@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="Featured projects from OceanCrest Entertainment - Current slate of productions spanning multiple genres with meticulous attention to detail."
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Projects-specific enhancements */
+      .project-filters {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 3rem 0;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 0.8rem 1.5rem;
+        border: 2px solid var(--border-color);
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        color: var(--text-secondary);
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .filter-btn:hover {
+        border-color: var(--accent-blue);
+        color: var(--accent-blue);
+        transform: translateY(-2px);
+      }
+
+      .filter-btn.active {
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        border-color: transparent;
+        transform: translateY(-2px);
+      }
+
+      .project-details {
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 12px;
+        border-left: 4px solid var(--accent-blue);
+      }
+
+      .detail-item {
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .detail-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .crew-member,
+      .cast-member {
+        color: var(--accent-blue);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .crew-member:hover,
+      .cast-member:hover {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-decoration: underline;
+      }
+
+      .status-production {
+        background: linear-gradient(135deg, #00ff9f, #00b4d8);
+        color: var(--primary-bg);
+      }
+
+      .status-pre-production {
+        background: linear-gradient(135deg, #ffd60a, #ff8500);
+        color: var(--primary-bg);
+      }
+
+      .status-development {
+        background: linear-gradient(135deg, #7209b7, #560bad);
+        color: white;
+      }
+
+      .project-card {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: center;
+      }
+
+      .project-card.fade-out {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+      }
+
+      .project-card.fade-in {
+        animation: fadeInScale 0.6s ease forwards;
+      }
+
+      @keyframes fadeInScale {
+        0% {
+          opacity: 0;
+          transform: scale(0.8) translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .project-filters {
+          gap: 0.5rem;
+        }
+
+        .filter-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="capabilities.html">Capabilities</a></li>
+              <li><a href="projects.html" class="active">Projects</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="newsroom.html">Newsroom</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1>Featured Projects</h1>
+            <p class="hero-subtitle">
+              Our films, includinng movies and series!
+            </p>
+            <div class="cta-buttons">
+              <a href="capabilities.html" class="btn btn-primary"
+                >Our Process</a
+              >
+              <a href="contact.html" class="btn btn-secondary"
+                >Start a Project</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section parallax-section fade-in">
+        <div class="container">
+          <h2 class="section-title">Current Productions</h2>
+          <p class="section-subtitle">
+            Explore our released and upcoming films!
+          </p>
+
+          <div class="overview-grid" id="projectsGrid">
+            <div
+              class="overview-card glass-card fade-in"
+              data-genre="thriller"
+              data-status="production"
+              data-year="2025"
+            >
+              <h3>The Oath of Office Movie</h3>
+              <span
+                class="project-genre"
+                style="color: var(--text-muted); font-size: 0.9rem"
+                >Political Thriller (13+)</span
+              >
+              <p style="margin: 1.5rem 0">
+                James "Jimmy" Washington, rises during a time of national
+                unrest. When the President Sebastian Underwood tightens his grip
+                on power, James runs. With his best friend Owen, James wages a
+                grueling campaign-facing the political world.
+              </p>
+              <div class="project-details">
+                <div class="detail-item">
+                  <strong>Executive Producer:</strong>
+                  <span class="crew-member" data-role="director">Natxeula</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Producer:</strong>
+                  <span class="crew-member" data-role="producer"
+                    >PoseidonOkeanos</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <strong>Lead Cast:</strong>
+                  <span class="cast-member" data-role="lead"
+                    >1080 as James Washington</span
+                  >,
+                  <span class="cast-member" data-role="lead"
+                    >Tempest as Sebastian Underwood</span
+                  >
+                </div>
+                <div class="detail-item">
+                  <strong>Release:</strong>June 2nd, 2025
+                </div>
+              </div>
+              <div style="margin-top: 1.5rem">
+                <span class="project-status status-production">Out Now</span>
+              </div>
+            </div>
+
+            <div
+              class="overview-card glass-card fade-in"
+              data-genre="thriller"
+              data-status="development"
+              data-year="2026"
+            >
+              <h3>Classified: A SCP Series</h3>
+              <span
+                class="project-genre"
+                style="color: var(--text-muted); font-size: 0.9rem"
+                >Horror Thriller (18+)</span
+              >
+              <p style="margin: 1.5rem 0">
+                Inside a remote Foundation site, routine experiments spiral into
+                chaos. A deadly breach, a rising riot, and an unexpected
+                infiltration push the facility to its breaking point.
+              </p>
+              <div class="project-details">
+                <div class="detail-item">
+                  <strong>Executive Producer:</strong>
+                  <span class="crew-member" data-role="director">Natxeula</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Producer:</strong>
+                  <span class="crew-member" data-role="producer">Future</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Lead Cast:</strong>
+                  <span class="cast-member" data-role="lead"
+                    >To Be Announced</span
+                  >
+                </div>
+                <div class="detail-item"><strong>Release:</strong>TBA</div>
+              </div>
+              <div style="margin-top: 1.5rem">
+                <span class="project-status status-development"
+                  >Pre-Production</span
+                >
+              </div>
+            </div>
+
+            <div
+              class="overview-card glass-card fade-in"
+              data-genre="tba"
+              data-status="development"
+              data-year="2026"
+            >
+              <h3>More to come</h3>
+              <span
+                class="project-genre"
+                style="color: var(--text-muted); font-size: 0.9rem"
+                >TBA</span
+              >
+              <p style="margin: 1.5rem 0">
+                More exciting projects are in development. Stay tuned for
+                announcements about our upcoming productions.
+              </p>
+              <div class="project-details">
+                <div class="detail-item">
+                  <strong>Status:</strong>
+                  <span>Early Development</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Announcements:</strong>
+                  <span>Coming Soon</span>
+                </div>
+                <div class="detail-item"><strong>Release:</strong>TBA</div>
+              </div>
+              <div style="margin-top: 1.5rem">
+                <span class="project-status status-development"
+                  >Development</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Company</h4>
+            <a href="about.html">About Us</a>
+            <a href="team.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+            <a href="newsroom.html">Newsroom</a>
+          </div>
+          <div class="footer-section">
+            <h4>Productions</h4>
+            <a href="projects.html">Current Projects</a>
+            <a href="capabilities.html">Our Services</a>
+            <a href="projects.html">Production Portfolio</a>
+            <a href="capabilities.html">Distribution</a>
+          </div>
+          <div class="footer-section">
+            <h4>Business</h4>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">Partnerships</a>
+            <a href="contact.html">Investor Relations</a>
+            <a href="newsroom.html">Press Kit</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Header scroll effect
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const scrolled = window.pageYOffset;
+
+        if (scrolled > 50) {
+          header.style.backgroundColor = "rgba(22, 27, 34, 0.95)";
+          header.style.backdropFilter = "blur(20px)";
+        } else {
+          header.style.backgroundColor = "var(--secondary-bg)";
+          header.style.backdropFilter = "blur(8px)";
+        }
+      });
+    </script>
+  </body>
+</html>

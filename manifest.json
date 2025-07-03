@@ -1,0 +1,31 @@
+{
+  "name": "OceanCrest Entertainment",
+  "short_name": "OceanCrest",
+  "description": "Where bold storytelling meets cutting-edge production, creating immersive cinematic experiences that captivate global audiences.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#00BFFF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230d1117'/><text x='96' y='120' text-anchor='middle' font-size='100' fill='url(%23gradient)'><defs><linearGradient id='gradient' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2300BFFF'/><stop offset='100%' stop-color='%238B4A8C'/></linearGradient></defs>🎬</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230d1117'/><text x='256' y='320' text-anchor='middle' font-size='280' fill='url(%23gradient)'><defs><linearGradient id='gradient' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2300BFFF'/><stop offset='100%' stop-color='%238B4A8C'/></linearGradient></defs>🎬</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["entertainment", "business", "productivity"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect width='1280' height='720' fill='%230d1117'/><text x='640' y='360' text-anchor='middle' font-size='48' fill='%2300BFFF'>OceanCrest Entertainment</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ]
+}

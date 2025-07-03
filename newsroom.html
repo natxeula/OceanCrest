@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Newsroom - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="OceanCrest Entertainment Newsroom - Latest updates, announcements, and insights from our entertainment studio."
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Additional newsroom-specific styles that complement the main stylesheet */
+      .hero {
+        min-height: 70vh;
+      }
+
+      .news-categories {
+        display: flex;
+        gap: 1rem;
+        margin: 3rem 0;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .category-filter {
+        padding: 0.8rem 1.5rem;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .category-filter:hover,
+      .category-filter.active {
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        border-color: transparent;
+        transform: translateY(-2px);
+      }
+
+      .featured-article {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 4rem 0;
+        border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+      }
+
+      .featured-article::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-gradient);
+      }
+
+      .featured-article:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: var(--shadow-primary), var(--shadow-secondary);
+      }
+
+      .featured-image {
+        height: 300px;
+        background: var(--accent-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: var(--primary-bg);
+      }
+
+      .featured-content {
+        padding: 3rem;
+      }
+
+      .featured-date {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .featured-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+      }
+
+      .featured-excerpt {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .press-releases {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        padding: 3rem;
+        border-radius: 20px;
+        margin: 4rem 0;
+        border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .press-releases::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-gradient);
+      }
+
+      .press-releases:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-primary);
+      }
+
+      .press-title {
+        font-size: 2rem;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 700;
+      }
+
+      .media-contact {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        padding: 3rem;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .media-contact::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-gradient);
+      }
+
+      .media-contact:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-primary);
+      }
+
+      .contact-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      @media (max-width: 768px) {
+        .news-categories {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-bottom: 0.5rem;
+        }
+
+        .featured-title {
+          font-size: 1.8rem;
+        }
+
+        .featured-content {
+          padding: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="capabilities.html">Capabilities</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="newsroom.html" class="active">Newsroom</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1>Newsroom</h1>
+            <p class="hero-subtitle">
+              Latest updates, announcements, and insights from OceanCrest
+              Entertainment.
+            </p>
+            <div class="cta-buttons">
+              <a href="projects.html" class="btn btn-primary"
+                >Current Projects</a
+              >
+              <a href="contact.html" class="btn btn-secondary"
+                >Press Inquiries</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section parallax-section fade-in">
+        <div class="container">
+          <h2 class="section-title">Latest News & Updates</h2>
+          <p class="section-subtitle">
+            Important news.
+          </p>
+
+          <!-- Featured Article -->
+          <article class="featured-article">
+            <div class="featured-image">🎬</div>
+            <div class="featured-content">
+              <div class="featured-date">July 2, 2025</div>
+              <h2 class="featured-title">
+                OceanCrest Entertainment releases new website!
+              </h2>
+              <p class="featured-excerpt">
+                The website has released! Report any errors directly through our discord tickets. Thank you!
+                - Natxeula, Founder of OceanCrest Entertainmentt
+              </p>
+              <div
+                class="full-content"
+                style="
+                  display: none;
+                  margin-top: 1.5rem;
+                  padding-top: 1.5rem;
+                  border-top: 1px solid var(--border-color);
+                "
+              >
+                <p style="margin-bottom: 1rem">
+                  No additional information provided
+                </p>
+              </div>
+              <a
+                href="#"
+                class="read-more"
+                onclick="toggleFullContent(this, event)"
+                >Read Full Article →</a
+              >
+            </div>
+          </article>
+
+          <!-- News Articles Grid -->
+          <div class="overview-grid">
+            <article class="overview-card glass-card fade-in">
+              <span class="news-category">Production Update</span>
+              <div class="news-date">January 1, 0000</div>
+              <h3 class="news-title">
+                Placeholder
+              </h3>
+              <p class="news-excerpt">
+                Placeholder
+              </p>
+              <div
+                class="full-content"
+                style="
+                  display: none;
+                  margin-top: 1rem;
+                  padding-top: 1rem;
+                  border-top: 1px solid var(--border-color);
+                "
+              >
+                <p style="margin-bottom: 1rem">
+                  Placeholder
+                </p>
+              </div>
+              <a href="#" class="read-more" onclick="toggleContent(this, event)"
+                >Read More →</a
+              >
+            </article>
+
+            <div class="overview-grid">
+            <article class="overview-card glass-card fade-in">
+              <span class="news-category">Production Update</span>
+              <div class="news-date">January 1, 0000</div>
+              <h3 class="news-title">
+                Placeholder
+              </h3>
+              <p class="news-excerpt">
+                Placeholder
+              </p>
+              <div
+                class="full-content"
+                style="
+                  display: none;
+                  margin-top: 1rem;
+                  padding-top: 1rem;
+                  border-top: 1px solid var(--border-color);
+                "
+              >
+                <p style="margin-bottom: 1rem">
+                  Placeholder
+                </p>
+              </div>
+              <a href="#" class="read-more" onclick="toggleContent(this, event)"
+                >Read More →</a
+              >
+            </article>
+           
+          <!-- Press Releases Section -->
+          <div class="press-releases">
+            <h3 class="press-title">Recent Press Releases</h3>
+
+            <div class="press-item">
+              <h4>
+                Placeholder
+              </h4>
+              <p class="press-meta">January 1, 0000 • Placeholder</p>
+            </div>
+
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Company</h4>
+            <a href="about.html">About Us</a>
+            <a href="team.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+            <a href="newsroom.html">Newsroom</a>
+          </div>
+          <div class="footer-section">
+            <h4>Productions</h4>
+            <a href="projects.html">Current Projects</a>
+            <a href="capabilities.html">Our Services</a>
+            <a href="projects.html">Production Portfolio</a>
+            <a href="capabilities.html">Distribution</a>
+          </div>
+          <div class="footer-section">
+            <h4>Business</h4>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">Partnerships</a>
+            <a href="contact.html">Investor Relations</a>
+            <a href="newsroom.html">Press Kit</a>
+          </div>
+          <div class="footer-section">
+            <h4>Connect</h4>
+            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
+              ><span>📧</span> contact@oceancrest.studio</a
+            >
+            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
+              ><span>💼</span> LinkedIn</a
+            >
+            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
+              ><span>🐦</span> Twitter</a
+            >
+            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
+              ><span>📸</span> Instagram</a
+            >
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Category filtering functionality
+      document.querySelectorAll(".category-filter").forEach((filter) => {
+        filter.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Remove active class from all filters
+          document
+            .querySelectorAll(".category-filter")
+            .forEach((f) => f.classList.remove("active"));
+
+          // Add active class to clicked filter
+          this.classList.add("active");
+
+          // Here you would implement actual filtering logic
+          // For now, this is just for UI demonstration
+        });
+      });
+
+      // Read More functionality
+      function toggleContent(link, event) {
+        event.preventDefault();
+
+        const article = link.closest(".news-article");
+        const fullContent = article.querySelector(".full-content");
+
+        if (fullContent.style.display === "none") {
+          fullContent.style.display = "block";
+          link.textContent = "Read Less ←";
+        } else {
+          fullContent.style.display = "none";
+          link.textContent = "Read More →";
+        }
+      }
+
+      // Featured article toggle functionality
+      function toggleFullContent(link, event) {
+        event.preventDefault();
+
+        const article = link.closest(".featured-article");
+        const fullContent = article.querySelector(".full-content");
+
+        if (fullContent.style.display === "none") {
+          fullContent.style.display = "block";
+          link.textContent = "Read Less ←";
+        } else {
+          fullContent.style.display = "none";
+          link.textContent = "Read Full Article →";
+        }
+      }
+    </script>
+  </body>
+</html>
