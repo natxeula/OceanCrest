@@ -89,18 +89,76 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches and start periodic online checks
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log("Deleting old cache:", cacheName);
-            return caches.delete(cacheName);
-          }
-        }),
-      );
-    }),
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== CACHE_NAME) {
+              console.log("Deleting old cache:", cacheName);
+              return caches.delete(cacheName);
+            }
+          }),
+        );
+      })
+      .then(() => {
+        // Take control of all clients immediately
+        return self.clients.claim();
+      })
+      .then(() => {
+        // Start periodic online checks
+        startPeriodicOnlineCheck();
+      }),
   );
+});
+
+// Periodic online check function
+function startPeriodicOnlineCheck() {
+  setInterval(() => {
+    checkOnlineStatus();
+  }, 30000); // Check every 30 seconds
+}
+
+// Check online status by attempting to fetch from server
+async function checkOnlineStatus() {
+  try {
+    const response = await fetch("/api/applications", {
+      method: "HEAD",
+      cache: "no-cache",
+    });
+
+    const isOnline = response.ok;
+
+    // Notify all clients of the current status
+    self.clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.postMessage({
+          type: "NETWORK_STATUS",
+          online: isOnline,
+          timestamp: Date.now(),
+        });
+      });
+    });
+  } catch (error) {
+    // Network is definitely offline
+    self.clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.postMessage({
+          type: "NETWORK_STATUS",
+          online: false,
+          timestamp: Date.now(),
+        });
+      });
+    });
+  }
+}
+
+// Handle messages from clients
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "CHECK_ONLINE_STATUS") {
+    checkOnlineStatus();
+  }
 });
