@@ -145,38 +145,6 @@ class OceanCrestApp {
     // No additional settings event listeners needed for simple theme toggle
   }
 
-  toggleSetting(setting) {
-    this.settings[setting] = !this.settings[setting];
-    localStorage.setItem(setting, this.settings[setting]);
-    this.updateSettingsUI();
-    this.applySettings();
-  }
-
-  applySettings() {
-    const body = document.body;
-
-    // Apply reduce motion
-    if (this.settings.reduceMotion) {
-      body.classList.add("reduce-motion");
-    } else {
-      body.classList.remove("reduce-motion");
-    }
-
-    // Apply animations setting
-    if (!this.settings.animations) {
-      body.classList.add("no-animations");
-    } else {
-      body.classList.remove("no-animations");
-    }
-
-    this.applyAnimationSpeed();
-  }
-
-  applyAnimationSpeed() {
-    const root = document.documentElement;
-    root.style.setProperty("--animation-speed", this.settings.animationSpeed);
-  }
-
   setupMobileNavigation() {
     // Create mobile navigation elements if they don't exist
     this.createMobileNavElements();
