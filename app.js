@@ -1321,15 +1321,43 @@ window.OceanCrest = {
 };
 
 // Progressive Web App Service Worker Registration
-if ("serviceWorker" in navigator && "production" === "production") {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/sw.js")
       .then((registration) => {
         console.log("SW registered: ", registration);
+
+        // Listen for service worker messages
+        navigator.serviceWorker.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "NETWORK_STATUS") {
+            const isOnline = event.data.online;
+            console.log(
+              `Service Worker reports: ${isOnline ? "ONLINE" : "OFFLINE"}`,
+            );
+
+            // Update any global online indicators
+            updateGlobalOnlineStatus(isOnline);
+          }
+        });
       })
       .catch((registrationError) => {
         console.log("SW registration failed: ", registrationError);
       });
   });
+}
+
+// Global function to update online status indicators
+function updateGlobalOnlineStatus(isOnline) {
+  // Update any global status elements
+  const statusElements = document.querySelectorAll(".network-status");
+  statusElements.forEach((element) => {
+    element.classList.toggle("online", isOnline);
+    element.classList.toggle("offline", !isOnline);
+  });
+
+  // If applications manager exists, notify it
+  if (window.applicationsManager) {
+    window.applicationsManager.handleNetworkStatusChange(isOnline, Date.now());
+  }
 }
