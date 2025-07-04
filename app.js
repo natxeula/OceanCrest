@@ -3,14 +3,12 @@ class OceanCrestApp {
   constructor() {
     this.isLoaded = false;
     this.scrollProgress = 0;
-    this.theme = localStorage.getItem("theme") || "dark";
     this.init();
   }
 
   init() {
     // Initialize core functionality immediately
     this.setupEventListeners();
-    this.setupTheme();
     this.setupMobileNavigation();
 
     // Initialize enhanced features after DOM is ready
@@ -24,13 +22,6 @@ class OceanCrestApp {
   }
 
   setupEventListeners() {
-    // Theme toggle
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "themeToggle") {
-        this.toggleTheme();
-      }
-    });
-
     // Scroll events
     let ticking = false;
     window.addEventListener("scroll", () => {
