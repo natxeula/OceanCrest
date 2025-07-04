@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaming Productions - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="OceanCrest Entertainment's gaming film production services - bringing your games to life through cinematic storytelling in Roblox"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Gaming-specific enhancements */
+      .gaming-hero {
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(0, 191, 255, 0.15) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            135deg,
+            var(--primary-bg) 0%,
+            var(--secondary-bg) 100%
+          );
+        padding: 8rem 0 6rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .gaming-title {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-blue) 50%,
+          #00ff9f 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .process-step {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .process-step::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--accent-gradient);
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--accent-gradient);
+        border-radius: 50%;
+        color: var(--primary-bg);
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .featured-project {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .featured-project:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-blue);
+      }
+
+      .project-status-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 1rem;
+      }
+
+      .status-available {
+        background: linear-gradient(135deg, #00ff9f, #00b4d8);
+        color: var(--primary-bg);
+      }
+
+      .status-production {
+        background: linear-gradient(135deg, #ffd60a, #ff8500);
+        color: var(--primary-bg);
+      }
+
+      .status-development {
+        background: linear-gradient(135deg, #7209b7, #560bad);
+        color: white;
+      }
+
+      .game-requirements {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 191, 255, 0.1),
+          rgba(0, 255, 159, 0.1)
+        );
+        border: 1px solid var(--accent-blue);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .gaming-title {
+          font-size: 2.5rem;
+        }
+
+        .process-step {
+          padding: 1.5rem;
+        }
+
+        .featured-project {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="capabilities.html">Capabilities</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="gaming.html" class="active">Gaming</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="newsroom.html">Newsroom</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="gaming-hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1 class="gaming-title">Gaming Film Productions</h1>
+            <p
+              class="hero-subtitle"
+              style="font-size: 1.3rem; max-width: 700px; margin: 0 auto"
+            >
+              Bringing your games to life through cinematic storytelling in
+              Roblox. We create high-quality films based on real games with 100%
+              authenticity and 0% budget required.
+            </p>
+            <div class="cta-buttons" style="margin-top: 2.5rem">
+              <a href="contact.html" class="btn btn-primary">Start Your Film</a>
+              <a href="#process" class="btn btn-secondary">How It Works</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section parallax-section fade-in">
+        <div class="container">
+          <h2 class="section-title">Why Choose OceanCrest for Your Game</h2>
+          <p class="section-subtitle">
+            We're passionate gamers and filmmakers who understand what makes
+            games special
+          </p>
+
+          <div class="overview-grid">
+            <div
+              class="overview-card glass-card fade-in tilt-effect reactive-card"
+            >
+              <h3>🎮 100% Game Authentic</h3>
+              <p>
+                Our films are based entirely on real games, and we stay as
+                authentic as possible to the game and their brand. We respect
+                your creation and bring it to life faithfully.
+              </p>
+              <div class="live-counter" data-target="100" data-duration="2000">
+                0
+              </div>
+              <small style="color: var(--text-muted)">% Game Accuracy</small>
+            </div>
+
+            <div
+              class="overview-card glass-card fade-in tilt-effect reactive-card"
+            >
+              <h3>💰 Free Forever</h3>
+              <p>
+                We request that you give us no money to produce these films. We
+                are a pure passion team and do not want your money. Quality
+                filmmaking should be accessible to everyone.
+              </p>
+              <div class="live-counter" data-target="0" data-duration="1000">
+                0
+              </div>
+              <small style="color: var(--text-muted)">$ Budget Required</small>
+            </div>
+
+            <div
+              class="overview-card glass-card fade-in tilt-effect reactive-card"
+            >
+              <h3>🤝 Minimal Involvement</h3>
+              <p>
+                Once we accept your project, we require minimal involvement from
+                you. We handle everything while keeping you updated on our
+                progress.
+              </p>
+              <div class="live-counter" data-target="95" data-duration="2500">
+                0
+              </div>
+              <small style="color: var(--text-muted)"
+                >% Independent Production</small
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="process"
+        class="section"
+        style="background: var(--secondary-bg)"
+      >
+        <div class="container">
+          <h2 class="section-title">Our Production Process</h2>
+          <p class="section-subtitle">
+            From your game concept to cinematic masterpiece in Roblox
+          </p>
+
+          <div style="max-width: 800px; margin: 0 auto">
+            <div class="process-step fade-in">
+              <div class="step-number">1</div>
+              <h3>Project Submission</h3>
+              <p>
+                Submit your game for consideration through our contact form. We
+                review each submission to ensure it aligns with our production
+                capabilities and storytelling vision.
+              </p>
+            </div>
+
+            <div class="process-step fade-in">
+              <div class="step-number">2</div>
+              <h3>Requirements Gathering</h3>
+              <p>The most we will need from you is:</p>
+              <div class="game-requirements">
+                <ul style="margin: 0; padding-left: 1.5rem">
+                  <li>The map from your game</li>
+                  <li>Any major systems from the game</li>
+                  <li>
+                    You, so we can ask questions about the game periodically!
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="process-step fade-in">
+              <div class="step-number">3</div>
+              <h3>Script & Pre-Production</h3>
+              <p>
+                Our team develops a cinematic script that captures the essence
+                of your game. We focus on drama-driven narratives that honor the
+                source material while creating compelling viewing experiences.
+              </p>
+            </div>
+
+            <div class="process-step fade-in">
+              <div class="step-number">4</div>
+              <h3>Roblox Production</h3>
+              <p>
+                Using cutting-edge Roblox filmmaking techniques, we bring your
+                game to life with cinematic quality production values. Our
+                voluntary team of passionate creators handles all aspects of
+                production.
+              </p>
+            </div>
+
+            <div class="process-step fade-in">
+              <div class="step-number">5</div>
+              <h3>Release & Distribution</h3>
+              <p>
+                Your completed film is released on our platforms and made
+                available to the gaming community. We handle all distribution
+                while ensuring you receive full credit as the original game
+                creator.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section parallax-section fade-in">
+        <div class="container">
+          <h2 class="section-title">Featured Gaming Productions</h2>
+          <p class="section-subtitle">
+            Our current slate of game-based films spanning multiple genres
+          </p>
+
+          <div class="featured-project fade-in">
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">
+              The Oath of Office Movie
+            </h3>
+            <span style="color: var(--accent-blue); font-weight: 600"
+              >Based on Authority Game</span
+            >
+            <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
+              James "Jimmy" Washington rises during a time of national unrest.
+              When President Sebastian Underwood tightens his grip on power,
+              James runs for office. With his best friend Owen, James wages a
+              grueling campaign, facing the harsh realities of the political
+              world.
+            </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 1.5rem 0;
+              "
+            >
+              <div><strong>Genre:</strong> Political Thriller (13+)</div>
+              <div><strong>Executive Producer:</strong> Natxeula</div>
+              <div><strong>Lead Cast:</strong> 1080, Tempest</div>
+              <div><strong>Release:</strong> June 2nd, 2025</div>
+            </div>
+            <span class="project-status-badge status-available"
+              >Watch on YouTube Now!</span
+            >
+          </div>
+
+          <div class="featured-project fade-in">
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">
+              Classified: A SCP Series
+            </h3>
+            <span style="color: var(--accent-blue); font-weight: 600"
+              >Based on SCP Gaming Universe</span
+            >
+            <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
+              Inside a remote Foundation site, routine experiments spiral into
+              chaos. A deadly breach, a rising riot, and an unexpected
+              infiltration push the facility to its breaking point. This
+              information is classified under Level-4 Personnel.
+            </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 1.5rem 0;
+              "
+            >
+              <div><strong>Genre:</strong> Horror Thriller (18+)</div>
+              <div><strong>Executive Producer:</strong> Natxeula</div>
+              <div><strong>Producer:</strong> Future</div>
+              <div><strong>Release:</strong> TBA 2026</div>
+            </div>
+            <span class="project-status-badge status-production"
+              >In Production</span
+            >
+          </div>
+
+          <div class="featured-project fade-in">
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">
+              Your Game Could Be Next
+            </h3>
+            <span style="color: var(--accent-blue); font-weight: 600"
+              >Submit Your Project</span
+            >
+            <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
+              Have a game with a compelling story? We're always looking for our
+              next production. Whether it's an adventure, thriller, drama, or
+              any other genre, we can bring your game's world to life through
+              cinematic storytelling.
+            </p>
+            <div style="text-align: center; margin-top: 2rem">
+              <a
+                href="contact.html"
+                class="btn btn-primary"
+                style="font-size: 1.1rem; padding: 1rem 2rem"
+              >
+                Submit Your Game
+              </a>
+            </div>
+            <span class="project-status-badge status-development"
+              >Accepting Submissions</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background: var(--secondary-bg)">
+        <div class="container">
+          <h2 class="section-title">Our Gaming Film Philosophy</h2>
+          <div style="max-width: 800px; margin: 0 auto; text-align: center">
+            <div class="overview-card glass-card fade-in" style="padding: 3rem">
+              <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem">
+                🎬 Passion-Driven Excellence
+              </h3>
+              <p
+                style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem"
+              >
+                We are a team that is entirely voluntary. We are paid nothing,
+                and are all here to pursue a passion to make the best Roblox
+                movies in the world. We listen to the community, take criticism
+                seriously, and never ignore feedback.
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                  gap: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div>
+                  <div
+                    class="live-counter"
+                    data-target="4"
+                    data-duration="3000"
+                  >
+                    0
+                  </div>
+                  <small style="color: var(--text-muted)"
+                    >Projects in Development</small
+                  >
+                </div>
+                <div>
+                  <div
+                    class="live-counter"
+                    data-target="100"
+                    data-duration="4000"
+                  >
+                    0
+                  </div>
+                  <small style="color: var(--text-muted)"
+                    >Community Members</small
+                  >
+                </div>
+                <div>
+                  <div
+                    class="live-counter"
+                    data-target="100"
+                    data-duration="2000"
+                  >
+                    0
+                  </div>
+                  <small style="color: var(--text-muted)"
+                    >% Passion Driven</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Company</h4>
+            <a href="about.html">About Us</a>
+            <a href="careers.html">Careers</a>
+            <a href="newsroom.html">Newsroom</a>
+          </div>
+          <div class="footer-section">
+            <h4>Productions</h4>
+            <a href="projects.html">Current Projects</a>
+            <a href="capabilities.html">Our Services</a>
+            <a href="gaming.html">Gaming Films</a>
+            <a href="capabilities.html">Distribution</a>
+          </div>
+          <div class="footer-section">
+            <h4>Business</h4>
+            <a href="contact.html">Contact</a>
+            <a href="about.html">Partnerships</a>
+            <a href="contact.html">Investor Relations</a>
+            <a href="newsroom.html">Press Kit</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
