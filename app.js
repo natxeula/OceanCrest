@@ -209,7 +209,112 @@ class OceanCrestApp {
     this.setupInteractiveEffects();
     this.setupTouchInteractions();
     this.setupReactiveFeatures();
+    this.setupAdvancedAnimations();
+    this.setupMagneticEffects();
+    this.setupQuantumElements();
+    this.setupPerformanceOptimizations();
     this.isLoaded = true;
+  }
+
+  setupAdvancedAnimations() {
+    // Morphing cards
+    const morphingCards = document.querySelectorAll(".glass-card");
+    morphingCards.forEach((card) => {
+      card.classList.add("morphing-card", "ultra-glass", "dynamic-shadow");
+
+      card.addEventListener("mouseenter", () => {
+        card.style.animationPlayState = "paused";
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.animationPlayState = "running";
+      });
+    });
+
+    // Floating elements
+    const floatingElements = document.querySelectorAll(".overview-card");
+    floatingElements.forEach((el, index) => {
+      el.classList.add("floating-element");
+      el.style.animationDelay = `${index * 0.5}s`;
+    });
+
+    // Reactive text effects
+    const titles = document.querySelectorAll("h1, h2, h3");
+    titles.forEach((title) => {
+      title.classList.add("reactive-text");
+    });
+  }
+
+  setupMagneticEffects() {
+    const magneticElements = document.querySelectorAll(
+      ".btn, .logo, .theme-toggle",
+    );
+
+    magneticElements.forEach((el) => {
+      el.classList.add("magnetic", "magnetic-field");
+
+      el.addEventListener("mousemove", (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        const strength = 0.3;
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+
+      el.addEventListener("mouseleave", () => {
+        el.style.transform = "";
+      });
+    });
+  }
+
+  setupQuantumElements() {
+    // Add quantum effects to random elements
+    const elements = document.querySelectorAll(".glass-card, .overview-card");
+    elements.forEach((el, index) => {
+      if (index % 3 === 0) {
+        // Every third element gets quantum effects
+        el.classList.add("energy-pulse");
+
+        // Add micro-interactions
+        el.addEventListener("click", () => {
+          el.classList.add("liquid-drop");
+          setTimeout(() => {
+            el.classList.remove("liquid-drop");
+          }, 600);
+        });
+      }
+    });
+  }
+
+  setupPerformanceOptimizations() {
+    // Add performance classes to heavy animation elements
+    const animatedElements = document.querySelectorAll(
+      ".particle, .glass-card, .btn, .cursor-follower, .hero-parallax",
+    );
+
+    animatedElements.forEach((el) => {
+      el.classList.add("will-change", "gpu-accelerated");
+    });
+
+    // Intersection observer for performance
+    const performanceObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          } else {
+            // Pause animations for off-screen elements
+            entry.target.style.animationPlayState = "paused";
+          }
+        });
+      },
+      { rootMargin: "50px" },
+    );
+
+    animatedElements.forEach((el) => {
+      performanceObserver.observe(el);
+    });
   }
 
   setupReactiveFeatures() {
@@ -313,7 +418,7 @@ class OceanCrestApp {
   setupCursorFollower() {
     if (window.innerWidth <= 768) return; // Skip on mobile
 
-    // Create cursor follower elements
+    // Create enhanced cursor follower elements
     const cursorFollower = document.createElement("div");
     cursorFollower.className = "cursor-follower";
 
@@ -329,38 +434,73 @@ class OceanCrestApp {
       followerY = 0;
     let glowX = 0,
       glowY = 0;
+    let trails = [];
 
     document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+
+      // Create cursor trails
+      this.createCursorTrail(mouseX, mouseY);
     });
 
-    // Smooth cursor following
+    // Enhanced cursor following with magnetic effects
     const updateCursor = () => {
-      followerX += (mouseX - followerX) * 0.06;
-      followerY += (mouseY - followerY) * 0.06;
+      followerX += (mouseX - followerX) * 0.08;
+      followerY += (mouseY - followerY) * 0.08;
 
-      glowX += (mouseX - glowX) * 0.03;
-      glowY += (mouseY - glowY) * 0.03;
+      glowX += (mouseX - glowX) * 0.04;
+      glowY += (mouseY - glowY) * 0.04;
 
       cursorFollower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px)`;
-      cursorGlow.style.transform = `translate(${glowX - 20}px, ${glowY - 20}px)`;
+      cursorGlow.style.transform = `translate(${glowX - 30}px, ${glowY - 30}px)`;
 
       requestAnimationFrame(updateCursor);
     };
     updateCursor();
 
-    // Reactive cursor states
+    // Enhanced cursor states
     document.addEventListener("mousedown", () => {
-      cursorFollower.style.transform += " scale(0.8)";
+      cursorFollower.classList.add("active");
+      cursorFollower.style.transform += " scale(0.7)";
     });
 
     document.addEventListener("mouseup", () => {
+      cursorFollower.classList.remove("active");
       cursorFollower.style.transform = cursorFollower.style.transform.replace(
-        " scale(0.8)",
+        " scale(0.7)",
         "",
       );
     });
+
+    // Magnetic cursor on interactive elements
+    const magneticElements = document.querySelectorAll(
+      ".btn, .glass-card, .logo",
+    );
+    magneticElements.forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        cursorFollower.classList.add("expanded");
+      });
+
+      el.addEventListener("mouseleave", () => {
+        cursorFollower.classList.remove("expanded");
+      });
+    });
+  }
+
+  createCursorTrail(x, y) {
+    if (Math.random() > 0.7) {
+      // Only create trails occasionally for performance
+      const trail = document.createElement("div");
+      trail.className = "cursor-trail";
+      trail.style.left = x + "px";
+      trail.style.top = y + "px";
+      document.body.appendChild(trail);
+
+      setTimeout(() => {
+        trail.remove();
+      }, 800);
+    }
   }
 
   setupReactiveBackground() {
@@ -531,41 +671,115 @@ class OceanCrestApp {
     const particlesContainer = document.getElementById("particles");
     if (!particlesContainer || window.innerWidth < 768) return;
 
-    const particleCount = Math.min(25, Math.floor(window.innerWidth / 50));
+    const particleCount = Math.min(30, Math.floor(window.innerWidth / 40));
     const fragment = document.createDocumentFragment();
     this.particles = [];
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
-      particle.className = "particle reactive";
 
-      // Random size
-      const sizes = ["small", "medium", "large"];
-      particle.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+      // Enhanced particle types
+      const types = ["small", "medium", "large", "quantum"];
+      const type = types[Math.floor(Math.random() * types.length)];
+      particle.className = `particle reactive ${type}`;
 
-      // Random position
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
+      // Quantum particles have special properties
+      if (type === "quantum") {
+        particle.classList.add("energy-pulse");
+      }
+
+      // Random position with edge avoidance
+      const margin = 10;
+      const x = margin + Math.random() * (100 - 2 * margin);
+      const y = margin + Math.random() * (100 - 2 * margin);
       particle.style.left = x + "%";
       particle.style.top = y + "%";
 
-      // Random animation delay and duration
-      particle.style.animationDelay = Math.random() * 8 + "s";
-      particle.style.animationDuration = Math.random() * 4 + 6 + "s";
+      // Enhanced animation properties
+      particle.style.animationDelay = Math.random() * 10 + "s";
+      particle.style.animationDuration = Math.random() * 6 + 8 + "s";
 
-      // Store particle data for reactive behavior
+      // Store enhanced particle data
       this.particles.push({
         element: particle,
         x: x,
         y: y,
         originalX: x,
         originalY: y,
+        velocity: { x: 0, y: 0 },
+        type: type,
+        energy: Math.random() * 100,
+        connectionDistance: type === "quantum" ? 25 : 15,
       });
 
       fragment.appendChild(particle);
     }
 
     particlesContainer.appendChild(fragment);
+    this.setupParticleConnections();
+  }
+
+  setupParticleConnections() {
+    if (!this.particles) return;
+
+    // Create particle connection canvas
+    const canvas = document.createElement("canvas");
+    canvas.className = "particle-connections";
+    canvas.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    `;
+
+    const particlesContainer = document.getElementById("particles");
+    if (particlesContainer) {
+      particlesContainer.appendChild(canvas);
+
+      const ctx = canvas.getContext("2d");
+
+      const updateConnections = () => {
+        canvas.width = particlesContainer.offsetWidth;
+        canvas.height = particlesContainer.offsetHeight;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connections between nearby particles
+        for (let i = 0; i < this.particles.length; i++) {
+          for (let j = i + 1; j < this.particles.length; j++) {
+            const p1 = this.particles[i];
+            const p2 = this.particles[j];
+
+            const dx = ((p1.x - p2.x) * canvas.width) / 100;
+            const dy = ((p1.y - p2.y) * canvas.height) / 100;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < p1.connectionDistance * 10) {
+              const opacity = 1 - distance / (p1.connectionDistance * 10);
+              ctx.strokeStyle = `rgba(0, 191, 255, ${opacity * 0.3})`;
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(
+                (p1.x * canvas.width) / 100,
+                (p1.y * canvas.height) / 100,
+              );
+              ctx.lineTo(
+                (p2.x * canvas.width) / 100,
+                (p2.y * canvas.height) / 100,
+              );
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(updateConnections);
+      };
+
+      updateConnections();
+    }
   }
 
   setupReactiveParticles() {
