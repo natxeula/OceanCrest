@@ -1243,6 +1243,8 @@ class JobApplicationForm {
 
     try {
       // First, try to submit to server
+      console.log("🚀 Submitting application to server...", applicationData);
+
       const response = await fetch("/api/applications", {
         method: "POST",
         headers: {
