@@ -238,7 +238,8 @@
   font-family: inherit;
 }
 
-.mobile-nav-menu a::before {
+.mobile-nav-menu a::before,
+.mobile-nav-settings::before {
   content: "";
   position: absolute;
   top: 0;
@@ -250,11 +251,13 @@
   z-index: -1;
 }
 
-.mobile-nav-menu a:hover::before {
+.mobile-nav-menu a:hover::before,
+.mobile-nav-settings:hover::before {
   left: 0;
 }
 
-.mobile-nav-menu a:hover {
+.mobile-nav-menu a:hover,
+.mobile-nav-settings:hover {
   color: var(--primary-bg);
   transform: scale(1.05);
   box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3);
@@ -263,6 +266,12 @@
 .mobile-nav-menu a.active {
   background: var(--accent-gradient);
   color: var(--primary-bg);
+}
+
+.mobile-nav-settings {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
 }
 
 /* Enhanced Glass Morphism Effects */
