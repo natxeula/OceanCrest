@@ -2399,11 +2399,19 @@ nav a.active {
     margin: 1rem;
   }
 
-  /* Theme toggle positioning */
-  .theme-toggle {
-    width: 45px;
-    height: 45px;
-    font-size: 1rem;
+  /* Settings toggle positioning */
+  .settings-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .settings-panel {
+    width: 280px;
+    bottom: 80px;
+    right: 1.5rem;
   }
 
   /* Particles disabled on mobile for performance */
