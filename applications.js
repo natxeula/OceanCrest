@@ -43,7 +43,8 @@ class ApplicationsManager {
 
   async loadApplications() {
     try {
-      const response = await fetch("/.netlify/functions/submit-application", {
+      // Load applications from Neon database
+      const response = await fetch("/api/applications.js", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -55,9 +56,18 @@ class ApplicationsManager {
         this.applications = data.applications || [];
         this.filteredApplications = [...this.applications];
       } else {
-        console.error("Failed to load applications from server");
-        this.applications = [];
-        this.filteredApplications = [];
+        console.error("Failed to load applications from database");
+        // Fallback to localStorage
+        const savedApplications = localStorage.getItem(
+          "oceancrest_applications",
+        );
+        if (savedApplications) {
+          this.applications = JSON.parse(savedApplications);
+          this.filteredApplications = [...this.applications];
+        } else {
+          this.applications = [];
+          this.filteredApplications = [];
+        }
       }
     } catch (error) {
       console.error("Error loading applications:", error);

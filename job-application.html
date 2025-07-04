@@ -105,11 +105,8 @@
               id="jobApplicationForm"
               name="job-application"
               method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field"
             >
               <!-- Hidden field for bot protection -->
-              <input type="hidden" name="form-name" value="job-application" />
               <div style="display: none">
                 <label>Don't fill this out: <input name="bot-field" /></label>
               </div>
@@ -837,39 +834,62 @@
             data[key] = value;
           }
 
-          // Try serverless function first
+          // Submit to Neon database
           try {
-            const response = await fetch(
-              "/.netlify/functions/submit-application",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
+            const response = await fetch("/api/applications.js", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
               },
-            );
+              body: JSON.stringify({
+                applicationId: this.generateId(),
+                ...data,
+              }),
+            });
 
             if (response.ok) {
-              return response;
+              const result = await response.json();
+              console.log(
+                "Application saved to database:",
+                result.applicationId,
+              );
+              return { ok: true };
+            } else {
+              throw new Error(`Server error: ${response.status}`);
             }
           } catch (error) {
-            console.log(
-              "Serverless function not available, trying Netlify Forms...",
+            console.error(
+              "Error saving to database, falling back to localStorage:",
+              error,
             );
-          }
 
-          // Fallback to Netlify Forms
-          try {
-            return await fetch("/", {
-              method: "POST",
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams(formData).toString(),
-            });
-          } catch (error) {
-            console.log("Netlify Forms not available");
-            // Return successful response - data is still saved locally
-            return { ok: true };
+            // Fallback to localStorage
+            try {
+              const existingApplications = localStorage.getItem(
+                "oceancrest_applications",
+              );
+              const applications = existingApplications
+                ? JSON.parse(existingApplications)
+                : [];
+
+              const application = {
+                id: this.generateId(),
+                submittedAt: new Date().toISOString(),
+                ...data,
+              };
+
+              applications.push(application);
+              localStorage.setItem(
+                "oceancrest_applications",
+                JSON.stringify(applications),
+              );
+
+              console.log("Application saved locally:", application.id);
+              return { ok: true };
+            } catch (localError) {
+              console.error("Error saving application:", localError);
+              return { ok: false };
+            }
           }
         }
 
