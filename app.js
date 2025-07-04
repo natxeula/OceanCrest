@@ -900,10 +900,6 @@ class OceanCrestApp {
     }
   }
 
-  getCurrentTheme() {
-    return this.theme;
-  }
-
   getScrollProgress() {
     return this.scrollProgress;
   }
@@ -1264,7 +1260,6 @@ if (document.getElementById("jobApplicationForm")) {
 window.OceanCrest = {
   app: oceanCrestApp,
   scrollToSection: (id) => oceanCrestApp.scrollToSection(id),
-  getCurrentTheme: () => oceanCrestApp.getCurrentTheme(),
   getScrollProgress: () => oceanCrestApp.getScrollProgress(),
 };
 
