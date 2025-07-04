@@ -16,7 +16,7 @@ app.use(express.static("."));
 // Database connection
 const pool = new Pool({
   connectionString:
-    "postgresql://neondb_owner:npg_i1XyGU4TuRaj@ep-ancient-meadow-a88rfx44-pooler.eastus2.azure.neon.tech/neondb?sslmode=require",
+    "postgresql://neondb_owner:npg_i1XyGU4TuRaj@ep-soft-shape-a8shmx5d-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require",
   ssl: {
     rejectUnauthorized: false,
   },
