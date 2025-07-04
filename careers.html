@@ -73,7 +73,7 @@
             </p>
             <div class="cta-buttons">
               <a href="team.html" class="btn btn-primary">Meet Our Team</a>
-              <a href="job-application.html" class="btn btn-secondary"
+              <a href="https://forms.gle/kXyWtpsdSpbyoLgz8" target="_blank" class="btn btn-secondary"
                 >Apply Now</a
               >
             </div>
@@ -83,55 +83,26 @@
 
       <section class="section parallax-section fade-in">
         <div class="container">
-          <h2 class="section-title">Career Opportunities</h2>
+          <h2 class="section-title">Ready to Join Our Team?</h2>
           <p class="section-subtitle">
-            Discover diverse roles across our teams and contribute to
-            world-class entertainment production.
+            Submit your application through our streamlined application form
           </p>
 
-          <div class="overview-grid">
-            <div class="overview-card glass-card fade-in">
-              <h3>Executive Team</h3>
-              <p>
-                Applications to this team will be automatically denied,
-                do not attempt to apply unless you are joking.
+          <div class="application-cta" style="text-align: center; margin-top: 3rem;">
+            <div class="glass-card" style="max-width: 600px; margin: 0 auto; padding: 3rem;">
+              <h3 style="margin-bottom: 1.5rem;">Apply Now</h3>
+              <p style="margin-bottom: 2rem; color: var(--text-color-secondary);">
+                Use our official application form to submit your information and join the OceanCrest Entertainment team.
               </p>
+              <a
+                href="https://forms.gle/kXyWtpsdSpbyoLgz8"
+                target="_blank"
+                class="btn btn-primary"
+                style="font-size: 1.2rem; padding: 1rem 2rem;"
+              >
+                Submit Application
+              </a>
             </div>
-            <div class="overview-card glass-card fade-in">
-              <h3>Teams Open</h3>
-              <p> These teams are currently accepting new applicants!
-                <ul>
-                  <li>Writing Team</li>
-                  <li>Acting Team</li>
-                  <li>Lore Team</li>
-                  <li>Cameras Team</li>
-                  <li>Post-Prod. Team</li>
-                </ul>
-              </p>
-            </div>
-            <div class="overview-card glass-card fade-in">
-              <h3>Teams Closed</h3>
-              <p> These teams are currently not accepting new applicants.
-                <ul>
-                  <li>Executive Team</li>
-                  <li>Marketing Team</li>
-                  <li>Outfitting Team</li>
-                  <li>QA Team</li>
-                  <li>Building Team</li>
-                  <li>Storyboard Team</li>
-                <ul>
-              </p>
-            </div>
-          </div>
-
-          <div style="text-align: center; margin-top: 3rem">
-            <a href="job-application.html" class="btn btn-primary">Apply Now</a>
-            <a
-              href="#application-form"
-              class="btn btn-secondary scroll-to-form"
-              style="margin-left: 1rem"
-              >Quick Apply</a
-            >
           </div>
         </div>
       </section>
@@ -188,177 +159,5 @@
     </footer>
 
     <script src="app.js"></script>
-    <script>
-      // Team-specific application handling
-      class TeamApplicationHandler {
-        constructor() {
-          this.init();
-        }
-
-        init() {
-          this.handleTeamParameter();
-          this.setupApplicationForm();
-        }
-
-        handleTeamParameter() {
-          const urlParams = new URLSearchParams(window.location.search);
-          const team = urlParams.get("team");
-
-          if (team) {
-            this.prefillTeamApplication(team);
-            this.updatePageForTeam(team);
-            // Scroll to application form
-            setTimeout(() => {
-              document.getElementById("application-form")?.scrollIntoView({
-                behavior: "smooth",
-              });
-            }, 500);
-          }
-        }
-
-        updatePageForTeam(team) {
-          const teamNames = {
-            executive: "Executive Team",
-            writing: "Writing Team",
-            acting: "Acting Team",
-            building: "Building Team",
-            "post-production": "Post-Production Team",
-            storyboard: "Storyboard Team",
-            cameras: "Cameras Team",
-            marketing: "Marketing Team",
-            lore: "Lore Team",
-            qa: "QA Team",
-          };
-
-          const teamName = teamNames[team];
-          if (teamName) {
-            // Update page title and subtitle
-            const heroTitle = document.querySelector(".hero h1");
-            const heroSubtitle = document.querySelector(".hero .hero-subtitle");
-            const sectionTitle = document.querySelector(
-              ".application-section .section-title",
-            );
-            const sectionSubtitle = document.querySelector(
-              ".application-section .section-subtitle",
-            );
-
-            if (heroTitle) {
-              heroTitle.textContent = `Join Our ${teamName}`;
-            }
-
-            if (heroSubtitle) {
-              heroSubtitle.textContent = `Apply to join our talented ${teamName.toLowerCase()} and contribute to world-class entertainment production at OceanCrest Entertainment.`;
-            }
-
-            if (sectionTitle) {
-              sectionTitle.textContent = `Apply to ${teamName}`;
-            }
-
-            if (sectionSubtitle) {
-              sectionSubtitle.textContent = `Ready to join our ${teamName.toLowerCase()}? Fill out the application form below and we'll review your submission carefully.`;
-            }
-          }
-        }
-
-        prefillTeamApplication(team) {
-          // Map team to appropriate position
-          const teamToPosition = {
-            executive: "business-development",
-            writing: "writer",
-            acting: "other",
-            building: "production-manager",
-            "post-production": "editor",
-            storyboard: "director",
-            cameras: "cinematographer",
-            marketing: "marketing-specialist",
-            lore: "writer",
-            qa: "other",
-          };
-
-          const position = teamToPosition[team];
-          if (position) {
-            // Wait for form to be ready
-            setTimeout(() => {
-              const positionSelect = document.getElementById("position");
-              if (positionSelect) {
-                positionSelect.value = position;
-
-                // Handle "other" positions
-                if (position === "other") {
-                  const otherPositionGroup =
-                    document.getElementById("otherPositionGroup");
-                  const otherPositionInput =
-                    document.getElementById("otherPosition");
-
-                  if (otherPositionGroup && otherPositionInput) {
-                    otherPositionGroup.style.display = "block";
-
-                    if (team === "acting") {
-                      otherPositionInput.value = "Actor/Actress";
-                    } else if (team === "qa") {
-                      otherPositionInput.value = "Quality Assurance Specialist";
-                    }
-                  }
-                }
-
-                // Pre-fill motivation based on team
-                const motivationTextarea =
-                  document.getElementById("motivation");
-                if (motivationTextarea && motivationTextarea.value === "") {
-                  const teamMotivations = {
-                    executive:
-                      "I am passionate about strategic leadership and want to contribute to OceanCrest's vision for the future of entertainment.",
-                    writing:
-                      "I am excited about crafting compelling narratives and developing engaging stories that resonate with audiences.",
-                    acting:
-                      "I am passionate about bringing characters to life and contributing to meaningful storytelling through performance.",
-                    building:
-                      "I enjoy creating immersive physical environments and practical sets that enhance storytelling.",
-                    "post-production":
-                      "I love the technical and creative aspects of post-production, from editing to VFX, that bring stories to life.",
-                    storyboard:
-                      "I am passionate about visual storytelling and translating scripts into compelling visual narratives.",
-                    cameras:
-                      "I am excited about cinematography and capturing stunning visuals that enhance the storytelling experience.",
-                    marketing:
-                      "I want to help connect OceanCrest's amazing stories with audiences around the world.",
-                    lore: "I am passionate about world-building and creating rich, consistent universes for storytelling.",
-                    qa: "I am committed to ensuring the highest quality standards in all aspects of production.",
-                  };
-
-                  motivationTextarea.value = teamMotivations[team] || "";
-                }
-              }
-            }, 100);
-          }
-        }
-
-        setupApplicationForm() {
-          // Setup form handling (this would integrate with existing form logic)
-          const form = document.getElementById("jobApplicationForm");
-          if (form) {
-            // Add team information to form submission
-            form.addEventListener("submit", (e) => {
-              const urlParams = new URLSearchParams(window.location.search);
-              const team = urlParams.get("team");
-
-              if (team) {
-                // Add team information to form data
-                const teamInput = document.createElement("input");
-                teamInput.type = "hidden";
-                teamInput.name = "appliedTeam";
-                teamInput.value = team;
-                form.appendChild(teamInput);
-              }
-            });
-          }
-        }
-      }
-
-      // Initialize team application handler
-      document.addEventListener("DOMContentLoaded", () => {
-        new TeamApplicationHandler();
-      });
-    </script>
   </body>
 </html>
