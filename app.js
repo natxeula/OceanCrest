@@ -965,7 +965,7 @@ class OceanCrestApp {
 class JobApplicationForm {
   constructor() {
     this.currentSection = 1;
-    this.totalSections = 3;
+    this.totalSections = 4;
     this.formData = {};
     this.init();
   }
