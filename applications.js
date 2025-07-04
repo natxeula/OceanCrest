@@ -49,12 +49,17 @@ class ApplicationsManager {
       this.handleNetworkStatusChange(false, Date.now());
     });
 
-    // Periodic connection check
+    // Periodic connection check and auto-refresh for new applications
     setInterval(() => {
       if (navigator.onLine) {
         this.checkServerConnection();
+        // Auto-refresh applications every 30 seconds when online
+        this.loadApplications().then(() => {
+          this.updateStats();
+          this.renderApplications();
+        });
       }
-    }, 60000); // Check every minute
+    }, 30000); // Check every 30 seconds
   }
 
   handleNetworkStatusChange(isOnline, timestamp) {
