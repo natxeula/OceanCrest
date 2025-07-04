@@ -579,37 +579,6 @@ nav a.active {
   transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
 }
 
-/* Enhanced Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  color: var(--text-primary);
-  font-size: 1.2rem;
-  cursor: pointer;
-  z-index: 1002;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.theme-toggle:hover {
-  transform: scale(1.05) rotate(8deg);
-  box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
-  background: var(--accent-gradient);
-  color: var(--primary-bg);
-}
-
-.theme-toggle:active {
-  transform: scale(0.95);
-}
-
 /* Reactive Cursor Effects */
 .cursor-follower {
   position: fixed;
