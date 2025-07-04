@@ -998,6 +998,38 @@
           );
         }
 
+        async notifyAdmin(applicationData) {
+          try {
+            // Send a simple notification to admin panel via localStorage
+            const adminNotification = {
+              type: "NEW_APPLICATION",
+              timestamp: Date.now(),
+              application: applicationData,
+              id: "notif_" + Date.now(),
+            };
+
+            // Store notification for admin panel
+            const existingNotifications = JSON.parse(
+              localStorage.getItem("oceancrest_admin_notifications") || "[]",
+            );
+            existingNotifications.unshift(adminNotification);
+
+            // Keep only last 50 notifications
+            const notifications = existingNotifications.slice(0, 50);
+            localStorage.setItem(
+              "oceancrest_admin_notifications",
+              JSON.stringify(notifications),
+            );
+
+            console.log(
+              "📢 Admin notification stored:",
+              applicationData.applicationId,
+            );
+          } catch (error) {
+            console.warn("Failed to store admin notification:", error.message);
+          }
+        }
+
         showSuccess() {
           const form = document.getElementById("jobApplicationForm");
           const success = document.getElementById("formSuccess");
