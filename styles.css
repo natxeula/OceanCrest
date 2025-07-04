@@ -27,18 +27,6 @@
   --shadow-secondary: 0 4px 16px rgba(139, 74, 140, 0.1);
 }
 
-[data-theme="light"] {
-  --primary-bg: #ffffff;
-  --secondary-bg: #f6f8fa;
-  --tertiary-bg: #f1f3f4;
-  --text-primary: #24292f;
-  --text-secondary: #57606a;
-  --text-muted: #656d76;
-  --border-color: #d0d7de;
-  --hover-bg: #f3f4f6;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-}
-
 /* Enhanced Loading Screen */
 .loading-screen {
   position: fixed;
