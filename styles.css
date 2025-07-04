@@ -764,9 +764,9 @@ nav a.active {
   bottom: 90px;
   right: 1.5rem;
   width: 320px;
-  background: rgba(22, 27, 34, 0.95);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
   z-index: 1001;
@@ -774,8 +774,10 @@ nav a.active {
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-primary);
   pointer-events: none;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .settings-panel.active {
@@ -797,6 +799,116 @@ nav a.active {
 
 .setting-group {
   margin-bottom: 20px;
+}
+
+.setting-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.setting-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+
+.theme-option:hover {
+  background: var(--hover-bg);
+  border-color: var(--accent-color);
+}
+
+.theme-option.active {
+  background: var(--accent-gradient);
+  color: var(--primary-bg);
+  border-color: transparent;
+}
+
+.theme-option-icon {
+  font-size: 14px;
+}
+
+.setting-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--border-color);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.setting-toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.setting-toggle.active {
+  background: var(--accent-gradient);
+}
+
+.setting-toggle.active::before {
+  transform: translateX(20px);
+}
+
+.setting-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border-color);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+
+.setting-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.setting-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 }
 
 .setting-group:last-child {
