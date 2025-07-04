@@ -67,7 +67,7 @@ async function handleRequest(request) {
 
       // Insert into database
       const result = await pool.query(
-        `INSERT INTO applications 
+        `INSERT INTO applications
          (id, preferred_name, discord_user, team, specific_role, portfolio, general_details, scene_writing, additional_links, terms_agree)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
          RETURNING id, submitted_at`,
