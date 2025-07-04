@@ -217,32 +217,14 @@ class OceanCrestApp {
   }
 
   setupAdvancedAnimations() {
-    // Morphing cards
+    // Enhanced styling without animations
     const morphingCards = document.querySelectorAll(".glass-card");
     morphingCards.forEach((card) => {
-      card.classList.add("morphing-card", "ultra-glass", "dynamic-shadow");
-
-      card.addEventListener("mouseenter", () => {
-        card.style.animationPlayState = "paused";
-      });
-
-      card.addEventListener("mouseleave", () => {
-        card.style.animationPlayState = "running";
-      });
+      card.classList.add("ultra-glass", "dynamic-shadow");
     });
 
-    // Floating elements
-    const floatingElements = document.querySelectorAll(".overview-card");
-    floatingElements.forEach((el, index) => {
-      el.classList.add("floating-element");
-      el.style.animationDelay = `${index * 0.5}s`;
-    });
-
-    // Reactive text effects
-    const titles = document.querySelectorAll("h1, h2, h3");
-    titles.forEach((title) => {
-      title.classList.add("reactive-text");
-    });
+    // Remove floating animations but keep 3D hover effects
+    // (3D hover effects handled in setupInteractiveEffects)
   }
 
   setupMagneticEffects() {
@@ -269,22 +251,7 @@ class OceanCrestApp {
   }
 
   setupQuantumElements() {
-    // Add quantum effects to random elements
-    const elements = document.querySelectorAll(".glass-card, .overview-card");
-    elements.forEach((el, index) => {
-      if (index % 3 === 0) {
-        // Every third element gets quantum effects
-        el.classList.add("energy-pulse");
-
-        // Add micro-interactions
-        el.addEventListener("click", () => {
-          el.classList.add("liquid-drop");
-          setTimeout(() => {
-            el.classList.remove("liquid-drop");
-          }, 600);
-        });
-      }
-    });
+    // Quantum effects removed - only 3D hover effects remain
   }
 
   setupPerformanceOptimizations() {
@@ -678,15 +645,10 @@ class OceanCrestApp {
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
 
-      // Enhanced particle types
-      const types = ["small", "medium", "large", "quantum"];
+      // Enhanced particle types (quantum removed)
+      const types = ["small", "medium", "large"];
       const type = types[Math.floor(Math.random() * types.length)];
       particle.className = `particle reactive ${type}`;
-
-      // Quantum particles have special properties
-      if (type === "quantum") {
-        particle.classList.add("energy-pulse");
-      }
 
       // Random position with edge avoidance
       const margin = 10;
@@ -709,7 +671,7 @@ class OceanCrestApp {
         velocity: { x: 0, y: 0 },
         type: type,
         energy: Math.random() * 100,
-        connectionDistance: type === "quantum" ? 25 : 15,
+        connectionDistance: 15,
       });
 
       fragment.appendChild(particle);
