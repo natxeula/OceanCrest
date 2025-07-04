@@ -1191,11 +1191,11 @@ class JobApplicationForm {
   saveApplication(applicationData) {
     try {
       const existingApplications = JSON.parse(
-        localStorage.getItem("oceanCrestApplications") || "[]",
+        localStorage.getItem("oceancrest_applications") || "[]",
       );
       existingApplications.push(applicationData);
       localStorage.setItem(
-        "oceanCrestApplications",
+        "oceancrest_applications",
         JSON.stringify(existingApplications),
       );
       return true;
