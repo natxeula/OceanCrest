@@ -701,8 +701,8 @@ nav a.active {
 
 .settings-panel {
   position: fixed;
-  bottom: 100px;
-  right: 2rem;
+  bottom: 90px;
+  right: 1.5rem;
   width: 320px;
   background: rgba(22, 27, 34, 0.95);
   backdrop-filter: blur(20px);
