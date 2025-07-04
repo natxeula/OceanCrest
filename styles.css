@@ -842,7 +842,11 @@ nav a.active {
 }
 
 .setting-toggle.active {
-  background: var(--accent-gradient);
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
 }
 
 .setting-toggle::after {
