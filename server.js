@@ -21,5 +21,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`OceanCrest Entertainment server running on port ${port}`);
-  console.log(`Connected to Neon database: oceancrest-applications`);
+  console.log(`Applications now handled via Google Forms`);
 });
