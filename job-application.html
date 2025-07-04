@@ -671,12 +671,21 @@
           );
 
           inputs?.forEach((input) => {
-            if (input.type === "checkbox") {
-              this.formData[input.name] = input.checked;
-            } else {
-              this.formData[input.name] = input.value;
+            if (input.name && input.name !== "bot-field") {
+              // Skip bot field
+              if (input.type === "checkbox") {
+                this.formData[input.name] = input.checked;
+              } else {
+                this.formData[input.name] = input.value?.trim() || "";
+              }
             }
           });
+
+          // Log current step data for debugging
+          console.log(
+            `Step ${this.currentStep} data collected:`,
+            this.formData,
+          );
         }
 
         generateSummary() {
