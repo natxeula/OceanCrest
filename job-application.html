@@ -374,7 +374,7 @@
           <div class="footer-section">
             <h4>Connect</h4>
             <a href="#" style="display: flex; align-items: center; gap: 0.5rem">
-              <span>📧</span> contact@oceancrest.studio
+              <span>����</span> contact@oceancrest.studio
             </a>
             <a href="#" style="display: flex; align-items: center; gap: 0.5rem">
               <span>💼</span> LinkedIn
@@ -443,7 +443,10 @@
           }
 
           // Form submission
-          form?.addEventListener("submit", (e) => this.handleSubmit(e));
+          form?.addEventListener("submit", (e) => {
+            console.log("🚀 Form submit event triggered");
+            this.handleSubmit(e);
+          });
 
           // Team change handler
           const teamSelect = document.getElementById("team");
