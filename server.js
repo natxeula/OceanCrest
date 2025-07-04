@@ -22,8 +22,36 @@ const pool = new Pool({
   },
 });
 
+// Initialize database table if it doesn't exist
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS applications (
+        id VARCHAR(50) PRIMARY KEY,
+        submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        preferred_name VARCHAR(255) NOT NULL,
+        discord_user VARCHAR(255) NOT NULL,
+        team VARCHAR(100) NOT NULL,
+        specific_role VARCHAR(255) NOT NULL,
+        portfolio VARCHAR(500),
+        general_details TEXT NOT NULL,
+        scene_writing TEXT,
+        additional_links TEXT,
+        terms_agree BOOLEAN NOT NULL DEFAULT false,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `);
+    console.log("Database table initialized");
+  } catch (error) {
+    console.error("Error initializing database:", error);
+  }
+}
+
+// Call on startup
+initializeDatabase();
+
 // API endpoint for applications
-app.get("/api/applications.js", async (req, res) => {
+app.get("/api/applications", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM applications ORDER BY submitted_at DESC",
@@ -35,7 +63,7 @@ app.get("/api/applications.js", async (req, res) => {
   }
 });
 
-app.post("/api/applications.js", async (req, res) => {
+app.post("/api/applications", async (req, res) => {
   try {
     const data = req.body;
 

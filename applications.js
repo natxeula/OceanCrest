@@ -44,7 +44,7 @@ class ApplicationsManager {
   async loadApplications() {
     try {
       // Load applications from Neon database
-      const response = await fetch("/api/applications.js", {
+      const response = await fetch("/api/applications", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
