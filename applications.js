@@ -18,6 +18,99 @@ class ApplicationsManager {
     this.setupEventListeners();
   }
 
+  setupOnlineDetection() {
+    // Listen for service worker messages
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "NETWORK_STATUS") {
+          this.handleNetworkStatusChange(
+            event.data.online,
+            event.data.timestamp,
+          );
+        }
+      });
+
+      // Request immediate status check
+      navigator.serviceWorker.ready.then((registration) => {
+        if (registration.active) {
+          registration.active.postMessage({ type: "CHECK_ONLINE_STATUS" });
+        }
+      });
+    }
+
+    // Listen for browser online/offline events
+    window.addEventListener("online", () => {
+      console.log("Browser detected online");
+      this.checkServerConnection();
+    });
+
+    window.addEventListener("offline", () => {
+      console.log("Browser detected offline");
+      this.handleNetworkStatusChange(false, Date.now());
+    });
+
+    // Periodic connection check
+    setInterval(() => {
+      if (navigator.onLine) {
+        this.checkServerConnection();
+      }
+    }, 60000); // Check every minute
+  }
+
+  handleNetworkStatusChange(isOnline, timestamp) {
+    const wasOnline = this.isOnline;
+    this.isOnline = isOnline;
+    this.lastOnlineCheck = timestamp || Date.now();
+
+    console.log(`Network status changed: ${isOnline ? "ONLINE" : "OFFLINE"}`);
+
+    // If we just came back online, reload applications
+    if (!wasOnline && isOnline) {
+      console.log("🟢 Connection restored! Reloading applications...");
+      this.loadApplications();
+    }
+
+    // Update status display
+    this.updateConnectionStatus();
+  }
+
+  async checkServerConnection() {
+    try {
+      const response = await fetch("/api/applications", {
+        method: "HEAD",
+        cache: "no-cache",
+        signal: AbortSignal.timeout(5000), // 5 second timeout
+      });
+
+      this.handleNetworkStatusChange(response.ok, Date.now());
+    } catch (error) {
+      console.log("Server connection check failed:", error.message);
+      this.handleNetworkStatusChange(false, Date.now());
+    }
+  }
+
+  updateConnectionStatus() {
+    const currentTime = Date.now();
+    const timeSinceCheck = currentTime - this.lastOnlineCheck;
+
+    // If it's been more than 2 minutes since last check, status is uncertain
+    const isStatusCurrent = timeSinceCheck < 120000;
+
+    let source, count;
+    if (this.isOnline && isStatusCurrent) {
+      source = "database";
+      count = this.applications.length;
+    } else if (!this.isOnline) {
+      source = "localStorage (offline)";
+      count = this.applications.length;
+    } else {
+      source = "status uncertain";
+      count = this.applications.length;
+    }
+
+    this.showConnectionStatus(source, count);
+  }
+
   setupEventListeners() {
     // Search functionality
     const searchInput = document.getElementById("searchApplications");
@@ -40,6 +133,15 @@ class ApplicationsManager {
     if (teamFilter) {
       teamFilter.addEventListener("change", (e) => {
         this.filterByTeam(e.target.value);
+      });
+    }
+
+    // Manual refresh button
+    const refreshButton = document.getElementById("refreshApplications");
+    if (refreshButton) {
+      refreshButton.addEventListener("click", () => {
+        this.checkServerConnection();
+        this.loadApplications();
       });
     }
   }
