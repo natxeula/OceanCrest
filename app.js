@@ -280,6 +280,16 @@ class OceanCrestApp {
       mobileNavMenu.appendChild(mobileLink);
     });
 
+    // Add settings button to mobile menu
+    const settingsButton = document.createElement("button");
+    settingsButton.className = "mobile-nav-settings";
+    settingsButton.innerHTML = "⚙️ Settings";
+    settingsButton.addEventListener("click", () => {
+      this.toggleSettingsPanel();
+      this.closeMobileNav(); // Close mobile menu when settings is opened
+    });
+    mobileNavMenu.appendChild(settingsButton);
+
     mobileOverlay.appendChild(mobileNavMenu);
 
     // Add to DOM
