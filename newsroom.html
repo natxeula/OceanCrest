@@ -8,7 +8,7 @@
       name="description"
       content="OceanCrest Entertainment Newsroom - Latest updates, announcements, and insights from our entertainment studio."
     />
-    <meta name="theme-color" content="#0d1117" />
+    <meta name="theme-color" content="#131416" />
     <link rel="manifest" href="manifest.json" />
     <link
       rel="icon"
@@ -20,474 +20,785 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <style>
-      /* Additional newsroom-specific styles that complement the main stylesheet */
-      .hero {
-        min-height: 70vh;
+      /* Roblox-inspired styling */
+      body {
+        background: rgb(19, 20, 22);
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px
+        );
+        background-size: 24px 24px;
+        color: rgb(255, 255, 255);
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
       }
 
-      .news-categories {
+      .newsroom-container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .newsroom-header {
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(20px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgb(49, 51, 57);
+      }
+
+      .newsroom-header .header-container {
         display: flex;
-        gap: 1rem;
-        margin: 3rem 0;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 0;
+      }
+
+      .newsroom-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: rgba(51, 95, 255, 0.2);
+        z-index: 1000;
+      }
+
+      .newsroom-progress-fill {
+        height: 100%;
+        background: rgb(51, 95, 255);
+        width: 0%;
+        transition: width 0.1s ease;
+      }
+
+      .newsroom-hero {
+        padding: 120px 0 80px;
+        text-align: center;
+        background: linear-gradient(
+          180deg,
+          transparent 0%,
+          rgba(19, 20, 22, 0.8) 100%
+        );
+      }
+
+      .newsroom-hero h1 {
+        font-size: 72px;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        background: linear-gradient(
+          135deg,
+          rgb(255, 255, 255) 0%,
+          rgb(130, 130, 136) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .newsroom-hero p {
+        font-size: 20px;
+        color: rgb(130, 130, 136);
+        margin-bottom: 48px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.5;
+      }
+
+      .category-filters {
+        display: flex;
+        gap: 16px;
         justify-content: center;
+        margin: 64px 0;
         flex-wrap: wrap;
       }
 
       .category-filter {
-        padding: 0.8rem 1.5rem;
-        background: var(--glass-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
-        color: var(--text-secondary);
+        padding: 12px 24px;
+        background: transparent;
+        border: 2px solid rgb(49, 51, 57);
+        color: rgb(130, 130, 136);
         text-decoration: none;
-        border-radius: 25px;
-        transition: all 0.3s ease;
+        border-radius: 24px;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
         cursor: pointer;
-        font-weight: 500;
       }
 
       .category-filter:hover,
       .category-filter.active {
-        background: var(--accent-gradient);
-        color: var(--primary-bg);
-        border-color: transparent;
+        background: rgb(51, 95, 255);
+        border-color: rgb(51, 95, 255);
+        color: rgb(255, 255, 255);
         transform: translateY(-2px);
       }
 
-      .featured-article {
-        background: var(--glass-bg);
-        backdrop-filter: blur(20px);
-        border-radius: 20px;
+      .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 32px;
+        margin: 64px 0;
+      }
+
+      .news-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgb(49, 51, 57);
+        border-radius: 16px;
         overflow: hidden;
-        margin: 4rem 0;
-        border: 1px solid var(--border-color);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
+        transition: all 0.3s ease;
+        cursor: pointer;
       }
 
-      .featured-article::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--accent-gradient);
+      .news-card:hover {
+        transform: translateY(-8px);
+        border-color: rgb(51, 95, 255);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
       }
 
-      .featured-article:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: var(--shadow-primary), var(--shadow-secondary);
-      }
-
-      .featured-image {
-        height: 300px;
-        background: var(--accent-gradient);
+      .news-card-header {
+        height: 200px;
+        background: linear-gradient(
+          135deg,
+          rgb(51, 95, 255) 0%,
+          rgb(139, 74, 140) 100%
+        );
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4rem;
-        color: var(--primary-bg);
+        font-size: 48px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .news-card-content {
+        padding: 32px;
+      }
+
+      .news-category {
+        color: rgb(51, 95, 255);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+      }
+
+      .news-date {
+        color: rgb(130, 130, 136);
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+
+      .news-title {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 16px;
+        color: rgb(255, 255, 255);
+      }
+
+      .news-excerpt {
+        color: rgb(130, 130, 136);
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+
+      .read-more {
+        color: rgb(51, 95, 255);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .read-more:hover {
+        color: rgb(255, 255, 255);
+        transform: translateX(4px);
+      }
+
+      .featured-article {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgb(49, 51, 57);
+        border-radius: 24px;
+        overflow: hidden;
+        margin: 64px 0;
+        transition: all 0.3s ease;
+      }
+
+      .featured-article:hover {
+        border-color: rgb(51, 95, 255);
+        transform: translateY(-4px);
+      }
+
+      .featured-header {
+        height: 400px;
+        background: linear-gradient(
+          135deg,
+          rgb(51, 95, 255) 0%,
+          rgb(139, 74, 140) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+        position: relative;
       }
 
       .featured-content {
-        padding: 3rem;
+        padding: 48px;
+      }
+
+      .featured-category {
+        color: rgb(51, 95, 255);
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
       }
 
       .featured-date {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
+        color: rgb(130, 130, 136);
+        font-size: 16px;
+        margin-bottom: 24px;
       }
 
       .featured-title {
-        font-size: 2.2rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-size: 40px;
+        font-weight: 700;
         line-height: 1.2;
+        margin-bottom: 24px;
+        color: rgb(255, 255, 255);
       }
 
       .featured-excerpt {
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        line-height: 1.7;
-        margin-bottom: 1.5rem;
+        font-size: 18px;
+        color: rgb(130, 130, 136);
+        line-height: 1.6;
+        margin-bottom: 32px;
       }
 
-      .press-releases {
-        background: var(--glass-bg);
-        backdrop-filter: blur(20px);
-        padding: 3rem;
-        border-radius: 20px;
-        margin: 4rem 0;
-        border: 1px solid var(--border-color);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
+      .press-section {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgb(49, 51, 57);
+        border-radius: 24px;
+        padding: 48px;
+        margin: 64px 0;
       }
 
-      .press-releases::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--accent-gradient);
-      }
-
-      .press-releases:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-primary);
-      }
-
-      .press-title {
-        font-size: 2rem;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 2rem;
-        text-align: center;
+      .press-section h2 {
+        font-size: 32px;
         font-weight: 700;
-      }
-
-      .media-contact {
-        background: var(--glass-bg);
-        backdrop-filter: blur(20px);
-        padding: 3rem;
-        border-radius: 20px;
+        margin-bottom: 32px;
+        color: rgb(255, 255, 255);
         text-align: center;
-        border: 1px solid var(--border-color);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
       }
 
-      .media-contact::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--accent-gradient);
+      .press-item {
+        border-bottom: 1px solid rgb(49, 51, 57);
+        padding: 24px 0;
       }
 
-      .media-contact:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-primary);
+      .press-item:last-child {
+        border-bottom: none;
       }
 
-      .contact-title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        background: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+      .press-item h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: rgb(255, 255, 255);
+      }
+
+      .press-meta {
+        color: rgb(130, 130, 136);
+        font-size: 14px;
+      }
+
+      .newsroom-footer {
+        background: rgba(0, 0, 0, 0.8);
+        border-top: 1px solid rgb(49, 51, 57);
+        padding: 64px 0;
+        margin-top: 120px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 64px;
+        margin-bottom: 48px;
+      }
+
+      .footer-column h4 {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 24px;
+        color: rgb(130, 130, 136);
+      }
+
+      .footer-column a {
+        display: block;
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        margin-bottom: 16px;
+        font-size: 16px;
+        transition: color 0.2s ease;
+      }
+
+      .footer-column a:hover {
+        color: rgb(51, 95, 255);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid rgb(49, 51, 57);
+        padding-top: 32px;
+        text-align: center;
+        color: rgb(130, 130, 136);
+        font-size: 14px;
       }
 
       @media (max-width: 768px) {
-        .news-categories {
-          justify-content: flex-start;
-          overflow-x: auto;
-          padding-bottom: 0.5rem;
+        .newsroom-hero h1 {
+          font-size: 48px;
         }
 
         .featured-title {
-          font-size: 1.8rem;
+          font-size: 28px;
         }
 
-        .featured-content {
-          padding: 2rem;
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+
+        .news-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .category-filters {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-bottom: 16px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-      <div class="loader-container">
-        <div class="loader"></div>
-        <div class="loading-text">Loading Experience...</div>
-      </div>
+    <!-- Progress Bar -->
+    <div class="newsroom-progress-bar">
+      <div class="newsroom-progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress">
-      <div class="scroll-progress-bar" id="scrollProgress"></div>
-    </div>
-
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      🌙
-    </button>
-
-    <header>
-      <div class="container">
+    <!-- Header -->
+    <header class="newsroom-header">
+      <div class="newsroom-container">
         <div class="header-container">
-          <a href="index.html" class="logo">OceanCrest</a>
+          <a
+            href="index.html"
+            class="logo"
+            style="
+              font-size: 24px;
+              font-weight: 700;
+              color: rgb(255, 255, 255);
+              text-decoration: none;
+            "
+            >OceanCrest</a
+          >
           <nav>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="capabilities.html">Capabilities</a></li>
-              <li><a href="projects.html">Projects</a></li>
-              <li><a href="gaming.html">Gaming</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="newsroom.html" class="active">Newsroom</a></li>
-              <li><a href="careers.html">Careers</a></li>
-              <li><a href="contact.html">Contact</a></li>
+            <ul
+              style="
+                display: flex;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                gap: 32px;
+              "
+            >
+              <li>
+                <a
+                  href="index.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="about.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >About</a
+                >
+              </li>
+              <li>
+                <a
+                  href="capabilities.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Capabilities</a
+                >
+              </li>
+              <li>
+                <a
+                  href="projects.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="gaming.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Gaming</a
+                >
+              </li>
+              <li>
+                <a
+                  href="team.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Team</a
+                >
+              </li>
+              <li>
+                <a
+                  href="leadership.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Leadership</a
+                >
+              </li>
+              <li>
+                <a
+                  href="newsroom.html"
+                  style="
+                    color: rgb(255, 255, 255);
+                    text-decoration: none;
+                    font-weight: 600;
+                  "
+                  >Newsroom</a
+                >
+              </li>
+              <li>
+                <a
+                  href="careers.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Careers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="contact.html"
+                  style="
+                    color: rgb(130, 130, 136);
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: color 0.2s;
+                  "
+                  >Contact</a
+                >
+              </li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="hero-parallax"></div>
-        <div class="particles" id="particles"></div>
-        <div class="container">
-          <div class="hero-content fade-in">
-            <h1>Newsroom</h1>
-            <p class="hero-subtitle">
-              Latest updates, announcements, and insights from OceanCrest
-              Entertainment.
-            </p>
-            <div class="cta-buttons">
-              <a href="projects.html" class="btn btn-primary"
-                >Current Projects</a
-              >
-              <a href="contact.html" class="btn btn-secondary"
-                >Press Inquiries</a
-              >
-            </div>
-          </div>
-        </div>
-      </section>
+    <!-- Hero Section -->
+    <section class="newsroom-hero">
+      <div class="newsroom-container">
+        <h1>Newsroom</h1>
+        <p>
+          Stay updated with the latest news, announcements, and insights from
+          OceanCrest Entertainment as we continue to push the boundaries of
+          immersive storytelling.
+        </p>
+      </div>
+    </section>
 
-      <section class="section parallax-section fade-in">
-        <div class="container">
-          <h2 class="section-title">Latest News & Updates</h2>
-          <p class="section-subtitle">
-            Important news.
+    <!-- Category Filters -->
+    <section class="newsroom-container">
+      <div class="category-filters">
+        <button class="category-filter active" data-category="all">
+          All News
+        </button>
+        <button class="category-filter" data-category="production">
+          Production
+        </button>
+        <button class="category-filter" data-category="gaming">Gaming</button>
+        <button class="category-filter" data-category="company">Company</button>
+        <button class="category-filter" data-category="press">
+          Press Releases
+        </button>
+      </div>
+    </section>
+
+    <!-- Featured Article -->
+    <section class="newsroom-container">
+      <article class="featured-article">
+        <div class="featured-header">🎬</div>
+        <div class="featured-content">
+          <div class="featured-category">Company News</div>
+          <div class="featured-date">July 2, 2025</div>
+          <h2 class="featured-title">
+            OceanCrest Entertainment Launches New Corporate Website
+          </h2>
+          <p class="featured-excerpt">
+            We're excited to announce the launch of our redesigned corporate
+            website, featuring enhanced user experience, streamlined navigation,
+            and comprehensive information about our productions, gaming
+            division, and team. The new site reflects our commitment to
+            innovation and transparency as we continue to grow our entertainment
+            portfolio.
           </p>
-
-          <!-- Featured Article -->
-          <article class="featured-article">
-            <div class="featured-image">🎬</div>
-            <div class="featured-content">
-              <div class="featured-date">July 2, 2025</div>
-              <h2 class="featured-title">
-                OceanCrest Entertainment releases new website!
-              </h2>
-              <p class="featured-excerpt">
-                The website has released! Report any errors directly through our discord tickets. Thank you!
-                - Natxeula, Founder of OceanCrest Entertainmentt
-              </p>
-              <div
-                class="full-content"
-                style="
-                  display: none;
-                  margin-top: 1.5rem;
-                  padding-top: 1.5rem;
-                  border-top: 1px solid var(--border-color);
-                "
-              >
-                <p style="margin-bottom: 1rem">
-                  No additional information provided
-                </p>
-              </div>
-              <a
-                href="#"
-                class="read-more"
-                onclick="toggleFullContent(this, event)"
-                >Read Full Article →</a
-              >
-            </div>
-          </article>
-
-          <!-- News Articles Grid -->
-          <div class="overview-grid">
-            <article class="overview-card glass-card fade-in">
-              <span class="news-category">Production Update</span>
-              <div class="news-date">January 1, 0000</div>
-              <h3 class="news-title">
-                Placeholder
-              </h3>
-              <p class="news-excerpt">
-                Placeholder
-              </p>
-              <div
-                class="full-content"
-                style="
-                  display: none;
-                  margin-top: 1rem;
-                  padding-top: 1rem;
-                  border-top: 1px solid var(--border-color);
-                "
-              >
-                <p style="margin-bottom: 1rem">
-                  Placeholder
-                </p>
-              </div>
-              <a href="#" class="read-more" onclick="toggleContent(this, event)"
-                >Read More →</a
-              >
-            </article>
-
-            <div class="overview-grid">
-            <article class="overview-card glass-card fade-in">
-              <span class="news-category">Production Update</span>
-              <div class="news-date">January 1, 0000</div>
-              <h3 class="news-title">
-                Placeholder
-              </h3>
-              <p class="news-excerpt">
-                Placeholder
-              </p>
-              <div
-                class="full-content"
-                style="
-                  display: none;
-                  margin-top: 1rem;
-                  padding-top: 1rem;
-                  border-top: 1px solid var(--border-color);
-                "
-              >
-                <p style="margin-bottom: 1rem">
-                  Placeholder
-                </p>
-              </div>
-              <a href="#" class="read-more" onclick="toggleContent(this, event)"
-                >Read More →</a
-              >
-            </article>
-
-          <!-- Press Releases Section -->
-          <div class="press-releases">
-            <h3 class="press-title">Recent Press Releases</h3>
-
-            <div class="press-item">
-              <h4>
-                Placeholder
-              </h4>
-              <p class="press-meta">January 1, 0000 • Placeholder</p>
-            </div>
-
+          <a href="#" class="read-more">Read Full Article →</a>
         </div>
-      </section>
-    </main>
+      </article>
+    </section>
 
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>Company</h4>
-            <a href="about.html">About Us</a>
-            <!-- <a href="team.html">Leadership</a> -->
-            <a href="careers.html">Careers</a>
+    <!-- News Grid -->
+    <section class="newsroom-container">
+      <div class="news-grid">
+        <article class="news-card" data-category="production">
+          <div class="news-card-header">🎥</div>
+          <div class="news-card-content">
+            <div class="news-category">Production Update</div>
+            <div class="news-date">June 28, 2025</div>
+            <h3 class="news-title">New Cinematic Project in Pre-Production</h3>
+            <p class="news-excerpt">
+              Our latest film project has entered pre-production phase with an
+              expanded creative team and innovative storytelling approaches.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="news-card" data-category="gaming">
+          <div class="news-card-header">🎮</div>
+          <div class="news-card-content">
+            <div class="news-category">Gaming Division</div>
+            <div class="news-date">June 25, 2025</div>
+            <h3 class="news-title">Mythoria: World Expansion Update</h3>
+            <p class="news-excerpt">
+              Major content update brings new realms, enhanced gameplay
+              mechanics, and expanded multiplayer features to our flagship
+              gaming experience.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="news-card" data-category="gaming">
+          <div class="news-card-header">🔥</div>
+          <div class="news-card-content">
+            <div class="news-category">New Release</div>
+            <div class="news-date">June 20, 2025</div>
+            <h3 class="news-title">HEAT: Action Gaming Experience Announced</h3>
+            <p class="news-excerpt">
+              Introducing HEAT, our upcoming high-intensity action game
+              featuring cutting-edge graphics and immersive gameplay mechanics.
+            </p>
+            <a href="heat.html" class="read-more">Learn More →</a>
+          </div>
+        </article>
+
+        <article class="news-card" data-category="company">
+          <div class="news-card-header">👥</div>
+          <div class="news-card-content">
+            <div class="news-category">Team Growth</div>
+            <div class="news-date">June 15, 2025</div>
+            <h3 class="news-title">Expanding Our Creative Team</h3>
+            <p class="news-excerpt">
+              We're welcoming new talented professionals across multiple
+              departments as we scale our production capabilities.
+            </p>
+            <a href="careers.html" class="read-more">View Opportunities →</a>
+          </div>
+        </article>
+
+        <article class="news-card" data-category="production">
+          <div class="news-card-header">🏆</div>
+          <div class="news-card-content">
+            <div class="news-category">Achievement</div>
+            <div class="news-date">June 10, 2025</div>
+            <h3 class="news-title">Industry Recognition for Innovation</h3>
+            <p class="news-excerpt">
+              OceanCrest Entertainment receives recognition for breakthrough
+              approaches in digital storytelling and immersive entertainment.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+
+        <article class="news-card" data-category="press">
+          <div class="news-card-header">📰</div>
+          <div class="news-card-content">
+            <div class="news-category">Press Release</div>
+            <div class="news-date">June 5, 2025</div>
+            <h3 class="news-title">Strategic Partnerships Announcement</h3>
+            <p class="news-excerpt">
+              New collaborations with industry leaders will enhance our
+              production capabilities and expand distribution reach.
+            </p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Press Releases Section -->
+    <section class="newsroom-container">
+      <div class="press-section">
+        <h2>Recent Press Releases</h2>
+        <div class="press-item">
+          <h3>Q2 2025 Production Update</h3>
+          <p class="press-meta">June 30, 2025 • Corporate Communications</p>
+        </div>
+        <div class="press-item">
+          <h3>Gaming Division Expansion</h3>
+          <p class="press-meta">June 22, 2025 • Gaming News</p>
+        </div>
+        <div class="press-item">
+          <h3>Leadership Team Updates</h3>
+          <p class="press-meta">June 12, 2025 • Company News</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="newsroom-footer">
+      <div class="newsroom-container">
+        <div class="footer-grid">
+          <div class="footer-column">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
             <a href="newsroom.html">Newsroom</a>
           </div>
-          <div class="footer-section">
-            <h4>Productions</h4>
-            <a href="projects.html">Current Projects</a>
-            <a href="capabilities.html">Our Services</a>
-            <a href="projects.html">Production Portfolio</a>
-            <a href="capabilities.html">Distribution</a>
+          <div class="footer-column">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
           </div>
-          <div class="footer-section">
-            <h4>Business</h4>
-            <a href="contact.html">Contact</a>
-            <a href="about.html">Partnerships</a>
-            <a href="contact.html">Investor Relations</a>
-            <a href="newsroom.html">Press Kit</a>
-          </div>
-          <div class="footer-section">
-            <h4>Connect</h4>
-            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
-              ><span>📧</span> contact@oceancrest.studio</a
-            >
-            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
-              ><span>💼</span> LinkedIn</a
-            >
-            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
-              ><span>🐦</span> Twitter</a
-            >
-            <a href="#" style="display: flex; align-items: center; gap: 0.5rem"
-              ><span>📸</span> Instagram</a
-            >
+          <div class="footer-column">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
           </div>
         </div>
         <div class="footer-bottom">
           <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
-          <p style="margin-top: 1rem; font-size: 0.9rem">
-            <a href="#" class="gradient-link">Privacy Policy</a> |
-            <a href="#" class="gradient-link">Terms of Service</a> |
-            <a href="contact.html" class="gradient-link">Contact</a>
-          </p>
         </div>
       </div>
     </footer>
 
-    <script src="app.js"></script>
     <script>
-      // Category filtering functionality
-      document.querySelectorAll(".category-filter").forEach((filter) => {
-        filter.addEventListener("click", function (e) {
-          e.preventDefault();
+      // Category filtering
+      const categoryFilters = document.querySelectorAll(".category-filter");
+      const newsCards = document.querySelectorAll(".news-card");
 
+      categoryFilters.forEach((filter) => {
+        filter.addEventListener("click", () => {
           // Remove active class from all filters
-          document
-            .querySelectorAll(".category-filter")
-            .forEach((f) => f.classList.remove("active"));
-
+          categoryFilters.forEach((f) => f.classList.remove("active"));
           // Add active class to clicked filter
-          this.classList.add("active");
+          filter.classList.add("active");
 
-          // Here you would implement actual filtering logic
-          // For now, this is just for UI demonstration
+          const category = filter.dataset.category;
+
+          // Show/hide cards based on category
+          newsCards.forEach((card) => {
+            if (category === "all" || card.dataset.category === category) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
         });
       });
 
-      // Read More functionality
-      function toggleContent(link, event) {
-        event.preventDefault();
+      // Progress bar
+      window.addEventListener("scroll", () => {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressFill").style.width = scrolled + "%";
+      });
 
-        const article = link.closest(".news-article");
-        const fullContent = article.querySelector(".full-content");
-
-        if (fullContent.style.display === "none") {
-          fullContent.style.display = "block";
-          link.textContent = "Read Less ←";
-        } else {
-          fullContent.style.display = "none";
-          link.textContent = "Read More →";
-        }
-      }
-
-      // Featured article toggle functionality
-      function toggleFullContent(link, event) {
-        event.preventDefault();
-
-        const article = link.closest(".featured-article");
-        const fullContent = article.querySelector(".full-content");
-
-        if (fullContent.style.display === "none") {
-          fullContent.style.display = "block";
-          link.textContent = "Read Less ←";
-        } else {
-          fullContent.style.display = "none";
-          link.textContent = "Read Full Article →";
-        }
-      }
+      // Navigation hover effects
+      const navLinks = document.querySelectorAll("nav a");
+      navLinks.forEach((link) => {
+        link.addEventListener("mouseenter", () => {
+          if (!link.style.color.includes("255, 255, 255")) {
+            link.style.color = "rgb(255, 255, 255)";
+          }
+        });
+        link.addEventListener("mouseleave", () => {
+          if (
+            !link.style.color.includes("255, 255, 255") ||
+            link.href.includes("newsroom.html")
+          ) {
+            if (!link.href.includes("newsroom.html")) {
+              link.style.color = "rgb(130, 130, 136)";
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>
