@@ -11,6 +11,7 @@ class ApplicationsManager {
   }
 
   async init() {
+    this.setupOnlineDetection();
     await this.loadApplications();
     this.updateStats();
     this.renderApplications();
