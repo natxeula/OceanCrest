@@ -17,6 +17,7 @@ class OceanCrestApp {
     // Initialize core functionality immediately
     this.setupEventListeners();
     this.setupTheme();
+    this.setupSettings();
     this.setupMobileNavigation();
 
     // Initialize enhanced features after DOM is ready
