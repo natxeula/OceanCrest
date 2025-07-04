@@ -62,7 +62,8 @@ class OceanCrestApp {
       // Close settings panel when clicking outside
       if (
         !e.target.closest(".settings-panel") &&
-        !e.target.closest("#settingsToggle")
+        !e.target.closest("#settingsToggle") &&
+        !e.target.closest("#desktopSettingsToggle")
       ) {
         this.closeSettingsPanel();
       }
