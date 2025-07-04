@@ -1056,14 +1056,14 @@ class JobApplicationForm {
   }
 
   showSection(sectionNumber) {
-    const section = document.querySelector(`[data-section="${sectionNumber}"]`);
+    const section = document.querySelector(`[data-step="${sectionNumber}"]`);
     if (section) {
       section.classList.add("active");
     }
   }
 
   hideSection(sectionNumber) {
-    const section = document.querySelector(`[data-section="${sectionNumber}"]`);
+    const section = document.querySelector(`[data-step="${sectionNumber}"]`);
     if (section) {
       section.classList.remove("active");
     }
