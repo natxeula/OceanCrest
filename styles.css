@@ -221,17 +221,21 @@
   transform: translateY(0);
 }
 
-.mobile-nav-menu a {
-  font-size: 2rem;
+.mobile-nav-menu a,
+.mobile-nav-settings {
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
   text-decoration: none;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 12px;
   transition: all 0.3s ease;
   background: linear-gradient(135deg, transparent 0%, transparent 100%);
   position: relative;
   overflow: hidden;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .mobile-nav-menu a::before {
