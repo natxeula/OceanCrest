@@ -2210,13 +2210,6 @@ footer::before {
     gap: 2rem;
   }
 
-  .theme-toggle {
-    right: 1rem;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-  }
-
   .particles {
     display: none; /* Hide particles on mobile for performance */
   }
@@ -3347,7 +3340,6 @@ footer::before {
 /* Print styles */
 @media print {
   .loading-screen,
-  .theme-toggle,
   .scroll-progress,
   .particles {
     display: none !important;
