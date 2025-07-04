@@ -1,14 +1,15 @@
 // Applications Management System
 class ApplicationsManager {
   constructor() {
-    this.applications = this.loadApplications();
+    this.applications = [];
     this.currentPage = 1;
     this.itemsPerPage = 5;
-    this.filteredApplications = [...this.applications];
+    this.filteredApplications = [];
     this.init();
   }
 
-  init() {
+  async init() {
+    await this.loadApplications();
     this.updateStats();
     this.renderApplications();
     this.setupEventListeners();
@@ -40,25 +41,35 @@ class ApplicationsManager {
     }
   }
 
-  loadApplications() {
+  async loadApplications() {
     try {
-      const stored = localStorage.getItem("oceanCrestApplications");
-      return stored ? JSON.parse(stored) : [];
+      const response = await fetch("/.netlify/functions/submit-application", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        this.applications = data.applications || [];
+        this.filteredApplications = [...this.applications];
+      } else {
+        console.error("Failed to load applications from server");
+        this.applications = [];
+        this.filteredApplications = [];
+      }
     } catch (error) {
       console.error("Error loading applications:", error);
-      return [];
+      this.applications = [];
+      this.filteredApplications = [];
     }
   }
 
   saveApplications() {
-    try {
-      localStorage.setItem(
-        "oceanCrestApplications",
-        JSON.stringify(this.applications),
-      );
-    } catch (error) {
-      console.error("Error saving applications:", error);
-    }
+    // Note: Individual applications are saved via the form submission
+    // This method exists for compatibility but doesn't need to do anything
+    // since we're now reading directly from the server file
   }
 
   updateStats() {
@@ -393,7 +404,7 @@ class ApplicationsManager {
     }
   }
 
-  deleteApplication(id) {
+  async deleteApplication(id) {
     if (
       !confirm(
         "Are you sure you want to delete this application? This action cannot be undone.",
@@ -402,16 +413,20 @@ class ApplicationsManager {
       return;
     }
 
+    // For now, just remove from local view (you'd need a delete endpoint for permanent deletion)
     this.applications = this.applications.filter((app) => app.id !== id);
     this.filteredApplications = this.filteredApplications.filter(
       (app) => app.id !== id,
     );
-    this.saveApplications();
     this.updateStats();
     this.renderApplications();
+
+    alert(
+      "Note: Application removed from view. For permanent deletion, you'll need to manually remove it from the server file.",
+    );
   }
 
-  clearAllApplications() {
+  async clearAllApplications() {
     if (
       !confirm(
         "Are you sure you want to delete ALL applications? This action cannot be undone.",
@@ -420,11 +435,15 @@ class ApplicationsManager {
       return;
     }
 
+    // For now, just clear local view (you'd need a clear endpoint for permanent deletion)
     this.applications = [];
     this.filteredApplications = [];
-    this.saveApplications();
     this.updateStats();
     this.renderApplications();
+
+    alert(
+      "Note: Applications removed from view. For permanent deletion, you'll need to manually clear the server file.",
+    );
   }
 
   exportApplications() {
@@ -548,6 +567,6 @@ function changePage(direction) {
 // Initialize the applications manager
 let applicationsManager;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   applicationsManager = new ApplicationsManager();
 });
