@@ -42,21 +42,9 @@ class OceanCrestApp {
         this.toggleSettingsPanel();
       }
 
-      // Theme options
-      if (e.target.classList.contains("theme-option")) {
-        const theme = e.target.dataset.theme;
-        this.setTheme(theme);
-      }
-
-      // Setting toggles
-      if (e.target.id === "animationsToggle") {
-        this.toggleSetting("animations");
-      }
-      if (e.target.id === "soundToggle") {
-        this.toggleSetting("sound");
-      }
-      if (e.target.id === "motionToggle") {
-        this.toggleSetting("reduceMotion");
+      // Theme toggle
+      if (e.target.id === "themeToggle") {
+        this.toggleTheme();
       }
 
       // Close settings panel when clicking outside
