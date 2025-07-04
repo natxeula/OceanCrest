@@ -19,6 +19,342 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Ultra Advanced Hero Enhancements */
+      .hero-effects {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .laser-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          linear-gradient(90deg, transparent 98%, rgba(0, 255, 255, 0.3) 100%),
+          linear-gradient(0deg, transparent 98%, rgba(255, 0, 255, 0.3) 100%);
+        background-size: 100px 100px;
+        animation: gridScan 8s ease-in-out infinite;
+      }
+
+      .floating-orbs {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 255, 0.8) 0%,
+          rgba(255, 0, 255, 0.4) 50%,
+          transparent 100%
+        );
+        animation: orbFloat 10s ease-in-out infinite;
+        filter: blur(2px);
+      }
+
+      .orb-1 {
+        width: 200px;
+        height: 200px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .orb-2 {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        right: 15%;
+        animation-delay: -3s;
+      }
+
+      .orb-3 {
+        width: 100px;
+        height: 100px;
+        bottom: 30%;
+        left: 70%;
+        animation-delay: -6s;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        background: rgba(0, 255, 255, 0.1);
+        border: 2px solid rgba(0, 255, 255, 0.5);
+        border-radius: 50px;
+        padding: 1rem 2rem;
+        margin-bottom: 3rem;
+        backdrop-filter: blur(20px);
+        animation: badgeGlow 3s ease-in-out infinite;
+      }
+
+      .badge-icon {
+        font-size: 1.5rem;
+        animation: iconSpin 4s linear infinite;
+      }
+
+      .badge-text {
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        color: var(--neon-cyan);
+        text-transform: uppercase;
+      }
+
+      .hero-title {
+        font-size: clamp(4rem, 12vw, 10rem) !important;
+        font-weight: 900 !important;
+        line-height: 0.9 !important;
+        margin-bottom: 3rem !important;
+        text-align: center;
+      }
+
+      .title-line {
+        display: block;
+        background: linear-gradient(135deg, #ffffff 0%, #e1e8f0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: titleReveal 1s ease-out forwards;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .title-line:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .title-line:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .title-line:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      .title-accent {
+        background: var(--accent-gradient) !important;
+        background-size: 200% 200% !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        animation:
+          titleReveal 1s ease-out forwards,
+          gradientShift 4s ease-in-out infinite !important;
+        filter: drop-shadow(0 0 50px rgba(0, 255, 255, 0.8));
+      }
+
+      .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 4rem;
+        margin: 4rem 0;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+        position: relative;
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 900;
+        background: var(--neon-gradient);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite;
+        font-family: "JetBrains Mono", monospace;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        display: block;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+      }
+
+      .btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem 3rem;
+        font-size: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 50px;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(30px);
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--neon-gradient);
+        transition: left 0.4s ease;
+        z-index: -1;
+      }
+
+      .btn:hover::before {
+        left: 0;
+      }
+
+      .btn-icon {
+        font-size: 1.2rem;
+        transition: transform 0.4s ease;
+      }
+
+      .btn:hover .btn-icon {
+        transform: scale(1.2) rotate(10deg);
+      }
+
+      .hero-scroll-indicator {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        animation: scrollBounce 2s ease-in-out infinite;
+      }
+
+      .scroll-line {
+        width: 2px;
+        height: 40px;
+        background: var(--neon-gradient);
+        margin: 0 auto 1rem;
+        border-radius: 2px;
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      .scroll-text {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      @keyframes gridScan {
+        0%,
+        100% {
+          opacity: 0.1;
+          transform: translateX(0);
+        }
+        50% {
+          opacity: 0.3;
+          transform: translateX(20px);
+        }
+      }
+
+      @keyframes orbFloat {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+          opacity: 0.3;
+        }
+        33% {
+          transform: translate(30px, -30px) scale(1.1);
+          opacity: 0.6;
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+          opacity: 0.4;
+        }
+      }
+
+      @keyframes badgeGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+        }
+      }
+
+      @keyframes iconSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes titleReveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scrollBounce {
+        0%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        50% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+      }
+
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          height: 40px;
+          opacity: 1;
+        }
+        50% {
+          height: 60px;
+          opacity: 0.7;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-stats {
+          gap: 2rem;
+          margin: 3rem 0;
+        }
+
+        .stat-number {
+          font-size: 2.5rem;
+        }
+
+        .btn {
+          padding: 1rem 2rem;
+          font-size: 0.9rem;
+        }
+
+        .orb {
+          display: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Loading Screen -->
