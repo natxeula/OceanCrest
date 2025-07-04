@@ -5,14 +5,110 @@ class ApplicationsManager {
     this.currentPage = 1;
     this.itemsPerPage = 5;
     this.filteredApplications = [];
+    this.isOnline = navigator.onLine;
+    this.lastOnlineCheck = Date.now();
     this.init();
   }
 
   async init() {
+    this.setupOnlineDetection();
     await this.loadApplications();
     this.updateStats();
     this.renderApplications();
     this.setupEventListeners();
+  }
+
+  setupOnlineDetection() {
+    // Listen for service worker messages
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "NETWORK_STATUS") {
+          this.handleNetworkStatusChange(
+            event.data.online,
+            event.data.timestamp,
+          );
+        }
+      });
+
+      // Request immediate status check
+      navigator.serviceWorker.ready.then((registration) => {
+        if (registration.active) {
+          registration.active.postMessage({ type: "CHECK_ONLINE_STATUS" });
+        }
+      });
+    }
+
+    // Listen for browser online/offline events
+    window.addEventListener("online", () => {
+      console.log("Browser detected online");
+      this.checkServerConnection();
+    });
+
+    window.addEventListener("offline", () => {
+      console.log("Browser detected offline");
+      this.handleNetworkStatusChange(false, Date.now());
+    });
+
+    // Periodic connection check
+    setInterval(() => {
+      if (navigator.onLine) {
+        this.checkServerConnection();
+      }
+    }, 60000); // Check every minute
+  }
+
+  handleNetworkStatusChange(isOnline, timestamp) {
+    const wasOnline = this.isOnline;
+    this.isOnline = isOnline;
+    this.lastOnlineCheck = timestamp || Date.now();
+
+    console.log(`Network status changed: ${isOnline ? "ONLINE" : "OFFLINE"}`);
+
+    // If we just came back online, reload applications
+    if (!wasOnline && isOnline) {
+      console.log("🟢 Connection restored! Reloading applications...");
+      this.loadApplications();
+    }
+
+    // Update status display
+    this.updateConnectionStatus();
+  }
+
+  async checkServerConnection() {
+    try {
+      const response = await fetch("/api/applications", {
+        method: "HEAD",
+        cache: "no-cache",
+        signal: AbortSignal.timeout(5000), // 5 second timeout
+      });
+
+      this.handleNetworkStatusChange(response.ok, Date.now());
+    } catch (error) {
+      console.log("Server connection check failed:", error.message);
+      this.handleNetworkStatusChange(false, Date.now());
+    }
+  }
+
+  updateConnectionStatus() {
+    const currentTime = Date.now();
+    const timeSinceCheck = currentTime - this.lastOnlineCheck;
+
+    // If it's been more than 2 minutes since last check, status is uncertain
+    const isStatusCurrent = timeSinceCheck < 120000;
+
+    let source, count;
+    if (this.isOnline && isStatusCurrent) {
+      source = "database";
+      count = this.applications.length;
+    } else if (!this.isOnline) {
+      source = "localStorage (offline)";
+      count = this.applications.length;
+    } else {
+      source = "status uncertain";
+      count = this.applications.length;
+    }
+
+    this.showConnectionStatus(source, count);
   }
 
   setupEventListeners() {
@@ -39,6 +135,15 @@ class ApplicationsManager {
         this.filterByTeam(e.target.value);
       });
     }
+
+    // Manual refresh button
+    const refreshButton = document.getElementById("refreshApplications");
+    if (refreshButton) {
+      refreshButton.addEventListener("click", () => {
+        this.checkServerConnection();
+        this.loadApplications();
+      });
+    }
   }
 
   async loadApplications() {
@@ -50,6 +155,7 @@ class ApplicationsManager {
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "no-cache", // Always try to get fresh data
       });
 
       if (response.ok) {
@@ -57,10 +163,22 @@ class ApplicationsManager {
         this.applications = data.applications || [];
         this.filteredApplications = [...this.applications];
 
+        // Save to localStorage for offline access
+        try {
+          localStorage.setItem(
+            "oceancrest_applications",
+            JSON.stringify(this.applications),
+          );
+        } catch (e) {
+          console.warn("Failed to save to localStorage:", e.message);
+        }
+
         console.log(
           `✅ Loaded ${this.applications.length} applications from ${data.source}`,
         );
-        this.showConnectionStatus(data.source, data.total);
+
+        // Update online status
+        this.handleNetworkStatusChange(true, Date.now());
       } else {
         console.error(
           `❌ Server error ${response.status}: Failed to load applications`,
@@ -73,6 +191,9 @@ class ApplicationsManager {
         error.message,
       );
 
+      // Update offline status
+      this.handleNetworkStatusChange(false, Date.now());
+
       // Fallback to localStorage
       try {
         const savedApplications = localStorage.getItem(
@@ -84,21 +205,15 @@ class ApplicationsManager {
           console.log(
             `💾 Loaded ${this.applications.length} applications from localStorage`,
           );
-          this.showConnectionStatus(
-            "localStorage (offline)",
-            this.applications.length,
-          );
         } else {
           this.applications = [];
           this.filteredApplications = [];
           console.log("📭 No applications found in localStorage");
-          this.showConnectionStatus("none", 0);
         }
       } catch (localError) {
         console.error("❌ Failed to load from localStorage:", localError);
         this.applications = [];
         this.filteredApplications = [];
-        this.showConnectionStatus("error", 0);
       }
     }
   }
@@ -118,50 +233,58 @@ class ApplicationsManager {
         font-size: 0.9rem;
         z-index: 1000;
         transition: all 0.3s ease;
+        cursor: pointer;
       `;
+
+      // Add click to refresh functionality
+      statusElement.addEventListener("click", () => {
+        this.checkServerConnection();
+        this.loadApplications();
+      });
+
       document.body.appendChild(statusElement);
     }
 
     let statusText = "";
     let statusColor = "";
+    const currentTime = Date.now();
+    const timeSinceCheck = currentTime - this.lastOnlineCheck;
 
-    switch (source) {
-      case "database":
-        statusText = `🟢 Connected to Database (${count} apps)`;
-        statusColor = "#238636";
-        break;
-      case "file":
-        statusText = `🟡 Using Server Files (${count} apps)`;
-        statusColor = "#d1a500";
-        break;
-      case "localStorage (offline)":
-        statusText = `🔴 Offline Mode (${count} apps)`;
-        statusColor = "#f85149";
-        break;
-      case "none":
-        statusText = "📭 No applications found";
-        statusColor = "#6e7681";
-        break;
-      case "error":
-        statusText = "❌ Connection failed";
-        statusColor = "#f85149";
-        break;
-      default:
-        statusText = `📊 ${source} (${count} apps)`;
-        statusColor = "#6e7681";
+    // Use actual online status from our detection system
+    if (this.isOnline && timeSinceCheck < 120000) {
+      // Status is current (within 2 minutes)
+      statusText = `🟢 Online - Server Connected (${count} apps)`;
+      statusColor = "#238636";
+    } else if (!this.isOnline) {
+      statusText = `🔴 Offline Mode (${count} apps cached)`;
+      statusColor = "#f85149";
+    } else {
+      // Status is uncertain
+      statusText = `🟡 Connection Status Unknown (${count} apps)`;
+      statusColor = "#d1a500";
+    }
+
+    // Add last check time for offline/uncertain states
+    if (!this.isOnline || timeSinceCheck > 120000) {
+      const lastCheckTime = new Date(this.lastOnlineCheck).toLocaleTimeString();
+      statusText += ` • Last check: ${lastCheckTime}`;
     }
 
     statusElement.textContent = statusText;
     statusElement.style.backgroundColor = statusColor;
     statusElement.style.color = "white";
+    statusElement.title = "Click to refresh connection";
 
-    // Auto-hide after 5 seconds unless it's an error/offline state
-    if (!source.includes("error") && !source.includes("offline")) {
+    // Only auto-hide for successful online connections
+    if (this.isOnline && timeSinceCheck < 30000) {
       setTimeout(() => {
         if (statusElement && statusElement.parentNode) {
           statusElement.style.opacity = "0.7";
         }
       }, 5000);
+    } else {
+      // Keep offline/uncertain status visible
+      statusElement.style.opacity = "1";
     }
   }
 
@@ -729,4 +852,6 @@ let applicationsManager;
 
 document.addEventListener("DOMContentLoaded", async () => {
   applicationsManager = new ApplicationsManager();
+  // Make it globally accessible for service worker messages
+  window.applicationsManager = applicationsManager;
 });

@@ -965,7 +965,7 @@ class OceanCrestApp {
 class JobApplicationForm {
   constructor() {
     this.currentSection = 1;
-    this.totalSections = 3;
+    this.totalSections = 4;
     this.formData = {};
     this.init();
   }
@@ -1056,14 +1056,14 @@ class JobApplicationForm {
   }
 
   showSection(sectionNumber) {
-    const section = document.querySelector(`[data-section="${sectionNumber}"]`);
+    const section = document.querySelector(`[data-step="${sectionNumber}"]`);
     if (section) {
       section.classList.add("active");
     }
   }
 
   hideSection(sectionNumber) {
-    const section = document.querySelector(`[data-section="${sectionNumber}"]`);
+    const section = document.querySelector(`[data-step="${sectionNumber}"]`);
     if (section) {
       section.classList.remove("active");
     }
@@ -1079,7 +1079,7 @@ class JobApplicationForm {
 
   validateCurrentSection() {
     const currentSectionElement = document.querySelector(
-      `[data-section="${this.currentSection}"]`,
+      `[data-step="${this.currentSection}"]`,
     );
     if (!currentSectionElement) return true;
 
@@ -1177,9 +1177,24 @@ class JobApplicationForm {
       data[key] = value;
     }
 
-    // Add metadata
-    data.id = this.generateId();
+    // Add metadata with server-compatible naming
+    data.applicationId = this.generateId();
     data.submittedAt = new Date().toISOString();
+
+    // Ensure required fields are present and not empty
+    const requiredFields = [
+      "preferredName",
+      "discordUser",
+      "team",
+      "specificRole",
+      "generalDetails",
+    ];
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].toString().trim() === "") {
+        console.error(`Missing required field: ${field}`);
+        throw new Error(`Missing required field: ${field}`);
+      }
+    }
 
     return data;
   }
@@ -1191,11 +1206,11 @@ class JobApplicationForm {
   saveApplication(applicationData) {
     try {
       const existingApplications = JSON.parse(
-        localStorage.getItem("oceanCrestApplications") || "[]",
+        localStorage.getItem("oceancrest_applications") || "[]",
       );
       existingApplications.push(applicationData);
       localStorage.setItem(
-        "oceanCrestApplications",
+        "oceancrest_applications",
         JSON.stringify(existingApplications),
       );
       return true;
@@ -1205,18 +1220,83 @@ class JobApplicationForm {
     }
   }
 
-  submitApplication() {
+  async submitApplication() {
     // Final validation
     if (!this.validateCurrentSection()) return;
 
-    const applicationData = this.collectFormData();
+    let applicationData;
 
-    // Save to localStorage
-    if (this.saveApplication(applicationData)) {
-      this.showSuccessMessage();
-      this.sendNotificationEmail(applicationData);
-    } else {
-      alert("Error submitting application. Please try again.");
+    try {
+      applicationData = this.collectFormData();
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
+
+    // Show loading state
+    const submitButton = document.querySelector('button[type="submit"]');
+    const originalText = submitButton ? submitButton.textContent : "";
+    if (submitButton) {
+      submitButton.textContent = "Submitting...";
+      submitButton.disabled = true;
+    }
+
+    try {
+      // First, try to submit to server
+      console.log("🚀 Submitting application to server...", applicationData);
+
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(applicationData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("✅ Application submitted to server successfully:", result);
+
+        // Also save to localStorage as backup
+        this.saveApplication(applicationData);
+
+        this.showSuccessMessage();
+        this.sendNotificationEmail(applicationData);
+      } else {
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          errorData = { error: `Server error: ${response.status}` };
+        }
+
+        console.error("❌ Server responded with error:", errorData);
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("❌ Server submission failed:", error.message);
+
+      // Fallback: save to localStorage only
+      if (this.saveApplication(applicationData)) {
+        console.log("💾 Application saved to localStorage as fallback");
+        this.showSuccessMessage();
+        this.sendNotificationEmail(applicationData);
+
+        // Show warning about offline submission
+        setTimeout(() => {
+          alert(
+            "⚠️ Application saved locally. It will be synced when connection is restored.",
+          );
+        }, 1000);
+      } else {
+        alert("Error submitting application. Please try again.");
+      }
+    } finally {
+      // Restore button state
+      if (submitButton) {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+      }
     }
   }
 
@@ -1321,15 +1401,43 @@ window.OceanCrest = {
 };
 
 // Progressive Web App Service Worker Registration
-if ("serviceWorker" in navigator && "production" === "production") {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/sw.js")
       .then((registration) => {
         console.log("SW registered: ", registration);
+
+        // Listen for service worker messages
+        navigator.serviceWorker.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "NETWORK_STATUS") {
+            const isOnline = event.data.online;
+            console.log(
+              `Service Worker reports: ${isOnline ? "ONLINE" : "OFFLINE"}`,
+            );
+
+            // Update any global online indicators
+            updateGlobalOnlineStatus(isOnline);
+          }
+        });
       })
       .catch((registrationError) => {
         console.log("SW registration failed: ", registrationError);
       });
   });
+}
+
+// Global function to update online status indicators
+function updateGlobalOnlineStatus(isOnline) {
+  // Update any global status elements
+  const statusElements = document.querySelectorAll(".network-status");
+  statusElements.forEach((element) => {
+    element.classList.toggle("online", isOnline);
+    element.classList.toggle("offline", !isOnline);
+  });
+
+  // If applications manager exists, notify it
+  if (window.applicationsManager) {
+    window.applicationsManager.handleNetworkStatusChange(isOnline, Date.now());
+  }
 }
