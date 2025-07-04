@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "build": "echo 'Static site - no build needed'"
+    "build": "echo 'Static site - no build needed'",
+    "test-db": "node test-database.js",
+    "setup": "npm install && node test-database.js"
   },
   "repository": {
     "type": "git",
