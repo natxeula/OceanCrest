@@ -148,14 +148,7 @@ class OceanCrestApp {
   }
 
   setupSettingsEventListeners() {
-    const speedSlider = document.getElementById("speedSlider");
-    if (speedSlider) {
-      speedSlider.addEventListener("input", (e) => {
-        this.settings.animationSpeed = parseFloat(e.target.value);
-        localStorage.setItem("animationSpeed", this.settings.animationSpeed);
-        this.applyAnimationSpeed();
-      });
-    }
+    // No additional settings event listeners needed for simple theme toggle
   }
 
   toggleSetting(setting) {
@@ -258,7 +251,7 @@ class OceanCrestApp {
     // Add settings button to mobile menu
     const settingsButton = document.createElement("button");
     settingsButton.className = "mobile-nav-settings";
-    settingsButton.innerHTML = "���️ Settings";
+    settingsButton.innerHTML = "⚙️ Settings";
     settingsButton.addEventListener("click", () => {
       this.toggleSettingsPanel();
       this.closeMobileNav(); // Close mobile menu when settings is opened
