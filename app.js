@@ -1205,18 +1205,67 @@ class JobApplicationForm {
     }
   }
 
-  submitApplication() {
+  async submitApplication() {
     // Final validation
     if (!this.validateCurrentSection()) return;
 
     const applicationData = this.collectFormData();
 
-    // Save to localStorage
-    if (this.saveApplication(applicationData)) {
-      this.showSuccessMessage();
-      this.sendNotificationEmail(applicationData);
-    } else {
-      alert("Error submitting application. Please try again.");
+    // Show loading state
+    const submitButton = document.querySelector('button[type="submit"]');
+    const originalText = submitButton ? submitButton.textContent : "";
+    if (submitButton) {
+      submitButton.textContent = "Submitting...";
+      submitButton.disabled = true;
+    }
+
+    try {
+      // First, try to submit to server
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(applicationData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("✅ Application submitted to server:", result);
+
+        // Also save to localStorage as backup
+        this.saveApplication(applicationData);
+
+        this.showSuccessMessage();
+        this.sendNotificationEmail(applicationData);
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("❌ Server submission failed:", error.message);
+
+      // Fallback: save to localStorage only
+      if (this.saveApplication(applicationData)) {
+        console.log("💾 Application saved to localStorage as fallback");
+        this.showSuccessMessage();
+        this.sendNotificationEmail(applicationData);
+
+        // Show warning about offline submission
+        setTimeout(() => {
+          alert(
+            "⚠️ Application saved locally. It will be synced when connection is restored.",
+          );
+        }, 1000);
+      } else {
+        alert("Error submitting application. Please try again.");
+      }
+    } finally {
+      // Restore button state
+      if (submitButton) {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+      }
     }
   }
 
