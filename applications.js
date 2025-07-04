@@ -43,7 +43,8 @@ class ApplicationsManager {
 
   async loadApplications() {
     try {
-      // Load applications from Neon database
+      console.log("🔄 Loading applications from server...");
+
       const response = await fetch("/api/applications", {
         method: "GET",
         headers: {
@@ -55,24 +56,112 @@ class ApplicationsManager {
         const data = await response.json();
         this.applications = data.applications || [];
         this.filteredApplications = [...this.applications];
+
+        console.log(
+          `✅ Loaded ${this.applications.length} applications from ${data.source}`,
+        );
+        this.showConnectionStatus(data.source, data.total);
       } else {
-        console.error("Failed to load applications from database");
-        // Fallback to localStorage
+        console.error(
+          `❌ Server error ${response.status}: Failed to load applications`,
+        );
+        throw new Error(`Server returned ${response.status}`);
+      }
+    } catch (error) {
+      console.error(
+        "❌ Failed to load from server, trying localStorage:",
+        error.message,
+      );
+
+      // Fallback to localStorage
+      try {
         const savedApplications = localStorage.getItem(
           "oceancrest_applications",
         );
         if (savedApplications) {
           this.applications = JSON.parse(savedApplications);
           this.filteredApplications = [...this.applications];
+          console.log(
+            `💾 Loaded ${this.applications.length} applications from localStorage`,
+          );
+          this.showConnectionStatus(
+            "localStorage (offline)",
+            this.applications.length,
+          );
         } else {
           this.applications = [];
           this.filteredApplications = [];
+          console.log("📭 No applications found in localStorage");
+          this.showConnectionStatus("none", 0);
         }
+      } catch (localError) {
+        console.error("❌ Failed to load from localStorage:", localError);
+        this.applications = [];
+        this.filteredApplications = [];
+        this.showConnectionStatus("error", 0);
       }
-    } catch (error) {
-      console.error("Error loading applications:", error);
-      this.applications = [];
-      this.filteredApplications = [];
+    }
+  }
+
+  showConnectionStatus(source, count) {
+    // Create or update status indicator
+    let statusElement = document.getElementById("connectionStatus");
+    if (!statusElement) {
+      statusElement = document.createElement("div");
+      statusElement.id = "connectionStatus";
+      statusElement.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      `;
+      document.body.appendChild(statusElement);
+    }
+
+    let statusText = "";
+    let statusColor = "";
+
+    switch (source) {
+      case "database":
+        statusText = `🟢 Connected to Database (${count} apps)`;
+        statusColor = "#238636";
+        break;
+      case "file":
+        statusText = `🟡 Using Server Files (${count} apps)`;
+        statusColor = "#d1a500";
+        break;
+      case "localStorage (offline)":
+        statusText = `🔴 Offline Mode (${count} apps)`;
+        statusColor = "#f85149";
+        break;
+      case "none":
+        statusText = "📭 No applications found";
+        statusColor = "#6e7681";
+        break;
+      case "error":
+        statusText = "❌ Connection failed";
+        statusColor = "#f85149";
+        break;
+      default:
+        statusText = `📊 ${source} (${count} apps)`;
+        statusColor = "#6e7681";
+    }
+
+    statusElement.textContent = statusText;
+    statusElement.style.backgroundColor = statusColor;
+    statusElement.style.color = "white";
+
+    // Auto-hide after 5 seconds unless it's an error/offline state
+    if (!source.includes("error") && !source.includes("offline")) {
+      setTimeout(() => {
+        if (statusElement && statusElement.parentNode) {
+          statusElement.style.opacity = "0.7";
+        }
+      }, 5000);
     }
   }
 
