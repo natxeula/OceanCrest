@@ -609,47 +609,6 @@ class OceanCrestApp {
     });
   }
 
-  setupDynamicTheme() {
-    // Enhanced theme switching with smooth transitions
-    const originalToggleTheme = this.toggleTheme.bind(this);
-
-    this.toggleTheme = () => {
-      // Add transition effect
-      const overlay = document.createElement("div");
-      overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: ${
-          this.theme === "light"
-            ? "radial-gradient(circle, #0d1117 0%, #161b22 100%)"
-            : "radial-gradient(circle, #ffffff 0%, #f6f8fa 100%)"
-        };
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-      `;
-
-      document.body.appendChild(overlay);
-
-      requestAnimationFrame(() => {
-        overlay.style.opacity = "1";
-
-        setTimeout(() => {
-          originalToggleTheme();
-
-          setTimeout(() => {
-            overlay.style.opacity = "0";
-            setTimeout(() => overlay.remove(), 300);
-          }, 150);
-        }, 150);
-      });
-    };
-  }
-
   setupSmoothScrolling() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", (e) => {
