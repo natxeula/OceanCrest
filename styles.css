@@ -212,29 +212,36 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  gap: 2rem;
+  gap: 1rem;
   transform: translateY(50px);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2rem 0;
+  overflow-y: auto;
 }
 
 .mobile-nav-overlay.active .mobile-nav-menu {
   transform: translateY(0);
 }
 
-.mobile-nav-menu a {
-  font-size: 2rem;
+.mobile-nav-menu a,
+.mobile-nav-settings {
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
   text-decoration: none;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 12px;
   transition: all 0.3s ease;
   background: linear-gradient(135deg, transparent 0%, transparent 100%);
   position: relative;
   overflow: hidden;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.mobile-nav-menu a::before {
+.mobile-nav-menu a::before,
+.mobile-nav-settings::before {
   content: "";
   position: absolute;
   top: 0;
@@ -246,11 +253,13 @@
   z-index: -1;
 }
 
-.mobile-nav-menu a:hover::before {
+.mobile-nav-menu a:hover::before,
+.mobile-nav-settings:hover::before {
   left: 0;
 }
 
-.mobile-nav-menu a:hover {
+.mobile-nav-menu a:hover,
+.mobile-nav-settings:hover {
   color: var(--primary-bg);
   transform: scale(1.05);
   box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3);
@@ -259,6 +268,12 @@
 .mobile-nav-menu a.active {
   background: var(--accent-gradient);
   color: var(--primary-bg);
+}
+
+.mobile-nav-settings {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
 }
 
 /* Enhanced Glass Morphism Effects */
@@ -2443,19 +2458,25 @@ nav a.active {
     margin: 1rem;
   }
 
-  /* Settings toggle positioning */
+  /* Hide settings toggle on mobile since it's in the menu */
   .settings-toggle {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
-    bottom: 1rem;
-    right: 1rem;
+    display: none;
   }
 
   .settings-panel {
-    width: 280px;
-    bottom: 70px;
+    width: auto;
+    bottom: 1rem;
     right: 1rem;
+    left: 1rem;
+    max-width: 320px;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .settings-panel.active {
+    transform: translateY(-50%) scale(1);
   }
 
   /* Particles disabled on mobile for performance */
@@ -2469,9 +2490,14 @@ nav a.active {
     font-size: 2rem;
   }
 
-  .mobile-nav-menu a {
-    font-size: 1.5rem;
-    padding: 0.8rem 1.5rem;
+  .mobile-nav-menu {
+    gap: 0.5rem;
+  }
+
+  .mobile-nav-menu a,
+  .mobile-nav-settings {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
   }
 
   .section {

@@ -35,7 +35,9 @@ class OceanCrestApp {
     document.addEventListener("click", (e) => {
       if (
         e.target.id === "settingsToggle" ||
-        e.target.closest("#settingsToggle")
+        e.target.closest("#settingsToggle") ||
+        e.target.id === "desktopSettingsToggle" ||
+        e.target.closest("#desktopSettingsToggle")
       ) {
         this.toggleSettingsPanel();
       }
@@ -60,7 +62,8 @@ class OceanCrestApp {
       // Close settings panel when clicking outside
       if (
         !e.target.closest(".settings-panel") &&
-        !e.target.closest("#settingsToggle")
+        !e.target.closest("#settingsToggle") &&
+        !e.target.closest("#desktopSettingsToggle")
       ) {
         this.closeSettingsPanel();
       }
@@ -279,6 +282,16 @@ class OceanCrestApp {
       const mobileLink = link.cloneNode(true);
       mobileNavMenu.appendChild(mobileLink);
     });
+
+    // Add settings button to mobile menu
+    const settingsButton = document.createElement("button");
+    settingsButton.className = "mobile-nav-settings";
+    settingsButton.innerHTML = "⚙️ Settings";
+    settingsButton.addEventListener("click", () => {
+      this.toggleSettingsPanel();
+      this.closeMobileNav(); // Close mobile menu when settings is opened
+    });
+    mobileNavMenu.appendChild(settingsButton);
 
     mobileOverlay.appendChild(mobileNavMenu);
 
