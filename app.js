@@ -81,7 +81,6 @@ class OceanCrestApp {
   setupTheme() {
     const body = document.body;
     body.setAttribute("data-theme", this.theme);
-    this.updateThemeOptions();
   }
 
   setTheme(theme) {
@@ -89,20 +88,13 @@ class OceanCrestApp {
     const body = document.body;
     body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    this.updateThemeOptions();
+    this.updateSettingsUI();
 
     // Add theme transition effect
     body.style.transition = "all 0.3s ease";
     setTimeout(() => {
       body.style.transition = "";
     }, 300);
-  }
-
-  updateThemeOptions() {
-    const themeOptions = document.querySelectorAll(".theme-option");
-    themeOptions.forEach((option) => {
-      option.classList.toggle("active", option.dataset.theme === this.theme);
-    });
   }
 
   toggleSettingsPanel() {
