@@ -118,6 +118,22 @@ class OceanCrestApp {
   }
 
   setupSettings() {
+    // Make sure settings elements are visible
+    const settingsToggle = document.getElementById("settingsToggle");
+    const desktopSettingsToggle = document.getElementById(
+      "desktopSettingsToggle",
+    );
+    const settingsPanel = document.getElementById("settingsPanel");
+
+    // Remove any display: none that might be hiding settings
+    [settingsToggle, desktopSettingsToggle, settingsPanel].forEach(
+      (element) => {
+        if (element && element.style.display === "none") {
+          element.style.display = "";
+        }
+      },
+    );
+
     // Initialize settings UI
     setTimeout(() => {
       this.updateSettingsUI();

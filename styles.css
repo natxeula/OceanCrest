@@ -2526,12 +2526,37 @@ nav a.active {
     gap: 1.5rem;
   }
 
+  .teams-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .team-grid {
     grid-template-columns: 1fr;
   }
 
   .news-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Team page specific fixes */
+  .team-department {
+    padding: 2rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .department-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .department-name {
+    font-size: 1.3rem;
+  }
+
+  .apply-team-btn {
+    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
   }
 
   /* Card interactions on mobile */
@@ -2583,12 +2608,12 @@ nav a.active {
     margin: 1rem;
   }
 
-  /* Hide settings toggle on mobile since it's in the menu */
+  /* Show mobile settings button but hide desktop one */
   .settings-toggle {
-    display: none;
+    display: flex;
   }
 
-  /* Keep desktop settings button visible on desktop only */
+  /* Hide desktop settings button on mobile */
   .desktop-settings-btn {
     display: none;
   }
