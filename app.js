@@ -1079,7 +1079,7 @@ class JobApplicationForm {
 
   validateCurrentSection() {
     const currentSectionElement = document.querySelector(
-      `[data-section="${this.currentSection}"]`,
+      `[data-step="${this.currentSection}"]`,
     );
     if (!currentSectionElement) return true;
 
