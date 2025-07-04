@@ -602,31 +602,9 @@
         }
 
         init() {
-          this.setupThemeToggle();
           this.setupInteractiveMembers();
           this.setupExtendedTeamDirectory();
           this.setupAnimations();
-        }
-
-        setupThemeToggle() {
-          const themeToggle = document.getElementById("themeToggle");
-          const body = document.body;
-
-          // Check for saved theme preference
-          const savedTheme = localStorage.getItem("theme") || "dark";
-          if (savedTheme === "light") {
-            body.setAttribute("data-theme", "light");
-            themeToggle.textContent = "☀️";
-          }
-
-          themeToggle.addEventListener("click", () => {
-            const currentTheme = body.getAttribute("data-theme");
-            const newTheme = currentTheme === "light" ? "dark" : "light";
-
-            body.setAttribute("data-theme", newTheme);
-            themeToggle.textContent = newTheme === "light" ? "☀️" : "🌙";
-            localStorage.setItem("theme", newTheme);
-          });
         }
 
         setupInteractiveMembers() {
