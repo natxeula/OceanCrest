@@ -2472,6 +2472,7 @@ footer::before {
   .theme-toggle {
     right: 1rem;
     top: 1rem;
+    z-index: 1002;
     width: 60px;
     height: 60px;
     font-size: 1.5rem;
