@@ -233,50 +233,58 @@ class ApplicationsManager {
         font-size: 0.9rem;
         z-index: 1000;
         transition: all 0.3s ease;
+        cursor: pointer;
       `;
+
+      // Add click to refresh functionality
+      statusElement.addEventListener("click", () => {
+        this.checkServerConnection();
+        this.loadApplications();
+      });
+
       document.body.appendChild(statusElement);
     }
 
     let statusText = "";
     let statusColor = "";
+    const currentTime = Date.now();
+    const timeSinceCheck = currentTime - this.lastOnlineCheck;
 
-    switch (source) {
-      case "database":
-        statusText = `🟢 Connected to Database (${count} apps)`;
-        statusColor = "#238636";
-        break;
-      case "file":
-        statusText = `🟡 Using Server Files (${count} apps)`;
-        statusColor = "#d1a500";
-        break;
-      case "localStorage (offline)":
-        statusText = `🔴 Offline Mode (${count} apps)`;
-        statusColor = "#f85149";
-        break;
-      case "none":
-        statusText = "📭 No applications found";
-        statusColor = "#6e7681";
-        break;
-      case "error":
-        statusText = "❌ Connection failed";
-        statusColor = "#f85149";
-        break;
-      default:
-        statusText = `📊 ${source} (${count} apps)`;
-        statusColor = "#6e7681";
+    // Use actual online status from our detection system
+    if (this.isOnline && timeSinceCheck < 120000) {
+      // Status is current (within 2 minutes)
+      statusText = `🟢 Online - Server Connected (${count} apps)`;
+      statusColor = "#238636";
+    } else if (!this.isOnline) {
+      statusText = `🔴 Offline Mode (${count} apps cached)`;
+      statusColor = "#f85149";
+    } else {
+      // Status is uncertain
+      statusText = `🟡 Connection Status Unknown (${count} apps)`;
+      statusColor = "#d1a500";
+    }
+
+    // Add last check time for offline/uncertain states
+    if (!this.isOnline || timeSinceCheck > 120000) {
+      const lastCheckTime = new Date(this.lastOnlineCheck).toLocaleTimeString();
+      statusText += ` • Last check: ${lastCheckTime}`;
     }
 
     statusElement.textContent = statusText;
     statusElement.style.backgroundColor = statusColor;
     statusElement.style.color = "white";
+    statusElement.title = "Click to refresh connection";
 
-    // Auto-hide after 5 seconds unless it's an error/offline state
-    if (!source.includes("error") && !source.includes("offline")) {
+    // Only auto-hide for successful online connections
+    if (this.isOnline && timeSinceCheck < 30000) {
       setTimeout(() => {
         if (statusElement && statusElement.parentNode) {
           statusElement.style.opacity = "0.7";
         }
       }, 5000);
+    } else {
+      // Keep offline/uncertain status visible
+      statusElement.style.opacity = "1";
     }
   }
 
