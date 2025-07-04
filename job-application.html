@@ -770,6 +770,12 @@
 
           this.collectCurrentStepData();
 
+          // Show loading state
+          const submitBtn = document.getElementById("submitBtn");
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = "Submitting...";
+          submitBtn.disabled = true;
+
           // Prepare form data for submission
           const form = document.getElementById("jobApplicationForm");
           const formData = new FormData(form);
@@ -781,49 +787,65 @@
             }
           });
 
-          // Add timestamp and ID
-          formData.set("submittedAt", new Date().toISOString());
-          formData.set("applicationId", this.generateId());
-
           try {
-            // Submit to server (Netlify Forms or fallback to fetch)
             const response = await this.submitToServer(formData);
 
             if (response.ok) {
-              // Also save locally for immediate admin panel access
-              const application = {
-                id: formData.get("applicationId"),
-                submittedAt: formData.get("submittedAt"),
-                preferredName: this.formData.preferredName,
-                discordUser: this.formData.discordUser,
-                team: this.formData.team,
-                specificRole: this.formData.specificRole,
-                portfolio: this.formData.portfolio,
-                generalDetails: this.formData.generalDetails,
-                sceneWriting: this.formData.sceneWriting,
-                additionalLinks: this.formData.additionalLinks,
-                termsAgree: this.formData.termsAgree,
-              };
-
-              const existingApplications = JSON.parse(
-                localStorage.getItem("oceanCrestApplications") || "[]",
-              );
-              existingApplications.push(application);
-              localStorage.setItem(
-                "oceanCrestApplications",
-                JSON.stringify(existingApplications),
+              console.log(
+                `🎉 Application submitted successfully! ID: ${response.applicationId}`,
               );
 
-              this.showSuccess();
+              // Show success message with storage location info
+              if (response.savedTo === "database") {
+                this.showToast(
+                  "✅ Application submitted and saved to database!",
+                  "success",
+                );
+              } else if (response.savedTo === "file") {
+                this.showToast(
+                  "✅ Application submitted and saved to server!",
+                  "success",
+                );
+              } else if (response.savedTo.includes("localStorage")) {
+                this.showToast(
+                  "⚠️ Application saved locally. Will sync when server is available.",
+                  "warning",
+                );
+              }
+
+              // Small delay before showing success screen
+              setTimeout(() => {
+                this.showSuccess();
+              }, 1000);
             } else {
-              throw new Error("Server submission failed");
+              throw new Error(response.error || "Submission failed");
             }
           } catch (error) {
-            console.error("Error submitting application:", error);
-            this.showToast(
-              "There was an error submitting your application. Please try again.",
-              "error",
-            );
+            console.error("❌ Application submission error:", error);
+
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+
+            // Show user-friendly error message
+            let errorMessage =
+              "There was an error submitting your application. ";
+
+            if (error.message.includes("Missing required field")) {
+              errorMessage +=
+                "Please check all required fields are filled out.";
+            } else if (
+              error.message.includes("network") ||
+              error.message.includes("fetch")
+            ) {
+              errorMessage +=
+                "Please check your internet connection and try again.";
+            } else {
+              errorMessage +=
+                "Please try again or contact support if the problem persists.";
+            }
+
+            this.showToast(errorMessage, "error");
           }
         }
 
