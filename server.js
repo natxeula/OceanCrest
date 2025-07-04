@@ -120,27 +120,9 @@ async function saveApplicationsToFile(applications) {
   }
 }
 
-// Send admin notification (placeholder for email service)
-async function notifyAdmin(application) {
-  console.log(`🔔 NEW APPLICATION RECEIVED:
-  Name: ${application.preferred_name}
-  Team: ${application.team}
-  Role: ${application.specific_role}
-  Discord: ${application.discord_user}
-  Submitted: ${new Date().toLocaleString()}
-
-  👉 Check admin panel at: /applications.html`);
-
-  // TODO: Implement email notification here
-  // Example: await sendEmail({
-  //   to: 'admin@oceancrest.studio',
-  //   subject: 'New Job Application',
-  //   body: `New application from ${application.preferred_name}...`
-  // });
-}
-
-// Initialize backup file
+// Initialize backup file and notification system
 ensureBackupFile();
+initializeNotifications();
 
 // API endpoint for applications
 app.get("/api/applications", async (req, res) => {
