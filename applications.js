@@ -44,7 +44,7 @@ class ApplicationsManager {
   async loadApplications() {
     try {
       // Load applications from Neon database
-      const response = await fetch("/api/applications.js", {
+      const response = await fetch("/api/applications", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -423,17 +423,31 @@ class ApplicationsManager {
       return;
     }
 
-    // For now, just remove from local view (you'd need a delete endpoint for permanent deletion)
-    this.applications = this.applications.filter((app) => app.id !== id);
-    this.filteredApplications = this.filteredApplications.filter(
-      (app) => app.id !== id,
-    );
-    this.updateStats();
-    this.renderApplications();
+    try {
+      const response = await fetch(`/api/applications/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    alert(
-      "Note: Application removed from view. For permanent deletion, you'll need to manually remove it from the server file.",
-    );
+      if (response.ok) {
+        // Remove from local arrays
+        this.applications = this.applications.filter((app) => app.id !== id);
+        this.filteredApplications = this.filteredApplications.filter(
+          (app) => app.id !== id,
+        );
+        this.updateStats();
+        this.renderApplications();
+
+        this.showToast("Application deleted successfully", "success");
+      } else {
+        throw new Error("Failed to delete application");
+      }
+    } catch (error) {
+      console.error("Error deleting application:", error);
+      this.showToast("Error deleting application. Please try again.", "error");
+    }
   }
 
   async clearAllApplications() {
@@ -445,15 +459,28 @@ class ApplicationsManager {
       return;
     }
 
-    // For now, just clear local view (you'd need a clear endpoint for permanent deletion)
-    this.applications = [];
-    this.filteredApplications = [];
-    this.updateStats();
-    this.renderApplications();
+    try {
+      const response = await fetch("/api/applications", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    alert(
-      "Note: Applications removed from view. For permanent deletion, you'll need to manually clear the server file.",
-    );
+      if (response.ok) {
+        this.applications = [];
+        this.filteredApplications = [];
+        this.updateStats();
+        this.renderApplications();
+
+        this.showToast("All applications deleted successfully", "success");
+      } else {
+        throw new Error("Failed to delete applications");
+      }
+    } catch (error) {
+      console.error("Error clearing applications:", error);
+      this.showToast("Error deleting applications. Please try again.", "error");
+    }
   }
 
   exportApplications() {
@@ -478,6 +505,40 @@ class ApplicationsManager {
       link.click();
       document.body.removeChild(link);
     }
+  }
+
+  showToast(message, type = "info") {
+    // Create toast notification
+    const toast = document.createElement("div");
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: ${type === "success" ? "#238636" : type === "error" ? "#f85149" : "#0d1117"};
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.transform = "translateX(0)";
+    }, 100);
+
+    setTimeout(() => {
+      toast.style.transform = "translateX(400px)";
+      setTimeout(() => {
+        if (document.body.contains(toast)) {
+          document.body.removeChild(toast);
+        }
+      }, 300);
+    }, 3000);
   }
 
   convertToCSV(applications) {

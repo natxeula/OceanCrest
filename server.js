@@ -22,8 +22,36 @@ const pool = new Pool({
   },
 });
 
+// Initialize database table if it doesn't exist
+async function initializeDatabase() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS applications (
+        id VARCHAR(50) PRIMARY KEY,
+        submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        preferred_name VARCHAR(255) NOT NULL,
+        discord_user VARCHAR(255) NOT NULL,
+        team VARCHAR(100) NOT NULL,
+        specific_role VARCHAR(255) NOT NULL,
+        portfolio VARCHAR(500),
+        general_details TEXT NOT NULL,
+        scene_writing TEXT,
+        additional_links TEXT,
+        terms_agree BOOLEAN NOT NULL DEFAULT false,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `);
+    console.log("Database table initialized");
+  } catch (error) {
+    console.error("Error initializing database:", error);
+  }
+}
+
+// Call on startup
+initializeDatabase();
+
 // API endpoint for applications
-app.get("/api/applications.js", async (req, res) => {
+app.get("/api/applications", async (req, res) => {
   try {
     const result = await pool.query(
       "SELECT * FROM applications ORDER BY submitted_at DESC",
@@ -35,7 +63,7 @@ app.get("/api/applications.js", async (req, res) => {
   }
 });
 
-app.post("/api/applications.js", async (req, res) => {
+app.post("/api/applications", async (req, res) => {
   try {
     const data = req.body;
 
@@ -92,6 +120,40 @@ app.post("/api/applications.js", async (req, res) => {
       error: "Internal server error",
       message: error.message,
     });
+  }
+});
+
+// DELETE endpoint for applications
+app.delete("/api/applications/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      "DELETE FROM applications WHERE id = $1 RETURNING id",
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    res.json({ success: true, message: "Application deleted successfully" });
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ error: "Failed to delete application" });
+  }
+});
+
+// DELETE all applications endpoint
+app.delete("/api/applications", async (req, res) => {
+  try {
+    await pool.query("DELETE FROM applications");
+    res.json({
+      success: true,
+      message: "All applications deleted successfully",
+    });
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ error: "Failed to delete applications" });
   }
 });
 
