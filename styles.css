@@ -861,7 +861,7 @@ nav a.active {
 }
 
 .setting-toggle::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 2px;
   left: 2px;
@@ -908,7 +908,6 @@ nav a.active {
   cursor: pointer;
   border: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
 }
 
 .setting-group:last-child {
