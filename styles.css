@@ -704,7 +704,7 @@ nav a.active {
   bottom: 100px;
   right: 2rem;
   width: 320px;
-  background: var(--glass-bg);
+  background: rgba(22, 27, 34, 0.95);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
@@ -714,7 +714,8 @@ nav a.active {
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
 }
 
 .settings-panel.active {
