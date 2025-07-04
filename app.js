@@ -1224,7 +1224,14 @@ class JobApplicationForm {
     // Final validation
     if (!this.validateCurrentSection()) return;
 
-    const applicationData = this.collectFormData();
+    let applicationData;
+
+    try {
+      applicationData = this.collectFormData();
+    } catch (error) {
+      alert(error.message);
+      return;
+    }
 
     // Show loading state
     const submitButton = document.querySelector('button[type="submit"]');
