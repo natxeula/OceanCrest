@@ -1015,20 +1015,7 @@ nav li:hover .nav-indicator {
   }
 }
 
-@keyframes liquidDrop {
-  0% {
-    border-radius: 50%;
-    transform: scale(0);
-  }
-  50% {
-    border-radius: 20% 50%;
-    transform: scale(1.2);
-  }
-  100% {
-    border-radius: 16px;
-    transform: scale(1);
-  }
-}
+/* liquidDrop keyframes removed */
 
 /* Enhanced Theme Toggle */
 .theme-toggle {
