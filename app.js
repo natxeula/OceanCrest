@@ -24,10 +24,27 @@ class OceanCrestApp {
   }
 
   setupEventListeners() {
-    // Theme toggle
+    // Settings panel toggle
     document.addEventListener("click", (e) => {
-      if (e.target.id === "themeToggle") {
-        this.toggleTheme();
+      if (
+        e.target.id === "settingsToggle" ||
+        e.target.closest("#settingsToggle")
+      ) {
+        this.toggleSettingsPanel();
+      }
+
+      // Theme options
+      if (e.target.classList.contains("theme-option")) {
+        const theme = e.target.dataset.theme;
+        this.setTheme(theme);
+      }
+
+      // Close settings panel when clicking outside
+      if (
+        !e.target.closest(".settings-panel") &&
+        !e.target.closest("#settingsToggle")
+      ) {
+        this.closeSettingsPanel();
       }
     });
 
