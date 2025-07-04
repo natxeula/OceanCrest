@@ -177,7 +177,6 @@ class OceanCrestApp {
     this.setupTypingEffect();
     this.setupReactiveParticles();
     this.setupRealTimeValidation();
-    this.setupDynamicTheme();
     this.setupLiveMonitors();
   }
 
@@ -593,7 +592,7 @@ class OceanCrestApp {
           message = "⚠️ This field needs at least 3 characters";
           isValid = false;
         } else if (input.required && value.length >= 3) {
-          message = "✅ Looking good!";
+          message = "��� Looking good!";
         }
 
         feedback.textContent = message;
