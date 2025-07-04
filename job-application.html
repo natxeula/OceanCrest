@@ -834,62 +834,119 @@
             data[key] = value;
           }
 
-          // Submit to Neon database
+          // Generate application ID
+          const applicationId = this.generateId();
+
+          // Prepare data for submission
+          const submitData = {
+            applicationId: applicationId,
+            preferredName: data.preferredName,
+            discordUser: data.discordUser,
+            team: data.team,
+            specificRole: data.specificRole,
+            portfolio: data.portfolio || "",
+            generalDetails: data.generalDetails,
+            sceneWriting: data.sceneWriting || "",
+            additionalLinks: data.additionalLinks || "",
+            termsAgree: data.termsAgree === "on" || data.termsAgree === true,
+            submittedAt: new Date().toISOString(),
+          };
+
+          console.log("Submitting application data:", submitData);
+
           try {
+            // Submit to server API
             const response = await fetch("/api/applications", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({
-                applicationId: this.generateId(),
-                ...data,
-              }),
+              body: JSON.stringify(submitData),
             });
 
-            if (response.ok) {
-              const result = await response.json();
+            const result = await response.json();
+
+            if (response.ok && result.success) {
               console.log(
-                "Application saved to database:",
+                `✅ Application saved successfully to ${result.savedTo}:`,
                 result.applicationId,
               );
-              return { ok: true };
-            } else {
-              throw new Error(`Server error: ${response.status}`);
-            }
-          } catch (error) {
-            console.error(
-              "Error saving to database, falling back to localStorage:",
-              error,
-            );
 
-            // Fallback to localStorage
-            try {
-              const existingApplications = localStorage.getItem(
-                "oceancrest_applications",
-              );
-              const applications = existingApplications
-                ? JSON.parse(existingApplications)
-                : [];
+              // Also save to localStorage for immediate admin access
+              this.saveToLocalStorage(submitData);
 
-              const application = {
-                id: this.generateId(),
-                submittedAt: new Date().toISOString(),
-                ...data,
+              return {
+                ok: true,
+                applicationId: result.applicationId,
+                savedTo: result.savedTo,
               };
+            } else {
+              // Server returned error
+              console.error("Server returned error:", result);
+              throw new Error(
+                result.error || `Server error: ${response.status}`,
+              );
+            }
+          } catch (networkError) {
+            console.error("Network/Server error:", networkError.message);
 
-              applications.push(application);
-              localStorage.setItem(
-                "oceancrest_applications",
-                JSON.stringify(applications),
+            // Fallback to localStorage only
+            try {
+              console.log("💾 Falling back to local storage...");
+              this.saveToLocalStorage(submitData);
+
+              // Show user that it's saved locally
+              this.showToast(
+                "⚠️ Server unavailable. Application saved locally and will sync when connection is restored.",
+                "warning",
               );
 
-              console.log("Application saved locally:", application.id);
-              return { ok: true };
+              return {
+                ok: true,
+                applicationId: applicationId,
+                savedTo: "localStorage (offline)",
+              };
             } catch (localError) {
-              console.error("Error saving application:", localError);
-              return { ok: false };
+              console.error("❌ All save methods failed:", localError);
+              return {
+                ok: false,
+                error: "Failed to save application. Please try again.",
+              };
             }
+          }
+        }
+
+        saveToLocalStorage(applicationData) {
+          try {
+            const existingApplications = localStorage.getItem(
+              "oceancrest_applications",
+            );
+            const applications = existingApplications
+              ? JSON.parse(existingApplications)
+              : [];
+
+            // Avoid duplicates
+            const existingIndex = applications.findIndex(
+              (app) => app.applicationId === applicationData.applicationId,
+            );
+            if (existingIndex >= 0) {
+              applications[existingIndex] = applicationData;
+            } else {
+              applications.push(applicationData);
+            }
+
+            localStorage.setItem(
+              "oceancrest_applications",
+              JSON.stringify(applications),
+            );
+            console.log(
+              "💾 Application saved to localStorage:",
+              applicationData.applicationId,
+            );
+            return true;
+          } catch (error) {
+            console.error("❌ Failed to save to localStorage:", error);
+            return false;
           }
         }
 
