@@ -688,6 +688,24 @@
           );
         }
 
+        collectAllFormData() {
+          // Collect data from all form steps to ensure nothing is missed
+          const form = document.getElementById("jobApplicationForm");
+          const allInputs = form.querySelectorAll("input, select, textarea");
+
+          allInputs.forEach((input) => {
+            if (input.name && input.name !== "bot-field") {
+              if (input.type === "checkbox") {
+                this.formData[input.name] = input.checked;
+              } else {
+                this.formData[input.name] = input.value?.trim() || "";
+              }
+            }
+          });
+
+          console.log("All form data collected:", this.formData);
+        }
+
         generateSummary() {
           const summaryContainer =
             document.getElementById("applicationSummary");
