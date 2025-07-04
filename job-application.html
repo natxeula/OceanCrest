@@ -1139,8 +1139,33 @@
       // Initialize the enhanced form when DOM is loaded
       document.addEventListener("DOMContentLoaded", () => {
         console.log("DOM loaded, initializing form...");
+
+        // Debug: Check if all required elements exist
+        const form = document.getElementById("jobApplicationForm");
+        const nextBtn = document.getElementById("nextBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const submitBtn = document.getElementById("submitBtn");
+
+        console.log("Form elements check:", {
+          form: !!form,
+          nextBtn: !!nextBtn,
+          prevBtn: !!prevBtn,
+          submitBtn: !!submitBtn,
+        });
+
+        if (!form) {
+          console.error("❌ Job application form not found!");
+          return;
+        }
+
         setTimeout(() => {
-          new EnhancedJobApplicationForm();
+          try {
+            const formInstance = new EnhancedJobApplicationForm();
+            console.log("✅ Form instance created successfully");
+            window.jobApplicationForm = formInstance; // Make globally accessible for debugging
+          } catch (error) {
+            console.error("❌ Error creating form instance:", error);
+          }
         }, 100); // Small delay to ensure all elements are rendered
       });
     </script>
