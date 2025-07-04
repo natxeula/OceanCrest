@@ -821,6 +821,7 @@
           );
 
           try {
+            console.log("🚀 Starting form submission...");
             const response = await this.submitToServer(formData);
 
             if (response.ok) {
@@ -860,6 +861,14 @@
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
 
+            // Show detailed error information for debugging
+            console.error("Detailed error info:", {
+              message: error.message,
+              stack: error.stack,
+              formData: Object.fromEntries(formData.entries()),
+              collectedData: this.formData,
+            });
+
             // Show user-friendly error message
             let errorMessage =
               "There was an error submitting your application. ";
@@ -867,15 +876,22 @@
             if (error.message.includes("Missing required field")) {
               errorMessage +=
                 "Please check all required fields are filled out.";
+            } else if (error.message.includes("timeout")) {
+              errorMessage += "The request timed out. Please try again.";
             } else if (
               error.message.includes("network") ||
-              error.message.includes("fetch")
+              error.message.includes("fetch") ||
+              error.message.includes("Network error")
             ) {
               errorMessage +=
                 "Please check your internet connection and try again.";
+            } else if (error.message.includes("Server error")) {
+              errorMessage +=
+                "Server is experiencing issues. Please try again in a moment.";
             } else {
               errorMessage +=
                 "Please try again or contact support if the problem persists.";
+              errorMessage += ` (Error: ${error.message})`;
             }
 
             this.showToast(errorMessage, "error");
