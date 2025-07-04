@@ -1175,6 +1175,30 @@ nav li:hover .nav-indicator {
 
 /* Legacy theme toggle styles removed - using settings panel now */
 
+/* Animation Settings */
+:root {
+  --animation-speed: 1;
+}
+
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.no-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Apply animation speed multiplier */
+* {
+  animation-duration: calc(var(--base-duration, 0.3s) / var(--animation-speed));
+  transition-duration: calc(
+    var(--base-duration, 0.3s) / var(--animation-speed)
+  );
+}
+
 /* Enhanced Scroll Progress */
 .scroll-progress {
   position: fixed;
