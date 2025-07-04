@@ -140,26 +140,10 @@ class OceanCrestApp {
   }
 
   updateSettingsUI() {
-    // Update theme options
-    this.updateThemeOptions();
-
-    // Update toggle states
-    const animationsToggle = document.getElementById("animationsToggle");
-    const soundToggle = document.getElementById("soundToggle");
-    const motionToggle = document.getElementById("motionToggle");
-    const speedSlider = document.getElementById("speedSlider");
-
-    if (animationsToggle) {
-      animationsToggle.classList.toggle("active", this.settings.animations);
-    }
-    if (soundToggle) {
-      soundToggle.classList.toggle("active", this.settings.sound);
-    }
-    if (motionToggle) {
-      motionToggle.classList.toggle("active", this.settings.reduceMotion);
-    }
-    if (speedSlider) {
-      speedSlider.value = this.settings.animationSpeed;
+    // Update theme toggle
+    const themeToggle = document.getElementById("themeToggle");
+    if (themeToggle) {
+      themeToggle.classList.toggle("active", this.theme === "dark");
     }
   }
 
@@ -274,7 +258,7 @@ class OceanCrestApp {
     // Add settings button to mobile menu
     const settingsButton = document.createElement("button");
     settingsButton.className = "mobile-nav-settings";
-    settingsButton.innerHTML = "⚙️ Settings";
+    settingsButton.innerHTML = "���️ Settings";
     settingsButton.addEventListener("click", () => {
       this.toggleSettingsPanel();
       this.closeMobileNav(); // Close mobile menu when settings is opened
