@@ -206,7 +206,6 @@ class OceanCrestApp {
       <div>Mouse: <span id="mousePos">0, 0</span></div>
       <div>Scroll: <span id="scrollPos">0%</span></div>
       <div>FPS: <span id="fpsCounter">60</span></div>
-      <div>Theme: <span id="themeStatus">${this.theme}</span></div>
     `;
 
     document.body.appendChild(monitor);
@@ -243,15 +242,6 @@ class OceanCrestApp {
       requestAnimationFrame(updateFPS);
     };
     updateFPS();
-
-    // Update theme status
-    const originalToggleTheme = this.toggleTheme;
-    this.toggleTheme = (...args) => {
-      const result = originalToggleTheme.apply(this, args);
-      const themeStatus = document.getElementById("themeStatus");
-      if (themeStatus) themeStatus.textContent = this.theme;
-      return result;
-    };
 
     // Hide monitor on mobile or when typing
     if (window.innerWidth <= 768) {
