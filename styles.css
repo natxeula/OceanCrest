@@ -1173,36 +1173,7 @@ nav li:hover .nav-indicator {
 
 /* liquidDrop keyframes removed */
 
-/* Enhanced Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 2px solid var(--border-color);
-  border-radius: 50%;
-  padding: 0.8rem;
-  cursor: pointer;
-  z-index: 1001;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  box-shadow: var(--shadow-primary);
-}
-
-.theme-toggle:hover {
-  background: var(--hover-bg);
-  transform: translateY(-50%) scale(1.1) rotate(180deg);
-  box-shadow:
-    var(--shadow-primary),
-    0 0 30px rgba(0, 191, 255, 0.3);
-}
+/* Legacy theme toggle styles removed - using settings panel now */
 
 /* Enhanced Scroll Progress */
 .scroll-progress {
