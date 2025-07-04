@@ -2,6 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const { Pool } = require("pg");
+const {
+  notifyAdmin,
+  initializeNotifications,
+} = require("./admin-notifications");
 
 const app = express();
 const port = process.env.PORT || 3000;
