@@ -5,6 +5,8 @@ class ApplicationsManager {
     this.currentPage = 1;
     this.itemsPerPage = 5;
     this.filteredApplications = [];
+    this.isOnline = navigator.onLine;
+    this.lastOnlineCheck = Date.now();
     this.init();
   }
 
