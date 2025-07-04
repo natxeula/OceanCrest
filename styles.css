@@ -2456,19 +2456,17 @@ nav a.active {
     margin: 1rem;
   }
 
-  /* Settings toggle positioning */
+  /* Hide settings toggle on mobile since it's in the menu */
   .settings-toggle {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
-    bottom: 1rem;
-    right: 1rem;
+    display: none;
   }
 
   .settings-panel {
     width: 280px;
-    bottom: 70px;
+    bottom: 1rem;
     right: 1rem;
+    left: 1rem;
+    width: auto;
   }
 
   /* Particles disabled on mobile for performance */
