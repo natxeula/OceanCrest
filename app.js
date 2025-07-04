@@ -77,35 +77,49 @@ class OceanCrestApp {
 
   setupTheme() {
     const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    if (this.theme === "light") {
-      body.setAttribute("data-theme", "light");
-      if (themeToggle) themeToggle.textContent = "☀️";
-    } else {
-      body.setAttribute("data-theme", "dark");
-      if (themeToggle) themeToggle.textContent = "🌙";
-    }
+    body.setAttribute("data-theme", this.theme);
+    this.updateThemeOptions();
   }
 
-  toggleTheme() {
+  setTheme(theme) {
+    this.theme = theme;
     const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    this.theme = this.theme === "light" ? "dark" : "light";
-
-    body.setAttribute("data-theme", this.theme);
-    if (themeToggle) {
-      themeToggle.textContent = this.theme === "light" ? "☀️" : "🌙";
-    }
-
-    localStorage.setItem("theme", this.theme);
+    body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    this.updateThemeOptions();
 
     // Add theme transition effect
     body.style.transition = "all 0.3s ease";
     setTimeout(() => {
       body.style.transition = "";
     }, 300);
+  }
+
+  updateThemeOptions() {
+    const themeOptions = document.querySelectorAll(".theme-option");
+    themeOptions.forEach((option) => {
+      option.classList.toggle("active", option.dataset.theme === this.theme);
+    });
+  }
+
+  toggleSettingsPanel() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      panel.classList.toggle("active");
+    }
+  }
+
+  closeSettingsPanel() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      panel.classList.remove("active");
+    }
+  }
+
+  // Legacy method for backward compatibility
+  toggleTheme() {
+    const newTheme = this.theme === "light" ? "dark" : "light";
+    this.setTheme(newTheme);
   }
 
   setupMobileNavigation() {
