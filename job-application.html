@@ -787,11 +787,19 @@
           );
         }
 
-        showSuccess() {
+        showSuccess(customMessage = null) {
           const form = document.getElementById("jobApplicationForm");
           const success = document.getElementById("formSuccess");
 
           if (form && success) {
+            // Update success message if custom message provided
+            if (customMessage) {
+              const successText = success.querySelector("p");
+              if (successText) {
+                successText.textContent = customMessage;
+              }
+            }
+
             form.style.display = "none";
             success.style.display = "block";
             this.triggerConfetti();
