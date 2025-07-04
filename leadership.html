@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leadership - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="Meet the executive leadership team at OceanCrest Entertainment - visionaries driving innovation in cinematic storytelling."
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .leadership-hero {
+        background: var(--primary-bg);
+        position: relative;
+        padding: 8rem 0 4rem;
+        overflow: hidden;
+      }
+
+      .leadership-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(0, 191, 255, 0.1) 0%,
+          transparent 70%
+        );
+      }
+
+      .leader-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 3rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 3rem;
+      }
+
+      .leader-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-gradient);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .leader-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .leader-card:hover {
+        transform: translateY(-12px);
+        box-shadow:
+          0 25px 50px rgba(0, 191, 255, 0.15),
+          0 12px 30px rgba(139, 74, 140, 0.1);
+        border-color: rgba(0, 191, 255, 0.3);
+      }
+
+      .leader-header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+
+      .leader-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--accent-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--primary-bg);
+        font-weight: 700;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .leader-avatar::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: var(--accent-gradient);
+        border-radius: 50%;
+        z-index: -1;
+        animation: rotate 3s linear infinite;
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .leader-info h3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .leader-title {
+        color: var(--accent-blue);
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .leader-tenure {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        background: var(--glass-bg);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid var(--border-color);
+      }
+
+      .leader-bio {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .leader-highlights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .highlight-section {
+        background: rgba(0, 191, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 191, 255, 0.1);
+      }
+
+      .highlight-section h4 {
+        color: var(--accent-blue);
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .highlight-section ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .highlight-section li {
+        padding: 0.5rem 0;
+        color: var(--text-secondary);
+        border-bottom: 1px solid rgba(0, 191, 255, 0.1);
+        position: relative;
+        padding-left: 1.5rem;
+      }
+
+      .highlight-section li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: var(--accent-blue);
+        font-weight: bold;
+      }
+
+      .highlight-section li:last-child {
+        border-bottom: none;
+      }
+
+      .leader-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 1rem;
+        background: var(--glass-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        min-width: 120px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      .contact-info {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .contact-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        background: transparent;
+        color: var(--accent-blue);
+        text-decoration: none;
+        border: 2px solid var(--accent-blue);
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--accent-gradient);
+        transition: left 0.4s ease;
+        z-index: -1;
+      }
+
+      .contact-btn:hover::before {
+        left: 0;
+      }
+
+      .contact-btn:hover {
+        color: var(--primary-bg);
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+      }
+
+      .vision-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 4rem 3rem;
+        margin: 4rem 0;
+        border: 1px solid var(--border-color);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .vision-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 191, 255, 0.05) 0%,
+          transparent 70%
+        );
+      }
+
+      .vision-quote {
+        font-size: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+        font-style: italic;
+        position: relative;
+      }
+
+      .vision-quote::before {
+        content: """;
+        font-size: 4rem;
+        color: var(--accent-blue);
+        opacity: 0.3;
+        position: absolute;
+        top: -1rem;
+        left: -2rem;
+      }
+
+      .vision-author {
+        color: var(--accent-blue);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 768px) {
+        .leader-header {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+
+        .leader-avatar {
+          margin: 0 auto;
+        }
+
+        .leader-highlights {
+          grid-template-columns: 1fr;
+        }
+
+        .leader-stats {
+          justify-content: center;
+        }
+
+        .contact-info {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Leadership...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="capabilities.html">Capabilities</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="leadership.html" class="active">Leadership</a></li>
+              <li><a href="newsroom.html">Newsroom</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="leadership-hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1>Executive Leadership</h1>
+            <p class="hero-subtitle">
+              Meet the visionary leaders driving OceanCrest Entertainment
+              forward, creating compelling stories that resonate with audiences
+              worldwide.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section fade-in">
+        <div class="container">
+          <!-- CEO/Founder -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">N</div>
+              <div class="leader-info">
+                <h3>Nate (Natxeula)</h3>
+                <div class="leader-title">
+                  Founder & Chief Executive Officer
+                </div>
+                <div class="leader-tenure">
+                  Founded 2024 • Leading since inception
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Nate is the visionary founder and driving force behind OceanCrest
+              Entertainment. With an unwavering passion for immersive
+              storytelling and cutting-edge cinematic experiences, he
+              established OceanCrest with the mission to create meaningful
+              entertainment that transcends traditional boundaries. His
+              leadership philosophy centers on empowering creative minds while
+              maintaining the highest standards of artistic integrity.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>🎯 Strategic Vision</h4>
+                <ul>
+                  <li>Founded OceanCrest Entertainment from concept</li>
+                  <li>Developed company's core creative philosophy</li>
+                  <li>Established industry partnerships and collaborations</li>
+                  <li>Led strategic expansion into new markets</li>
+                </ul>
+              </div>
+              <div class="highlight-section">
+                <h4>🏆 Key Achievements</h4>
+                <ul>
+                  <li>Built team of 40+ creative professionals</li>
+                  <li>Oversaw 15+ major productions</li>
+                  <li>Recognized for innovation in digital storytelling</li>
+                  <li>Established OceanCrest as emerging industry leader</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="leader-stats">
+              <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Projects Led</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">40+</span>
+                <span class="stat-label">Team Members</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label">Years Leading</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Commitment</span>
+              </div>
+            </div>
+
+            <div class="contact-info">
+              <a href="mailto:nate@oceancrest.studio" class="contact-btn">
+                📧 Contact Nate
+              </a>
+              <a href="job-application.html?team=executive" class="contact-btn">
+                🤝 Join Executive Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Executive Producer -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">F</div>
+              <div class="leader-info">
+                <h3>Future</h3>
+                <div class="leader-title">
+                  Executive Producer & Head of Writing
+                </div>
+                <div class="leader-tenure">
+                  Senior Executive • 2+ Years Experience
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Future serves as Executive Producer and Head of Writing, bringing
+              strategic oversight to production operations while leading our
+              acclaimed writing team. With extensive experience in project
+              management and creative development, Future ensures every project
+              meets OceanCrest's rigorous standards while fostering an
+              environment where creative excellence can flourish.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>📋 Production Excellence</h4>
+                <ul>
+                  <li>Managed 20+ successful productions</li>
+                  <li>Streamlined production workflows and processes</li>
+                  <li>Implemented quality assurance protocols</li>
+                  <li>Led cross-functional team coordination</li>
+                </ul>
+              </div>
+              <div class="highlight-section">
+                <h4>��️ Creative Leadership</h4>
+                <ul>
+                  <li>Built and leads 8-member writing team</li>
+                  <li>Developed award-winning scripts and narratives</li>
+                  <li>Mentors emerging writing talent</li>
+                  <li>Established writing standards and best practices</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="leader-stats">
+              <div class="stat-item">
+                <span class="stat-number">20+</span>
+                <span class="stat-label">Productions</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">8</span>
+                <span class="stat-label">Writing Team</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">2+</span>
+                <span class="stat-label">Years Leadership</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">95%</span>
+                <span class="stat-label">Project Success</span>
+              </div>
+            </div>
+
+            <div class="contact-info">
+              <a href="mailto:future@oceancrest.studio" class="contact-btn">
+                �� Contact Future
+              </a>
+              <a href="job-application.html?team=writing" class="contact-btn">
+                ✍️ Join Writing Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Vision Statement -->
+          <div class="vision-section fade-in">
+            <div class="vision-quote">
+              Our mission is to create entertainment that not only captivates
+              audiences but also pushes the boundaries of what's possible in
+              storytelling. We believe in the power of collaboration,
+              innovation, and unwavering commitment to artistic excellence.
+            </div>
+            <div class="vision-author">— OceanCrest Leadership Team</div>
+          </div>
+
+          <!-- Call to Action -->
+          <div style="text-align: center; margin-top: 4rem">
+            <h3
+              style="
+                margin-bottom: 2rem;
+                background: var(--accent-gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-size: 2rem;
+              "
+            >
+              Ready to Lead With Us?
+            </h3>
+            <p
+              style="
+                color: var(--text-secondary);
+                margin-bottom: 2rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 1.1rem;
+              "
+            >
+              We're always looking for exceptional leaders to join our executive
+              team and help drive the future of entertainment.
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <a
+                href="job-application.html?team=executive"
+                class="btn btn-primary"
+              >
+                Join Executive Team
+              </a>
+              <a href="team.html" class="btn btn-secondary"> View All Teams </a>
+              <a href="contact.html" class="btn btn-secondary">
+                Contact Leadership
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Enhanced Leadership Page Functionality
+      class LeadershipEnhancer {
+        constructor() {
+          this.init();
+        }
+
+        init() {
+          this.setupScrollAnimations();
+          this.setupParticleEffects();
+          this.setupContactButtons();
+        }
+
+        setupScrollAnimations() {
+          const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+          };
+
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+              }
+            });
+          }, observerOptions);
+
+          document.querySelectorAll(".leader-card").forEach((card, index) => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(50px)";
+            card.style.transition = `all 0.8s ease ${index * 0.2}s`;
+            observer.observe(card);
+          });
+        }
+
+        setupParticleEffects() {
+          const avatars = document.querySelectorAll(".leader-avatar");
+
+          avatars.forEach((avatar) => {
+            avatar.addEventListener("mouseenter", () => {
+              this.createParticleEffect(avatar);
+            });
+          });
+        }
+
+        createParticleEffect(element) {
+          const rect = element.getBoundingClientRect();
+          const particles = 8;
+
+          for (let i = 0; i < particles; i++) {
+            const particle = document.createElement("div");
+            particle.style.cssText = `
+              position: fixed;
+              width: 4px;
+              height: 4px;
+              background: var(--accent-blue);
+              border-radius: 50%;
+              pointer-events: none;
+              z-index: 1000;
+              left: ${rect.left + rect.width / 2}px;
+              top: ${rect.top + rect.height / 2}px;
+            `;
+
+            document.body.appendChild(particle);
+
+            const angle = (i / particles) * Math.PI * 2;
+            const velocity = 50 + Math.random() * 30;
+            const lifetime = 1000 + Math.random() * 500;
+
+            particle.animate(
+              [
+                {
+                  transform: "translate(0, 0) scale(1)",
+                  opacity: 1,
+                },
+                {
+                  transform: `translate(${Math.cos(angle) * velocity}px, ${Math.sin(angle) * velocity}px) scale(0)`,
+                  opacity: 0,
+                },
+              ],
+              {
+                duration: lifetime,
+                easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+              },
+            ).onfinish = () => particle.remove();
+          }
+        }
+
+        setupContactButtons() {
+          const contactBtns = document.querySelectorAll(".contact-btn");
+
+          contactBtns.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              if (btn.href.includes("mailto:")) {
+                // Add visual feedback for email contacts
+                this.showEmailNotification(btn);
+              }
+            });
+          });
+        }
+
+        showEmailNotification(btn) {
+          const notification = document.createElement("div");
+          notification.textContent = "Opening email client...";
+          notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-blue);
+            color: var(--primary-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            z-index: 1000;
+            font-weight: 600;
+            transform: translateY(-100px);
+            transition: transform 0.3s ease;
+          `;
+
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.style.transform = "translateY(0)";
+          }, 100);
+
+          setTimeout(() => {
+            notification.style.transform = "translateY(-100px)";
+            setTimeout(() => notification.remove(), 300);
+          }, 3000);
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        new LeadershipEnhancer();
+      });
+    </script>
+  </body>
+</html>
