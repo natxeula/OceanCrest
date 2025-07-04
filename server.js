@@ -123,6 +123,40 @@ app.post("/api/applications", async (req, res) => {
   }
 });
 
+// DELETE endpoint for applications
+app.delete("/api/applications/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await pool.query(
+      "DELETE FROM applications WHERE id = $1 RETURNING id",
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Application not found" });
+    }
+
+    res.json({ success: true, message: "Application deleted successfully" });
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ error: "Failed to delete application" });
+  }
+});
+
+// DELETE all applications endpoint
+app.delete("/api/applications", async (req, res) => {
+  try {
+    await pool.query("DELETE FROM applications");
+    res.json({
+      success: true,
+      message: "All applications deleted successfully",
+    });
+  } catch (error) {
+    console.error("Database error:", error);
+    res.status(500).json({ error: "Failed to delete applications" });
+  }
+});
+
 // Serve index.html for any non-API routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
