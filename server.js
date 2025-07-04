@@ -57,14 +57,20 @@ async function initializeDatabase() {
         scene_writing TEXT,
         additional_links TEXT,
         terms_agree BOOLEAN NOT NULL DEFAULT false,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-
-        -- Add indexes for better performance
-        INDEX idx_submitted_at (submitted_at),
-        INDEX idx_team (team),
-        INDEX idx_preferred_name (preferred_name)
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
     `);
+
+    // Create indexes separately for better compatibility
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_applications_submitted_at ON applications (submitted_at)`,
+    );
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_applications_team ON applications (team)`,
+    );
+    await client.query(
+      `CREATE INDEX IF NOT EXISTS idx_applications_preferred_name ON applications (preferred_name)`,
+    );
 
     console.log("✅ Database table initialized successfully");
     client.release();
