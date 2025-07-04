@@ -49,39 +49,6 @@ class OceanCrestApp {
     );
   }
 
-  setupTheme() {
-    const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    if (this.theme === "light") {
-      body.setAttribute("data-theme", "light");
-      if (themeToggle) themeToggle.textContent = "☀️";
-    } else {
-      body.setAttribute("data-theme", "dark");
-      if (themeToggle) themeToggle.textContent = "🌙";
-    }
-  }
-
-  toggleTheme() {
-    const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    this.theme = this.theme === "light" ? "dark" : "light";
-
-    body.setAttribute("data-theme", this.theme);
-    if (themeToggle) {
-      themeToggle.textContent = this.theme === "light" ? "☀️" : "🌙";
-    }
-
-    localStorage.setItem("theme", this.theme);
-
-    // Add theme transition effect
-    body.style.transition = "all 0.3s ease";
-    setTimeout(() => {
-      body.style.transition = "";
-    }, 300);
-  }
-
   setupMobileNavigation() {
     // Create mobile navigation elements if they don't exist
     this.createMobileNavElements();
