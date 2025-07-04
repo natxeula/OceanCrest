@@ -703,6 +703,51 @@ nav a.active {
   justify-content: center;
 }
 
+/* Desktop settings button in navigation */
+.desktop-settings-btn {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.desktop-settings-btn:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: var(--accent-gradient);
+  color: var(--primary-bg);
+  box-shadow: 0 4px 20px rgba(0, 191, 255, 0.3);
+}
+
+.desktop-settings-btn:active {
+  transform: scale(0.95);
+}
+
+.desktop-settings-btn .nav-indicator {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  transition: width 0.3s ease;
+}
+
+.desktop-settings-btn:hover .nav-indicator {
+  width: 100%;
+}
+
 .settings-toggle:hover {
   transform: scale(1.1) rotate(90deg);
   box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
@@ -2463,9 +2508,14 @@ nav a.active {
     display: none;
   }
 
+  /* Keep desktop settings button visible on desktop only */
+  .desktop-settings-btn {
+    display: none;
+  }
+
   .settings-panel {
-    width: auto;
-    bottom: 1rem;
+    width: calc(100vw - 2rem);
+    bottom: auto;
     right: 1rem;
     left: 1rem;
     max-width: 320px;
@@ -2473,6 +2523,7 @@ nav a.active {
     position: fixed;
     top: 50%;
     transform: translateY(-50%) scale(0.95);
+    z-index: 1003;
   }
 
   .settings-panel.active {
@@ -4249,6 +4300,48 @@ footer::before {
 
   .filter-select {
     min-width: 120px;
+  }
+}
+
+/* Desktop styles for larger screens */
+@media (min-width: 769px) {
+  /* Show desktop settings button in navigation */
+  .desktop-settings-btn {
+    display: flex !important;
+  }
+
+  /* Hide the floating settings toggle on desktop when we have the nav button */
+  .settings-toggle {
+    display: none !important;
+  }
+
+  /* Ensure navigation is visible */
+  nav ul {
+    display: flex;
+  }
+
+  .mobile-nav-toggle {
+    display: none;
+  }
+
+  .mobile-nav-overlay {
+    display: none;
+  }
+
+  /* Desktop settings panel positioning */
+  .settings-panel {
+    position: absolute;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    top: 100%;
+    width: 320px;
+    transform: translateY(10px) scale(0.95);
+    margin-top: 0.5rem;
+  }
+
+  .settings-panel.active {
+    transform: translateY(10px) scale(1);
   }
 
   .admin-stats {
