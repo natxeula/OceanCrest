@@ -374,7 +374,7 @@
           <div class="footer-section">
             <h4>Connect</h4>
             <a href="#" style="display: flex; align-items: center; gap: 0.5rem">
-              <span>����</span> contact@oceancrest.studio
+              <span>📧</span> contact@oceancrest.studio
             </a>
             <a href="#" style="display: flex; align-items: center; gap: 0.5rem">
               <span>💼</span> LinkedIn
@@ -586,16 +586,23 @@
         }
 
         nextStep() {
+          console.log(
+            `🔄 Moving from step ${this.currentStep} to ${this.currentStep + 1}`,
+          );
+
           if (!this.validateCurrentStep()) {
+            console.log("❌ Validation failed for current step");
             this.showToast("Please fix the errors before proceeding", "error");
             return;
           }
 
           this.collectCurrentStepData();
+          console.log(`✅ Data collected for step ${this.currentStep}`);
 
           if (this.currentStep < this.totalSteps) {
             this.currentStep++;
             this.updateStep();
+            console.log(`✅ Now on step ${this.currentStep}`);
           }
         }
 
