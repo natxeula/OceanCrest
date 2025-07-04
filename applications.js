@@ -43,19 +43,12 @@ class ApplicationsManager {
 
   async loadApplications() {
     try {
-      const response = await fetch("/.netlify/functions/submit-application", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        this.applications = data.applications || [];
+      // Load applications from localStorage
+      const savedApplications = localStorage.getItem("oceancrest_applications");
+      if (savedApplications) {
+        this.applications = JSON.parse(savedApplications);
         this.filteredApplications = [...this.applications];
       } else {
-        console.error("Failed to load applications from server");
         this.applications = [];
         this.filteredApplications = [];
       }
