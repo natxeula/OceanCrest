@@ -1,12 +1,69 @@
+const fs = require("fs").promises;
+const path = require("path");
+
 exports.handler = async (event, context) => {
-  // Only allow POST requests
+  // Handle CORS preflight
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "POST, GET",
+      },
+    };
+  }
+
+  // Handle GET requests to read applications
+  if (event.httpMethod === "GET") {
+    try {
+      const applicationsPath = path.join("/tmp", "applications.json");
+
+      // Check if file exists
+      try {
+        const data = await fs.readFile(applicationsPath, "utf8");
+        const applications = JSON.parse(data);
+
+        return {
+          statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+          body: JSON.stringify({ applications }),
+        };
+      } catch (readError) {
+        // File doesn't exist or is empty, return empty array
+        return {
+          statusCode: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
+          body: JSON.stringify({ applications: [] }),
+        };
+      }
+    } catch (error) {
+      console.error("Error reading applications:", error);
+      return {
+        statusCode: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+        body: JSON.stringify({ error: "Failed to read applications" }),
+      };
+    }
+  }
+
+  // Only allow POST requests for submission
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Methods": "POST, GET",
       },
       body: JSON.stringify({ error: "Method not allowed" }),
     };
@@ -54,20 +111,26 @@ exports.handler = async (event, context) => {
       termsAgree: body.termsAgree === "true" || body.termsAgree === true,
     };
 
-    // TODO: Save to database
-    // You can connect to databases here using:
-    // - Neon (serverless Postgres)
-    // - Prisma with PostgreSQL
-    // - Any other database service
+    // Save to JSON file
+    const applicationsPath = path.join("/tmp", "applications.json");
 
-    // For now, we'll log the application (in production, you'd save to a database)
-    console.log("New job application received:", application);
+    let applications = [];
+    try {
+      // Try to read existing applications
+      const existingData = await fs.readFile(applicationsPath, "utf8");
+      applications = JSON.parse(existingData);
+    } catch (readError) {
+      // File doesn't exist or is empty, start with empty array
+      applications = [];
+    }
 
-    // In a real implementation, you might:
-    // 1. Save to a database
-    // 2. Send notification emails
-    // 3. Add to a CRM system
-    // 4. Integrate with Slack/Discord for notifications
+    // Add new application
+    applications.push(application);
+
+    // Write back to file
+    await fs.writeFile(applicationsPath, JSON.stringify(applications, null, 2));
+
+    console.log("Application saved to file:", application.id);
 
     return {
       statusCode: 200,
