@@ -852,4 +852,6 @@ let applicationsManager;
 
 document.addEventListener("DOMContentLoaded", async () => {
   applicationsManager = new ApplicationsManager();
+  // Make it globally accessible for service worker messages
+  window.applicationsManager = applicationsManager;
 });
