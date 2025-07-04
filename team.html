@@ -284,7 +284,7 @@
               <li><a href="projects.html">Projects</a></li>
               <li><a href="gaming.html">Gaming</a></li>
               <li><a href="team.html" class="active">Team</a></li>
-              <!-- <li><a href="leadership.html">Leadership</a></li> -->
+              <li><a href="leadership.html">Leadership</a></li>
               <li><a href="newsroom.html">Newsroom</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="contact.html">Contact</a></li>
@@ -536,8 +536,34 @@
 
     <footer>
       <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+            <a href="newsroom.html">Newsroom</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
         <div class="footer-bottom">
           <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
         </div>
       </div>
     </footer>
@@ -565,7 +591,7 @@
           const savedTheme = localStorage.getItem("theme") || "dark";
           if (savedTheme === "light") {
             body.setAttribute("data-theme", "light");
-            themeToggle.textContent = "☀️";
+            themeToggle.textContent = "☀��";
           }
 
           themeToggle.addEventListener("click", () => {

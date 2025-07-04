@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HEAT - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="HEAT - High-intensity action gaming experience by OceanCrest Entertainment. Featuring cutting-edge graphics and immersive gameplay."
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .heat-hero {
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(255, 69, 0, 0.2) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            135deg,
+            var(--primary-bg) 0%,
+            var(--secondary-bg) 100%
+          );
+        padding: 8rem 0 6rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .heat-title {
+        font-size: 5rem;
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          #ff4500 0%,
+          #ff6b35 50%,
+          #ff8c42 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .heat-subtitle {
+        font-size: 1.3rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .game-preview {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 3rem;
+        margin: 4rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .game-preview::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ff4500, #ff6b35, #ff8c42);
+      }
+
+      .preview-image {
+        height: 400px;
+        background: linear-gradient(
+          135deg,
+          #ff4500 0%,
+          #ff6b35 50%,
+          #ff8c42 100%
+        );
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 8rem;
+        color: white;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .preview-image::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 30% 30%,
+            rgba(255, 255, 255, 0.2) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 70% 70%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          );
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+      }
+
+      .feature-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #ff4500, #ff6b35, #ff8c42);
+        transform: scaleX(0);
+        transition: transform 0.4s ease;
+      }
+
+      .feature-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow:
+          0 20px 40px rgba(255, 69, 0, 0.15),
+          0 10px 25px rgba(255, 107, 53, 0.1);
+        border-color: rgba(255, 69, 0, 0.3);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+
+      .feature-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ff4500, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .gameplay-section {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 4rem;
+        margin: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .gameplay-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(255, 69, 0, 0.05) 0%,
+          transparent 70%
+        );
+      }
+
+      .coming-soon {
+        background: linear-gradient(135deg, #ff4500, #ff6b35);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: inline-block;
+        margin: 2rem 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .heat-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+      }
+
+      .stat-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 69, 0, 0.3);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #ff4500, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+      }
+
+      @media (max-width: 768px) {
+        .heat-title {
+          font-size: 3rem;
+        }
+
+        .preview-image {
+          height: 250px;
+          font-size: 5rem;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading HEAT...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      🌙
+    </button>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="capabilities.html">Capabilities</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="gaming.html">Gaming</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="leadership.html">Leadership</a></li>
+              <li><a href="newsroom.html">Newsroom</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="heat-hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1 class="heat-title">HEAT</h1>
+            <p class="heat-subtitle">
+              Experience the ultimate high-intensity action gaming adventure.
+              HEAT combines cutting-edge graphics, immersive gameplay mechanics,
+              and adrenaline-pumping combat in an unprecedented gaming
+              experience.
+            </p>
+            <div class="coming-soon">Coming Soon</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section fade-in">
+        <div class="container">
+          <div class="game-preview">
+            <div class="preview-image">🔥</div>
+            <h2
+              style="
+                font-size: 2.5rem;
+                text-align: center;
+                margin-bottom: 2rem;
+                background: linear-gradient(135deg, #ff4500, #ff6b35);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+              "
+            >
+              Ignite Your Gaming Experience
+            </h2>
+            <p
+              style="
+                text-align: center;
+                font-size: 1.2rem;
+                color: var(--text-secondary);
+                line-height: 1.6;
+                max-width: 800px;
+                margin: 0 auto;
+              "
+            >
+              HEAT represents the next evolution in action gaming, featuring
+              dynamic environments, strategic combat systems, and multiplayer
+              experiences that push the boundaries of what's possible in
+              interactive entertainment.
+            </p>
+          </div>
+
+          <div class="features-grid">
+            <div class="feature-card">
+              <span class="feature-icon">⚡</span>
+              <h3 class="feature-title">Lightning-Fast Combat</h3>
+              <p class="feature-description">
+                Experience fluid, responsive combat mechanics with precise
+                controls and devastating attack combinations that reward skill
+                and timing.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🌎</span>
+              <h3 class="feature-title">Dynamic Environments</h3>
+              <p class="feature-description">
+                Battle across ever-changing landscapes with destructible
+                terrain, environmental hazards, and interactive elements that
+                affect gameplay.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">👥</span>
+              <h3 class="feature-title">Multiplayer Mayhem</h3>
+              <p class="feature-description">
+                Team up with friends or compete against players worldwide in
+                intense multiplayer modes designed for maximum excitement.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🎯</span>
+              <h3 class="feature-title">Precision Mechanics</h3>
+              <p class="feature-description">
+                Master advanced weapon systems, tactical abilities, and
+                strategic positioning in gameplay that rewards both quick
+                reflexes and smart thinking.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🏆</span>
+              <h3 class="feature-title">Competitive Ranking</h3>
+              <p class="feature-description">
+                Climb the leaderboards through ranked matches, seasonal events,
+                and championship tournaments with meaningful progression
+                systems.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <span class="feature-icon">🎨</span>
+              <h3 class="feature-title">Stunning Visuals</h3>
+              <p class="feature-description">
+                Immerse yourself in breathtaking graphics powered by the latest
+                technology, delivering cinematic quality in real-time gameplay.
+              </p>
+            </div>
+          </div>
+
+          <div class="heat-stats">
+            <div class="stat-card">
+              <span class="stat-number">60</span>
+              <span class="stat-label">FPS Target</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">32</span>
+              <span class="stat-label">Max Players</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">12</span>
+              <span class="stat-label">Game Modes</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Weapons</span>
+            </div>
+          </div>
+
+          <div class="gameplay-section">
+            <h2
+              style="
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+                background: linear-gradient(135deg, #ff4500, #ff6b35);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+              "
+            >
+              Revolutionary Gameplay
+            </h2>
+            <p
+              style="
+                font-size: 1.2rem;
+                color: var(--text-secondary);
+                line-height: 1.7;
+                max-width: 700px;
+                margin: 0 auto 2rem;
+              "
+            >
+              HEAT introduces innovative gameplay mechanics that blend
+              fast-paced action with strategic depth. Every match is unique,
+              every decision matters, and every victory is earned through skill,
+              teamwork, and tactical superiority.
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 3rem;
+              "
+            >
+              <a href="gaming.html" class="btn btn-primary"
+                >Explore Gaming Division</a
+              >
+              <a href="contact.html" class="btn btn-secondary">Get Updates</a>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 4rem">
+            <h3
+              style="
+                font-size: 2rem;
+                margin-bottom: 2rem;
+                background: linear-gradient(135deg, #ff4500, #ff6b35);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+              "
+            >
+              Stay Connected
+            </h3>
+            <p
+              style="
+                color: var(--text-secondary);
+                margin-bottom: 2rem;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+              "
+            >
+              Be the first to know about HEAT development updates, beta access
+              opportunities, and release announcements.
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <a href="newsroom.html" class="btn btn-primary">Latest News</a>
+              <a href="mythoria.html" class="btn btn-secondary">Try Mythoria</a>
+              <a href="careers.html" class="btn btn-secondary">Join Our Team</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+            <a href="newsroom.html">Newsroom</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // HEAT-specific enhancements
+      class HeatGameEnhancer {
+        constructor() {
+          this.init();
+        }
+
+        init() {
+          this.setupFireEffects();
+          this.setupStatCounters();
+          this.setupParallaxEffects();
+        }
+
+        setupFireEffects() {
+          const previewImage = document.querySelector(".preview-image");
+          const featureCards = document.querySelectorAll(".feature-card");
+
+          // Add fire particle effects on hover
+          [previewImage, ...featureCards].forEach((element) => {
+            element.addEventListener("mouseenter", () => {
+              this.createFireParticles(element);
+            });
+          });
+        }
+
+        createFireParticles(element) {
+          const rect = element.getBoundingClientRect();
+          const particles = 6;
+
+          for (let i = 0; i < particles; i++) {
+            const particle = document.createElement("div");
+            particle.style.cssText = `
+              position: fixed;
+              width: 6px;
+              height: 6px;
+              background: #ff4500;
+              border-radius: 50%;
+              pointer-events: none;
+              z-index: 1000;
+              left: ${rect.left + Math.random() * rect.width}px;
+              top: ${rect.bottom - 10}px;
+            `;
+
+            document.body.appendChild(particle);
+
+            particle.animate(
+              [
+                {
+                  transform: "translateY(0) scale(1)",
+                  opacity: 1,
+                  background: "#ff4500",
+                },
+                {
+                  transform: "translateY(-50px) scale(0.5)",
+                  opacity: 0.5,
+                  background: "#ff6b35",
+                },
+                {
+                  transform: "translateY(-100px) scale(0)",
+                  opacity: 0,
+                  background: "#ff8c42",
+                },
+              ],
+              {
+                duration: 2000 + Math.random() * 1000,
+                easing: "ease-out",
+              },
+            ).onfinish = () => particle.remove();
+          }
+        }
+
+        setupStatCounters() {
+          const statNumbers = document.querySelectorAll(".stat-number");
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                this.animateCounter(entry.target);
+                observer.unobserve(entry.target);
+              }
+            });
+          });
+
+          statNumbers.forEach((stat) => observer.observe(stat));
+        }
+
+        animateCounter(element) {
+          const target = element.textContent;
+          const isNumber = !isNaN(target);
+
+          if (isNumber) {
+            let current = 0;
+            const increment = parseInt(target) / 30;
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= parseInt(target)) {
+                element.textContent = target;
+                clearInterval(timer);
+              } else {
+                element.textContent = Math.floor(current);
+              }
+            }, 50);
+          }
+        }
+
+        setupParallaxEffects() {
+          window.addEventListener("scroll", () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements =
+              document.querySelectorAll(".hero-parallax");
+
+            parallaxElements.forEach((element) => {
+              const speed = 0.5;
+              element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+          });
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        new HeatGameEnhancer();
+      });
+    </script>
+  </body>
+</html>
