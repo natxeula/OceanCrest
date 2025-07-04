@@ -859,36 +859,65 @@
           // Generate application ID
           const applicationId = this.generateId();
 
-          // Prepare data for submission
+          // Prepare data for submission - ensure all required fields are present
           const submitData = {
             applicationId: applicationId,
-            preferredName: data.preferredName,
-            discordUser: data.discordUser,
-            team: data.team,
-            specificRole: data.specificRole,
-            portfolio: data.portfolio || "",
-            generalDetails: data.generalDetails,
-            sceneWriting: data.sceneWriting || "",
-            additionalLinks: data.additionalLinks || "",
+            preferredName: data.preferredName?.trim() || "",
+            discordUser: data.discordUser?.trim() || "",
+            team: data.team || "",
+            specificRole: data.specificRole?.trim() || "",
+            portfolio: data.portfolio?.trim() || "",
+            generalDetails: data.generalDetails?.trim() || "",
+            sceneWriting: data.sceneWriting?.trim() || "",
+            additionalLinks: data.additionalLinks?.trim() || "",
             termsAgree: data.termsAgree === "on" || data.termsAgree === true,
             submittedAt: new Date().toISOString(),
           };
 
+          // Validate required fields before submission
+          const requiredFields = [
+            "preferredName",
+            "discordUser",
+            "team",
+            "specificRole",
+            "generalDetails",
+          ];
+          for (const field of requiredFields) {
+            if (!submitData[field] || submitData[field].trim() === "") {
+              throw new Error(`Missing required field: ${field}`);
+            }
+          }
+
           console.log("Submitting application data:", submitData);
 
           try {
-            // Submit to server API
+            // Submit to server API with longer timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
             const response = await fetch("/api/applications", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Accept: "application/json",
               },
               body: JSON.stringify(submitData),
+              signal: controller.signal,
             });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.error(`HTTP ${response.status}:`, errorText);
+              throw new Error(
+                `Server error: ${response.status} - ${errorText}`,
+              );
+            }
 
             const result = await response.json();
 
-            if (response.ok && result.success) {
+            if (result.success) {
               console.log(
                 `✅ Application saved successfully to ${result.savedTo}:`,
                 result.applicationId,
@@ -896,6 +925,9 @@
 
               // Also save to localStorage for immediate admin access
               this.saveToLocalStorage(submitData);
+
+              // Trigger admin notification
+              await this.notifyAdmin(submitData);
 
               return {
                 ok: true,
@@ -905,35 +937,23 @@
             } else {
               // Server returned error
               console.error("Server returned error:", result);
-              throw new Error(
-                result.error || `Server error: ${response.status}`,
-              );
+              throw new Error(result.error || "Server processing error");
             }
           } catch (networkError) {
             console.error("Network/Server error:", networkError.message);
 
-            // Fallback to localStorage only
-            try {
-              console.log("💾 Falling back to local storage...");
-              this.saveToLocalStorage(submitData);
-
-              // Show user that it's saved locally
-              this.showToast(
-                "⚠️ Server unavailable. Application saved locally and will sync when connection is restored.",
-                "warning",
+            // Don't fallback to localStorage only - this hides the real problem
+            // Instead, inform user of the actual issue
+            if (networkError.name === "AbortError") {
+              throw new Error(
+                "Request timed out. Please check your connection and try again.",
               );
-
-              return {
-                ok: true,
-                applicationId: applicationId,
-                savedTo: "localStorage (offline)",
-              };
-            } catch (localError) {
-              console.error("❌ All save methods failed:", localError);
-              return {
-                ok: false,
-                error: "Failed to save application. Please try again.",
-              };
+            } else if (networkError.message.includes("fetch")) {
+              throw new Error(
+                "Network error. Please check your internet connection.",
+              );
+            } else {
+              throw new Error(`Submission failed: ${networkError.message}`);
             }
           }
         }
