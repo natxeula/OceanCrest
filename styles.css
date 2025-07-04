@@ -665,35 +665,211 @@ nav a.active {
   transform: scale(1.02);
 }
 
-/* Enhanced Theme Toggle */
-.theme-toggle {
+/* Settings Panel System */
+.settings-toggle {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 50px;
-  height: 50px;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: none;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   color: var(--text-primary);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   z-index: 1002;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--shadow-primary);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.theme-toggle:hover {
-  transform: scale(1.05) rotate(8deg);
-  box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
+.settings-toggle:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
   background: var(--accent-gradient);
   color: var(--primary-bg);
 }
 
-.theme-toggle:active {
+.settings-toggle:active {
   transform: scale(0.95);
+}
+
+.settings-panel {
+  position: fixed;
+  bottom: 100px;
+  right: 2rem;
+  width: 320px;
+  background: rgba(22, 27, 34, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.settings-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.settings-panel h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+}
+
+.setting-group {
+  margin-bottom: 20px;
+}
+
+.setting-group:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(200, 209, 217);
+  margin-bottom: 8px;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.theme-option {
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: transparent;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.theme-option:hover {
+  border-color: rgb(51, 95, 255);
+  background: rgba(51, 95, 255, 0.1);
+}
+
+.theme-option.active {
+  border-color: rgb(51, 95, 255);
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
+  color: rgb(255, 255, 255);
+}
+
+.theme-option-icon {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.setting-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.setting-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.setting-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.setting-toggle {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.setting-toggle.active {
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
+}
+
+.setting-toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.setting-toggle.active::after {
+  transform: translateX(24px);
+}
+
+.setting-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Enhanced Reactive Cursor Effects */
@@ -1017,35 +1193,30 @@ nav li:hover .nav-indicator {
 
 /* liquidDrop keyframes removed */
 
-/* Enhanced Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 2px solid var(--border-color);
-  border-radius: 50%;
-  padding: 0.8rem;
-  cursor: pointer;
-  z-index: 1001;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  box-shadow: var(--shadow-primary);
+/* Legacy theme toggle styles removed - using settings panel now */
+
+/* Animation Settings */
+:root {
+  --animation-speed: 1;
 }
 
-.theme-toggle:hover {
-  background: var(--hover-bg);
-  transform: translateY(-50%) scale(1.1) rotate(180deg);
-  box-shadow:
-    var(--shadow-primary),
-    0 0 30px rgba(0, 191, 255, 0.3);
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.no-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Apply animation speed multiplier */
+* {
+  animation-duration: calc(var(--base-duration, 0.3s) / var(--animation-speed));
+  transition-duration: calc(
+    var(--base-duration, 0.3s) / var(--animation-speed)
+  );
 }
 
 /* Enhanced Scroll Progress */
@@ -2272,11 +2443,19 @@ nav a.active {
     margin: 1rem;
   }
 
-  /* Theme toggle positioning */
-  .theme-toggle {
-    width: 45px;
-    height: 45px;
-    font-size: 1rem;
+  /* Settings toggle positioning */
+  .settings-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .settings-panel {
+    width: 280px;
+    bottom: 80px;
+    right: 1.5rem;
   }
 
   /* Particles disabled on mobile for performance */
@@ -2921,13 +3100,18 @@ footer::before {
     gap: 2rem;
   }
 
-  .theme-toggle {
+  .settings-toggle {
     right: 1rem;
-    top: 1rem;
-    z-index: 1002;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    bottom: 1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .settings-panel {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+    bottom: 70px;
   }
 
   .particles {

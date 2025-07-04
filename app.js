@@ -4,6 +4,12 @@ class OceanCrestApp {
     this.isLoaded = false;
     this.scrollProgress = 0;
     this.theme = localStorage.getItem("theme") || "dark";
+    this.settings = {
+      animations: localStorage.getItem("animations") !== "false",
+      sound: localStorage.getItem("sound") === "true",
+      animationSpeed: parseFloat(localStorage.getItem("animationSpeed")) || 1,
+      reduceMotion: localStorage.getItem("reduceMotion") === "true",
+    };
     this.init();
   }
 
@@ -11,6 +17,7 @@ class OceanCrestApp {
     // Initialize core functionality immediately
     this.setupEventListeners();
     this.setupTheme();
+    this.setupSettings();
     this.setupMobileNavigation();
 
     // Initialize enhanced features after DOM is ready
@@ -24,10 +31,38 @@ class OceanCrestApp {
   }
 
   setupEventListeners() {
-    // Theme toggle
+    // Settings panel toggle
     document.addEventListener("click", (e) => {
-      if (e.target.id === "themeToggle") {
-        this.toggleTheme();
+      if (
+        e.target.id === "settingsToggle" ||
+        e.target.closest("#settingsToggle")
+      ) {
+        this.toggleSettingsPanel();
+      }
+
+      // Theme options
+      if (e.target.classList.contains("theme-option")) {
+        const theme = e.target.dataset.theme;
+        this.setTheme(theme);
+      }
+
+      // Setting toggles
+      if (e.target.id === "animationsToggle") {
+        this.toggleSetting("animations");
+      }
+      if (e.target.id === "soundToggle") {
+        this.toggleSetting("sound");
+      }
+      if (e.target.id === "motionToggle") {
+        this.toggleSetting("reduceMotion");
+      }
+
+      // Close settings panel when clicking outside
+      if (
+        !e.target.closest(".settings-panel") &&
+        !e.target.closest("#settingsToggle")
+      ) {
+        this.closeSettingsPanel();
       }
     });
 
@@ -60,35 +95,124 @@ class OceanCrestApp {
 
   setupTheme() {
     const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    if (this.theme === "light") {
-      body.setAttribute("data-theme", "light");
-      if (themeToggle) themeToggle.textContent = "☀️";
-    } else {
-      body.setAttribute("data-theme", "dark");
-      if (themeToggle) themeToggle.textContent = "🌙";
-    }
+    body.setAttribute("data-theme", this.theme);
+    this.updateThemeOptions();
   }
 
-  toggleTheme() {
+  setTheme(theme) {
+    this.theme = theme;
     const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-
-    this.theme = this.theme === "light" ? "dark" : "light";
-
-    body.setAttribute("data-theme", this.theme);
-    if (themeToggle) {
-      themeToggle.textContent = this.theme === "light" ? "☀️" : "🌙";
-    }
-
-    localStorage.setItem("theme", this.theme);
+    body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    this.updateThemeOptions();
 
     // Add theme transition effect
     body.style.transition = "all 0.3s ease";
     setTimeout(() => {
       body.style.transition = "";
     }, 300);
+  }
+
+  updateThemeOptions() {
+    const themeOptions = document.querySelectorAll(".theme-option");
+    themeOptions.forEach((option) => {
+      option.classList.toggle("active", option.dataset.theme === this.theme);
+    });
+  }
+
+  toggleSettingsPanel() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      panel.classList.toggle("active");
+    }
+  }
+
+  closeSettingsPanel() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      panel.classList.remove("active");
+    }
+  }
+
+  // Legacy method for backward compatibility
+  toggleTheme() {
+    const newTheme = this.theme === "light" ? "dark" : "light";
+    this.setTheme(newTheme);
+  }
+
+  setupSettings() {
+    // Initialize settings UI
+    setTimeout(() => {
+      this.updateSettingsUI();
+      this.setupSettingsEventListeners();
+    }, 100);
+  }
+
+  updateSettingsUI() {
+    // Update theme options
+    this.updateThemeOptions();
+
+    // Update toggle states
+    const animationsToggle = document.getElementById("animationsToggle");
+    const soundToggle = document.getElementById("soundToggle");
+    const motionToggle = document.getElementById("motionToggle");
+    const speedSlider = document.getElementById("speedSlider");
+
+    if (animationsToggle) {
+      animationsToggle.classList.toggle("active", this.settings.animations);
+    }
+    if (soundToggle) {
+      soundToggle.classList.toggle("active", this.settings.sound);
+    }
+    if (motionToggle) {
+      motionToggle.classList.toggle("active", this.settings.reduceMotion);
+    }
+    if (speedSlider) {
+      speedSlider.value = this.settings.animationSpeed;
+    }
+  }
+
+  setupSettingsEventListeners() {
+    const speedSlider = document.getElementById("speedSlider");
+    if (speedSlider) {
+      speedSlider.addEventListener("input", (e) => {
+        this.settings.animationSpeed = parseFloat(e.target.value);
+        localStorage.setItem("animationSpeed", this.settings.animationSpeed);
+        this.applyAnimationSpeed();
+      });
+    }
+  }
+
+  toggleSetting(setting) {
+    this.settings[setting] = !this.settings[setting];
+    localStorage.setItem(setting, this.settings[setting]);
+    this.updateSettingsUI();
+    this.applySettings();
+  }
+
+  applySettings() {
+    const body = document.body;
+
+    // Apply reduce motion
+    if (this.settings.reduceMotion) {
+      body.classList.add("reduce-motion");
+    } else {
+      body.classList.remove("reduce-motion");
+    }
+
+    // Apply animations setting
+    if (!this.settings.animations) {
+      body.classList.add("no-animations");
+    } else {
+      body.classList.remove("no-animations");
+    }
+
+    this.applyAnimationSpeed();
+  }
+
+  applyAnimationSpeed() {
+    const root = document.documentElement;
+    root.style.setProperty("--animation-speed", this.settings.animationSpeed);
   }
 
   setupMobileNavigation() {
@@ -229,7 +353,7 @@ class OceanCrestApp {
 
   setupMagneticEffects() {
     const magneticElements = document.querySelectorAll(
-      ".btn, .logo, .theme-toggle",
+      ".btn, .logo, .settings-toggle",
     );
 
     magneticElements.forEach((el) => {

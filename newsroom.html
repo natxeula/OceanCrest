@@ -625,6 +625,34 @@
         background: rgba(110, 118, 129, 0.6);
       }
 
+      /* No News State Styles */
+      .no-news-container {
+        text-align: center;
+        padding: 120px 0;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .no-news-icon {
+        font-size: 80px;
+        margin-bottom: 32px;
+        opacity: 0.5;
+      }
+
+      .no-news-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: rgb(255, 255, 255);
+        margin-bottom: 24px;
+      }
+
+      .no-news-description {
+        font-size: 18px;
+        color: rgb(130, 130, 136);
+        line-height: 1.6;
+        margin-bottom: 48px;
+      }
+
       @media (max-width: 768px) {
         .newsroom-hero h1 {
           font-size: 48px;
@@ -678,6 +706,71 @@
     <!-- Progress Bar -->
     <div class="newsroom-progress-bar">
       <div class="newsroom-progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Settings Panel -->
+    <button
+      class="settings-toggle"
+      id="settingsToggle"
+      aria-label="Open settings"
+    >
+      ⚙️
+    </button>
+
+    <div class="settings-panel" id="settingsPanel">
+      <h3>Settings</h3>
+
+      <div class="setting-group">
+        <label class="setting-label">Theme</label>
+        <div class="theme-options">
+          <button class="theme-option" data-theme="dark">
+            <div class="theme-option-icon">🌙</div>
+            <span>Dark</span>
+          </button>
+          <button class="theme-option" data-theme="light">
+            <div class="theme-option-icon">☀️</div>
+            <span>Light</span>
+          </button>
+          <button class="theme-option" data-theme="auto">
+            <div class="theme-option-icon">🌓</div>
+            <span>Auto</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">Animations</label>
+          <div class="setting-toggle active" id="animationsToggle"></div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">Sound Effects</label>
+          <div class="setting-toggle" id="soundToggle"></div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Animation Speed</label>
+        <input
+          type="range"
+          class="setting-slider"
+          min="0.5"
+          max="2"
+          step="0.1"
+          value="1"
+          id="speedSlider"
+        />
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">Reduce Motion</label>
+          <div class="setting-toggle" id="motionToggle"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Header -->
@@ -859,304 +952,39 @@
       </div>
     </section>
 
-    <!-- Featured Article -->
+    <!-- No News Message -->
     <section class="newsroom-container">
-      <article
-        class="featured-article"
-        data-article-id="featured-1"
-        data-full-content="We're excited to announce the launch of our redesigned corporate website, featuring enhanced user experience, streamlined navigation, and comprehensive information about our productions, gaming division, and team. The new site reflects our commitment to innovation and transparency as we continue to grow our entertainment portfolio.
-
-Our new website represents months of careful planning and development, incorporating feedback from our community and industry partners. The redesigned platform features:
-
-• Enhanced user experience with intuitive navigation
-• Comprehensive project portfolios and case studies
-• Real-time updates from our gaming and production divisions
-• Streamlined contact and collaboration tools
-• Mobile-first responsive design
-• Advanced accessibility features
-
-The launch marks a significant milestone in our digital transformation strategy. As we continue to expand our entertainment offerings, this platform will serve as the central hub for all OceanCrest Entertainment communications, project updates, and community engagement.
-
-We thank our development team, design partners, and beta testers who made this launch possible. The new website is now live and we encourage all stakeholders to explore the enhanced features and provide feedback as we continue to iterate and improve.
-
-Looking ahead, we plan to integrate additional interactive features, including live streaming capabilities for behind-the-scenes content, enhanced project collaboration tools, and expanded community features. Stay tuned for more exciting updates in the coming months."
-      >
-        <div class="featured-header">🎬</div>
-        <div class="featured-content">
-          <div class="article-meta">
-            <div class="featured-category">Company News</div>
-            <div class="article-status enabled">Disabled</div>
-          </div>
-          <div class="featured-date">July 2, 2025</div>
-          <h2 class="featured-title">
-            OceanCrest Entertainment Launches New Corporate Website
-          </h2>
-          <p class="featured-excerpt">
-            We're excited to announce the launch of our redesigned corporate
-            website, featuring enhanced user experience, streamlined navigation,
-            and comprehensive information about our productions, gaming
-            division, and team. The new site reflects our commitment to
-            innovation and transparency as we continue to grow our entertainment
-            portfolio.
-          </p>
-          <button class="read-more read-full-btn" data-article-id="featured-1">
-            Read Full Article →
-          </button>
-        </div>
-      </article>
+      <div class="no-news-container">
+        <div class="no-news-icon">📰</div>
+        <h2 class="no-news-title">No News Available</h2>
+        <p class="no-news-description">
+          We don't have any news to share at the moment. Please check back later
+          for updates on our latest projects, announcements, and company
+          developments.
+        </p>
+      </div>
     </section>
 
-    <!-- News Grid -->
+    <!-- Empty News Grid -->
     <section class="newsroom-container">
-      <div class="news-grid">
-        <article
-          class="news-card"
-          data-category="production"
-          data-article-id="production-1"
-          data-full-content="Our latest film project has entered pre-production phase with an expanded creative team and innovative storytelling approaches.
-
-This exciting new cinematic venture represents our most ambitious production to date, combining cutting-edge technology with compelling narrative design. The project brings together acclaimed directors, writers, and technical specialists from across the entertainment industry.
-
-Key highlights of the pre-production phase:
-
-• Assembled a world-class creative team including Emmy-winning cinematographers
-• Secured partnerships with leading VFX studios for groundbreaking visual effects
-• Developed proprietary filming techniques for enhanced immersive storytelling
-• Completed extensive location scouting across multiple international destinations
-• Finalized casting for principal roles with both established and emerging talent
-
-The production timeline spans 18 months, with principal photography scheduled to begin in Q4 2025. Our innovative approach combines practical effects with advanced digital techniques, creating a unique visual language that will set new standards for cinematic entertainment.
-
-We're particularly excited about the collaborative approach this project represents, bringing together diverse voices and perspectives to create something truly special. The story explores themes of human connection, technological advancement, and the power of storytelling itself.
-
-Updates on casting announcements, behind-the-scenes content, and production milestones will be shared regularly as we progress through this incredible journey."
-        >
-          <div class="news-card-header">🎥</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">Production Update</div>
-              <div class="article-status enabled">Disabled</div>
-            </div>
-            <div class="news-date">June 28, 2025</div>
-            <h3 class="news-title">New Cinematic Project in Pre-Production</h3>
-            <p class="news-excerpt">
-              Our latest film project has entered pre-production phase with an
-              expanded creative team and innovative storytelling approaches.
-            </p>
-            <button
-              class="read-more read-full-btn"
-              data-article-id="production-1"
-            >
-              Read More →
-            </button>
-          </div>
-        </article>
-
-        <article
-          class="news-card"
-          data-category="gaming"
-          data-article-id="gaming-1"
-          data-full-content="Major content update brings new realms, enhanced gameplay mechanics, and expanded multiplayer features to our flagship gaming experience.
-
-The Mythoria: World Expansion represents the largest content update in the game's history, introducing three entirely new realms, each with unique environmental storytelling, challenging quests, and exclusive rewards.
-
-What's New in This Update:
-
-• The Crystalline Depths: An underground realm featuring crystal-powered puzzles and mining mechanics
-• Skyward Sanctuaries: Floating islands with aerial combat and wing-suit traversal systems
-• The Temporal Nexus: A time-bending realm where past and future collide
-
-Enhanced Gameplay Features:
-• Advanced crafting system with 200+ new recipes and materials
-• Dynamic weather system affecting gameplay strategies
-• Expanded guild system with cross-realm alliances
-• New character progression paths and skill trees
-• Enhanced PvP arenas with seasonal competitions
-
-The update also introduces quality-of-life improvements based on community feedback, including improved user interface, streamlined inventory management, and enhanced accessibility options.
-
-Our development team has worked closely with the Mythoria community throughout the development process, incorporating player suggestions and feedback into every aspect of the expansion.
-
-The update is now live for all players, with additional content releases planned monthly throughout 2025. Join millions of adventurers exploring these new realms and discover what awaits in the expanded world of Mythoria."
-        >
-          <div class="news-card-header">🎮</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">Gaming Division</div>
-              <div class="article-status featured">Featured</div>
-            </div>
-            <div class="news-date">June 25, 2025</div>
-            <h3 class="news-title">Mythoria: World Expansion Update</h3>
-            <p class="news-excerpt">
-              Major content update brings new realms, enhanced gameplay
-              mechanics, and expanded multiplayer features to our flagship
-              gaming experience.
-            </p>
-            <button class="read-more read-full-btn" data-article-id="gaming-1">
-              Read More →
-            </button>
-          </div>
-        </article>
-
-        <article class="news-card" data-category="gaming">
-          <div class="news-card-header">🔥</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">New Release</div>
-              <div class="article-status enabled">Disabled</div>
-            </div>
-            <div class="news-date">June 20, 2025</div>
-            <h3 class="news-title">HEAT: Action Gaming Experience Announced</h3>
-            <p class="news-excerpt">
-              Introducing HEAT, our upcoming high-intensity action game
-              featuring cutting-edge graphics and immersive gameplay mechanics.
-            </p>
-            <a href="heat.html" class="read-more">Learn More →</a>
-          </div>
-        </article>
-
-        <article class="news-card" data-category="company">
-          <div class="news-card-header">👥</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">Team Growth</div>
-              <div class="article-status enabled">Disabled</div>
-            </div>
-            <div class="news-date">June 15, 2025</div>
-            <h3 class="news-title">Expanding Our Creative Team</h3>
-            <p class="news-excerpt">
-              We're welcoming new talented professionals across multiple
-              departments as we scale our production capabilities.
-            </p>
-            <a href="careers.html" class="read-more">View Opportunities →</a>
-          </div>
-        </article>
-
-        <article
-          class="news-card"
-          data-category="production"
-          data-article-id="production-2"
-          data-full-content="OceanCrest Entertainment receives recognition for breakthrough approaches in digital storytelling and immersive entertainment.
-
-We are honored to announce that OceanCrest Entertainment has been recognized with the Innovation in Digital Storytelling Award at the 2025 Interactive Media Excellence Conference. This prestigious recognition highlights our commitment to pushing the boundaries of how stories are told and experienced in the digital age.
-
-Recognition Highlights:
-
-• Innovation in Digital Storytelling Award - Interactive Media Excellence Conference 2025
-• Best Emerging Studio - Digital Entertainment Association
-• Technology Innovation Prize - Future of Media Summit
-• Community Choice Award - Independent Creators Collective
-
-The awards specifically recognized our groundbreaking work in:
-
-• Immersive narrative techniques that blur the line between gaming and cinema
-• Revolutionary use of real-time rendering for interactive storytelling
-• Community-driven content creation tools and platforms
-• Accessibility innovations making digital entertainment more inclusive
-• Sustainable production practices in digital media creation
-
-Our CEO expressed gratitude to the entire OceanCrest team, noting that these achievements reflect the collective passion and innovation of everyone contributing to our projects. The recognition also highlights our collaborative approach with community creators and industry partners.
-
-Looking forward, these awards motivate us to continue innovating and exploring new frontiers in digital entertainment. We remain committed to creating experiences that inspire, engage, and connect people through the power of storytelling.
-
-Special thanks to our amazing community, industry partners, and the talented individuals who make OceanCrest Entertainment's vision a reality."
-        >
-          <div class="news-card-header">🏆</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">Achievement</div>
-              <div class="article-status enabled">Disabled</div>
-            </div>
-            <div class="news-date">June 10, 2025</div>
-            <h3 class="news-title">Industry Recognition for Innovation</h3>
-            <p class="news-excerpt">
-              OceanCrest Entertainment receives recognition for breakthrough
-              approaches in digital storytelling and immersive entertainment.
-            </p>
-            <button
-              class="read-more read-full-btn"
-              data-article-id="production-2"
-            >
-              Read More →
-            </button>
-          </div>
-        </article>
-
-        <article
-          class="news-card"
-          data-category="press"
-          data-article-id="press-1"
-          data-full-content="New collaborations with industry leaders will enhance our production capabilities and expand distribution reach.
-
-OceanCrest Entertainment is pleased to announce strategic partnerships with several leading organizations in the entertainment industry, significantly expanding our capabilities and market reach.
-
-Key Partnership Announcements:
-
-Strategic Technology Partnership with Vertex Studios
-• Access to cutting-edge motion capture and virtual production facilities
-• Collaborative development of next-generation storytelling tools
-• Shared research initiatives in immersive media technologies
-
-Distribution Alliance with Global Media Networks
-• Multi-platform distribution agreement covering streaming, theatrical, and digital releases
-• International market expansion across 50+ territories
-• Co-marketing initiatives for major releases
-
-Creative Collaboration with Independent Artists Collective
-• Funding and support program for emerging creators
-• Mentorship initiatives pairing established and emerging talent
-• Platform integration for community-created content
-
-Technology Integration with Cloud Computing Leaders
-• Advanced cloud infrastructure for global game deployments
-• Real-time collaboration tools for distributed teams
-• Enhanced data analytics for audience engagement optimization
-
-These partnerships represent a significant milestone in our growth strategy, combining OceanCrest's innovative storytelling approach with the expertise and resources of industry leaders.
-
-The collaborations will enable us to:
-• Accelerate production timelines while maintaining quality standards
-• Expand into new markets and audience segments
-• Develop more ambitious and technically sophisticated projects
-• Support a broader community of creators and artists
-
-We look forward to the exciting projects and opportunities these partnerships will enable, as we continue building the future of immersive entertainment together."
-        >
-          <div class="news-card-header">📰</div>
-          <div class="news-card-content">
-            <div class="article-meta">
-              <div class="news-category">Press Release</div>
-              <div class="article-status disabled">Disabled</div>
-            </div>
-            <div class="news-date">June 5, 2025</div>
-            <h3 class="news-title">Strategic Partnerships Announcement</h3>
-            <p class="news-excerpt">
-              New collaborations with industry leaders will enhance our
-              production capabilities and expand distribution reach.
-            </p>
-            <button class="read-more read-full-btn" data-article-id="press-1">
-              Read More →
-            </button>
-          </div>
-        </article>
-      </div>
+      <div class="news-grid" style="display: none"></div>
     </section>
 
     <!-- Press Releases Section -->
     <section class="newsroom-container">
       <div class="press-section">
         <h2>Recent Press Releases</h2>
-        <div class="press-item">
-          <h3>Q2 2025 Production Update</h3>
-          <p class="press-meta">June 30, 2025 • Corporate Communications</p>
-        </div>
-        <div class="press-item">
-          <h3>Gaming Division Expansion</h3>
-          <p class="press-meta">June 22, 2025 • Gaming News</p>
-        </div>
-        <div class="press-item">
-          <h3>Leadership Team Updates</h3>
-          <p class="press-meta">June 12, 2025 • Company News</p>
+        <div class="no-press-message">
+          <p
+            style="
+              text-align: center;
+              color: rgb(130, 130, 136);
+              font-size: 16px;
+              margin: 40px 0;
+            "
+          >
+            No press releases available at this time.
+          </p>
         </div>
       </div>
     </section>
@@ -1363,6 +1191,171 @@ We look forward to the exciting projects and opportunities these partnerships wi
           }
         });
       });
+
+      // Settings Panel Functionality
+      class SettingsManager {
+        constructor() {
+          this.settings = {
+            theme: localStorage.getItem("theme") || "dark",
+            animations: localStorage.getItem("animations") !== "false",
+            sound: localStorage.getItem("sound") === "true",
+            animationSpeed:
+              parseFloat(localStorage.getItem("animationSpeed")) || 1,
+            reduceMotion: localStorage.getItem("reduceMotion") === "true",
+          };
+          this.init();
+        }
+
+        init() {
+          this.setupEventListeners();
+          this.updateSettingsUI();
+          this.applySettings();
+        }
+
+        setupEventListeners() {
+          // Settings toggle
+          document.addEventListener("click", (e) => {
+            if (
+              e.target.id === "settingsToggle" ||
+              e.target.closest("#settingsToggle")
+            ) {
+              this.toggleSettingsPanel();
+            }
+
+            // Theme options
+            if (e.target.classList.contains("theme-option")) {
+              const theme = e.target.dataset.theme;
+              this.setTheme(theme);
+            }
+
+            // Setting toggles
+            if (e.target.id === "animationsToggle") {
+              this.toggleSetting("animations");
+            }
+            if (e.target.id === "soundToggle") {
+              this.toggleSetting("sound");
+            }
+            if (e.target.id === "motionToggle") {
+              this.toggleSetting("reduceMotion");
+            }
+
+            // Close settings panel when clicking outside
+            if (
+              !e.target.closest(".settings-panel") &&
+              !e.target.closest("#settingsToggle")
+            ) {
+              this.closeSettingsPanel();
+            }
+          });
+
+          // Speed slider
+          const speedSlider = document.getElementById("speedSlider");
+          if (speedSlider) {
+            speedSlider.addEventListener("input", (e) => {
+              this.settings.animationSpeed = parseFloat(e.target.value);
+              localStorage.setItem(
+                "animationSpeed",
+                this.settings.animationSpeed,
+              );
+              this.applyAnimationSpeed();
+            });
+          }
+        }
+
+        setTheme(theme) {
+          this.settings.theme = theme;
+          const body = document.body;
+          body.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+          this.updateThemeOptions();
+        }
+
+        updateThemeOptions() {
+          const themeOptions = document.querySelectorAll(".theme-option");
+          themeOptions.forEach((option) => {
+            option.classList.toggle(
+              "active",
+              option.dataset.theme === this.settings.theme,
+            );
+          });
+        }
+
+        toggleSetting(setting) {
+          this.settings[setting] = !this.settings[setting];
+          localStorage.setItem(setting, this.settings[setting]);
+          this.updateSettingsUI();
+          this.applySettings();
+        }
+
+        updateSettingsUI() {
+          this.updateThemeOptions();
+
+          const animationsToggle = document.getElementById("animationsToggle");
+          const soundToggle = document.getElementById("soundToggle");
+          const motionToggle = document.getElementById("motionToggle");
+          const speedSlider = document.getElementById("speedSlider");
+
+          if (animationsToggle) {
+            animationsToggle.classList.toggle(
+              "active",
+              this.settings.animations,
+            );
+          }
+          if (soundToggle) {
+            soundToggle.classList.toggle("active", this.settings.sound);
+          }
+          if (motionToggle) {
+            motionToggle.classList.toggle("active", this.settings.reduceMotion);
+          }
+          if (speedSlider) {
+            speedSlider.value = this.settings.animationSpeed;
+          }
+        }
+
+        applySettings() {
+          const body = document.body;
+          body.setAttribute("data-theme", this.settings.theme);
+
+          if (this.settings.reduceMotion) {
+            body.classList.add("reduce-motion");
+          } else {
+            body.classList.remove("reduce-motion");
+          }
+
+          if (!this.settings.animations) {
+            body.classList.add("no-animations");
+          } else {
+            body.classList.remove("no-animations");
+          }
+
+          this.applyAnimationSpeed();
+        }
+
+        applyAnimationSpeed() {
+          const root = document.documentElement;
+          root.style.setProperty(
+            "--animation-speed",
+            this.settings.animationSpeed,
+          );
+        }
+
+        toggleSettingsPanel() {
+          const panel = document.getElementById("settingsPanel");
+          if (panel) {
+            panel.classList.toggle("active");
+          }
+        }
+
+        closeSettingsPanel() {
+          const panel = document.getElementById("settingsPanel");
+          if (panel) {
+            panel.classList.remove("active");
+          }
+        }
+      }
+
+      // Initialize settings
+      const settingsManager = new SettingsManager();
     </script>
   </body>
 </html>
