@@ -26,17 +26,67 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Fetch event - serve from cache when possible
+// Fetch event - network-first strategy for API calls, cache-first for static assets
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return cached version or fetch from network
-      if (response) {
-        return response;
-      }
-      return fetch(event.request);
-    }),
-  );
+  const url = new URL(event.request.url);
+
+  // Network-first strategy for API calls
+  if (url.pathname.startsWith("/api/")) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // If network request succeeds, notify clients that we're online
+          self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => {
+              client.postMessage({ type: "NETWORK_STATUS", online: true });
+            });
+          });
+          return response;
+        })
+        .catch((error) => {
+          // Network failed, notify clients that we're offline
+          self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => {
+              client.postMessage({ type: "NETWORK_STATUS", online: false });
+            });
+          });
+
+          // Try to return a cached response for API calls (fallback)
+          return caches.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            // Return a custom offline response for API calls
+            return new Response(
+              JSON.stringify({
+                error: "Offline",
+                message: "No network connection available",
+                offline: true,
+              }),
+              {
+                status: 503,
+                headers: { "Content-Type": "application/json" },
+              },
+            );
+          });
+        }),
+    );
+  } else {
+    // Cache-first strategy for static assets
+    event.respondWith(
+      caches.match(event.request).then((response) => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request).catch(() => {
+          // Return offline page for navigation requests
+          if (event.request.mode === "navigate") {
+            return caches.match("/index.html");
+          }
+        });
+      }),
+    );
+  }
 });
 
 // Activate event - clean up old caches
