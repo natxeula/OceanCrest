@@ -13,19 +13,34 @@ app.use(express.json());
 // Serve static files
 app.use(express.static("."));
 
-// Database connection
-const pool = new Pool({
-  connectionString:
-    "postgresql://neondb_owner:npg_i1XyGU4TuRaj@ep-soft-shape-a8shmx5d-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require",
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
+// Database connection with environment variable fallback
+const DATABASE_URL =
+  process.env.DATABASE_URL ||
+  "postgresql://neondb_owner:npg_i1XyGU4TuRaj@ep-soft-shape-a8shmx5d-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require";
 
-// Initialize database table if it doesn't exist
+let pool;
+let databaseAvailable = false;
+
+// Initialize database connection
 async function initializeDatabase() {
   try {
-    await pool.query(`
+    pool = new Pool({
+      connectionString: DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      // Connection timeout and retry settings
+      connectionTimeoutMillis: 10000,
+      idleTimeoutMillis: 30000,
+      max: 10,
+    });
+
+    // Test connection
+    const client = await pool.connect();
+    console.log("✅ Connected to Neon database successfully");
+
+    // Create table with updated schema matching form data
+    await client.query(`
       CREATE TABLE IF NOT EXISTS applications (
         id VARCHAR(50) PRIMARY KEY,
         submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -38,16 +53,26 @@ async function initializeDatabase() {
         scene_writing TEXT,
         additional_links TEXT,
         terms_agree BOOLEAN NOT NULL DEFAULT false,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+
+        -- Add indexes for better performance
+        INDEX idx_submitted_at (submitted_at),
+        INDEX idx_team (team),
+        INDEX idx_preferred_name (preferred_name)
       )
     `);
-    console.log("Database table initialized");
+
+    console.log("✅ Database table initialized successfully");
+    client.release();
+    databaseAvailable = true;
   } catch (error) {
-    console.error("Error initializing database:", error);
+    console.error("❌ Database connection failed:", error.message);
+    console.log("📝 Applications will be saved to local files as fallback");
+    databaseAvailable = false;
   }
 }
 
-// Call on startup
+// Initialize on startup
 initializeDatabase();
 
 // API endpoint for applications
