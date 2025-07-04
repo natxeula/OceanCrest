@@ -729,8 +729,10 @@ nav a.active {
   margin: 0 0 20px 0;
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: rgb(255, 255, 255);
   text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
 }
 
 .setting-group {
