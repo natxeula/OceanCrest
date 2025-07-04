@@ -802,11 +802,17 @@ nav a.active {
 }
 
 .setting-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 8px;
+}
+
+.theme-icon {
+  font-size: 16px;
 }
 
 .setting-flex {
@@ -915,11 +921,17 @@ nav a.active {
 }
 
 .setting-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
   margin-bottom: 8px;
+}
+
+.theme-icon {
+  font-size: 16px;
 }
 
 .theme-options {

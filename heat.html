@@ -433,57 +433,15 @@
     </button>
 
     <div class="settings-panel" id="settingsPanel">
-      <h3>Settings</h3>
-
-      <div class="setting-group">
-        <label class="setting-label">Theme</label>
-        <div class="theme-options">
-          <button class="theme-option" data-theme="dark">
-            <div class="theme-option-icon">🌙</div>
-            <span>Dark</span>
-          </button>
-          <button class="theme-option" data-theme="light">
-            <div class="theme-option-icon">☀️</div>
-            <span>Light</span>
-          </button>
-          <button class="theme-option" data-theme="auto">
-            <div class="theme-option-icon">🌓</div>
-            <span>Auto</span>
-          </button>
-        </div>
-      </div>
+      <h3>Theme</h3>
 
       <div class="setting-group">
         <div class="setting-flex">
-          <label class="setting-label">Animations</label>
-          <div class="setting-toggle active" id="animationsToggle"></div>
-        </div>
-      </div>
-
-      <div class="setting-group">
-        <div class="setting-flex">
-          <label class="setting-label">Sound Effects</label>
-          <div class="setting-toggle" id="soundToggle"></div>
-        </div>
-      </div>
-
-      <div class="setting-group">
-        <label class="setting-label">Animation Speed</label>
-        <input
-          type="range"
-          class="setting-slider"
-          min="0.5"
-          max="2"
-          step="0.1"
-          value="1"
-          id="speedSlider"
-        />
-      </div>
-
-      <div class="setting-group">
-        <div class="setting-flex">
-          <label class="setting-label">Reduce Motion</label>
-          <div class="setting-toggle" id="motionToggle"></div>
+          <label class="setting-label">
+            <span class="theme-icon">🌙</span>
+            Dark Mode
+          </label>
+          <div class="setting-toggle" id="themeToggle"></div>
         </div>
       </div>
     </div>
