@@ -834,33 +834,62 @@
             data[key] = value;
           }
 
-          // Save to localStorage
+          // Submit to Neon database
           try {
-            const existingApplications = localStorage.getItem(
-              "oceancrest_applications",
-            );
-            const applications = existingApplications
-              ? JSON.parse(existingApplications)
-              : [];
+            const response = await fetch("/api/applications.js", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                applicationId: this.generateId(),
+                ...data,
+              }),
+            });
 
-            // Add new application with ID and timestamp
-            const application = {
-              id: this.generateId(),
-              submittedAt: new Date().toISOString(),
-              ...data,
-            };
-
-            applications.push(application);
-            localStorage.setItem(
-              "oceancrest_applications",
-              JSON.stringify(applications),
-            );
-
-            console.log("Application saved locally:", application.id);
-            return { ok: true };
+            if (response.ok) {
+              const result = await response.json();
+              console.log(
+                "Application saved to database:",
+                result.applicationId,
+              );
+              return { ok: true };
+            } else {
+              throw new Error(`Server error: ${response.status}`);
+            }
           } catch (error) {
-            console.error("Error saving application:", error);
-            return { ok: false };
+            console.error(
+              "Error saving to database, falling back to localStorage:",
+              error,
+            );
+
+            // Fallback to localStorage
+            try {
+              const existingApplications = localStorage.getItem(
+                "oceancrest_applications",
+              );
+              const applications = existingApplications
+                ? JSON.parse(existingApplications)
+                : [];
+
+              const application = {
+                id: this.generateId(),
+                submittedAt: new Date().toISOString(),
+                ...data,
+              };
+
+              applications.push(application);
+              localStorage.setItem(
+                "oceancrest_applications",
+                JSON.stringify(applications),
+              );
+
+              console.log("Application saved locally:", application.id);
+              return { ok: true };
+            } catch (localError) {
+              console.error("Error saving application:", localError);
+              return { ok: false };
+            }
           }
         }
 
