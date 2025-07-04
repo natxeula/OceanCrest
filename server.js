@@ -307,18 +307,51 @@ app.post("/api/applications", async (req, res) => {
 app.delete("/api/applications/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query(
-      "DELETE FROM applications WHERE id = $1 RETURNING id",
-      [id],
-    );
+    let deletedFromDatabase = false;
+    let deletedFromFile = false;
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Application not found" });
+    // Try to delete from database
+    if (databaseAvailable && pool) {
+      try {
+        const result = await pool.query(
+          "DELETE FROM applications WHERE id = $1 RETURNING id",
+          [id],
+        );
+
+        if (result.rows.length > 0) {
+          deletedFromDatabase = true;
+          console.log(`🗑️ Application ${id} deleted from database`);
+        }
+      } catch (dbError) {
+        console.error("Database delete failed:", dbError.message);
+      }
     }
 
-    res.json({ success: true, message: "Application deleted successfully" });
+    // Also delete from file backup
+    try {
+      const applications = await loadApplicationsFromFile();
+      const initialLength = applications.length;
+      const filteredApplications = applications.filter((app) => app.id !== id);
+
+      if (filteredApplications.length < initialLength) {
+        deletedFromFile = await saveApplicationsToFile(filteredApplications);
+        console.log(`🗑️ Application ${id} deleted from backup file`);
+      }
+    } catch (fileError) {
+      console.error("File delete failed:", fileError.message);
+    }
+
+    if (deletedFromDatabase || deletedFromFile) {
+      res.json({
+        success: true,
+        message: "Application deleted successfully",
+        deletedFrom: deletedFromDatabase ? "database" : "file",
+      });
+    } else {
+      res.status(404).json({ error: "Application not found" });
+    }
   } catch (error) {
-    console.error("Database error:", error);
+    console.error("Delete error:", error);
     res.status(500).json({ error: "Failed to delete application" });
   }
 });
@@ -326,13 +359,39 @@ app.delete("/api/applications/:id", async (req, res) => {
 // DELETE all applications endpoint
 app.delete("/api/applications", async (req, res) => {
   try {
-    await pool.query("DELETE FROM applications");
-    res.json({
-      success: true,
-      message: "All applications deleted successfully",
-    });
+    let clearedDatabase = false;
+    let clearedFile = false;
+
+    // Clear database
+    if (databaseAvailable && pool) {
+      try {
+        await pool.query("DELETE FROM applications");
+        clearedDatabase = true;
+        console.log("🗑️ All applications cleared from database");
+      } catch (dbError) {
+        console.error("Database clear failed:", dbError.message);
+      }
+    }
+
+    // Clear file backup
+    try {
+      clearedFile = await saveApplicationsToFile([]);
+      console.log("🗑️ All applications cleared from backup file");
+    } catch (fileError) {
+      console.error("File clear failed:", fileError.message);
+    }
+
+    if (clearedDatabase || clearedFile) {
+      res.json({
+        success: true,
+        message: "All applications deleted successfully",
+        clearedFrom: clearedDatabase ? "database" : "file",
+      });
+    } else {
+      throw new Error("Failed to clear applications from any storage");
+    }
   } catch (error) {
-    console.error("Database error:", error);
+    console.error("Clear error:", error);
     res.status(500).json({ error: "Failed to delete applications" });
   }
 });
