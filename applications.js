@@ -49,12 +49,17 @@ class ApplicationsManager {
       this.handleNetworkStatusChange(false, Date.now());
     });
 
-    // Periodic connection check
+    // Periodic connection check and auto-refresh for new applications
     setInterval(() => {
       if (navigator.onLine) {
         this.checkServerConnection();
+        // Auto-refresh applications every 30 seconds when online
+        this.loadApplications().then(() => {
+          this.updateStats();
+          this.renderApplications();
+        });
       }
-    }, 60000); // Check every minute
+    }, 30000); // Check every 30 seconds
   }
 
   handleNetworkStatusChange(isOnline, timestamp) {
@@ -160,7 +165,13 @@ class ApplicationsManager {
 
       if (response.ok) {
         const data = await response.json();
-        this.applications = data.applications || [];
+        const newApplications = data.applications || [];
+
+        // Check for new applications since last load
+        const previousCount = this.applications.length;
+        const newCount = newApplications.length;
+
+        this.applications = newApplications;
         this.filteredApplications = [...this.applications];
 
         // Save to localStorage for offline access
@@ -176,6 +187,15 @@ class ApplicationsManager {
         console.log(
           `✅ Loaded ${this.applications.length} applications from ${data.source}`,
         );
+
+        // Show notification for new applications
+        if (newCount > previousCount) {
+          const newAppsCount = newCount - previousCount;
+          this.showToast(
+            `🎉 ${newAppsCount} new application${newAppsCount > 1 ? "s" : ""} received!`,
+            "success",
+          );
+        }
 
         // Update online status
         this.handleNetworkStatusChange(true, Date.now());

@@ -443,7 +443,10 @@
           }
 
           // Form submission
-          form?.addEventListener("submit", (e) => this.handleSubmit(e));
+          form?.addEventListener("submit", (e) => {
+            console.log("🚀 Form submit event triggered");
+            this.handleSubmit(e);
+          });
 
           // Team change handler
           const teamSelect = document.getElementById("team");
@@ -583,16 +586,23 @@
         }
 
         nextStep() {
+          console.log(
+            `🔄 Moving from step ${this.currentStep} to ${this.currentStep + 1}`,
+          );
+
           if (!this.validateCurrentStep()) {
+            console.log("❌ Validation failed for current step");
             this.showToast("Please fix the errors before proceeding", "error");
             return;
           }
 
           this.collectCurrentStepData();
+          console.log(`✅ Data collected for step ${this.currentStep}`);
 
           if (this.currentStep < this.totalSteps) {
             this.currentStep++;
             this.updateStep();
+            console.log(`✅ Now on step ${this.currentStep}`);
           }
         }
 
@@ -671,12 +681,39 @@
           );
 
           inputs?.forEach((input) => {
-            if (input.type === "checkbox") {
-              this.formData[input.name] = input.checked;
-            } else {
-              this.formData[input.name] = input.value;
+            if (input.name && input.name !== "bot-field") {
+              // Skip bot field
+              if (input.type === "checkbox") {
+                this.formData[input.name] = input.checked;
+              } else {
+                this.formData[input.name] = input.value?.trim() || "";
+              }
             }
           });
+
+          // Log current step data for debugging
+          console.log(
+            `Step ${this.currentStep} data collected:`,
+            this.formData,
+          );
+        }
+
+        collectAllFormData() {
+          // Collect data from all form steps to ensure nothing is missed
+          const form = document.getElementById("jobApplicationForm");
+          const allInputs = form.querySelectorAll("input, select, textarea");
+
+          allInputs.forEach((input) => {
+            if (input.name && input.name !== "bot-field") {
+              if (input.type === "checkbox") {
+                this.formData[input.name] = input.checked;
+              } else {
+                this.formData[input.name] = input.value?.trim() || "";
+              }
+            }
+          });
+
+          console.log("All form data collected:", this.formData);
         }
 
         generateSummary() {
@@ -768,7 +805,8 @@
             return;
           }
 
-          this.collectCurrentStepData();
+          // Collect data from all steps, not just current
+          this.collectAllFormData();
 
           // Show loading state
           const submitBtn = document.getElementById("submitBtn");
@@ -780,14 +818,20 @@
           const form = document.getElementById("jobApplicationForm");
           const formData = new FormData(form);
 
-          // Add collected data to form
+          // Ensure all collected data is included
           Object.keys(this.formData).forEach((key) => {
             if (this.formData[key] !== undefined && this.formData[key] !== "") {
               formData.set(key, this.formData[key]);
             }
           });
 
+          console.log(
+            "Final form data being submitted:",
+            Object.fromEntries(formData.entries()),
+          );
+
           try {
+            console.log("🚀 Starting form submission...");
             const response = await this.submitToServer(formData);
 
             if (response.ok) {
@@ -827,6 +871,14 @@
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
 
+            // Show detailed error information for debugging
+            console.error("Detailed error info:", {
+              message: error.message,
+              stack: error.stack,
+              formData: Object.fromEntries(formData.entries()),
+              collectedData: this.formData,
+            });
+
             // Show user-friendly error message
             let errorMessage =
               "There was an error submitting your application. ";
@@ -834,15 +886,22 @@
             if (error.message.includes("Missing required field")) {
               errorMessage +=
                 "Please check all required fields are filled out.";
+            } else if (error.message.includes("timeout")) {
+              errorMessage += "The request timed out. Please try again.";
             } else if (
               error.message.includes("network") ||
-              error.message.includes("fetch")
+              error.message.includes("fetch") ||
+              error.message.includes("Network error")
             ) {
               errorMessage +=
                 "Please check your internet connection and try again.";
+            } else if (error.message.includes("Server error")) {
+              errorMessage +=
+                "Server is experiencing issues. Please try again in a moment.";
             } else {
               errorMessage +=
                 "Please try again or contact support if the problem persists.";
+              errorMessage += ` (Error: ${error.message})`;
             }
 
             this.showToast(errorMessage, "error");
@@ -859,36 +918,65 @@
           // Generate application ID
           const applicationId = this.generateId();
 
-          // Prepare data for submission
+          // Prepare data for submission - ensure all required fields are present
           const submitData = {
             applicationId: applicationId,
-            preferredName: data.preferredName,
-            discordUser: data.discordUser,
-            team: data.team,
-            specificRole: data.specificRole,
-            portfolio: data.portfolio || "",
-            generalDetails: data.generalDetails,
-            sceneWriting: data.sceneWriting || "",
-            additionalLinks: data.additionalLinks || "",
+            preferredName: data.preferredName?.trim() || "",
+            discordUser: data.discordUser?.trim() || "",
+            team: data.team || "",
+            specificRole: data.specificRole?.trim() || "",
+            portfolio: data.portfolio?.trim() || "",
+            generalDetails: data.generalDetails?.trim() || "",
+            sceneWriting: data.sceneWriting?.trim() || "",
+            additionalLinks: data.additionalLinks?.trim() || "",
             termsAgree: data.termsAgree === "on" || data.termsAgree === true,
             submittedAt: new Date().toISOString(),
           };
 
+          // Validate required fields before submission
+          const requiredFields = [
+            "preferredName",
+            "discordUser",
+            "team",
+            "specificRole",
+            "generalDetails",
+          ];
+          for (const field of requiredFields) {
+            if (!submitData[field] || submitData[field].trim() === "") {
+              throw new Error(`Missing required field: ${field}`);
+            }
+          }
+
           console.log("Submitting application data:", submitData);
 
           try {
-            // Submit to server API
+            // Submit to server API with longer timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
             const response = await fetch("/api/applications", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                Accept: "application/json",
               },
               body: JSON.stringify(submitData),
+              signal: controller.signal,
             });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              console.error(`HTTP ${response.status}:`, errorText);
+              throw new Error(
+                `Server error: ${response.status} - ${errorText}`,
+              );
+            }
 
             const result = await response.json();
 
-            if (response.ok && result.success) {
+            if (result.success) {
               console.log(
                 `✅ Application saved successfully to ${result.savedTo}:`,
                 result.applicationId,
@@ -896,6 +984,9 @@
 
               // Also save to localStorage for immediate admin access
               this.saveToLocalStorage(submitData);
+
+              // Trigger admin notification
+              await this.notifyAdmin(submitData);
 
               return {
                 ok: true,
@@ -905,35 +996,23 @@
             } else {
               // Server returned error
               console.error("Server returned error:", result);
-              throw new Error(
-                result.error || `Server error: ${response.status}`,
-              );
+              throw new Error(result.error || "Server processing error");
             }
           } catch (networkError) {
             console.error("Network/Server error:", networkError.message);
 
-            // Fallback to localStorage only
-            try {
-              console.log("💾 Falling back to local storage...");
-              this.saveToLocalStorage(submitData);
-
-              // Show user that it's saved locally
-              this.showToast(
-                "⚠️ Server unavailable. Application saved locally and will sync when connection is restored.",
-                "warning",
+            // Don't fallback to localStorage only - this hides the real problem
+            // Instead, inform user of the actual issue
+            if (networkError.name === "AbortError") {
+              throw new Error(
+                "Request timed out. Please check your connection and try again.",
               );
-
-              return {
-                ok: true,
-                applicationId: applicationId,
-                savedTo: "localStorage (offline)",
-              };
-            } catch (localError) {
-              console.error("❌ All save methods failed:", localError);
-              return {
-                ok: false,
-                error: "Failed to save application. Please try again.",
-              };
+            } else if (networkError.message.includes("fetch")) {
+              throw new Error(
+                "Network error. Please check your internet connection.",
+              );
+            } else {
+              throw new Error(`Submission failed: ${networkError.message}`);
             }
           }
         }
@@ -976,6 +1055,38 @@
           return (
             "app_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9)
           );
+        }
+
+        async notifyAdmin(applicationData) {
+          try {
+            // Send a simple notification to admin panel via localStorage
+            const adminNotification = {
+              type: "NEW_APPLICATION",
+              timestamp: Date.now(),
+              application: applicationData,
+              id: "notif_" + Date.now(),
+            };
+
+            // Store notification for admin panel
+            const existingNotifications = JSON.parse(
+              localStorage.getItem("oceancrest_admin_notifications") || "[]",
+            );
+            existingNotifications.unshift(adminNotification);
+
+            // Keep only last 50 notifications
+            const notifications = existingNotifications.slice(0, 50);
+            localStorage.setItem(
+              "oceancrest_admin_notifications",
+              JSON.stringify(notifications),
+            );
+
+            console.log(
+              "📢 Admin notification stored:",
+              applicationData.applicationId,
+            );
+          } catch (error) {
+            console.warn("Failed to store admin notification:", error.message);
+          }
         }
 
         showSuccess() {
@@ -1038,8 +1149,33 @@
       // Initialize the enhanced form when DOM is loaded
       document.addEventListener("DOMContentLoaded", () => {
         console.log("DOM loaded, initializing form...");
+
+        // Debug: Check if all required elements exist
+        const form = document.getElementById("jobApplicationForm");
+        const nextBtn = document.getElementById("nextBtn");
+        const prevBtn = document.getElementById("prevBtn");
+        const submitBtn = document.getElementById("submitBtn");
+
+        console.log("Form elements check:", {
+          form: !!form,
+          nextBtn: !!nextBtn,
+          prevBtn: !!prevBtn,
+          submitBtn: !!submitBtn,
+        });
+
+        if (!form) {
+          console.error("❌ Job application form not found!");
+          return;
+        }
+
         setTimeout(() => {
-          new EnhancedJobApplicationForm();
+          try {
+            const formInstance = new EnhancedJobApplicationForm();
+            console.log("✅ Form instance created successfully");
+            window.jobApplicationForm = formInstance; // Make globally accessible for debugging
+          } catch (error) {
+            console.error("❌ Error creating form instance:", error);
+          }
         }, 100); // Small delay to ensure all elements are rendered
       });
     </script>
