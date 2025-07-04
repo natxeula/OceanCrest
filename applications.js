@@ -155,6 +155,7 @@ class ApplicationsManager {
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "no-cache", // Always try to get fresh data
       });
 
       if (response.ok) {
@@ -162,10 +163,22 @@ class ApplicationsManager {
         this.applications = data.applications || [];
         this.filteredApplications = [...this.applications];
 
+        // Save to localStorage for offline access
+        try {
+          localStorage.setItem(
+            "oceancrest_applications",
+            JSON.stringify(this.applications),
+          );
+        } catch (e) {
+          console.warn("Failed to save to localStorage:", e.message);
+        }
+
         console.log(
           `✅ Loaded ${this.applications.length} applications from ${data.source}`,
         );
-        this.showConnectionStatus(data.source, data.total);
+
+        // Update online status
+        this.handleNetworkStatusChange(true, Date.now());
       } else {
         console.error(
           `❌ Server error ${response.status}: Failed to load applications`,
@@ -178,6 +191,9 @@ class ApplicationsManager {
         error.message,
       );
 
+      // Update offline status
+      this.handleNetworkStatusChange(false, Date.now());
+
       // Fallback to localStorage
       try {
         const savedApplications = localStorage.getItem(
@@ -189,21 +205,15 @@ class ApplicationsManager {
           console.log(
             `💾 Loaded ${this.applications.length} applications from localStorage`,
           );
-          this.showConnectionStatus(
-            "localStorage (offline)",
-            this.applications.length,
-          );
         } else {
           this.applications = [];
           this.filteredApplications = [];
           console.log("📭 No applications found in localStorage");
-          this.showConnectionStatus("none", 0);
         }
       } catch (localError) {
         console.error("❌ Failed to load from localStorage:", localError);
         this.applications = [];
         this.filteredApplications = [];
-        this.showConnectionStatus("error", 0);
       }
     }
   }
