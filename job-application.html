@@ -777,7 +777,8 @@
             return;
           }
 
-          this.collectCurrentStepData();
+          // Collect data from all steps, not just current
+          this.collectAllFormData();
 
           // Show loading state
           const submitBtn = document.getElementById("submitBtn");
@@ -789,12 +790,17 @@
           const form = document.getElementById("jobApplicationForm");
           const formData = new FormData(form);
 
-          // Add collected data to form
+          // Ensure all collected data is included
           Object.keys(this.formData).forEach((key) => {
             if (this.formData[key] !== undefined && this.formData[key] !== "") {
               formData.set(key, this.formData[key]);
             }
           });
+
+          console.log(
+            "Final form data being submitted:",
+            Object.fromEntries(formData.entries()),
+          );
 
           try {
             const response = await this.submitToServer(formData);
