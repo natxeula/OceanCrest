@@ -1255,7 +1255,7 @@ class JobApplicationForm {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("✅ Application submitted to server:", result);
+        console.log("✅ Application submitted to server successfully:", result);
 
         // Also save to localStorage as backup
         this.saveApplication(applicationData);
@@ -1263,7 +1263,14 @@ class JobApplicationForm {
         this.showSuccessMessage();
         this.sendNotificationEmail(applicationData);
       } else {
-        const errorData = await response.json().catch(() => ({}));
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch (e) {
+          errorData = { error: `Server error: ${response.status}` };
+        }
+
+        console.error("❌ Server responded with error:", errorData);
         throw new Error(errorData.error || `Server error: ${response.status}`);
       }
     } catch (error) {
