@@ -35,7 +35,9 @@ class OceanCrestApp {
     document.addEventListener("click", (e) => {
       if (
         e.target.id === "settingsToggle" ||
-        e.target.closest("#settingsToggle")
+        e.target.closest("#settingsToggle") ||
+        e.target.id === "desktopSettingsToggle" ||
+        e.target.closest("#desktopSettingsToggle")
       ) {
         this.toggleSettingsPanel();
       }
