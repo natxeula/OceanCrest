@@ -918,7 +918,7 @@ nav a.active {
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: rgb(200, 209, 217);
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
@@ -930,10 +930,10 @@ nav a.active {
 
 .theme-option {
   padding: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   background: transparent;
-  color: rgb(255, 255, 255);
+  color: var(--text-primary);
   cursor: pointer;
   font-size: 12px;
   text-align: center;
@@ -945,18 +945,14 @@ nav a.active {
 }
 
 .theme-option:hover {
-  border-color: rgb(51, 95, 255);
-  background: rgba(51, 95, 255, 0.1);
+  border-color: var(--accent-color);
+  background: var(--hover-bg);
 }
 
 .theme-option.active {
-  border-color: rgb(51, 95, 255);
-  background: linear-gradient(
-    135deg,
-    rgb(51, 95, 255) 0%,
-    rgb(139, 74, 140) 100%
-  );
-  color: rgb(255, 255, 255);
+  border-color: var(--accent-color);
+  background: var(--accent-gradient);
+  color: var(--primary-bg);
 }
 
 .theme-option-icon {
