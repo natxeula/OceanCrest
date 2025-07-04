@@ -1,16 +1,8 @@
 # Database Setup for Job Applications
 
-The job application system has been updated to support server-side storage instead of just localStorage. Here are your options:
+The job application system currently saves to localStorage. For production use, consider these database options:
 
-## Option 1: Netlify Forms (Easiest - No Setup Required)
-
-If you're hosting on Netlify, the forms will automatically be collected in your Netlify dashboard:
-
-1. Deploy to Netlify
-2. Forms will appear in your Netlify dashboard under "Forms"
-3. You can view, export, and manage submissions there
-
-## Option 2: MCP Server Integration (Recommended for Full Database Control)
+## Option 1: MCP Server Integration (Recommended)
 
 Connect to a database using Builder.io's MCP servers:
 
@@ -26,16 +18,16 @@ Connect to a database using Builder.io's MCP servers:
 - Advanced filtering and reporting
 - Integration with other business tools
 
-## Option 3: Custom Backend (Advanced)
+## Option 2: Custom Backend (Advanced)
 
-1. Update `netlify/functions/submit-application.js` to connect to your database
+1. Create a custom backend API
 2. Add environment variables for database connection
 3. Install necessary dependencies
 
 ### Example with Neon/PostgreSQL:
 
 ```javascript
-// In netlify/functions/submit-application.js
+// In your backend API
 const { Pool } = require("pg");
 
 const pool = new Pool({
@@ -64,8 +56,8 @@ const result = await pool.query(
 
 ## Current Status
 
-✅ **Forms now submit to server** (instead of just localStorage)  
-✅ **Backward compatible** (still saves locally for immediate admin access)  
+✅ **Forms now submit to server** (instead of just localStorage)
+✅ **Backward compatible** (still saves locally for immediate admin access)
 ✅ **Ready for database integration**
 
 ## Next Steps
