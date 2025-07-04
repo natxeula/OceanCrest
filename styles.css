@@ -774,14 +774,18 @@ nav a.active {
 }
 
 .theme-option:hover {
-  border-color: var(--accent-blue);
-  background: rgba(0, 191, 255, 0.1);
+  border-color: rgb(51, 95, 255);
+  background: rgba(51, 95, 255, 0.1);
 }
 
 .theme-option.active {
-  border-color: var(--accent-blue);
-  background: var(--accent-gradient);
-  color: var(--primary-bg);
+  border-color: rgb(51, 95, 255);
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
+  color: rgb(255, 255, 255);
 }
 
 .theme-option-icon {
