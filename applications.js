@@ -98,10 +98,10 @@ class ApplicationsManager {
 
   async loadFromGitHub() {
     try {
-      // GitHub repository configuration - same as in job-application.html
+      // GitHub repository configuration - using current repository
       const GITHUB_TOKEN = "github_pat_YOUR_TOKEN_HERE"; // Replace with your GitHub token
       const REPO_OWNER = "YourUsername"; // Replace with your GitHub username
-      const REPO_NAME = "oceancrest-applications"; // Replace with your repo name
+      const REPO_NAME = "oceancrest"; // Using current repository
 
       // Get all files in the applications directory
       const response = await fetch(
