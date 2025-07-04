@@ -1,11 +1,36 @@
 // Applications Management System
 class ApplicationsManager {
   constructor() {
-    this.applications = this.loadApplications();
+    this.applications = [];
     this.currentPage = 1;
     this.itemsPerPage = 5;
+    this.filteredApplications = [];
+    this.initAsync();
+  }
+
+  async initAsync() {
+    // Show loading state
+    this.showLoadingState();
+
+    // Load applications
+    this.applications = await this.loadApplications();
     this.filteredApplications = [...this.applications];
+
+    // Initialize UI
     this.init();
+  }
+
+  showLoadingState() {
+    const container = document.getElementById("applicationsContainer");
+    if (container) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 3rem;">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">🔄</div>
+          <h3>Loading Applications...</h3>
+          <p style="color: var(--text-secondary);">Fetching data from GitHub repository...</p>
+        </div>
+      `;
+    }
   }
 
   init() {
@@ -40,12 +65,87 @@ class ApplicationsManager {
     }
   }
 
-  loadApplications() {
+  async loadApplications() {
     try {
+      // First try to load from GitHub
+      const githubApplications = await this.loadFromGitHub();
+
+      if (githubApplications.length > 0) {
+        console.log(
+          `Loaded ${githubApplications.length} applications from GitHub`,
+        );
+        return githubApplications;
+      }
+
+      // Fallback to localStorage
       const stored = localStorage.getItem("oceanCrestApplications");
-      return stored ? JSON.parse(stored) : [];
+      const localApplications = stored ? JSON.parse(stored) : [];
+
+      if (localApplications.length > 0) {
+        console.log(
+          `Loaded ${localApplications.length} applications from localStorage`,
+        );
+      }
+
+      return localApplications;
     } catch (error) {
       console.error("Error loading applications:", error);
+      // Fallback to localStorage on error
+      const stored = localStorage.getItem("oceanCrestApplications");
+      return stored ? JSON.parse(stored) : [];
+    }
+  }
+
+  async loadFromGitHub() {
+    try {
+      // GitHub repository configuration - same as in job-application.html
+      const GITHUB_TOKEN = "github_pat_YOUR_TOKEN_HERE"; // Replace with your GitHub token
+      const REPO_OWNER = "YourUsername"; // Replace with your GitHub username
+      const REPO_NAME = "oceancrest-applications"; // Replace with your repo name
+
+      // Get all files in the applications directory
+      const response = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/applications`,
+        {
+          headers: {
+            Authorization: `token ${GITHUB_TOKEN}`,
+            Accept: "application/vnd.github.v3+json",
+          },
+        },
+      );
+
+      if (!response.ok) {
+        console.log("GitHub repository not accessible, using localStorage");
+        return [];
+      }
+
+      const files = await response.json();
+      const applications = [];
+
+      // Fetch each application file
+      for (const file of files) {
+        if (file.name.endsWith(".json")) {
+          try {
+            const fileResponse = await fetch(file.download_url);
+            const applicationData = await fileResponse.json();
+            applications.push(applicationData);
+          } catch (error) {
+            console.error(
+              `Error loading application file ${file.name}:`,
+              error,
+            );
+          }
+        }
+      }
+
+      // Sort by submission date (newest first)
+      applications.sort(
+        (a, b) => new Date(b.submittedAt) - new Date(a.submittedAt),
+      );
+
+      return applications;
+    } catch (error) {
+      console.error("Error loading from GitHub:", error);
       return [];
     }
   }
