@@ -62,7 +62,7 @@ app.post("/api/applications.js", async (req, res) => {
 
     // Insert into database
     const result = await pool.query(
-      `INSERT INTO applications 
+      `INSERT INTO applications
        (id, preferred_name, discord_user, team, specific_role, portfolio, general_details, scene_writing, additional_links, terms_agree)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
        RETURNING id, submitted_at`,
@@ -95,8 +95,8 @@ app.post("/api/applications.js", async (req, res) => {
   }
 });
 
-// Catch-all handler for SPA routes
-app.get("*", (req, res) => {
+// Serve index.html for any non-API routes
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
