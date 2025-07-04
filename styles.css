@@ -668,8 +668,8 @@ nav a.active {
 /* Settings Panel System */
 .settings-toggle {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   width: 60px;
   height: 60px;
   border-radius: 50%;
