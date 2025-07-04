@@ -2464,11 +2464,19 @@ nav a.active {
   }
 
   .settings-panel {
-    width: 280px;
+    width: auto;
     bottom: 1rem;
     right: 1rem;
     left: 1rem;
-    width: auto;
+    max-width: 320px;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .settings-panel.active {
+    transform: translateY(-50%) scale(1);
   }
 
   /* Particles disabled on mobile for performance */
