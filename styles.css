@@ -4301,6 +4301,47 @@ footer::before {
   .filter-select {
     min-width: 120px;
   }
+}
+
+/* Desktop styles for larger screens */
+@media (min-width: 769px) {
+  /* Show desktop settings button in navigation */
+  .desktop-settings-btn {
+    display: flex !important;
+  }
+
+  /* Hide the floating settings toggle on desktop when we have the nav button */
+  .settings-toggle {
+    display: none !important;
+  }
+
+  /* Ensure navigation is visible */
+  nav ul {
+    display: flex;
+  }
+
+  .mobile-nav-toggle {
+    display: none;
+  }
+
+  .mobile-nav-overlay {
+    display: none;
+  }
+
+  /* Desktop settings panel positioning */
+  .settings-panel {
+    position: fixed;
+    bottom: auto;
+    right: 1.5rem;
+    left: auto;
+    top: 70px;
+    width: 320px;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  .settings-panel.active {
+    transform: translateY(0) scale(1);
+  }
 
   .admin-stats {
     gap: 1rem;
