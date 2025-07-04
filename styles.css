@@ -762,7 +762,7 @@ nav a.active {
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   background: transparent;
-  color: var(--text-primary);
+  color: rgb(255, 255, 255);
   cursor: pointer;
   font-size: 12px;
   text-align: center;
