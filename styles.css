@@ -808,7 +808,11 @@ nav a.active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent-gradient);
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
@@ -817,7 +821,11 @@ nav a.active {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--accent-gradient);
+  background: linear-gradient(
+    135deg,
+    rgb(51, 95, 255) 0%,
+    rgb(139, 74, 140) 100%
+  );
   cursor: pointer;
   border: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
