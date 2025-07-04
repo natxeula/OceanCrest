@@ -1177,9 +1177,24 @@ class JobApplicationForm {
       data[key] = value;
     }
 
-    // Add metadata
-    data.id = this.generateId();
+    // Add metadata with server-compatible naming
+    data.applicationId = this.generateId();
     data.submittedAt = new Date().toISOString();
+
+    // Ensure required fields are present and not empty
+    const requiredFields = [
+      "preferredName",
+      "discordUser",
+      "team",
+      "specificRole",
+      "generalDetails",
+    ];
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].toString().trim() === "") {
+        console.error(`Missing required field: ${field}`);
+        throw new Error(`Missing required field: ${field}`);
+      }
+    }
 
     return data;
   }
