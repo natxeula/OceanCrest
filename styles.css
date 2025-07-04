@@ -2480,15 +2480,35 @@ footer::before {
   }
 
   /* Footer responsive styles */
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-brand {
+    text-align: center;
+  }
+
+  .footer-social {
+    align-items: center;
+  }
+
   .footer-content {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 2rem;
   }
 
-  .footer-cta-buttons {
+  .footer-buttons {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
   }
 
   .footer-links {
@@ -2496,11 +2516,11 @@ footer::before {
     gap: 1rem;
   }
 
-  .footer-top h3 {
+  .footer-logo {
     font-size: 2rem;
   }
 
-  .footer-top p {
+  .footer-tagline {
     font-size: 1rem;
   }
 }
