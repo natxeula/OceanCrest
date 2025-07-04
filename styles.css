@@ -1780,7 +1780,7 @@ nav a.active {
 
   /* Disable complex animations on mobile */
   .tilt-effect:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
   }
 
   /* Form adjustments */
