@@ -140,6 +140,81 @@ class OceanCrestApp {
     this.setTheme(newTheme);
   }
 
+  setupSettings() {
+    // Initialize settings UI
+    setTimeout(() => {
+      this.updateSettingsUI();
+      this.setupSettingsEventListeners();
+    }, 100);
+  }
+
+  updateSettingsUI() {
+    // Update theme options
+    this.updateThemeOptions();
+
+    // Update toggle states
+    const animationsToggle = document.getElementById("animationsToggle");
+    const soundToggle = document.getElementById("soundToggle");
+    const motionToggle = document.getElementById("motionToggle");
+    const speedSlider = document.getElementById("speedSlider");
+
+    if (animationsToggle) {
+      animationsToggle.classList.toggle("active", this.settings.animations);
+    }
+    if (soundToggle) {
+      soundToggle.classList.toggle("active", this.settings.sound);
+    }
+    if (motionToggle) {
+      motionToggle.classList.toggle("active", this.settings.reduceMotion);
+    }
+    if (speedSlider) {
+      speedSlider.value = this.settings.animationSpeed;
+    }
+  }
+
+  setupSettingsEventListeners() {
+    const speedSlider = document.getElementById("speedSlider");
+    if (speedSlider) {
+      speedSlider.addEventListener("input", (e) => {
+        this.settings.animationSpeed = parseFloat(e.target.value);
+        localStorage.setItem("animationSpeed", this.settings.animationSpeed);
+        this.applyAnimationSpeed();
+      });
+    }
+  }
+
+  toggleSetting(setting) {
+    this.settings[setting] = !this.settings[setting];
+    localStorage.setItem(setting, this.settings[setting]);
+    this.updateSettingsUI();
+    this.applySettings();
+  }
+
+  applySettings() {
+    const body = document.body;
+
+    // Apply reduce motion
+    if (this.settings.reduceMotion) {
+      body.classList.add("reduce-motion");
+    } else {
+      body.classList.remove("reduce-motion");
+    }
+
+    // Apply animations setting
+    if (!this.settings.animations) {
+      body.classList.add("no-animations");
+    } else {
+      body.classList.remove("no-animations");
+    }
+
+    this.applyAnimationSpeed();
+  }
+
+  applyAnimationSpeed() {
+    const root = document.documentElement;
+    root.style.setProperty("--animation-speed", this.settings.animationSpeed);
+  }
+
   setupMobileNavigation() {
     // Create mobile navigation elements if they don't exist
     this.createMobileNavElements();
