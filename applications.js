@@ -43,13 +43,27 @@ class ApplicationsManager {
 
   async loadApplications() {
     try {
-      // Load applications from localStorage
-      const savedApplications = localStorage.getItem("oceancrest_applications");
-      if (savedApplications) {
-        this.applications = JSON.parse(savedApplications);
+      // Load applications from Neon database
+      const response = await fetch('/api/applications.js', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        this.applications = data.applications || [];
         this.filteredApplications = [...this.applications];
       } else {
-        this.applications = [];
+        console.error('Failed to load applications from database');
+        // Fallback to localStorage
+        const savedApplications = localStorage.getItem('oceancrest_applications');
+        if (savedApplications) {
+          this.applications = JSON.parse(savedApplications);
+          this.filteredApplications = [...this.applications];
+        } else {
+          this.applications = [];
         this.filteredApplications = [];
       }
     } catch (error) {
