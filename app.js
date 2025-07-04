@@ -260,7 +260,7 @@ class OceanCrestApp {
 
   setupMagneticEffects() {
     const magneticElements = document.querySelectorAll(
-      ".btn, .logo, .theme-toggle",
+      ".btn, .logo, .settings-toggle",
     );
 
     magneticElements.forEach((el) => {
