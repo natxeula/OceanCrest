@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HEAT - OceanCrest Entertainment</title>
-    <meta
-      name="description"
-      content="HEAT by OceanCrest Entertainment"
-    />
+    <meta name="description" content="HEAT by OceanCrest Entertainment" />
     <meta name="theme-color" content="#0d1117" />
     <link rel="manifest" href="manifest.json" />
     <link
@@ -276,6 +273,63 @@
         letter-spacing: 0.05em;
       }
 
+      .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #ff4500, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-description {
+        text-align: center;
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .gameplay-description {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 3rem;
+      }
+
+      .stay-connected {
+        text-align: center;
+        margin-top: 4rem;
+      }
+
+      .stay-connected h3 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #ff4500, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .stay-connected p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       @media (max-width: 768px) {
         .heat-title {
           font-size: 3rem;
@@ -288,6 +342,15 @@
 
         .features-grid {
           grid-template-columns: 1fr;
+        }
+
+        .button-group {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .section-title {
+          font-size: 2rem;
         }
       }
     </style>
@@ -340,9 +403,7 @@
         <div class="container">
           <div class="hero-content fade-in">
             <h1 class="heat-title">HEAT</h1>
-            <p class="heat-subtitle">
-              "The desert never cools."
-            </p>
+            <p class="heat-subtitle">"The desert never cools."</p>
             <div class="coming-soon">Coming Soon</div>
           </div>
         </div>
@@ -352,30 +413,10 @@
         <div class="container">
           <div class="game-preview">
             <div class="preview-image">🔥</div>
-            <h2
-              style="
-                font-size: 2.5rem;
-                text-align: center;
-                margin-bottom: 2rem;
-                background: linear-gradient(135deg, #ff4500, #ff6b35);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-              "
-            >
-              Enter the Desert
-            </h2>
-            <p
-              style="
-                text-align: center;
-                font-size: 1.2rem;
-                color: var(--text-secondary);
-                line-height: 1.6;
-                max-width: 800px;
-                margin: 0 auto;
-              "
-            >
-              HEAT is a game where you are dropped in with a pistol, and must fend off hoards of enemies to survive.
+            <h2 class="section-title">Enter the Desert</h2>
+            <p class="section-description">
+              HEAT is a game where you are dropped in with a pistol, and must
+              fend off hoards of enemies to survive.
             </p>
           </div>
 
@@ -391,9 +432,7 @@
             <div class="feature-card">
               <span class="feature-icon">🔥</span>
               <h3 class="feature-title">The Environments</h3>
-              <p class="feature-description">
-                Battle across the desert!
-              </p>
+              <p class="feature-description">Battle across the desert!</p>
             </div>
 
             <div class="feature-card">
@@ -403,6 +442,8 @@
                 Team up with friends to fend off the hoards!
               </p>
             </div>
+          </div>
+
           <div class="heat-stats">
             <div class="stat-card">
               <span class="stat-number">60</span>
@@ -418,43 +459,14 @@
             </div>
             <div class="stat-card">
               <span class="stat-number">1</span>
-              <span class="stat-label">Weapon.</span>
+              <span class="stat-label">Weapon</span>
             </div>
           </div>
 
           <div class="gameplay-section">
-            <h2
-              style="
-                font-size: 2.5rem;
-                margin-bottom: 2rem;
-                background: linear-gradient(135deg, #ff4500, #ff6b35);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-              "
-            >
-              Revolutionary Gameplay
-            </h2>
-            <p
-              style="
-                font-size: 1.2rem;
-                color: var(--text-secondary);
-                line-height: 1.7;
-                max-width: 700px;
-                margin: 0 auto 2rem;
-              "
-            >
-              "The desert never yields."
-            </p>
-            <div
-              style="
-                display: flex;
-                gap: 1rem;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-top: 3rem;
-              "
-            >
+            <h2 class="section-title">Revolutionary Gameplay</h2>
+            <p class="gameplay-description">"The desert never yields."</p>
+            <div class="button-group">
               <a href="gaming.html" class="btn btn-primary"
                 >Explore Gaming Division</a
               >
@@ -462,39 +474,13 @@
             </div>
           </div>
 
-          <div style="text-align: center; margin-top: 4rem">
-            <h3
-              style="
-                font-size: 2rem;
-                margin-bottom: 2rem;
-                background: linear-gradient(135deg, #ff4500, #ff6b35);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-              "
-            >
-              Stay Connected
-            </h3>
-            <p
-              style="
-                color: var(--text-secondary);
-                margin-bottom: 2rem;
-                max-width: 600px;
-                margin-left: auto;
-                margin-right: auto;
-              "
-            >
+          <div class="stay-connected">
+            <h3>Stay Connected</h3>
+            <p>
               Be the first to know about HEAT development updates, beta access
               opportunities, and release announcements.
             </p>
-            <div
-              style="
-                display: flex;
-                gap: 1rem;
-                justify-content: center;
-                flex-wrap: wrap;
-              "
-            >
+            <div class="button-group">
               <a href="newsroom.html" class="btn btn-primary">Latest News</a>
               <a href="mythoria.html" class="btn btn-secondary">Try Mythoria</a>
               <a href="careers.html" class="btn btn-secondary">Join Our Team</a>
