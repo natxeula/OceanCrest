@@ -118,6 +118,26 @@ class OceanCrestApp {
     body.setAttribute("data-motion", reduced ? "reduced" : "full");
     localStorage.setItem("reducedMotion", reduced.toString());
     this.updateSettingsUI();
+
+    // Visual feedback
+    this.showSettingsSaved();
+  }
+
+  showSettingsSaved() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      const title = panel.querySelector("h3");
+      if (title) {
+        const originalText = title.textContent;
+        title.textContent = "Settings Saved ✓";
+        title.style.color = "var(--accent-blue)";
+
+        setTimeout(() => {
+          title.textContent = originalText;
+          title.style.color = "";
+        }, 1000);
+      }
+    }
   }
 
   toggleSettingsPanel() {
