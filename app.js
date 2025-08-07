@@ -51,7 +51,8 @@ class OceanCrestApp {
       if (
         !e.target.closest(".settings-panel") &&
         !e.target.closest("#settingsToggle") &&
-        !e.target.closest("#desktopSettingsToggle")
+        !e.target.closest("#desktopSettingsToggle") &&
+        !e.target.closest(".mobile-nav-settings")
       ) {
         this.closeSettingsPanel();
       }
