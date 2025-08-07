@@ -1298,15 +1298,22 @@ header.scrolled {
 .nav-indicator {
   position: absolute;
   bottom: -2px;
-  left: 0;
+  left: 50%;
+  width: 0;
   height: 2px;
   background: var(--accent-gradient);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: scaleX(0);
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-nav li:hover .nav-indicator {
-  transform: scaleX(1);
+.desktop-nav li:hover .nav-indicator {
+  transform: translateX(-50%) scaleX(1);
+  width: 80%;
+}
+
+.desktop-nav a.active .nav-indicator {
+  transform: translateX(-50%) scaleX(1);
+  width: 80%;
 }
 
 /* Scroll Progress Enhancement */
