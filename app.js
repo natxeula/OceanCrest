@@ -154,9 +154,6 @@ class OceanCrestApp {
   }
 
   setupMobileNavigation() {
-    // Create mobile navigation elements if they don't exist
-    this.createMobileNavElements();
-
     // Mobile nav toggle functionality
     document.addEventListener("click", (e) => {
       if (e.target.closest(".mobile-nav-toggle")) {
@@ -166,9 +163,15 @@ class OceanCrestApp {
       // Close mobile nav when clicking overlay or links
       if (
         e.target.classList.contains("mobile-nav-overlay") ||
-        (e.target.closest(".mobile-nav-menu a") &&
+        (e.target.closest(".mobile-nav-link") &&
           !e.target.closest(".mobile-nav-toggle"))
       ) {
+        this.closeMobileNav();
+      }
+
+      // Handle mobile settings button
+      if (e.target.closest("#mobileSettingsToggle")) {
+        this.toggleSettingsPanel();
         this.closeMobileNav();
       }
     });
@@ -182,7 +185,7 @@ class OceanCrestApp {
 
     // Close mobile nav on resize to desktop
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1023) {
         this.closeMobileNav();
       }
     });
