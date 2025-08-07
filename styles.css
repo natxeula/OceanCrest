@@ -329,7 +329,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(13, 17, 23, 0.8);
+  background: rgba(13, 17, 23, 0.9);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 999;
@@ -359,6 +359,7 @@ header.scrolled {
   background-clip: text;
   text-decoration: none;
   transition: all 0.3s ease;
+  z-index: 1001;
 }
 
 .logo:hover {
@@ -366,26 +367,39 @@ header.scrolled {
   filter: drop-shadow(0 0 8px rgba(0, 191, 255, 0.3));
 }
 
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
+/* Desktop Navigation */
+.desktop-nav {
+  display: none;
 }
 
-nav a {
+.desktop-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.desktop-nav li {
+  position: relative;
+}
+
+.desktop-nav a {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
-nav a::before {
+.desktop-nav a::before {
   content: "";
   position: absolute;
   top: 0;
@@ -401,19 +415,84 @@ nav a::before {
   transition: left 0.5s ease;
 }
 
-nav a:hover::before {
+.desktop-nav a:hover::before {
   left: 100%;
 }
 
-nav a:hover {
+.desktop-nav a:hover {
   color: var(--text-primary);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 191, 255, 0.2);
 }
 
-nav a.active {
+.desktop-nav a.active {
   color: var(--accent-blue);
   background: rgba(0, 191, 255, 0.1);
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-arrow {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  margin-left: 0.2rem;
+}
+
+.dropdown:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 17, 23, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.7rem 1.2rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  font-size: 0.9rem;
+}
+
+.dropdown-menu a:hover {
+  background: var(--accent-gradient);
+  color: var(--primary-bg);
+  transform: none;
+  box-shadow: none;
+}
+
+.dropdown-menu a::before {
+  display: none;
 }
 
 /* Floating Particles System */
