@@ -945,7 +945,16 @@
         lives: 3,
         level: 1,
         running: false,
-        gameLoop: null
+        gameLoop: null,
+        modifiers: {
+          bigPaddle: false,
+          multiBall: false,
+          slowMotion: false,
+          laser: false
+        },
+        balls: [],
+        powerUps: [],
+        mobileDirection: 0
       };
 
       function initBreakout() {
@@ -1426,7 +1435,7 @@
         btn.classList.toggle('active');
 
         if (type === 'ghost') {
-          showModifierEffect(tetrisGame.modifiers[type] ? '�� Ghost Piece ON!' : '👻 Ghost Piece OFF!');
+          showModifierEffect(tetrisGame.modifiers[type] ? '👻 Ghost Piece ON!' : '👻 Ghost Piece OFF!');
         } else if (type === 'hold') {
           showModifierEffect(tetrisGame.modifiers[type] ? '📦 Hold Piece ON!' : '📦 Hold Piece OFF!');
         } else if (type === 'bomb') {
