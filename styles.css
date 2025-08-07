@@ -971,6 +971,19 @@ header.scrolled {
   transform: translateX(20px);
 }
 
+.setting-toggle:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.setting-toggle:focus {
+  box-shadow: 0 0 0 2px var(--accent-blue);
+}
+
+.setting-toggle:active {
+  transform: scale(0.95);
+}
+
 .setting-slider {
   width: 100%;
   height: 6px;
