@@ -730,6 +730,14 @@
         const cell = minesweeperGame.grid[y][x];
         if (cell.revealed || cell.flagged) return;
 
+        // Safe dig modifier
+        if (cell.mine && minesweeperGame.modifiers.safeDig && minesweeperGame.safeDigs > 0) {
+          minesweeperGame.safeDigs--;
+          showModifierEffect('🛡️ Safe dig used!');
+          updateMinesweeperDisplay();
+          return;
+        }
+
         cell.revealed = true;
         minesweeperGame.revealed++;
 
@@ -738,6 +746,23 @@
           pauseMinesweeper();
           alert('Game Over! You hit a mine!');
           return;
+        }
+
+        // Auto-flag adjacent mines
+        if (minesweeperGame.modifiers.autoFlag && cell.count > 0) {
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                const adjCell = minesweeperGame.grid[ny][nx];
+                if (adjCell.mine && !adjCell.flagged && !adjCell.revealed) {
+                  adjCell.flagged = true;
+                  minesweeperGame.flags++;
+                }
+              }
+            }
+          }
         }
 
         if (cell.count === 0) {
@@ -759,6 +784,7 @@
           alert(`Level ${minesweeperGame.level} completed in ${minesweeperGame.timer} seconds!`);
         }
 
+        updateMinesweeperDisplay();
         drawMinesweeper();
       }
 
