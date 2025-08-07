@@ -1412,8 +1412,87 @@
       }
 
       function updateTetrisDisplay() {
+        let modifierText = '';
+        if (tetrisGame.modifiers.hold && tetrisGame.heldPiece) {
+          modifierText += ' | Hold: Ready';
+        }
         document.getElementById('tetrisScore').textContent =
-          `Score: ${tetrisGame.score} | Level: ${tetrisGame.level} | Lines: ${tetrisGame.lines}`;
+          `Score: ${tetrisGame.score} | Level: ${tetrisGame.level} | Lines: ${tetrisGame.lines}${modifierText}`;
+      }
+
+      function toggleTetrisModifier(type) {
+        tetrisGame.modifiers[type] = !tetrisGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'ghost') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '�� Ghost Piece ON!' : '👻 Ghost Piece OFF!');
+        } else if (type === 'hold') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '📦 Hold Piece ON!' : '📦 Hold Piece OFF!');
+        } else if (type === 'bomb') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '💣 Bomb Pieces OFF!');
+        } else if (type === 'rainbow') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '🌈 Rainbow Mode ON!' : '🌈 Rainbow Mode OFF!');
+        }
+
+        drawTetris();
+      }
+
+      function holdTetrisPiece() {
+        if (!tetrisGame.canHold) return;
+
+        if (tetrisGame.heldPiece) {
+          const temp = tetrisGame.currentPiece;
+          tetrisGame.currentPiece = {
+            matrix: tetrisGame.heldPiece.matrix,
+            color: tetrisGame.heldPiece.color,
+            x: Math.floor((10 - tetrisGame.heldPiece.matrix[0].length) / 2),
+            y: 0
+          };
+          tetrisGame.heldPiece = {
+            matrix: temp.matrix,
+            color: temp.color
+          };
+        } else {
+          tetrisGame.heldPiece = {
+            matrix: tetrisGame.currentPiece.matrix,
+            color: tetrisGame.currentPiece.color
+          };
+          spawnTetrisPiece();
+        }
+
+        tetrisGame.canHold = false;
+        updateTetrisDisplay();
+        drawTetris();
+      }
+
+      // Mobile Tetris controls
+      function mobileTetrisMove(action) {
+        if (!tetrisGame.running) return;
+
+        switch(action) {
+          case 'left':
+            moveTetrisPiece(-1, 0);
+            break;
+          case 'right':
+            moveTetrisPiece(1, 0);
+            break;
+          case 'down':
+            moveTetrisPiece(0, 1);
+            tetrisGame.score += 1;
+            break;
+          case 'rotate':
+            rotateTetrisPiece();
+            break;
+          case 'drop':
+            hardDrop();
+            break;
+          case 'hold':
+            if (tetrisGame.modifiers.hold) {
+              holdTetrisPiece();
+            }
+            break;
+        }
       }
 
       function updateTetris() {
