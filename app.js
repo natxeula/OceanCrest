@@ -191,52 +191,6 @@ class OceanCrestApp {
     });
   }
 
-  createMobileNavElements() {
-    const header = document.querySelector("header");
-    if (!header) return;
-
-    // Check if mobile nav already exists
-    if (document.querySelector(".mobile-nav-toggle")) return;
-
-    // Create mobile toggle button
-    const mobileToggle = document.createElement("button");
-    mobileToggle.className = "mobile-nav-toggle";
-    mobileToggle.innerHTML = `
-      <span></span>
-      <span></span>
-      <span></span>
-    `;
-
-    // Create mobile overlay
-    const mobileOverlay = document.createElement("div");
-    mobileOverlay.className = "mobile-nav-overlay";
-
-    // Get navigation links
-    const navLinks = document.querySelectorAll("nav ul li a");
-    const mobileNavMenu = document.createElement("div");
-    mobileNavMenu.className = "mobile-nav-menu";
-
-    navLinks.forEach((link) => {
-      const mobileLink = link.cloneNode(true);
-      mobileNavMenu.appendChild(mobileLink);
-    });
-
-    // Add settings button to mobile menu
-    const settingsButton = document.createElement("button");
-    settingsButton.className = "mobile-nav-settings";
-    settingsButton.innerHTML = "⚙️ Settings";
-    settingsButton.addEventListener("click", () => {
-      this.toggleSettingsPanel();
-      this.closeMobileNav(); // Close mobile menu when settings is opened
-    });
-    mobileNavMenu.appendChild(settingsButton);
-
-    mobileOverlay.appendChild(mobileNavMenu);
-
-    // Add to DOM
-    header.querySelector(".header-container").appendChild(mobileToggle);
-    document.body.appendChild(mobileOverlay);
-  }
 
   toggleMobileNav() {
     const toggle = document.querySelector(".mobile-nav-toggle");
