@@ -97,11 +97,21 @@ class OceanCrestApp {
     localStorage.setItem("theme", theme);
     this.updateSettingsUI();
 
-    // Add theme transition effect
-    body.style.transition = "all 0.3s ease";
-    setTimeout(() => {
-      body.style.transition = "";
-    }, 300);
+    // Add theme transition effect if motion is not reduced
+    if (!this.reducedMotion) {
+      body.style.transition = "all 0.3s ease";
+      setTimeout(() => {
+        body.style.transition = "";
+      }, 300);
+    }
+  }
+
+  setMotion(reduced) {
+    this.reducedMotion = reduced;
+    const body = document.body;
+    body.setAttribute("data-motion", reduced ? "reduced" : "full");
+    localStorage.setItem("reducedMotion", reduced.toString());
+    this.updateSettingsUI();
   }
 
   toggleSettingsPanel() {
