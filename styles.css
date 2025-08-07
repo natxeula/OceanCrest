@@ -8,6 +8,16 @@
   font-family: "Inter", sans-serif;
 }
 
+/* Reduced Motion Support */
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
 :root {
   --primary-bg: #0d1117;
   --secondary-bg: #161b22;
