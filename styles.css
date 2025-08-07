@@ -2550,23 +2550,50 @@ nav a.active {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  /* Mobile Navigation */
+/* Responsive Breakpoints */
+@media (min-width: 1024px) {
+  .desktop-nav {
+    display: block;
+  }
+
+  .mobile-nav-toggle {
+    display: none;
+  }
+
+  .desktop-nav ul {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-nav {
+    display: none;
+  }
+
   .mobile-nav-toggle {
     display: flex;
   }
 
-  nav ul {
-    display: none;
-  }
-
-  .mobile-nav-overlay {
-    display: block;
-  }
-
-  /* Header adjustments */
   .header-container {
     padding: 0.8rem 0;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-nav-link,
+  .mobile-nav-settings {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    min-width: 180px;
+  }
+
+  .mobile-nav-menu {
+    gap: 1rem;
+    padding: 1.5rem;
   }
 
   .logo {
