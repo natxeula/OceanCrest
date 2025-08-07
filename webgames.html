@@ -484,7 +484,7 @@
 
           <!-- Tetris -->
           <div class="game-container">
-            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🔲 Tetris</h2>
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">���� Tetris</h2>
             <canvas id="tetrisCanvas" class="game-canvas" width="400" height="400" style="max-width: 400px;"></canvas>
             <div class="score-display" id="tetrisScore">Score: 0 | Level: 1 | Lines: 0</div>
 
@@ -758,8 +758,88 @@
       }
 
       function updateMinesweeperDisplay() {
+        let bonusText = '';
+        if (minesweeperGame.modifiers.safeDig && minesweeperGame.safeDigs > 0) {
+          bonusText += ` | Safe Digs: ${minesweeperGame.safeDigs}`;
+        }
         document.getElementById('minesweeperScore').textContent =
-          `Level: ${minesweeperGame.level} | Mines: ${minesweeperGame.mines} | Flags: ${minesweeperGame.flags} | Timer: ${minesweeperGame.timer}`;
+          `Level: ${minesweeperGame.level} | Mines: ${minesweeperGame.mines} | Flags: ${minesweeperGame.flags} | Timer: ${minesweeperGame.timer}${bonusText}`;
+      }
+
+      function toggleMinesweeperModifier(type) {
+        minesweeperGame.modifiers[type] = !minesweeperGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'extraTime' && minesweeperGame.modifiers[type]) {
+          minesweeperGame.timer = Math.max(0, minesweeperGame.timer - 30);
+          showModifierEffect('⏰ +30 Seconds!');
+        } else if (type === 'safeDig' && minesweeperGame.modifiers[type]) {
+          minesweeperGame.safeDigs = 3;
+          showModifierEffect('🛡️ 3 Safe Digs!');
+        } else if (type === 'xray') {
+          showModifierEffect(minesweeperGame.modifiers[type] ? '👁️ X-Ray ON!' : '👁️ X-Ray OFF!');
+        } else if (type === 'autoFlag') {
+          showModifierEffect(minesweeperGame.modifiers[type] ? '🚩 Auto-Flag ON!' : '🚩 Auto-Flag OFF!');
+        }
+
+        updateMinesweeperDisplay();
+        drawMinesweeper();
+      }
+
+      function showModifierEffect(text) {
+        const effect = document.createElement('div');
+        effect.className = 'modifier-effect';
+        effect.textContent = text;
+        document.body.appendChild(effect);
+        setTimeout(() => effect.remove(), 2000);
+      }
+
+      // Mobile controls
+      function detectMobile() {
+        return window.innerWidth <= 768 || 'ontouchstart' in window;
+      }
+
+      function mobileRevealCell() {
+        if (minesweeperGame.selectedCell) {
+          revealMinesweeperCell(minesweeperGame.selectedCell.x, minesweeperGame.selectedCell.y);
+        } else {
+          alert('Tap a cell first to select it!');
+        }
+      }
+
+      function mobileFlagCell() {
+        if (minesweeperGame.selectedCell) {
+          const x = minesweeperGame.selectedCell.x;
+          const y = minesweeperGame.selectedCell.y;
+          const cell = minesweeperGame.grid[y][x];
+          if (!cell.revealed) {
+            cell.flagged = !cell.flagged;
+            minesweeperGame.flags += cell.flagged ? 1 : -1;
+            updateMinesweeperDisplay();
+            drawMinesweeper();
+          }
+        } else {
+          alert('Tap a cell first to select it!');
+        }
+      }
+
+      function mobileHint() {
+        if (!minesweeperGame.running) return;
+
+        // Find a safe cell to reveal
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            const cell = minesweeperGame.grid[y][x];
+            if (!cell.revealed && !cell.mine && !cell.flagged) {
+              minesweeperGame.selectedCell = {x, y};
+              drawMinesweeper();
+              showModifierEffect('💡 Hint: Safe cell highlighted!');
+              return;
+            }
+          }
+        }
+        showModifierEffect('💡 No safe cells found!');
       }
 
       function drawMinesweeper() {
