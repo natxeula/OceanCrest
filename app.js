@@ -107,6 +107,9 @@ class OceanCrestApp {
         body.style.transition = "";
       }, 300);
     }
+
+    // Visual feedback
+    this.showSettingsSaved();
   }
 
   setMotion(reduced) {
