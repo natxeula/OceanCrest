@@ -198,7 +198,7 @@ class OceanCrestApp {
       }
 
       // Handle mobile settings button
-      if (e.target.closest("#mobileSettingsToggle")) {
+      if (e.target.closest("#mobileSettingsToggle") || e.target.closest(".mobile-nav-settings")) {
         this.toggleSettingsPanel();
         this.closeMobileNav();
       }
