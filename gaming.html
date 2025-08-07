@@ -6,7 +6,7 @@
     <title>Game Development - OceanCrest Entertainment</title>
     <meta
       name="description"
-      content="OceanCrest Entertainment's game development studio - creating immersive gaming experiences including Mythoria and HEAT"
+      content="OceanCrest Entertainment's game development studio - creating immersive gaming experiences including Mythoria, HEAT, Secure. Contain. Protect., and Air Clicker"
     />
     <meta name="theme-color" content="#0d1117" />
     <link rel="manifest" href="manifest.json" />
@@ -170,31 +170,122 @@
       <div class="scroll-progress-bar" id="scrollProgress"></div>
     </div>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      🌙
+    <!-- Settings Panel -->
+    <button
+      class="settings-toggle"
+      id="settingsToggle"
+      aria-label="Open settings"
+    >
+      ⚙️
     </button>
 
+    <div class="settings-panel" id="settingsPanel">
+      <h3>Settings</h3>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">
+            <span class="theme-icon">🌙</span>
+            Dark Mode
+          </label>
+          <button class="setting-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">
+            <span class="theme-icon">🎬</span>
+            Reduced Motion
+          </label>
+          <button class="setting-toggle" id="motionToggle" aria-label="Toggle reduced motion"></button>
+        </div>
+      </div>
+    </div>
+    
     <header>
       <div class="container">
         <div class="header-container">
           <a href="index.html" class="logo">OceanCrest</a>
-          <nav>
+          
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="capabilities.html">Capabilities</a></li>
-              <li><a href="projects.html">Projects</a></li>
-              <li><a href="gaming.html" class="active">Gaming</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="newsroom.html">Newsroom</a></li>
-              <li><a href="careers.html">Careers</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li>
+                <a href="index.html"
+                  >Home<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="about.html"
+                  >About<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="projects.html"
+                  >Projects<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="gaming.html" class="active"
+                  >Gaming<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                  >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
+                ></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="newsroom.html">Newsroom</a>
+                  <a href="careers.html">Careers</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html"
+                  >Contact<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <button
+                  class="desktop-settings-btn"
+                  id="desktopSettingsToggle"
+                  aria-label="Open settings"
+                >
+                  ⚙️<span class="nav-indicator"></span>
+                </button>
+              </li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
+    
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="newsroom.html" class="mobile-nav-link">📰 Newsroom</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+        <button class="mobile-nav-settings" id="mobileSettingsToggle">⚙️ Settings</button>
+      </nav>
+    </div>
 
     <main>
       <section class="gaming-hero">
@@ -219,18 +310,17 @@
         </div>
       </section>
 
-
-      <section class="section parallax-section fade-in">
+      <section class="section parallax-section fade-in" id="games">
         <div class="container">
           <h2 class="section-title">Our Games</h2>
           <p class="section-subtitle">
-            Discover our upcoming games!
+            Discover our game portfolio spanning multiple genres and platforms!
           </p>
 
           <div class="featured-project fade-in">
             <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">Mythoria</h3>
             <span style="color: var(--accent-blue); font-weight: 600"
-              >Sciene</span
+              >Science Fiction</span
             >
             <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
               Arrive in Thlassa, collect several weapons, and protect The Central from the enemies at all costs.
@@ -291,11 +381,74 @@
             >
               <div><strong>Genre:</strong> Action </div>
               <div><strong>Players:</strong> Multiplayer </div>
-              <div><strong>Mode:</strong> Infinite Survivial</div>
+              <div><strong>Mode:</strong> Infinite Survival</div>
               <div><strong>Platform:</strong> PS5, Xbox, PC </div>
             </div>
             <span class="project-status-badge status-production"
               >Coming Soon</span
+            >
+          </div>
+
+          <div class="featured-project fade-in">
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">Secure. Contain. Protect.</h3>
+            <span style="color: var(--accent-blue); font-weight: 600"
+              >Horror/Roleplay</span
+            >
+            <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
+              An upcoming Roblox game where you can either play a story mode or a roleplay mode, set in a custom Site 1110. Experience the world of the SCP Foundation in an immersive environment.
+            </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 1.5rem 0;
+              "
+            >
+              <div><strong>Genre:</strong> Horror/Roleplay</div>
+              <div><strong>Players:</strong> Multiplayer</div>
+              <div><strong>Modes:</strong> Story & Roleplay</div>
+              <div><strong>Platform:</strong> Roblox</div>
+            </div>
+            <span class="project-status-badge status-development"
+              >In Development</span
+            >
+          </div>
+
+          <div class="featured-project fade-in">
+            <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem">Air Clicker Series</h3>
+            <span style="color: var(--accent-blue); font-weight: 600"
+              >Clicker Game</span
+            >
+            <p style="margin: 1.5rem 0; font-size: 1.1rem; line-height: 1.6">
+              A unique clicker game where you click air! Experience both the original Air Clicker: Legacy featuring the Mafia and Summer Sacred events, and the upcoming Air Clicker Remastered with enhanced features.
+            </p>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin: 1.5rem 0;
+              "
+            >
+              <div><strong>Genre:</strong> Idle/Clicker</div>
+              <div><strong>Players:</strong> Single Player</div>
+              <div><strong>Versions:</strong> Legacy & Remastered</div>
+              <div><strong>Platform:</strong> Roblox</div>
+            </div>
+            <div class="game-requirements">
+              <h4 style="margin-bottom: 1rem; color: var(--accent-blue)">📝 Game Versions</h4>
+              <div style="margin-bottom: 1rem">
+                <strong>🎮 Air Clicker: Legacy</strong><br>
+                <small style="color: var(--text-muted)">Features 2 special events: The Mafia and Summer Sacred</small>
+              </div>
+              <div>
+                <strong>✨ Air Clicker Remastered</strong><br>
+                <small style="color: var(--text-muted)">Enhanced version with improved features - Coming Soon!</small>
+              </div>
+            </div>
+            <span class="project-status-badge status-production"
+              >Legacy Available - Remastered Coming Soon</span
             >
           </div>
 
@@ -324,6 +477,7 @@
           </div>
         </div>
       </section>
+    </main>
 
     <footer>
       <div class="container">
