@@ -817,17 +817,18 @@ header.scrolled {
 
 .desktop-settings-btn .nav-indicator {
   position: absolute;
-  bottom: -8px;
+  bottom: -2px;
   left: 50%;
-  transform: translateX(-50%);
   width: 0;
   height: 2px;
   background: var(--accent-gradient);
-  transition: width 0.3s ease;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .desktop-settings-btn:hover .nav-indicator {
-  width: 100%;
+  width: 80%;
+  transform: translateX(-50%) scaleX(1);
 }
 
 .settings-toggle:hover {
