@@ -4,6 +4,7 @@ class OceanCrestApp {
     this.isLoaded = false;
     this.scrollProgress = 0;
     this.theme = localStorage.getItem("theme") || "dark";
+    this.reducedMotion = localStorage.getItem("reducedMotion") === "true" || false;
     this.init();
   }
 
