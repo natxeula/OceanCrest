@@ -4,6 +4,7 @@ class OceanCrestApp {
     this.isLoaded = false;
     this.scrollProgress = 0;
     this.theme = localStorage.getItem("theme") || "dark";
+    this.reducedMotion = localStorage.getItem("reducedMotion") === "true" || false;
     this.init();
   }
 
@@ -37,15 +38,23 @@ class OceanCrestApp {
       }
 
       // Theme toggle
-      if (e.target.id === "themeToggle") {
+      if (e.target.id === "themeToggle" || e.target.closest("#themeToggle") ||
+          (e.target.closest(".setting-label") && e.target.closest(".setting-flex").querySelector("#themeToggle"))) {
         this.toggleTheme();
+      }
+
+      // Motion toggle
+      if (e.target.id === "motionToggle" || e.target.closest("#motionToggle") ||
+          (e.target.closest(".setting-label") && e.target.closest(".setting-flex").querySelector("#motionToggle"))) {
+        this.toggleMotion();
       }
 
       // Close settings panel when clicking outside
       if (
         !e.target.closest(".settings-panel") &&
         !e.target.closest("#settingsToggle") &&
-        !e.target.closest("#desktopSettingsToggle")
+        !e.target.closest("#desktopSettingsToggle") &&
+        !e.target.closest(".mobile-nav-settings")
       ) {
         this.closeSettingsPanel();
       }
@@ -81,6 +90,7 @@ class OceanCrestApp {
   setupTheme() {
     const body = document.body;
     body.setAttribute("data-theme", this.theme);
+    body.setAttribute("data-motion", this.reducedMotion ? "reduced" : "full");
   }
 
   setTheme(theme) {
@@ -90,11 +100,44 @@ class OceanCrestApp {
     localStorage.setItem("theme", theme);
     this.updateSettingsUI();
 
-    // Add theme transition effect
-    body.style.transition = "all 0.3s ease";
-    setTimeout(() => {
-      body.style.transition = "";
-    }, 300);
+    // Add theme transition effect if motion is not reduced
+    if (!this.reducedMotion) {
+      body.style.transition = "all 0.3s ease";
+      setTimeout(() => {
+        body.style.transition = "";
+      }, 300);
+    }
+
+    // Visual feedback
+    this.showSettingsSaved();
+  }
+
+  setMotion(reduced) {
+    this.reducedMotion = reduced;
+    const body = document.body;
+    body.setAttribute("data-motion", reduced ? "reduced" : "full");
+    localStorage.setItem("reducedMotion", reduced.toString());
+    this.updateSettingsUI();
+
+    // Visual feedback
+    this.showSettingsSaved();
+  }
+
+  showSettingsSaved() {
+    const panel = document.getElementById("settingsPanel");
+    if (panel) {
+      const title = panel.querySelector("h3");
+      if (title) {
+        const originalText = title.textContent;
+        title.textContent = "Settings Saved ✓";
+        title.style.color = "var(--accent-blue)";
+
+        setTimeout(() => {
+          title.textContent = originalText;
+          title.style.color = "";
+        }, 1000);
+      }
+    }
   }
 
   toggleSettingsPanel() {
@@ -115,6 +158,11 @@ class OceanCrestApp {
   toggleTheme() {
     const newTheme = this.theme === "light" ? "dark" : "light";
     this.setTheme(newTheme);
+  }
+
+  toggleMotion() {
+    const newMotion = !this.reducedMotion;
+    this.setMotion(newMotion);
   }
 
   setupSettings() {
@@ -147,6 +195,12 @@ class OceanCrestApp {
     if (themeToggle) {
       themeToggle.classList.toggle("active", this.theme === "dark");
     }
+
+    // Update motion toggle
+    const motionToggle = document.getElementById("motionToggle");
+    if (motionToggle) {
+      motionToggle.classList.toggle("active", this.reducedMotion);
+    }
   }
 
   setupSettingsEventListeners() {
@@ -154,9 +208,6 @@ class OceanCrestApp {
   }
 
   setupMobileNavigation() {
-    // Create mobile navigation elements if they don't exist
-    this.createMobileNavElements();
-
     // Mobile nav toggle functionality
     document.addEventListener("click", (e) => {
       if (e.target.closest(".mobile-nav-toggle")) {
@@ -166,78 +217,39 @@ class OceanCrestApp {
       // Close mobile nav when clicking overlay or links
       if (
         e.target.classList.contains("mobile-nav-overlay") ||
-        (e.target.closest(".mobile-nav-menu a") &&
+        (e.target.closest(".mobile-nav-link") &&
           !e.target.closest(".mobile-nav-toggle"))
       ) {
         this.closeMobileNav();
       }
+
+      // Handle mobile settings button
+      if (e.target.closest("#mobileSettingsToggle") || e.target.closest(".mobile-nav-settings")) {
+        this.toggleSettingsPanel();
+        this.closeMobileNav();
+      }
     });
 
-    // Close mobile nav on escape key
+    // Handle escape key for closing overlays
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         this.closeMobileNav();
+        this.closeSettingsPanel();
       }
     });
 
     // Close mobile nav on resize to desktop
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1023) {
         this.closeMobileNav();
       }
     });
   }
 
-  createMobileNavElements() {
-    const header = document.querySelector("header");
-    if (!header) return;
-
-    // Check if mobile nav already exists
-    if (document.querySelector(".mobile-nav-toggle")) return;
-
-    // Create mobile toggle button
-    const mobileToggle = document.createElement("button");
-    mobileToggle.className = "mobile-nav-toggle";
-    mobileToggle.innerHTML = `
-      <span></span>
-      <span></span>
-      <span></span>
-    `;
-
-    // Create mobile overlay
-    const mobileOverlay = document.createElement("div");
-    mobileOverlay.className = "mobile-nav-overlay";
-
-    // Get navigation links
-    const navLinks = document.querySelectorAll("nav ul li a");
-    const mobileNavMenu = document.createElement("div");
-    mobileNavMenu.className = "mobile-nav-menu";
-
-    navLinks.forEach((link) => {
-      const mobileLink = link.cloneNode(true);
-      mobileNavMenu.appendChild(mobileLink);
-    });
-
-    // Add settings button to mobile menu
-    const settingsButton = document.createElement("button");
-    settingsButton.className = "mobile-nav-settings";
-    settingsButton.innerHTML = "⚙️ Settings";
-    settingsButton.addEventListener("click", () => {
-      this.toggleSettingsPanel();
-      this.closeMobileNav(); // Close mobile menu when settings is opened
-    });
-    mobileNavMenu.appendChild(settingsButton);
-
-    mobileOverlay.appendChild(mobileNavMenu);
-
-    // Add to DOM
-    header.querySelector(".header-container").appendChild(mobileToggle);
-    document.body.appendChild(mobileOverlay);
-  }
 
   toggleMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       const isActive = toggle.classList.contains("active");
@@ -251,8 +263,8 @@ class OceanCrestApp {
   }
 
   openMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       toggle.classList.add("active");
@@ -262,8 +274,8 @@ class OceanCrestApp {
   }
 
   closeMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       toggle.classList.remove("active");
