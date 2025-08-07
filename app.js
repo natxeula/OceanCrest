@@ -38,8 +38,13 @@ class OceanCrestApp {
       }
 
       // Theme toggle
-      if (e.target.id === "themeToggle") {
+      if (e.target.id === "themeToggle" || e.target.closest("#themeToggle")) {
         this.toggleTheme();
+      }
+
+      // Motion toggle
+      if (e.target.id === "motionToggle" || e.target.closest("#motionToggle")) {
+        this.toggleMotion();
       }
 
       // Close settings panel when clicking outside
