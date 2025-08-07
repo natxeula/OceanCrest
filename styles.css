@@ -854,8 +854,8 @@ header.scrolled {
 
 .settings-panel {
   position: fixed;
-  bottom: 90px;
-  right: 1.5rem;
+  bottom: 20px;
+  right: 20px;
   width: 320px;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
