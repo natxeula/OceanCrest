@@ -155,31 +155,122 @@
       <div class="scroll-progress-bar" id="scrollProgress"></div>
     </div>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-      🌙
+    <!-- Settings Panel -->
+    <button
+      class="settings-toggle"
+      id="settingsToggle"
+      aria-label="Open settings"
+    >
+      ⚙️
     </button>
+
+    <div class="settings-panel" id="settingsPanel">
+      <h3>Settings</h3>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">
+            <span class="theme-icon">🌙</span>
+            Dark Mode
+          </label>
+          <button class="setting-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">
+            <span class="theme-icon">🎬</span>
+            Reduced Motion
+          </label>
+          <button class="setting-toggle" id="motionToggle" aria-label="Toggle reduced motion"></button>
+        </div>
+      </div>
+    </div>
 
     <header>
       <div class="container">
         <div class="header-container">
           <a href="index.html" class="logo">OceanCrest</a>
-          <nav>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="capabilities.html">Capabilities</a></li>
-              <li><a href="projects.html" class="active">Projects</a></li>
-              <li><a href="gaming.html">Gaming</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="newsroom.html">Newsroom</a></li>
-              <li><a href="careers.html">Careers</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li>
+                <a href="index.html"
+                  >Home<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="about.html"
+                  >About<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="projects.html" class="active"
+                  >Projects<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="gaming.html"
+                  >Gaming<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                  >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
+                ></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="newsroom.html">Newsroom</a>
+                  <a href="careers.html">Careers</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html"
+                  >Contact<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <button
+                  class="desktop-settings-btn"
+                  id="desktopSettingsToggle"
+                  aria-label="Open settings"
+                >
+                  ⚙️<span class="nav-indicator"></span>
+                </button>
+              </li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="newsroom.html" class="mobile-nav-link">📰 Newsroom</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+        <button class="mobile-nav-settings" id="mobileSettingsToggle">⚙️ Settings</button>
+      </nav>
+    </div>
 
     <main>
       <section class="hero">
