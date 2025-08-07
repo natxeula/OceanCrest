@@ -484,7 +484,7 @@
 
           <!-- Tetris -->
           <div class="game-container">
-            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">���� Tetris</h2>
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🔲 Tetris</h2>
             <canvas id="tetrisCanvas" class="game-canvas" width="400" height="400" style="max-width: 400px;"></canvas>
             <div class="score-display" id="tetrisScore">Score: 0 | Level: 1 | Lines: 0</div>
 
@@ -698,7 +698,12 @@
         const y = Math.floor((e.clientY - rect.top) / minesweeperGame.cellSize);
 
         if (x >= 0 && x < minesweeperGame.width && y >= 0 && y < minesweeperGame.height) {
-          revealMinesweeperCell(x, y);
+          if (detectMobile()) {
+            minesweeperGame.selectedCell = {x, y};
+            drawMinesweeper();
+          } else {
+            revealMinesweeperCell(x, y);
+          }
         }
       }
 
