@@ -586,7 +586,16 @@
         running: false,
         startTime: null,
         timer: 0,
-        timerInterval: null
+        timerInterval: null,
+        modifiers: {
+          xray: false,
+          autoFlag: false,
+          extraTime: false,
+          safeDig: false
+        },
+        mobileMode: false,
+        selectedCell: null,
+        safeDigs: 3
       };
 
       function initMinesweeper() {
