@@ -87,6 +87,7 @@ class OceanCrestApp {
   setupTheme() {
     const body = document.body;
     body.setAttribute("data-theme", this.theme);
+    body.setAttribute("data-motion", this.reducedMotion ? "reduced" : "full");
   }
 
   setTheme(theme) {
