@@ -1096,8 +1096,83 @@
       }
 
       function updateBreakoutDisplay() {
+        let powerUpText = '';
+        if (breakoutGame.modifiers.bigPaddle) powerUpText += ' | Big Paddle';
+        if (breakoutGame.modifiers.multiBall) powerUpText += ' | Multi-Ball';
+        if (breakoutGame.modifiers.slowMotion) powerUpText += ' | Slow-Mo';
+        if (breakoutGame.modifiers.laser) powerUpText += ' | Laser';
+
         document.getElementById('breakoutScore').textContent =
-          `Score: ${breakoutGame.score} | Lives: ${breakoutGame.lives} | Level: ${breakoutGame.level}`;
+          `Score: ${breakoutGame.score} | Lives: ${breakoutGame.lives} | Level: ${breakoutGame.level}${powerUpText}`;
+      }
+
+      function toggleBreakoutModifier(type) {
+        breakoutGame.modifiers[type] = !breakoutGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'bigPaddle') {
+          breakoutGame.paddleWidth = breakoutGame.modifiers[type] ? 150 : 100;
+          showModifierEffect(breakoutGame.modifiers[type] ? '🏓 Big Paddle!' : '🏓 Normal Paddle!');
+        } else if (type === 'multiBall') {
+          if (breakoutGame.modifiers[type]) {
+            breakoutGame.balls = [
+              {x: breakoutGame.ballX - 20, y: breakoutGame.ballY, dx: -3, dy: breakoutGame.ballDY},
+              {x: breakoutGame.ballX + 20, y: breakoutGame.ballY, dx: 3, dy: breakoutGame.ballDY}
+            ];
+            showModifierEffect('⚽ Multi-Ball!');
+          } else {
+            breakoutGame.balls = [];
+            showModifierEffect('⚽ Single Ball!');
+          }
+        } else if (type === 'slowMotion') {
+          showModifierEffect(breakoutGame.modifiers[type] ? '🐌 Slow Motion ON!' : '⚡ Normal Speed!');
+        } else if (type === 'laser') {
+          showModifierEffect(breakoutGame.modifiers[type] ? '🔫 Laser Paddle!' : '🏓 Normal Paddle!');
+        }
+
+        updateBreakoutDisplay();
+      }
+
+      function activateBreakoutPowerUp() {
+        const powerUps = ['bigPaddle', 'multiBall', 'slowMotion', 'laser'];
+        const randomPowerUp = powerUps[Math.floor(Math.random() * powerUps.length)];
+
+        // Temporarily activate power-up
+        breakoutGame.modifiers[randomPowerUp] = true;
+        showModifierEffect(`🎁 Power-Up: ${randomPowerUp}!`);
+
+        setTimeout(() => {
+          breakoutGame.modifiers[randomPowerUp] = false;
+          showModifierEffect(`⏰ Power-Up expired!`);
+          updateBreakoutDisplay();
+        }, 10000); // 10 seconds
+
+        updateBreakoutDisplay();
+      }
+
+      // Mobile Breakout controls
+      let mobilePaddleInterval = null;
+
+      function mobilePaddleMove(direction) {
+        if (!breakoutGame.running) return;
+
+        breakoutGame.mobileDirection = direction === 'left' ? -1 : 1;
+
+        if (!mobilePaddleInterval) {
+          mobilePaddleInterval = setInterval(() => {
+            breakoutGame.paddleX += breakoutGame.mobileDirection * 8;
+            breakoutGame.paddleX = Math.max(0, Math.min(800 - breakoutGame.paddleWidth, breakoutGame.paddleX));
+          }, 16);
+        }
+      }
+
+      function stopMobilePaddle() {
+        if (mobilePaddleInterval) {
+          clearInterval(mobilePaddleInterval);
+          mobilePaddleInterval = null;
+        }
+        breakoutGame.mobileDirection = 0;
       }
 
       function drawBreakout() {
@@ -1439,7 +1514,7 @@
         } else if (type === 'hold') {
           showModifierEffect(tetrisGame.modifiers[type] ? '📦 Hold Piece ON!' : '📦 Hold Piece OFF!');
         } else if (type === 'bomb') {
-          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '💣 Bomb Pieces OFF!');
+          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '�� Bomb Pieces OFF!');
         } else if (type === 'rainbow') {
           showModifierEffect(tetrisGame.modifiers[type] ? '🌈 Rainbow Mode ON!' : '🌈 Rainbow Mode OFF!');
         }
