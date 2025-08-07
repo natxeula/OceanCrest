@@ -38,12 +38,14 @@ class OceanCrestApp {
       }
 
       // Theme toggle
-      if (e.target.id === "themeToggle" || e.target.closest("#themeToggle")) {
+      if (e.target.id === "themeToggle" || e.target.closest("#themeToggle") ||
+          (e.target.closest(".setting-label") && e.target.closest(".setting-flex").querySelector("#themeToggle"))) {
         this.toggleTheme();
       }
 
       // Motion toggle
-      if (e.target.id === "motionToggle" || e.target.closest("#motionToggle")) {
+      if (e.target.id === "motionToggle" || e.target.closest("#motionToggle") ||
+          (e.target.closest(".setting-label") && e.target.closest(".setting-flex").querySelector("#motionToggle"))) {
         this.toggleMotion();
       }
 
