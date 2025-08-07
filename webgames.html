@@ -411,6 +411,21 @@
             <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">💣 Minesweeper</h2>
             <canvas id="minesweeperCanvas" class="game-canvas" width="600" height="400" style="max-width: 600px;"></canvas>
             <div class="score-display" id="minesweeperScore">Level: 1 | Mines: 10 | Flags: 0 | Timer: 0</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Modifiers:</span>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('xray')">X-Ray Vision</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('autoFlag')">Auto-Flag</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('extraTime')">Extra Time</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('safeDig')">Safe Dig</button>
+            </div>
+
+            <div class="mobile-controls">
+              <button class="mobile-btn" onclick="mobileRevealCell()">Reveal</button>
+              <button class="mobile-btn" onclick="mobileFlagCell()">Flag</button>
+              <button class="mobile-btn" onclick="mobileHint()">Hint</button>
+            </div>
+
             <div class="game-controls">
               <button class="game-btn" onclick="startMinesweeper()">Start Game</button>
               <button class="game-btn" onclick="pauseMinesweeper()">Pause</button>
