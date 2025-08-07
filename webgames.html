@@ -799,20 +799,22 @@
         ctx: null,
         board: [],
         currentPiece: null,
+        nextPiece: null,
         score: 0,
         level: 1,
         lines: 0,
         running: false,
         gameLoop: null,
         dropTime: 0,
+        comboCount: 0,
         pieces: [
-          [[1,1,1,1]], // I
-          [[1,1],[1,1]], // O
-          [[0,1,0],[1,1,1]], // T
-          [[0,1,1],[1,1,0]], // S
-          [[1,1,0],[0,1,1]], // Z
-          [[1,0,0],[1,1,1]], // J
-          [[0,0,1],[1,1,1]]  // L
+          {matrix: [[1,1,1,1]], color: '#00ffff'}, // I - Cyan
+          {matrix: [[1,1],[1,1]], color: '#ffff00'}, // O - Yellow
+          {matrix: [[0,1,0],[1,1,1]], color: '#800080'}, // T - Purple
+          {matrix: [[0,1,1],[1,1,0]], color: '#00ff00'}, // S - Green
+          {matrix: [[1,1,0],[0,1,1]], color: '#ff0000'}, // Z - Red
+          {matrix: [[1,0,0],[1,1,1]], color: '#0000ff'}, // J - Blue
+          {matrix: [[0,0,1],[1,1,1]], color: '#ffa500'}  // L - Orange
         ]
       };
 
@@ -820,14 +822,14 @@
         tetrisGame.canvas = document.getElementById('tetrisCanvas');
         tetrisGame.ctx = tetrisGame.canvas.getContext('2d');
         tetrisGame.ctx.scale(20, 20);
-        
-        // Initialize board
-        tetrisGame.board = Array(20).fill().map(() => Array(10).fill(0));
-        
+
+        // Initialize board with level obstacles for higher levels
+        resetTetrisBoard();
+
         // Key events for Tetris
         document.addEventListener('keydown', (e) => {
           if (!tetrisGame.running) return;
-          
+
           switch(e.code) {
             case 'ArrowLeft':
               moveTetrisPiece(-1, 0);
@@ -837,18 +839,41 @@
               break;
             case 'ArrowDown':
               moveTetrisPiece(0, 1);
+              tetrisGame.score += 1; // Bonus for soft drop
               break;
             case 'ArrowUp':
               rotateTetrisPiece();
               break;
+            case 'Space':
+              e.preventDefault();
+              hardDrop();
+              break;
           }
         });
+      }
+
+      function resetTetrisBoard() {
+        tetrisGame.board = Array(20).fill().map(() => Array(10).fill(0));
+
+        // Add level obstacles for higher levels
+        if (tetrisGame.level > 5) {
+          const obstacleRows = Math.min(Math.floor(tetrisGame.level / 3), 5);
+          for (let row = 0; row < obstacleRows; row++) {
+            const y = 20 - 1 - row;
+            for (let x = 0; x < 10; x++) {
+              if (Math.random() < 0.3) {
+                tetrisGame.board[y][x] = -1; // Obstacle block
+              }
+            }
+          }
+        }
       }
 
       function startTetris() {
         if (!tetrisGame.running) {
           tetrisGame.running = true;
           spawnTetrisPiece();
+          generateNextPiece();
           tetrisGame.gameLoop = setInterval(updateTetris, 50);
         }
       }
@@ -860,40 +885,79 @@
 
       function resetTetris() {
         pauseTetris();
-        tetrisGame.board = Array(20).fill().map(() => Array(10).fill(0));
         tetrisGame.score = 0;
         tetrisGame.level = 1;
         tetrisGame.lines = 0;
         tetrisGame.dropTime = 0;
-        document.getElementById('tetrisScore').textContent = 'Score: 0 | Level: 1 | Lines: 0';
+        tetrisGame.comboCount = 0;
+        resetTetrisBoard();
+        updateTetrisDisplay();
         drawTetris();
       }
 
-      function spawnTetrisPiece() {
+      function skipTetrisLevel() {
+        tetrisGame.level++;
+        tetrisGame.score += 1000 * tetrisGame.level; // Bonus for skipping
+        resetTetrisBoard();
+        updateTetrisDisplay();
+        drawTetris();
+      }
+
+      function generateNextPiece() {
         const piece = tetrisGame.pieces[Math.floor(Math.random() * tetrisGame.pieces.length)];
-        tetrisGame.currentPiece = {
-          matrix: piece,
-          x: Math.floor((10 - piece[0].length) / 2),
-          y: 0
+        tetrisGame.nextPiece = {
+          matrix: piece.matrix,
+          color: piece.color
         };
+      }
+
+      function spawnTetrisPiece() {
+        if (tetrisGame.nextPiece) {
+          tetrisGame.currentPiece = {
+            matrix: tetrisGame.nextPiece.matrix,
+            color: tetrisGame.nextPiece.color,
+            x: Math.floor((10 - tetrisGame.nextPiece.matrix[0].length) / 2),
+            y: 0
+          };
+          generateNextPiece();
+        } else {
+          generateNextPiece();
+          spawnTetrisPiece();
+        }
+      }
+
+      function hardDrop() {
+        while (!collidesTetris()) {
+          tetrisGame.currentPiece.y++;
+          tetrisGame.score += 2; // Bonus for hard drop
+        }
+        tetrisGame.currentPiece.y--;
+        mergeTetrisPiece();
+        clearTetrisLines();
+        spawnTetrisPiece();
+
+        if (collidesTetris()) {
+          pauseTetris();
+          alert(`Game Over! Level ${tetrisGame.level} | Score: ${tetrisGame.score}`);
+        }
       }
 
       function moveTetrisPiece(dx, dy) {
         tetrisGame.currentPiece.x += dx;
         tetrisGame.currentPiece.y += dy;
-        
+
         if (collidesTetris()) {
           tetrisGame.currentPiece.x -= dx;
           tetrisGame.currentPiece.y -= dy;
-          
+
           if (dy > 0) {
             mergeTetrisPiece();
             clearTetrisLines();
             spawnTetrisPiece();
-            
+
             if (collidesTetris()) {
               pauseTetris();
-              alert('Game Over! Score: ' + tetrisGame.score);
+              alert(`Game Over! Level ${tetrisGame.level} | Score: ${tetrisGame.score}`);
             }
           }
         }
@@ -902,12 +966,31 @@
       function rotateTetrisPiece() {
         const matrix = tetrisGame.currentPiece.matrix;
         const rotated = matrix[0].map((_, i) => matrix.map(row => row[i]).reverse());
-        
+
         const originalMatrix = tetrisGame.currentPiece.matrix;
         tetrisGame.currentPiece.matrix = rotated;
-        
+
         if (collidesTetris()) {
-          tetrisGame.currentPiece.matrix = originalMatrix;
+          // Try wall kicks
+          const kicks = [[-1, 0], [1, 0], [0, -1], [-2, 0], [2, 0]];
+          let kicked = false;
+
+          for (let kick of kicks) {
+            tetrisGame.currentPiece.x += kick[0];
+            tetrisGame.currentPiece.y += kick[1];
+
+            if (!collidesTetris()) {
+              kicked = true;
+              break;
+            }
+
+            tetrisGame.currentPiece.x -= kick[0];
+            tetrisGame.currentPiece.y -= kick[1];
+          }
+
+          if (!kicked) {
+            tetrisGame.currentPiece.matrix = originalMatrix;
+          }
         }
       }
 
@@ -930,7 +1013,7 @@
         for (let y = 0; y < piece.matrix.length; y++) {
           for (let x = 0; x < piece.matrix[y].length; x++) {
             if (piece.matrix[y][x]) {
-              tetrisGame.board[y + piece.y][x + piece.x] = 1;
+              tetrisGame.board[y + piece.y][x + piece.x] = piece.color;
             }
           }
         }
@@ -944,56 +1027,90 @@
               continue outer;
             }
           }
-          
+
           tetrisGame.board.splice(y, 1);
           tetrisGame.board.unshift(Array(10).fill(0));
           y++;
           linesCleared++;
         }
-        
+
         if (linesCleared > 0) {
           tetrisGame.lines += linesCleared;
-          tetrisGame.score += linesCleared * 100 * tetrisGame.level;
-          tetrisGame.level = Math.floor(tetrisGame.lines / 10) + 1;
-          document.getElementById('tetrisScore').textContent = 
-            `Score: ${tetrisGame.score} | Level: ${tetrisGame.level} | Lines: ${tetrisGame.lines}`;
+
+          // Combo scoring
+          if (linesCleared >= 4) {
+            tetrisGame.comboCount++;
+            tetrisGame.score += 1200 * tetrisGame.level * tetrisGame.comboCount; // Tetris bonus
+          } else {
+            tetrisGame.comboCount = 0;
+            tetrisGame.score += [0, 100, 300, 500][linesCleared] * tetrisGame.level;
+          }
+
+          // Level progression
+          const newLevel = Math.floor(tetrisGame.lines / 10) + 1;
+          if (newLevel > tetrisGame.level) {
+            tetrisGame.level = newLevel;
+            tetrisGame.score += 500 * tetrisGame.level; // Level bonus
+          }
+
+          updateTetrisDisplay();
         }
+      }
+
+      function updateTetrisDisplay() {
+        document.getElementById('tetrisScore').textContent =
+          `Score: ${tetrisGame.score} | Level: ${tetrisGame.level} | Lines: ${tetrisGame.lines}`;
       }
 
       function updateTetris() {
         tetrisGame.dropTime += 50;
-        const dropInterval = Math.max(50, 500 - (tetrisGame.level * 50));
-        
+        const dropInterval = Math.max(50, 500 - (tetrisGame.level * 40));
+
         if (tetrisGame.dropTime >= dropInterval) {
           moveTetrisPiece(0, 1);
           tetrisGame.dropTime = 0;
         }
-        
+
         drawTetris();
       }
 
       function drawTetris() {
         tetrisGame.ctx.fillStyle = '#000';
         tetrisGame.ctx.fillRect(0, 0, 10, 20);
-        
+
         // Draw board
         for (let y = 0; y < tetrisGame.board.length; y++) {
           for (let x = 0; x < tetrisGame.board[y].length; x++) {
             if (tetrisGame.board[y][x]) {
-              tetrisGame.ctx.fillStyle = '#00ff9f';
+              if (tetrisGame.board[y][x] === -1) {
+                // Obstacle blocks
+                tetrisGame.ctx.fillStyle = '#666';
+              } else {
+                tetrisGame.ctx.fillStyle = tetrisGame.board[y][x];
+              }
               tetrisGame.ctx.fillRect(x, y, 1, 1);
+
+              // Add border
+              tetrisGame.ctx.strokeStyle = '#fff';
+              tetrisGame.ctx.lineWidth = 0.05;
+              tetrisGame.ctx.strokeRect(x, y, 1, 1);
             }
           }
         }
-        
+
         // Draw current piece
         if (tetrisGame.currentPiece) {
-          tetrisGame.ctx.fillStyle = '#00bfff';
+          tetrisGame.ctx.fillStyle = tetrisGame.currentPiece.color;
           const piece = tetrisGame.currentPiece;
           for (let y = 0; y < piece.matrix.length; y++) {
             for (let x = 0; x < piece.matrix[y].length; x++) {
               if (piece.matrix[y][x]) {
                 tetrisGame.ctx.fillRect(x + piece.x, y + piece.y, 1, 1);
+
+                // Add border
+                tetrisGame.ctx.strokeStyle = '#fff';
+                tetrisGame.ctx.lineWidth = 0.05;
+                tetrisGame.ctx.strokeRect(x + piece.x, y + piece.y, 1, 1);
               }
             }
           }
