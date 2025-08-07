@@ -367,23 +367,74 @@
     <header>
       <div class="container">
         <div class="header-container">
-          <a href="index.html" class="logo">OceanCrest</a>
-          <nav>
+          <a href="#home" class="logo">OceanCrest</a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="capabilities.html">Capabilities</a></li>
-              <li><a href="projects.html">Projects</a></li>
-              <li><a href="team.html">Team</a></li>
-              <li><a href="leadership.html" class="active">Leadership</a></li>
-              <li><a href="newsroom.html">Newsroom</a></li>
-              <li><a href="careers.html">Careers</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li>
+                <a href="index.html"
+                  >Home<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="about.html"
+                  >About<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="projects.html"
+                  >Projects<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li>
+                <a href="gaming.html"
+                  >Gaming<span class="nav-indicator"></span
+                ></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle"
+                  >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
+                ></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html" class="active">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html"
+                  >Contact<span class="nav-indicator"></span
+                ></a>
+              </li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ��� About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link active">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
 
     <main>
       <section class="leadership-hero">
@@ -417,17 +468,12 @@
             </div>
 
             <p class="leader-bio">
-              Nate (Natxeula) is the founder and creative force 
-              behind OceanCrest Entertainment, an independent film
-              group redefining storytelling on digital platforms. 
-              Known for bold narratives and cinematic ambition, 
-              Nate leads the charge on projects like Authority and 
-              CLASSIFIED, balancing raw passion with sharp direction.
+              Founder and Executive Producer leading OceanCrest Entertainment's creative vision.
             </p>
 
             <div class="leader-highlights">
               <div class="highlight-section">
-                <h4>Internal Achivements</h4>
+                <h4>Internal Achievements</h4>
                 <ul>
                   <li>Founded OceanCrest Entertainment (alongside PoseidonOkeanos)</li>
                   <li>Developed the team's core</li>
@@ -446,24 +492,6 @@
               </div>
             </div>
 
-            <div class="leader-stats">
-              <div class="stat-item">
-                <span class="stat-number">4</span>
-                <span class="stat-label">Projects Led</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">20+</span>
-                <span class="stat-label">Team Members</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">1</span>
-                <span class="stat-label">Year Leading</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Commitment</span>
-              </div>
-            </div>
 
             <div class="contact-info">
               <a href="mailto:natxeula@gmail.com" class="contact-btn">
@@ -482,7 +510,7 @@
               <div class="leader-info">
                 <h3>Future</h3>
                 <div class="leader-title">
-                  Producer, Head of Writing & Head of Outfitting
+                  Producer, Overseer of Writing & Head of Outfitting
                 </div>
                 <div class="leader-tenure">
                   Producwe • 1/2 year on the team
@@ -491,52 +519,227 @@
             </div>
 
             <p class="leader-bio">
-              Future is a producer, Head of Writing and Head of Outfitting at
-              OceanCrest Entertainment, driving collaboration across writing and
-              visual design. Known for their ability to keep teams moving,
-              Future leads outfit desn, contributes to mapping, and ensures every 
-              scene hits with style and clarity.
+              Producer overseeing writing operations and outfit design coordination.
             </p>
 
             <div class="leader-highlights">
               <div class="highlight-section">
-                <h4>Internal Achivements</h4>
+                <h4>Internal Achievements</h4>
                 <ul>
                   <li>Managed outfits for The Oath of Office Movie</li>
-                  <li>Leads 2 teams simutaniously</li>
+                  <li>Leads 2 teams simultaneously</li>
                   <li>Became 2nd in command</li>
                 </ul>
               </div>
               <div class="highlight-section">
                 <h4>��️ Creative Leadership</h4>
                 <ul>
-                  <li>Built and leads 6-member writing team</li>
+                  <li>Built and leads 6-member creative team</li>
                   <li>Leads the Outfitting Team</li>
-                  <li>Teaches New Writers</li>
+                  <li>Teaches New Creatives</li>
                 </ul>
               </div>
             </div>
 
             
 
-            <div class="leader-stats">
-              <div class="stat-item">
-                <span class="stat-number">3</span>
-                <span class="stat-label">Productions</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">6</span>
-                <span class="stat-label">Writers/span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">1/2</span>
-                <span class="stat-label">Years Leadership</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-number">95%</span>
-                <span class="stat-label">Project Success</span>
+
+            <div class="contact-info">
+              <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
+                Join Writing Team
+              </a>
+            </div>
+          </div>
+
+          <!-- 1080 - Overseer of Acting -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">1</div>
+              <div class="leader-info">
+                <h3>1080</h3>
+                <div class="leader-title">
+                  Overseer of Acting
+                </div>
+                <div class="leader-tenure">
+                  Acting Director • 1/2 year on the team
+                </div>
               </div>
             </div>
+
+            <p class="leader-bio">
+              Oversees all acting performances and talent development.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>Acting Leadership</h4>
+                <ul>
+                  <li>Directs all acting performances</li>
+                  <li>Manages talent casting and development</li>
+                  <li>Oversees character coaching</li>
+                  <li>Ensures performance quality standards</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="contact-info">
+              <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
+                Join Acting Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Mr Puzzles - Overseer of Lore -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">M</div>
+              <div class="leader-info">
+                <h3>Mr Puzzles</h3>
+                <div class="leader-title">
+                  Overseer of Lore
+                </div>
+                <div class="leader-tenure">
+                  Lore Master • 1 month on the team
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Manages narrative consistency and world-building across all projects.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>Lore Management</h4>
+                <ul>
+                  <li>Develops comprehensive world-building</li>
+                  <li>Maintains narrative consistency</li>
+                  <li>Creates detailed character backstories</li>
+                  <li>Manages continuity across projects</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="contact-info">
+              <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
+                Join Lore Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Kat - Overseer of Marketing -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">K</div>
+              <div class="leader-info">
+                <h3>Kat</h3>
+                <div class="leader-title">
+                  Overseer of Marketing
+                </div>
+                <div class="leader-tenure">
+                  Marketing Director • 1/2 year on the team
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Leads marketing strategy and community engagement initiatives.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>Marketing Leadership</h4>
+                <ul>
+                  <li>Develops comprehensive marketing strategies</li>
+                  <li>Manages social media presence</li>
+                  <li>Oversees community engagement</li>
+                  <li>Coordinates promotional campaigns</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="contact-info">
+              <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
+                Join Marketing Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Muelio - Deputy Head of Creative -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">M</div>
+              <div class="leader-info">
+                <h3>Muelio</h3>
+                <div class="leader-title">
+                  Deputy Overseer of Writing
+                </div>
+                <div class="leader-tenure">
+                  Creative Deputy • Senior Team Member
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Deputy writing overseer supporting team operations and creative coordination.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>Creative Deputy Role</h4>
+                <ul>
+                  <li>Supports Head of Creative operations</li>
+                  <li>Coordinates cross-team creative initiatives</li>
+                  <li>Mentors junior creative team members</li>
+                  <li>Assists in creative vision development</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="contact-info">
+              <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
+                Join Writing Team
+              </a>
+            </div>
+          </div>
+
+          <!-- Fortune - Deputy Head of Creative -->
+          <div class="leader-card">
+            <div class="leader-header">
+              <div class="leader-avatar">F</div>
+              <div class="leader-info">
+                <h3>Fortune</h3>
+                <div class="leader-title">
+                  Deputy Overseer of Writing
+                </div>
+                <div class="leader-tenure">
+                  Creative Deputy • Senior Team Member
+                </div>
+              </div>
+            </div>
+
+            <p class="leader-bio">
+              Second deputy writing overseer bringing fresh creative insights to storytelling.
+            </p>
+
+            <div class="leader-highlights">
+              <div class="highlight-section">
+                <h4>Creative Deputy Role</h4>
+                <ul>
+                  <li>Co-leads creative team operations</li>
+                  <li>Develops innovative narrative approaches</li>
+                  <li>Facilitates creative team collaboration</li>
+                  <li>Ensures quality creative output</li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="contact-info">
               <a href="https://forms.gle/qJcUUWeBgrkWBXRNA" class="contact-btn">
                 Join Writing Team
               </a>
@@ -613,7 +816,6 @@
             <a href="about.html">About</a>
             <a href="capabilities.html">Capabilities</a>
             <a href="projects.html">Projects</a>
-            <a href="newsroom.html">Newsroom</a>
           </div>
           <div class="footer-section">
             <h4>Gaming</h4>
