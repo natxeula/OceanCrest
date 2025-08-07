@@ -169,6 +169,12 @@ class OceanCrestApp {
     if (themeToggle) {
       themeToggle.classList.toggle("active", this.theme === "dark");
     }
+
+    // Update motion toggle
+    const motionToggle = document.getElementById("motionToggle");
+    if (motionToggle) {
+      motionToggle.classList.toggle("active", this.reducedMotion);
+    }
   }
 
   setupSettingsEventListeners() {
