@@ -193,8 +193,8 @@ class OceanCrestApp {
 
 
   toggleMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       const isActive = toggle.classList.contains("active");
@@ -208,8 +208,8 @@ class OceanCrestApp {
   }
 
   openMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       toggle.classList.add("active");
@@ -219,8 +219,8 @@ class OceanCrestApp {
   }
 
   closeMobileNav() {
-    const toggle = document.querySelector(".mobile-nav-toggle");
-    const overlay = document.querySelector(".mobile-nav-overlay");
+    const toggle = document.querySelector("#mobileNavToggle");
+    const overlay = document.querySelector("#mobileNavOverlay");
 
     if (toggle && overlay) {
       toggle.classList.remove("active");
