@@ -1,0 +1,1676 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Games - OceanCrest Entertainment</title>
+    <meta
+      name="description"
+      content="we have played these games before"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .webgames-hero {
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(0, 191, 255, 0.15) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            135deg,
+            var(--primary-bg) 0%,
+            var(--secondary-bg) 100%
+          );
+        padding: 8rem 0 6rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .webgames-title {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--accent-blue) 50%,
+          #00ff9f 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .game-container {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .game-container:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-blue);
+        box-shadow: 0 20px 40px rgba(0, 191, 255, 0.15);
+      }
+
+      .game-canvas {
+        width: 100%;
+        max-width: 800px;
+        height: 400px;
+        border: 2px solid var(--accent-blue);
+        border-radius: 12px;
+        background: #000;
+        margin: 1rem auto;
+        display: block;
+      }
+
+      .game-controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+      }
+
+      .game-btn {
+        padding: 0.8rem 1.5rem;
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+
+      .game-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+      }
+
+      .game-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .score-display {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        color: var(--accent-blue);
+        font-weight: 600;
+      }
+
+      .game-info {
+        background: rgba(0, 191, 255, 0.1);
+        border: 1px solid var(--accent-blue);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      .leaderboard {
+        background: var(--glass-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      .leaderboard h4 {
+        color: var(--accent-blue);
+        margin-bottom: 0.5rem;
+      }
+
+      .leaderboard-entry {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.3rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .leaderboard-entry:last-child {
+        border-bottom: none;
+      }
+
+      .modifiers-panel {
+        background: rgba(0, 191, 255, 0.1);
+        border: 1px solid var(--accent-blue);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .modifier-btn {
+        padding: 0.5rem 1rem;
+        background: rgba(0, 191, 255, 0.2);
+        color: var(--accent-blue);
+        border: 1px solid var(--accent-blue);
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modifier-btn:hover {
+        background: var(--accent-blue);
+        color: var(--primary-bg);
+      }
+
+      .modifier-btn.active {
+        background: var(--accent-blue);
+        color: var(--primary-bg);
+      }
+
+      .mobile-controls {
+        display: none;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+      }
+
+      .mobile-btn {
+        padding: 1rem;
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      .mobile-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+      }
+
+      .mobile-btn:active {
+        transform: translateY(0px);
+      }
+
+      .mobile-dpad {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0.5rem;
+        width: 150px;
+        height: 150px;
+      }
+
+      .mobile-dpad .mobile-btn {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+      }
+
+      .mobile-dpad .mobile-btn:nth-child(2) { grid-column: 2; grid-row: 1; } /* Up */
+      .mobile-dpad .mobile-btn:nth-child(3) { grid-column: 1; grid-row: 2; } /* Left */
+      .mobile-dpad .mobile-btn:nth-child(4) { grid-column: 3; grid-row: 2; } /* Right */
+      .mobile-dpad .mobile-btn:nth-child(5) { grid-column: 2; grid-row: 3; } /* Down */
+
+      .power-up {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffd700, #ffaa00);
+        box-shadow: 0 0 10px #ffd700;
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+      }
+
+      .modifier-effect {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: fadeInOut 2s ease-in-out;
+      }
+
+      @keyframes fadeInOut {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      }
+
+      @media (max-width: 768px) {
+        .webgames-title {
+          font-size: 2.5rem;
+        }
+
+        .game-canvas {
+          height: 300px;
+          max-width: 100%;
+        }
+
+        .game-container {
+          padding: 1.5rem;
+        }
+
+        .mobile-controls {
+          display: flex;
+        }
+
+        .game-controls {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .game-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .modifiers-panel {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .modifier-btn {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Games...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
+            <ul>
+              <li>
+                <a href="index.html">Home<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="about.html">About<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="projects.html">Projects<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="gaming.html">Gaming<span class="nav-indicator"></span></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html">Contact<span class="nav-indicator"></span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
+
+    <main>
+      <section class="webgames-hero">
+        <div class="hero-parallax"></div>
+        <div class="particles" id="particles"></div>
+        <div class="container">
+          <div class="hero-content fade-in">
+            <h1 class="webgames-title">Web Games</h1>
+            <p class="hero-subtitle" style="font-size: 1.3rem; max-width: 700px; margin: 0 auto">
+             we have played these games before
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section fade-in">
+        <div class="container">
+          <!-- Minesweeper Game -->
+          <div class="game-container">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">💣 Minesweeper</h2>
+            <canvas id="minesweeperCanvas" class="game-canvas" width="600" height="400" style="max-width: 600px;"></canvas>
+            <div class="score-display" id="minesweeperScore">Level: 1 | Mines: 10 | Flags: 0 | Timer: 0</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Modifiers:</span>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('xray')">X-Ray Vision</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('autoFlag')">Auto-Flag</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('extraTime')">Extra Time</button>
+              <button class="modifier-btn" onclick="toggleMinesweeperModifier('safeDig')">Safe Dig</button>
+            </div>
+
+            <div class="mobile-controls">
+              <button class="mobile-btn" onclick="mobileRevealCell()">Reveal</button>
+              <button class="mobile-btn" onclick="mobileFlagCell()">Flag</button>
+              <button class="mobile-btn" onclick="mobileHint()">Hint</button>
+            </div>
+
+            <div class="game-controls">
+              <button class="game-btn" onclick="startMinesweeper()">Start Game</button>
+              <button class="game-btn" onclick="pauseMinesweeper()">Pause</button>
+              <button class="game-btn" onclick="resetMinesweeper()">Reset</button>
+              <button class="game-btn" onclick="nextMinesweeperLevel()">Next Level</button>
+            </div>
+            <div class="game-info">
+              🎮 Left click to reveal, right click to flag. Find all mines without exploding them! Each level adds more mines.
+            </div>
+            <div class="leaderboard" id="minesweeperLeaderboard">
+              <h4>Best Times</h4>
+              <div class="leaderboard-entry"><span>Level 1</span><span>45s</span></div>
+              <div class="leaderboard-entry"><span>Level 2</span><span>78s</span></div>
+              <div class="leaderboard-entry"><span>Level 3</span><span>120s</span></div>
+            </div>
+          </div>
+
+          <!-- Breakout Game -->
+          <div class="game-container">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🧱 Breakout</h2>
+            <canvas id="breakoutCanvas" class="game-canvas" width="800" height="400"></canvas>
+            <div class="score-display" id="breakoutScore">Score: 0 | Lives: 3 | Level: 1</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Power-ups:</span>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('bigPaddle')">Big Paddle</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('multiBall')">Multi-Ball</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('slowMotion')">Slow Motion</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('laser')">Laser Paddle</button>
+            </div>
+
+            <div class="mobile-controls">
+              <div class="mobile-dpad">
+                <button class="mobile-btn" onmousedown="mobilePaddleMove('left')" onmouseup="stopMobilePaddle()" ontouchstart="mobilePaddleMove('left')" ontouchend="stopMobilePaddle()">←</button>
+                <button class="mobile-btn" onmousedown="mobilePaddleMove('right')" onmouseup="stopMobilePaddle()" ontouchstart="mobilePaddleMove('right')" ontouchend="stopMobilePaddle()">→</button>
+              </div>
+              <button class="mobile-btn" onclick="activateBreakoutPowerUp()">Power-Up</button>
+            </div>
+
+            <div class="game-controls">
+              <button class="game-btn" onclick="startBreakout()">Start Game</button>
+              <button class="game-btn" onclick="pauseBreakout()">Pause</button>
+              <button class="game-btn" onclick="resetBreakout()">Reset</button>
+              <button class="game-btn" onclick="nextBreakoutLevel()">Next Level</button>
+            </div>
+            <div class="game-info">
+              🎮 Move your mouse to control the paddle. Break all the bricks to advance to the next level!
+            </div>
+            <div class="leaderboard" id="breakoutLeaderboard">
+              <h4>High Scores</h4>
+              <div class="leaderboard-entry"><span>Level 5</span><span>12400</span></div>
+              <div class="leaderboard-entry"><span>Level 4</span><span>8800</span></div>
+              <div class="leaderboard-entry"><span>Level 3</span><span>5200</span></div>
+            </div>
+          </div>
+
+          <!-- Tetris -->
+          <div class="game-container">
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🔲 Tetris</h2>
+            <canvas id="tetrisCanvas" class="game-canvas" width="400" height="400" style="max-width: 400px;"></canvas>
+            <div class="score-display" id="tetrisScore">Score: 0 | Level: 1 | Lines: 0</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Modifiers:</span>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('ghost')">Ghost Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('hold')">Hold Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('bomb')">Bomb Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('rainbow')">Rainbow Mode</button>
+            </div>
+
+            <div class="mobile-controls">
+              <div class="mobile-dpad">
+                <button class="mobile-btn" onclick="mobileTetrisMove('rotate')">🔄</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('left')">A</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('right')">D</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('down')">S</button>
+              </div>
+              <button class="mobile-btn" onclick="mobileTetrisMove('drop')">⬇ Drop</button>
+              <button class="mobile-btn" onclick="mobileTetrisMove('hold')">📦 Hold</button>
+            </div>
+
+            <div class="game-controls">
+              <button class="game-btn" onclick="startTetris()">Start Game</button>
+              <button class="game-btn" onclick="pauseTetris()">Pause</button>
+              <button class="game-btn" onclick="resetTetris()">Reset</button>
+              <button class="game-btn" onclick="skipTetrisLevel()">Skip Level</button>
+            </div>
+            <div class="game-info">
+              🎮 Use WASD: A/D to move, S to drop faster, W to rotate, SPACE for hard drop. Complete lines to advance levels!
+            </div>
+            <div class="leaderboard" id="tetrisLeaderboard">
+              <h4>High Scores</h4>
+              <div class="leaderboard-entry"><span>Level 10</span><span>45000</span></div>
+              <div class="leaderboard-entry"><span>Level 8</span><span>32000</span></div>
+              <div class="leaderboard-entry"><span>Level 6</span><span>18500</span></div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 4rem;">
+            <a href="gaming.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+              ← Back to Gaming
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+            <a href="webgames.html">Web Games</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Minesweeper Game
+      let minesweeperGame = {
+        canvas: null,
+        ctx: null,
+        grid: [],
+        width: 15,
+        height: 10,
+        cellSize: 40,
+        mines: 10,
+        level: 1,
+        flags: 0,
+        revealed: 0,
+        gameOver: false,
+        won: false,
+        running: false,
+        startTime: null,
+        timer: 0,
+        timerInterval: null,
+        modifiers: {
+          xray: false,
+          autoFlag: false,
+          extraTime: false,
+          safeDig: false
+        },
+        mobileMode: false,
+        selectedCell: null,
+        safeDigs: 3
+      };
+
+      function initMinesweeper() {
+        minesweeperGame.canvas = document.getElementById('minesweeperCanvas');
+        minesweeperGame.ctx = minesweeperGame.canvas.getContext('2d');
+
+        minesweeperGame.canvas.addEventListener('click', handleMinesweeperClick);
+        minesweeperGame.canvas.addEventListener('contextmenu', handleMinesweeperRightClick);
+
+        generateMinesweeperGrid();
+      }
+
+      function generateMinesweeperGrid() {
+        minesweeperGame.grid = [];
+        minesweeperGame.revealed = 0;
+        minesweeperGame.flags = 0;
+        minesweeperGame.gameOver = false;
+        minesweeperGame.won = false;
+
+        // Initialize grid
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          minesweeperGame.grid[y] = [];
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            minesweeperGame.grid[y][x] = {
+              mine: false,
+              revealed: false,
+              flagged: false,
+              count: 0
+            };
+          }
+        }
+
+        // Place mines
+        let minesPlaced = 0;
+        while (minesPlaced < minesweeperGame.mines) {
+          const x = Math.floor(Math.random() * minesweeperGame.width);
+          const y = Math.floor(Math.random() * minesweeperGame.height);
+
+          if (!minesweeperGame.grid[y][x].mine) {
+            minesweeperGame.grid[y][x].mine = true;
+            minesPlaced++;
+          }
+        }
+
+        // Calculate numbers
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            if (!minesweeperGame.grid[y][x].mine) {
+              let count = 0;
+              for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                  const nx = x + dx;
+                  const ny = y + dy;
+                  if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                    if (minesweeperGame.grid[ny][nx].mine) count++;
+                  }
+                }
+              }
+              minesweeperGame.grid[y][x].count = count;
+            }
+          }
+        }
+      }
+
+      function startMinesweeper() {
+        if (!minesweeperGame.running) {
+          minesweeperGame.running = true;
+          minesweeperGame.startTime = Date.now();
+          minesweeperGame.timerInterval = setInterval(() => {
+            minesweeperGame.timer = Math.floor((Date.now() - minesweeperGame.startTime) / 1000);
+            updateMinesweeperDisplay();
+          }, 1000);
+        }
+      }
+
+      function pauseMinesweeper() {
+        minesweeperGame.running = false;
+        clearInterval(minesweeperGame.timerInterval);
+      }
+
+      function resetMinesweeper() {
+        pauseMinesweeper();
+        minesweeperGame.timer = 0;
+        generateMinesweeperGrid();
+        updateMinesweeperDisplay();
+        drawMinesweeper();
+      }
+
+      function nextMinesweeperLevel() {
+        minesweeperGame.level++;
+        minesweeperGame.mines = Math.min(10 + (minesweeperGame.level - 1) * 5, 60);
+        resetMinesweeper();
+      }
+
+      function handleMinesweeperClick(e) {
+        if (!minesweeperGame.running || minesweeperGame.gameOver) return;
+
+        const rect = minesweeperGame.canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / minesweeperGame.cellSize);
+        const y = Math.floor((e.clientY - rect.top) / minesweeperGame.cellSize);
+
+        if (x >= 0 && x < minesweeperGame.width && y >= 0 && y < minesweeperGame.height) {
+          if (detectMobile()) {
+            minesweeperGame.selectedCell = {x, y};
+            drawMinesweeper();
+          } else {
+            revealMinesweeperCell(x, y);
+          }
+        }
+      }
+
+      function handleMinesweeperRightClick(e) {
+        e.preventDefault();
+        if (!minesweeperGame.running || minesweeperGame.gameOver) return;
+
+        const rect = minesweeperGame.canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / minesweeperGame.cellSize);
+        const y = Math.floor((e.clientY - rect.top) / minesweeperGame.cellSize);
+
+        if (x >= 0 && x < minesweeperGame.width && y >= 0 && y < minesweeperGame.height) {
+          const cell = minesweeperGame.grid[y][x];
+          if (!cell.revealed) {
+            cell.flagged = !cell.flagged;
+            minesweeperGame.flags += cell.flagged ? 1 : -1;
+            updateMinesweeperDisplay();
+            drawMinesweeper();
+          }
+        }
+      }
+
+      function revealMinesweeperCell(x, y) {
+        const cell = minesweeperGame.grid[y][x];
+        if (cell.revealed || cell.flagged) return;
+
+        // Safe dig modifier
+        if (cell.mine && minesweeperGame.modifiers.safeDig && minesweeperGame.safeDigs > 0) {
+          minesweeperGame.safeDigs--;
+          showModifierEffect('🛡️ Safe dig used!');
+          updateMinesweeperDisplay();
+          return;
+        }
+
+        cell.revealed = true;
+        minesweeperGame.revealed++;
+
+        if (cell.mine) {
+          minesweeperGame.gameOver = true;
+          pauseMinesweeper();
+          alert('Game Over! You hit a mine!');
+          return;
+        }
+
+        // Auto-flag adjacent mines
+        if (minesweeperGame.modifiers.autoFlag && cell.count > 0) {
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                const adjCell = minesweeperGame.grid[ny][nx];
+                if (adjCell.mine && !adjCell.flagged && !adjCell.revealed) {
+                  adjCell.flagged = true;
+                  minesweeperGame.flags++;
+                }
+              }
+            }
+          }
+        }
+
+        if (cell.count === 0) {
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                revealMinesweeperCell(nx, ny);
+              }
+            }
+          }
+        }
+
+        if (minesweeperGame.revealed === minesweeperGame.width * minesweeperGame.height - minesweeperGame.mines) {
+          minesweeperGame.won = true;
+          minesweeperGame.gameOver = true;
+          pauseMinesweeper();
+          alert(`Level ${minesweeperGame.level} completed in ${minesweeperGame.timer} seconds!`);
+        }
+
+        updateMinesweeperDisplay();
+        drawMinesweeper();
+      }
+
+      function updateMinesweeperDisplay() {
+        let bonusText = '';
+        if (minesweeperGame.modifiers.safeDig && minesweeperGame.safeDigs > 0) {
+          bonusText += ` | Safe Digs: ${minesweeperGame.safeDigs}`;
+        }
+        document.getElementById('minesweeperScore').textContent =
+          `Level: ${minesweeperGame.level} | Mines: ${minesweeperGame.mines} | Flags: ${minesweeperGame.flags} | Timer: ${minesweeperGame.timer}${bonusText}`;
+      }
+
+      function toggleMinesweeperModifier(type) {
+        minesweeperGame.modifiers[type] = !minesweeperGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'extraTime' && minesweeperGame.modifiers[type]) {
+          minesweeperGame.timer = Math.max(0, minesweeperGame.timer - 30);
+          showModifierEffect('⏰ +30 Seconds!');
+        } else if (type === 'safeDig' && minesweeperGame.modifiers[type]) {
+          minesweeperGame.safeDigs = 3;
+          showModifierEffect('🛡️ 3 Safe Digs!');
+        } else if (type === 'xray') {
+          showModifierEffect(minesweeperGame.modifiers[type] ? '👁️ X-Ray ON!' : '👁️ X-Ray OFF!');
+        } else if (type === 'autoFlag') {
+          showModifierEffect(minesweeperGame.modifiers[type] ? '🚩 Auto-Flag ON!' : '🚩 Auto-Flag OFF!');
+        }
+
+        updateMinesweeperDisplay();
+        drawMinesweeper();
+      }
+
+      function showModifierEffect(text) {
+        const effect = document.createElement('div');
+        effect.className = 'modifier-effect';
+        effect.textContent = text;
+        document.body.appendChild(effect);
+        setTimeout(() => effect.remove(), 2000);
+      }
+
+      // Mobile controls
+      function detectMobile() {
+        return window.innerWidth <= 768 || 'ontouchstart' in window;
+      }
+
+      function mobileRevealCell() {
+        if (minesweeperGame.selectedCell) {
+          revealMinesweeperCell(minesweeperGame.selectedCell.x, minesweeperGame.selectedCell.y);
+        } else {
+          alert('Tap a cell first to select it!');
+        }
+      }
+
+      function mobileFlagCell() {
+        if (minesweeperGame.selectedCell) {
+          const x = minesweeperGame.selectedCell.x;
+          const y = minesweeperGame.selectedCell.y;
+          const cell = minesweeperGame.grid[y][x];
+          if (!cell.revealed) {
+            cell.flagged = !cell.flagged;
+            minesweeperGame.flags += cell.flagged ? 1 : -1;
+            updateMinesweeperDisplay();
+            drawMinesweeper();
+          }
+        } else {
+          alert('Tap a cell first to select it!');
+        }
+      }
+
+      function mobileHint() {
+        if (!minesweeperGame.running) return;
+
+        // Find a safe cell to reveal
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            const cell = minesweeperGame.grid[y][x];
+            if (!cell.revealed && !cell.mine && !cell.flagged) {
+              minesweeperGame.selectedCell = {x, y};
+              drawMinesweeper();
+              showModifierEffect('💡 Hint: Safe cell highlighted!');
+              return;
+            }
+          }
+        }
+        showModifierEffect('💡 No safe cells found!');
+      }
+
+      function drawMinesweeper() {
+        minesweeperGame.ctx.fillStyle = '#000';
+        minesweeperGame.ctx.fillRect(0, 0, 600, 400);
+
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            const cell = minesweeperGame.grid[y][x];
+            const pixelX = x * minesweeperGame.cellSize;
+            const pixelY = y * minesweeperGame.cellSize;
+
+            // Highlight selected cell for mobile
+            if (minesweeperGame.selectedCell &&
+                minesweeperGame.selectedCell.x === x && minesweeperGame.selectedCell.y === y) {
+              minesweeperGame.ctx.fillStyle = '#00bfff';
+              minesweeperGame.ctx.fillRect(pixelX - 2, pixelY - 2, minesweeperGame.cellSize + 2, minesweeperGame.cellSize + 2);
+            }
+
+            if (cell.revealed) {
+              minesweeperGame.ctx.fillStyle = cell.mine ? '#ff0000' : '#ddd';
+              minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
+
+              if (!cell.mine && cell.count > 0) {
+                minesweeperGame.ctx.fillStyle = '#000';
+                minesweeperGame.ctx.font = '20px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText(cell.count, pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 7);
+              } else if (cell.mine) {
+                minesweeperGame.ctx.fillStyle = '#000';
+                minesweeperGame.ctx.font = '20px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('💣', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 7);
+              }
+            } else {
+              // X-ray vision modifier
+              if (minesweeperGame.modifiers.xray && cell.mine) {
+                minesweeperGame.ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+              } else {
+                minesweeperGame.ctx.fillStyle = cell.flagged ? '#ffff00' : '#888';
+              }
+              minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
+
+              if (cell.flagged) {
+                minesweeperGame.ctx.fillStyle = '#ff0000';
+                minesweeperGame.ctx.font = '16px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('🚩', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 5);
+              } else if (minesweeperGame.modifiers.xray && cell.mine) {
+                minesweeperGame.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                minesweeperGame.ctx.font = '16px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('💣', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 5);
+              }
+            }
+          }
+        }
+      }
+
+      // Breakout Game
+      let breakoutGame = {
+        canvas: null,
+        ctx: null,
+        ballX: 400,
+        ballY: 300,
+        ballDX: 5,
+        ballDY: -5,
+        paddleX: 350,
+        paddleWidth: 100,
+        bricks: [],
+        score: 0,
+        lives: 3,
+        level: 1,
+        running: false,
+        gameLoop: null,
+        modifiers: {
+          bigPaddle: false,
+          multiBall: false,
+          slowMotion: false,
+          laser: false
+        },
+        balls: [],
+        powerUps: [],
+        mobileDirection: 0
+      };
+
+      function initBreakout() {
+        breakoutGame.canvas = document.getElementById('breakoutCanvas');
+        breakoutGame.ctx = breakoutGame.canvas.getContext('2d');
+
+        generateBreakoutLevel();
+
+        // Mouse movement
+        breakoutGame.canvas.addEventListener('mousemove', (e) => {
+          const rect = breakoutGame.canvas.getBoundingClientRect();
+          breakoutGame.paddleX = e.clientX - rect.left - breakoutGame.paddleWidth / 2;
+        });
+      }
+
+      function generateBreakoutLevel() {
+        breakoutGame.bricks = [];
+        const rows = Math.min(5 + Math.floor(breakoutGame.level / 2), 8);
+        const cols = 10;
+
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            // Skip some bricks in higher levels for interesting patterns
+            if (breakoutGame.level > 3 && Math.random() < 0.1) continue;
+
+            breakoutGame.bricks.push({
+              x: col * 80 + 10,
+              y: row * 20 + 30,
+              width: 75,
+              height: 15,
+              visible: true,
+              hits: breakoutGame.level > 2 ? Math.floor(Math.random() * 2) + 1 : 1
+            });
+          }
+        }
+
+        // Increase ball speed with level
+        const speedMultiplier = 1 + (breakoutGame.level - 1) * 0.2;
+        breakoutGame.ballDX = (breakoutGame.ballDX > 0 ? 5 : -5) * speedMultiplier;
+        breakoutGame.ballDY = (breakoutGame.ballDY > 0 ? 5 : -5) * speedMultiplier;
+      }
+
+      function startBreakout() {
+        if (!breakoutGame.running) {
+          breakoutGame.running = true;
+          breakoutGame.gameLoop = setInterval(updateBreakout, 16);
+        }
+      }
+
+      function pauseBreakout() {
+        breakoutGame.running = false;
+        clearInterval(breakoutGame.gameLoop);
+      }
+
+      function resetBreakout() {
+        pauseBreakout();
+        breakoutGame.ballX = 400;
+        breakoutGame.ballY = 300;
+        breakoutGame.ballDX = 5;
+        breakoutGame.ballDY = -5;
+        breakoutGame.paddleX = 350;
+        breakoutGame.score = 0;
+        breakoutGame.lives = 3;
+        breakoutGame.level = 1;
+        generateBreakoutLevel();
+        updateBreakoutDisplay();
+        drawBreakout();
+      }
+
+      function nextBreakoutLevel() {
+        breakoutGame.level++;
+        breakoutGame.ballX = 400;
+        breakoutGame.ballY = 300;
+        breakoutGame.paddleX = 350;
+        breakoutGame.lives = Math.min(breakoutGame.lives + 1, 5); // Bonus life each level
+        generateBreakoutLevel();
+        updateBreakoutDisplay();
+        drawBreakout();
+      }
+
+      function updateBreakout() {
+        breakoutGame.ballX += breakoutGame.ballDX;
+        breakoutGame.ballY += breakoutGame.ballDY;
+
+        // Wall collisions
+        if (breakoutGame.ballX <= 10 || breakoutGame.ballX >= 790) breakoutGame.ballDX = -breakoutGame.ballDX;
+        if (breakoutGame.ballY <= 10) breakoutGame.ballDY = -breakoutGame.ballDY;
+
+        // Paddle collision
+        if (breakoutGame.ballY >= 380 && breakoutGame.ballX >= breakoutGame.paddleX &&
+            breakoutGame.ballX <= breakoutGame.paddleX + breakoutGame.paddleWidth) {
+          breakoutGame.ballDY = -breakoutGame.ballDY;
+          // Add angle based on where ball hits paddle
+          const hitPos = (breakoutGame.ballX - breakoutGame.paddleX) / breakoutGame.paddleWidth;
+          breakoutGame.ballDX += (hitPos - 0.5) * 3;
+        }
+
+        // Bottom wall
+        if (breakoutGame.ballY >= 400) {
+          breakoutGame.lives--;
+          if (breakoutGame.lives <= 0) {
+            pauseBreakout();
+            alert(`Game Over! Level ${breakoutGame.level} | Score: ${breakoutGame.score}`);
+            return;
+          }
+          breakoutGame.ballX = 400;
+          breakoutGame.ballY = 300;
+          breakoutGame.ballDY = -Math.abs(breakoutGame.ballDY);
+        }
+
+        // Brick collisions
+        let bricksRemaining = 0;
+        breakoutGame.bricks.forEach(brick => {
+          if (brick.visible) {
+            bricksRemaining++;
+            if (breakoutGame.ballX >= brick.x && breakoutGame.ballX <= brick.x + brick.width &&
+                breakoutGame.ballY >= brick.y && breakoutGame.ballY <= brick.y + brick.height) {
+              brick.hits--;
+              if (brick.hits <= 0) {
+                brick.visible = false;
+                breakoutGame.score += 100 * breakoutGame.level;
+              } else {
+                breakoutGame.score += 50 * breakoutGame.level;
+              }
+              breakoutGame.ballDY = -breakoutGame.ballDY;
+            }
+          }
+        });
+
+        // Check if level completed
+        if (bricksRemaining === 0) {
+          pauseBreakout();
+          alert(`Level ${breakoutGame.level} completed! Score: ${breakoutGame.score}`);
+          nextBreakoutLevel();
+        }
+
+        updateBreakoutDisplay();
+        drawBreakout();
+      }
+
+      function updateBreakoutDisplay() {
+        let powerUpText = '';
+        if (breakoutGame.modifiers.bigPaddle) powerUpText += ' | Big Paddle';
+        if (breakoutGame.modifiers.multiBall) powerUpText += ' | Multi-Ball';
+        if (breakoutGame.modifiers.slowMotion) powerUpText += ' | Slow-Mo';
+        if (breakoutGame.modifiers.laser) powerUpText += ' | Laser';
+
+        document.getElementById('breakoutScore').textContent =
+          `Score: ${breakoutGame.score} | Lives: ${breakoutGame.lives} | Level: ${breakoutGame.level}${powerUpText}`;
+      }
+
+      function toggleBreakoutModifier(type) {
+        breakoutGame.modifiers[type] = !breakoutGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'bigPaddle') {
+          breakoutGame.paddleWidth = breakoutGame.modifiers[type] ? 150 : 100;
+          showModifierEffect(breakoutGame.modifiers[type] ? '🏓 Big Paddle!' : '🏓 Normal Paddle!');
+        } else if (type === 'multiBall') {
+          if (breakoutGame.modifiers[type]) {
+            breakoutGame.balls = [
+              {x: breakoutGame.ballX - 20, y: breakoutGame.ballY, dx: -3, dy: breakoutGame.ballDY},
+              {x: breakoutGame.ballX + 20, y: breakoutGame.ballY, dx: 3, dy: breakoutGame.ballDY}
+            ];
+            showModifierEffect('⚽ Multi-Ball!');
+          } else {
+            breakoutGame.balls = [];
+            showModifierEffect('⚽ Single Ball!');
+          }
+        } else if (type === 'slowMotion') {
+          showModifierEffect(breakoutGame.modifiers[type] ? '🐌 Slow Motion ON!' : '⚡ Normal Speed!');
+        } else if (type === 'laser') {
+          showModifierEffect(breakoutGame.modifiers[type] ? '🔫 Laser Paddle!' : '🏓 Normal Paddle!');
+        }
+
+        updateBreakoutDisplay();
+      }
+
+      function activateBreakoutPowerUp() {
+        const powerUps = ['bigPaddle', 'multiBall', 'slowMotion', 'laser'];
+        const randomPowerUp = powerUps[Math.floor(Math.random() * powerUps.length)];
+
+        // Temporarily activate power-up
+        breakoutGame.modifiers[randomPowerUp] = true;
+        showModifierEffect(`🎁 Power-Up: ${randomPowerUp}!`);
+
+        setTimeout(() => {
+          breakoutGame.modifiers[randomPowerUp] = false;
+          showModifierEffect(`⏰ Power-Up expired!`);
+          updateBreakoutDisplay();
+        }, 10000); // 10 seconds
+
+        updateBreakoutDisplay();
+      }
+
+      // Mobile Breakout controls
+      let mobilePaddleInterval = null;
+
+      function mobilePaddleMove(direction) {
+        if (!breakoutGame.running) return;
+
+        breakoutGame.mobileDirection = direction === 'left' ? -1 : 1;
+
+        if (!mobilePaddleInterval) {
+          mobilePaddleInterval = setInterval(() => {
+            breakoutGame.paddleX += breakoutGame.mobileDirection * 8;
+            breakoutGame.paddleX = Math.max(0, Math.min(800 - breakoutGame.paddleWidth, breakoutGame.paddleX));
+          }, 16);
+        }
+      }
+
+      function stopMobilePaddle() {
+        if (mobilePaddleInterval) {
+          clearInterval(mobilePaddleInterval);
+          mobilePaddleInterval = null;
+        }
+        breakoutGame.mobileDirection = 0;
+      }
+
+      function drawBreakout() {
+        breakoutGame.ctx.fillStyle = '#000';
+        breakoutGame.ctx.fillRect(0, 0, 800, 400);
+
+        // Ball
+        breakoutGame.ctx.fillStyle = '#00ff9f';
+        breakoutGame.ctx.beginPath();
+        breakoutGame.ctx.arc(breakoutGame.ballX, breakoutGame.ballY, 10, 0, Math.PI * 2);
+        breakoutGame.ctx.fill();
+
+        // Paddle
+        breakoutGame.ctx.fillStyle = '#00bfff';
+        breakoutGame.ctx.fillRect(breakoutGame.paddleX, 380, breakoutGame.paddleWidth, 10);
+
+        // Bricks
+        breakoutGame.bricks.forEach(brick => {
+          if (brick.visible) {
+            // Different colors based on hits required
+            if (brick.hits > 1) {
+              breakoutGame.ctx.fillStyle = '#ff4444';
+            } else {
+              breakoutGame.ctx.fillStyle = '#ff6b6b';
+            }
+            breakoutGame.ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+
+            // Show hit count for multi-hit bricks
+            if (brick.hits > 1) {
+              breakoutGame.ctx.fillStyle = '#fff';
+              breakoutGame.ctx.font = '12px Arial';
+              breakoutGame.ctx.textAlign = 'center';
+              breakoutGame.ctx.fillText(brick.hits, brick.x + brick.width/2, brick.y + brick.height/2 + 4);
+            }
+          }
+        });
+      }
+
+
+      // Tetris Game
+      let tetrisGame = {
+        canvas: null,
+        ctx: null,
+        board: [],
+        currentPiece: null,
+        nextPiece: null,
+        heldPiece: null,
+        canHold: true,
+        score: 0,
+        level: 1,
+        lines: 0,
+        running: false,
+        gameLoop: null,
+        dropTime: 0,
+        comboCount: 0,
+        modifiers: {
+          ghost: false,
+          hold: false,
+          bomb: false,
+          rainbow: false
+        },
+        pieces: [
+          {matrix: [[1,1,1,1]], color: '#00ffff'}, // I - Cyan
+          {matrix: [[1,1],[1,1]], color: '#ffff00'}, // O - Yellow
+          {matrix: [[0,1,0],[1,1,1]], color: '#800080'}, // T - Purple
+          {matrix: [[0,1,1],[1,1,0]], color: '#00ff00'}, // S - Green
+          {matrix: [[1,1,0],[0,1,1]], color: '#ff0000'}, // Z - Red
+          {matrix: [[1,0,0],[1,1,1]], color: '#0000ff'}, // J - Blue
+          {matrix: [[0,0,1],[1,1,1]], color: '#ffa500'}, // L - Orange
+          {matrix: [[1]], color: '#ff00ff'} // Bomb piece
+        ]
+      };
+
+      function initTetris() {
+        tetrisGame.canvas = document.getElementById('tetrisCanvas');
+        tetrisGame.ctx = tetrisGame.canvas.getContext('2d');
+        tetrisGame.ctx.scale(20, 20);
+
+        // Initialize board with level obstacles for higher levels
+        resetTetrisBoard();
+
+        // Key events for Tetris (WASD)
+        document.addEventListener('keydown', (e) => {
+          if (!tetrisGame.running) return;
+
+          switch(e.code) {
+            case 'KeyA':
+              moveTetrisPiece(-1, 0);
+              e.preventDefault();
+              break;
+            case 'KeyD':
+              moveTetrisPiece(1, 0);
+              e.preventDefault();
+              break;
+            case 'KeyS':
+              moveTetrisPiece(0, 1);
+              tetrisGame.score += 1; // Bonus for soft drop
+              e.preventDefault();
+              break;
+            case 'KeyW':
+              rotateTetrisPiece();
+              e.preventDefault();
+              break;
+            case 'Space':
+              e.preventDefault();
+              hardDrop();
+              break;
+            case 'KeyH':
+              if (tetrisGame.modifiers.hold) {
+                holdTetrisPiece();
+              }
+              e.preventDefault();
+              break;
+          }
+        });
+      }
+
+      function resetTetrisBoard() {
+        tetrisGame.board = Array(20).fill().map(() => Array(10).fill(0));
+
+        // Add level obstacles for higher levels
+        if (tetrisGame.level > 5) {
+          const obstacleRows = Math.min(Math.floor(tetrisGame.level / 3), 5);
+          for (let row = 0; row < obstacleRows; row++) {
+            const y = 20 - 1 - row;
+            for (let x = 0; x < 10; x++) {
+              if (Math.random() < 0.3) {
+                tetrisGame.board[y][x] = -1; // Obstacle block
+              }
+            }
+          }
+        }
+      }
+
+      function startTetris() {
+        if (!tetrisGame.running) {
+          tetrisGame.running = true;
+          spawnTetrisPiece();
+          generateNextPiece();
+          tetrisGame.gameLoop = setInterval(updateTetris, 50);
+        }
+      }
+
+      function pauseTetris() {
+        tetrisGame.running = false;
+        clearInterval(tetrisGame.gameLoop);
+      }
+
+      function resetTetris() {
+        pauseTetris();
+        tetrisGame.score = 0;
+        tetrisGame.level = 1;
+        tetrisGame.lines = 0;
+        tetrisGame.dropTime = 0;
+        tetrisGame.comboCount = 0;
+        resetTetrisBoard();
+        updateTetrisDisplay();
+        drawTetris();
+      }
+
+      function skipTetrisLevel() {
+        tetrisGame.level++;
+        tetrisGame.score += 1000 * tetrisGame.level; // Bonus for skipping
+        resetTetrisBoard();
+        updateTetrisDisplay();
+        drawTetris();
+      }
+
+      function generateNextPiece() {
+        const piece = tetrisGame.pieces[Math.floor(Math.random() * tetrisGame.pieces.length)];
+        tetrisGame.nextPiece = {
+          matrix: piece.matrix,
+          color: piece.color
+        };
+      }
+
+      function spawnTetrisPiece() {
+        if (tetrisGame.nextPiece) {
+          tetrisGame.currentPiece = {
+            matrix: tetrisGame.nextPiece.matrix,
+            color: tetrisGame.nextPiece.color,
+            x: Math.floor((10 - tetrisGame.nextPiece.matrix[0].length) / 2),
+            y: 0
+          };
+          generateNextPiece();
+        } else {
+          generateNextPiece();
+          spawnTetrisPiece();
+        }
+      }
+
+      function hardDrop() {
+        while (!collidesTetris()) {
+          tetrisGame.currentPiece.y++;
+          tetrisGame.score += 2; // Bonus for hard drop
+        }
+        tetrisGame.currentPiece.y--;
+        mergeTetrisPiece();
+        clearTetrisLines();
+        spawnTetrisPiece();
+
+        if (collidesTetris()) {
+          pauseTetris();
+          alert(`Game Over! Level ${tetrisGame.level} | Score: ${tetrisGame.score}`);
+        }
+      }
+
+      function moveTetrisPiece(dx, dy) {
+        tetrisGame.currentPiece.x += dx;
+        tetrisGame.currentPiece.y += dy;
+
+        if (collidesTetris()) {
+          tetrisGame.currentPiece.x -= dx;
+          tetrisGame.currentPiece.y -= dy;
+
+          if (dy > 0) {
+            mergeTetrisPiece();
+            clearTetrisLines();
+            spawnTetrisPiece();
+
+            if (collidesTetris()) {
+              pauseTetris();
+              alert(`Game Over! Level ${tetrisGame.level} | Score: ${tetrisGame.score}`);
+            }
+          }
+        }
+      }
+
+      function rotateTetrisPiece() {
+        const matrix = tetrisGame.currentPiece.matrix;
+        const rotated = matrix[0].map((_, i) => matrix.map(row => row[i]).reverse());
+
+        const originalMatrix = tetrisGame.currentPiece.matrix;
+        tetrisGame.currentPiece.matrix = rotated;
+
+        if (collidesTetris()) {
+          // Try wall kicks
+          const kicks = [[-1, 0], [1, 0], [0, -1], [-2, 0], [2, 0]];
+          let kicked = false;
+
+          for (let kick of kicks) {
+            tetrisGame.currentPiece.x += kick[0];
+            tetrisGame.currentPiece.y += kick[1];
+
+            if (!collidesTetris()) {
+              kicked = true;
+              break;
+            }
+
+            tetrisGame.currentPiece.x -= kick[0];
+            tetrisGame.currentPiece.y -= kick[1];
+          }
+
+          if (!kicked) {
+            tetrisGame.currentPiece.matrix = originalMatrix;
+          }
+        }
+      }
+
+      function collidesTetris() {
+        const piece = tetrisGame.currentPiece;
+        for (let y = 0; y < piece.matrix.length; y++) {
+          for (let x = 0; x < piece.matrix[y].length; x++) {
+            if (piece.matrix[y][x] &&
+                (tetrisGame.board[y + piece.y] && tetrisGame.board[y + piece.y][x + piece.x]) !== 0 ||
+                piece.x + x < 0 || piece.x + x >= 10 || piece.y + y >= 20) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+
+      function mergeTetrisPiece() {
+        const piece = tetrisGame.currentPiece;
+        for (let y = 0; y < piece.matrix.length; y++) {
+          for (let x = 0; x < piece.matrix[y].length; x++) {
+            if (piece.matrix[y][x]) {
+              tetrisGame.board[y + piece.y][x + piece.x] = piece.color;
+            }
+          }
+        }
+      }
+
+      function clearTetrisLines() {
+        let linesCleared = 0;
+        outer: for (let y = tetrisGame.board.length - 1; y >= 0; y--) {
+          for (let x = 0; x < tetrisGame.board[y].length; x++) {
+            if (tetrisGame.board[y][x] === 0) {
+              continue outer;
+            }
+          }
+
+          tetrisGame.board.splice(y, 1);
+          tetrisGame.board.unshift(Array(10).fill(0));
+          y++;
+          linesCleared++;
+        }
+
+        if (linesCleared > 0) {
+          tetrisGame.lines += linesCleared;
+
+          // Combo scoring
+          if (linesCleared >= 4) {
+            tetrisGame.comboCount++;
+            tetrisGame.score += 1200 * tetrisGame.level * tetrisGame.comboCount; // Tetris bonus
+          } else {
+            tetrisGame.comboCount = 0;
+            tetrisGame.score += [0, 100, 300, 500][linesCleared] * tetrisGame.level;
+          }
+
+          // Level progression
+          const newLevel = Math.floor(tetrisGame.lines / 10) + 1;
+          if (newLevel > tetrisGame.level) {
+            tetrisGame.level = newLevel;
+            tetrisGame.score += 500 * tetrisGame.level; // Level bonus
+          }
+
+          updateTetrisDisplay();
+        }
+      }
+
+      function updateTetrisDisplay() {
+        let modifierText = '';
+        if (tetrisGame.modifiers.hold && tetrisGame.heldPiece) {
+          modifierText += ' | Hold: Ready';
+        }
+        document.getElementById('tetrisScore').textContent =
+          `Score: ${tetrisGame.score} | Level: ${tetrisGame.level} | Lines: ${tetrisGame.lines}${modifierText}`;
+      }
+
+      function toggleTetrisModifier(type) {
+        tetrisGame.modifiers[type] = !tetrisGame.modifiers[type];
+        const btn = event.target;
+        btn.classList.toggle('active');
+
+        if (type === 'ghost') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '👻 Ghost Piece ON!' : '👻 Ghost Piece OFF!');
+        } else if (type === 'hold') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '📦 Hold Piece ON!' : '📦 Hold Piece OFF!');
+        } else if (type === 'bomb') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '💣 Bomb Pieces OFF!');
+        } else if (type === 'rainbow') {
+          showModifierEffect(tetrisGame.modifiers[type] ? '🌈 Rainbow Mode ON!' : '🌈 Rainbow Mode OFF!');
+        }
+
+        drawTetris();
+      }
+
+      function holdTetrisPiece() {
+        if (!tetrisGame.canHold) return;
+
+        if (tetrisGame.heldPiece) {
+          const temp = tetrisGame.currentPiece;
+          tetrisGame.currentPiece = {
+            matrix: tetrisGame.heldPiece.matrix,
+            color: tetrisGame.heldPiece.color,
+            x: Math.floor((10 - tetrisGame.heldPiece.matrix[0].length) / 2),
+            y: 0
+          };
+          tetrisGame.heldPiece = {
+            matrix: temp.matrix,
+            color: temp.color
+          };
+        } else {
+          tetrisGame.heldPiece = {
+            matrix: tetrisGame.currentPiece.matrix,
+            color: tetrisGame.currentPiece.color
+          };
+          spawnTetrisPiece();
+        }
+
+        tetrisGame.canHold = false;
+        updateTetrisDisplay();
+        drawTetris();
+      }
+
+      // Mobile Tetris controls
+      function mobileTetrisMove(action) {
+        if (!tetrisGame.running) return;
+
+        switch(action) {
+          case 'left':
+            moveTetrisPiece(-1, 0);
+            break;
+          case 'right':
+            moveTetrisPiece(1, 0);
+            break;
+          case 'down':
+            moveTetrisPiece(0, 1);
+            tetrisGame.score += 1;
+            break;
+          case 'rotate':
+            rotateTetrisPiece();
+            break;
+          case 'drop':
+            hardDrop();
+            break;
+          case 'hold':
+            if (tetrisGame.modifiers.hold) {
+              holdTetrisPiece();
+            }
+            break;
+        }
+      }
+
+      function updateTetris() {
+        tetrisGame.dropTime += 50;
+        const dropInterval = Math.max(50, 500 - (tetrisGame.level * 40));
+
+        if (tetrisGame.dropTime >= dropInterval) {
+          moveTetrisPiece(0, 1);
+          tetrisGame.dropTime = 0;
+        }
+
+        drawTetris();
+      }
+
+      function drawTetris() {
+        tetrisGame.ctx.fillStyle = '#000';
+        tetrisGame.ctx.fillRect(0, 0, 10, 20);
+
+        // Draw board
+        for (let y = 0; y < tetrisGame.board.length; y++) {
+          for (let x = 0; x < tetrisGame.board[y].length; x++) {
+            if (tetrisGame.board[y][x]) {
+              if (tetrisGame.board[y][x] === -1) {
+                // Obstacle blocks
+                tetrisGame.ctx.fillStyle = '#666';
+              } else {
+                tetrisGame.ctx.fillStyle = tetrisGame.board[y][x];
+              }
+              tetrisGame.ctx.fillRect(x, y, 1, 1);
+
+              // Add border
+              tetrisGame.ctx.strokeStyle = '#fff';
+              tetrisGame.ctx.lineWidth = 0.05;
+              tetrisGame.ctx.strokeRect(x, y, 1, 1);
+            }
+          }
+        }
+
+        // Draw current piece
+        if (tetrisGame.currentPiece) {
+          tetrisGame.ctx.fillStyle = tetrisGame.currentPiece.color;
+          const piece = tetrisGame.currentPiece;
+          for (let y = 0; y < piece.matrix.length; y++) {
+            for (let x = 0; x < piece.matrix[y].length; x++) {
+              if (piece.matrix[y][x]) {
+                tetrisGame.ctx.fillRect(x + piece.x, y + piece.y, 1, 1);
+
+                // Add border
+                tetrisGame.ctx.strokeStyle = '#fff';
+                tetrisGame.ctx.lineWidth = 0.05;
+                tetrisGame.ctx.strokeRect(x + piece.x, y + piece.y, 1, 1);
+              }
+            }
+          }
+        }
+      }
+
+      // Initialize all games when page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        initMinesweeper();
+        initBreakout();
+        initTetris();
+
+        // Draw initial states
+        drawMinesweeper();
+        drawBreakout();
+        drawTetris();
+
+        // Update displays
+        updateMinesweeperDisplay();
+        updateBreakoutDisplay();
+        updateTetrisDisplay();
+
+        // Add touch event handling for mobile
+        if (detectMobile()) {
+          document.body.style.touchAction = 'pan-x pan-y';
+
+          // Prevent zoom on double tap
+          document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+              e.preventDefault();
+            }
+          });
+
+          let lastTouchEnd = 0;
+          document.addEventListener('touchend', (e) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+              e.preventDefault();
+            }
+            lastTouchEnd = now;
+          }, false);
+        }
+      });
+    </script>
+  </body>
+</html>
