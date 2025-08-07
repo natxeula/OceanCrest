@@ -371,88 +371,228 @@
 
     <script src="app.js"></script>
     <script>
-      // Snake Game
-      let snakeGame = {
+      // Minesweeper Game
+      let minesweeperGame = {
         canvas: null,
         ctx: null,
-        snake: [{x: 10, y: 10}],
-        dx: 0,
-        dy: 0,
-        food: {x: 15, y: 15},
-        score: 0,
+        grid: [],
+        width: 15,
+        height: 10,
+        cellSize: 40,
+        mines: 10,
+        level: 1,
+        flags: 0,
+        revealed: 0,
+        gameOver: false,
+        won: false,
         running: false,
-        gameLoop: null
+        startTime: null,
+        timer: 0,
+        timerInterval: null
       };
 
-      function initSnake() {
-        snakeGame.canvas = document.getElementById('snakeCanvas');
-        snakeGame.ctx = snakeGame.canvas.getContext('2d');
-        snakeGame.ctx.scale(20, 20);
+      function initMinesweeper() {
+        minesweeperGame.canvas = document.getElementById('minesweeperCanvas');
+        minesweeperGame.ctx = minesweeperGame.canvas.getContext('2d');
+
+        minesweeperGame.canvas.addEventListener('click', handleMinesweeperClick);
+        minesweeperGame.canvas.addEventListener('contextmenu', handleMinesweeperRightClick);
+
+        generateMinesweeperGrid();
       }
 
-      function startSnake() {
-        if (!snakeGame.running) {
-          snakeGame.running = true;
-          snakeGame.gameLoop = setInterval(updateSnake, 100);
+      function generateMinesweeperGrid() {
+        minesweeperGame.grid = [];
+        minesweeperGame.revealed = 0;
+        minesweeperGame.flags = 0;
+        minesweeperGame.gameOver = false;
+        minesweeperGame.won = false;
+
+        // Initialize grid
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          minesweeperGame.grid[y] = [];
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            minesweeperGame.grid[y][x] = {
+              mine: false,
+              revealed: false,
+              flagged: false,
+              count: 0
+            };
+          }
+        }
+
+        // Place mines
+        let minesPlaced = 0;
+        while (minesPlaced < minesweeperGame.mines) {
+          const x = Math.floor(Math.random() * minesweeperGame.width);
+          const y = Math.floor(Math.random() * minesweeperGame.height);
+
+          if (!minesweeperGame.grid[y][x].mine) {
+            minesweeperGame.grid[y][x].mine = true;
+            minesPlaced++;
+          }
+        }
+
+        // Calculate numbers
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            if (!minesweeperGame.grid[y][x].mine) {
+              let count = 0;
+              for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                  const nx = x + dx;
+                  const ny = y + dy;
+                  if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                    if (minesweeperGame.grid[ny][nx].mine) count++;
+                  }
+                }
+              }
+              minesweeperGame.grid[y][x].count = count;
+            }
+          }
         }
       }
 
-      function pauseSnake() {
-        snakeGame.running = false;
-        clearInterval(snakeGame.gameLoop);
+      function startMinesweeper() {
+        if (!minesweeperGame.running) {
+          minesweeperGame.running = true;
+          minesweeperGame.startTime = Date.now();
+          minesweeperGame.timerInterval = setInterval(() => {
+            minesweeperGame.timer = Math.floor((Date.now() - minesweeperGame.startTime) / 1000);
+            updateMinesweeperDisplay();
+          }, 1000);
+        }
       }
 
-      function resetSnake() {
-        pauseSnake();
-        snakeGame.snake = [{x: 10, y: 10}];
-        snakeGame.dx = 0;
-        snakeGame.dy = 0;
-        snakeGame.score = 0;
-        document.getElementById('snakeScore').textContent = 'Score: 0';
-        drawSnake();
+      function pauseMinesweeper() {
+        minesweeperGame.running = false;
+        clearInterval(minesweeperGame.timerInterval);
       }
 
-      function updateSnake() {
-        const head = {x: snakeGame.snake[0].x + snakeGame.dx, y: snakeGame.snake[0].y + snakeGame.dy};
-        
-        if (head.x < 0 || head.x >= 40 || head.y < 0 || head.y >= 20 || 
-            snakeGame.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-          pauseSnake();
-          alert('Game Over! Score: ' + snakeGame.score);
+      function resetMinesweeper() {
+        pauseMinesweeper();
+        minesweeperGame.timer = 0;
+        generateMinesweeperGrid();
+        updateMinesweeperDisplay();
+        drawMinesweeper();
+      }
+
+      function nextMinesweeperLevel() {
+        minesweeperGame.level++;
+        minesweeperGame.mines = Math.min(10 + (minesweeperGame.level - 1) * 5, 60);
+        resetMinesweeper();
+      }
+
+      function handleMinesweeperClick(e) {
+        if (!minesweeperGame.running || minesweeperGame.gameOver) return;
+
+        const rect = minesweeperGame.canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / minesweeperGame.cellSize);
+        const y = Math.floor((e.clientY - rect.top) / minesweeperGame.cellSize);
+
+        if (x >= 0 && x < minesweeperGame.width && y >= 0 && y < minesweeperGame.height) {
+          revealMinesweeperCell(x, y);
+        }
+      }
+
+      function handleMinesweeperRightClick(e) {
+        e.preventDefault();
+        if (!minesweeperGame.running || minesweeperGame.gameOver) return;
+
+        const rect = minesweeperGame.canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / minesweeperGame.cellSize);
+        const y = Math.floor((e.clientY - rect.top) / minesweeperGame.cellSize);
+
+        if (x >= 0 && x < minesweeperGame.width && y >= 0 && y < minesweeperGame.height) {
+          const cell = minesweeperGame.grid[y][x];
+          if (!cell.revealed) {
+            cell.flagged = !cell.flagged;
+            minesweeperGame.flags += cell.flagged ? 1 : -1;
+            updateMinesweeperDisplay();
+            drawMinesweeper();
+          }
+        }
+      }
+
+      function revealMinesweeperCell(x, y) {
+        const cell = minesweeperGame.grid[y][x];
+        if (cell.revealed || cell.flagged) return;
+
+        cell.revealed = true;
+        minesweeperGame.revealed++;
+
+        if (cell.mine) {
+          minesweeperGame.gameOver = true;
+          pauseMinesweeper();
+          alert('Game Over! You hit a mine!');
           return;
         }
 
-        snakeGame.snake.unshift(head);
-
-        if (head.x === snakeGame.food.x && head.y === snakeGame.food.y) {
-          snakeGame.score += 10;
-          document.getElementById('snakeScore').textContent = 'Score: ' + snakeGame.score;
-          generateFood();
-        } else {
-          snakeGame.snake.pop();
+        if (cell.count === 0) {
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx >= 0 && nx < minesweeperGame.width && ny >= 0 && ny < minesweeperGame.height) {
+                revealMinesweeperCell(nx, ny);
+              }
+            }
+          }
         }
 
-        drawSnake();
+        if (minesweeperGame.revealed === minesweeperGame.width * minesweeperGame.height - minesweeperGame.mines) {
+          minesweeperGame.won = true;
+          minesweeperGame.gameOver = true;
+          pauseMinesweeper();
+          alert(`Level ${minesweeperGame.level} completed in ${minesweeperGame.timer} seconds!`);
+        }
+
+        drawMinesweeper();
       }
 
-      function generateFood() {
-        snakeGame.food = {
-          x: Math.floor(Math.random() * 40),
-          y: Math.floor(Math.random() * 20)
-        };
+      function updateMinesweeperDisplay() {
+        document.getElementById('minesweeperScore').textContent =
+          `Level: ${minesweeperGame.level} | Mines: ${minesweeperGame.mines} | Flags: ${minesweeperGame.flags} | Timer: ${minesweeperGame.timer}`;
       }
 
-      function drawSnake() {
-        snakeGame.ctx.fillStyle = '#000';
-        snakeGame.ctx.fillRect(0, 0, 40, 20);
-        
-        snakeGame.ctx.fillStyle = '#00ff9f';
-        snakeGame.snake.forEach(segment => {
-          snakeGame.ctx.fillRect(segment.x, segment.y, 1, 1);
-        });
-        
-        snakeGame.ctx.fillStyle = '#ff0000';
-        snakeGame.ctx.fillRect(snakeGame.food.x, snakeGame.food.y, 1, 1);
+      function drawMinesweeper() {
+        minesweeperGame.ctx.fillStyle = '#000';
+        minesweeperGame.ctx.fillRect(0, 0, 600, 400);
+
+        for (let y = 0; y < minesweeperGame.height; y++) {
+          for (let x = 0; x < minesweeperGame.width; x++) {
+            const cell = minesweeperGame.grid[y][x];
+            const pixelX = x * minesweeperGame.cellSize;
+            const pixelY = y * minesweeperGame.cellSize;
+
+            if (cell.revealed) {
+              minesweeperGame.ctx.fillStyle = cell.mine ? '#ff0000' : '#ddd';
+              minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
+
+              if (!cell.mine && cell.count > 0) {
+                minesweeperGame.ctx.fillStyle = '#000';
+                minesweeperGame.ctx.font = '20px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText(cell.count, pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 7);
+              } else if (cell.mine) {
+                minesweeperGame.ctx.fillStyle = '#000';
+                minesweeperGame.ctx.font = '20px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('💣', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 7);
+              }
+            } else {
+              minesweeperGame.ctx.fillStyle = cell.flagged ? '#ffff00' : '#888';
+              minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
+
+              if (cell.flagged) {
+                minesweeperGame.ctx.fillStyle = '#ff0000';
+                minesweeperGame.ctx.font = '16px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('🚩', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 5);
+              }
+            }
+          }
+        }
       }
 
       // Breakout Game
