@@ -1161,27 +1161,37 @@
         // Initialize board with level obstacles for higher levels
         resetTetrisBoard();
 
-        // Key events for Tetris
+        // Key events for Tetris (WASD)
         document.addEventListener('keydown', (e) => {
           if (!tetrisGame.running) return;
 
           switch(e.code) {
-            case 'ArrowLeft':
+            case 'KeyA':
               moveTetrisPiece(-1, 0);
+              e.preventDefault();
               break;
-            case 'ArrowRight':
+            case 'KeyD':
               moveTetrisPiece(1, 0);
+              e.preventDefault();
               break;
-            case 'ArrowDown':
+            case 'KeyS':
               moveTetrisPiece(0, 1);
               tetrisGame.score += 1; // Bonus for soft drop
+              e.preventDefault();
               break;
-            case 'ArrowUp':
+            case 'KeyW':
               rotateTetrisPiece();
+              e.preventDefault();
               break;
             case 'Space':
               e.preventDefault();
               hardDrop();
+              break;
+            case 'KeyH':
+              if (tetrisGame.modifiers.hold) {
+                holdTetrisPiece();
+              }
+              e.preventDefault();
               break;
           }
         });
