@@ -207,10 +207,11 @@ class OceanCrestApp {
       }
     });
 
-    // Close mobile nav on escape key
+    // Handle escape key for closing overlays
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         this.closeMobileNav();
+        this.closeSettingsPanel();
       }
     });
 
