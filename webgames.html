@@ -1514,7 +1514,7 @@
         } else if (type === 'hold') {
           showModifierEffect(tetrisGame.modifiers[type] ? '📦 Hold Piece ON!' : '📦 Hold Piece OFF!');
         } else if (type === 'bomb') {
-          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '�� Bomb Pieces OFF!');
+          showModifierEffect(tetrisGame.modifiers[type] ? '💣 Bomb Pieces ON!' : '💣 Bomb Pieces OFF!');
         } else if (type === 'rainbow') {
           showModifierEffect(tetrisGame.modifiers[type] ? '🌈 Rainbow Mode ON!' : '🌈 Rainbow Mode OFF!');
         }
@@ -1649,6 +1649,27 @@
         updateMinesweeperDisplay();
         updateBreakoutDisplay();
         updateTetrisDisplay();
+
+        // Add touch event handling for mobile
+        if (detectMobile()) {
+          document.body.style.touchAction = 'pan-x pan-y';
+
+          // Prevent zoom on double tap
+          document.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+              e.preventDefault();
+            }
+          });
+
+          let lastTouchEnd = 0;
+          document.addEventListener('touchend', (e) => {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+              e.preventDefault();
+            }
+            lastTouchEnd = now;
+          }, false);
+        }
       });
     </script>
   </body>
