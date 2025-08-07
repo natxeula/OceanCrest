@@ -260,24 +260,25 @@
 
       <section class="section fade-in">
         <div class="container">
-          <!-- Snake Game -->
+          <!-- Minesweeper Game -->
           <div class="game-container">
-            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🐍 Snake Game</h2>
-            <canvas id="snakeCanvas" class="game-canvas" width="800" height="400"></canvas>
-            <div class="score-display" id="snakeScore">Score: 0</div>
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">💣 Minesweeper</h2>
+            <canvas id="minesweeperCanvas" class="game-canvas" width="600" height="400" style="max-width: 600px;"></canvas>
+            <div class="score-display" id="minesweeperScore">Level: 1 | Mines: 10 | Flags: 0 | Timer: 0</div>
             <div class="game-controls">
-              <button class="game-btn" onclick="startSnake()">Start Game</button>
-              <button class="game-btn" onclick="pauseSnake()">Pause</button>
-              <button class="game-btn" onclick="resetSnake()">Reset</button>
+              <button class="game-btn" onclick="startMinesweeper()">Start Game</button>
+              <button class="game-btn" onclick="pauseMinesweeper()">Pause</button>
+              <button class="game-btn" onclick="resetMinesweeper()">Reset</button>
+              <button class="game-btn" onclick="nextMinesweeperLevel()">Next Level</button>
             </div>
             <div class="game-info">
-              🎮 Use arrow keys to control the snake. Eat the red food to grow and increase your score!
+              🎮 Left click to reveal, right click to flag. Find all mines without exploding them! Each level adds more mines.
             </div>
-            <div class="leaderboard" id="snakeLeaderboard">
-              <h4>High Scores</h4>
-              <div class="leaderboard-entry"><span>Player 1</span><span>150</span></div>
-              <div class="leaderboard-entry"><span>Player 2</span><span>120</span></div>
-              <div class="leaderboard-entry"><span>Player 3</span><span>90</span></div>
+            <div class="leaderboard" id="minesweeperLeaderboard">
+              <h4>Best Times</h4>
+              <div class="leaderboard-entry"><span>Level 1</span><span>45s</span></div>
+              <div class="leaderboard-entry"><span>Level 2</span><span>78s</span></div>
+              <div class="leaderboard-entry"><span>Level 3</span><span>120s</span></div>
             </div>
           </div>
 
@@ -285,41 +286,21 @@
           <div class="game-container">
             <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🧱 Breakout</h2>
             <canvas id="breakoutCanvas" class="game-canvas" width="800" height="400"></canvas>
-            <div class="score-display" id="breakoutScore">Score: 0 | Lives: 3</div>
+            <div class="score-display" id="breakoutScore">Score: 0 | Lives: 3 | Level: 1</div>
             <div class="game-controls">
               <button class="game-btn" onclick="startBreakout()">Start Game</button>
               <button class="game-btn" onclick="pauseBreakout()">Pause</button>
               <button class="game-btn" onclick="resetBreakout()">Reset</button>
+              <button class="game-btn" onclick="nextBreakoutLevel()">Next Level</button>
             </div>
             <div class="game-info">
-              🎮 Move your mouse to control the paddle. Break all the bricks to win!
+              🎮 Move your mouse to control the paddle. Break all the bricks to advance to the next level!
             </div>
             <div class="leaderboard" id="breakoutLeaderboard">
               <h4>High Scores</h4>
-              <div class="leaderboard-entry"><span>Player 1</span><span>2400</span></div>
-              <div class="leaderboard-entry"><span>Player 2</span><span>1800</span></div>
-              <div class="leaderboard-entry"><span>Player 3</span><span>1200</span></div>
-            </div>
-          </div>
-
-          <!-- Space Invaders -->
-          <div class="game-container">
-            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">👾 Space Invaders</h2>
-            <canvas id="spaceCanvas" class="game-canvas" width="800" height="400"></canvas>
-            <div class="score-display" id="spaceScore">Score: 0 | Lives: 3</div>
-            <div class="game-controls">
-              <button class="game-btn" onclick="startSpace()">Start Game</button>
-              <button class="game-btn" onclick="pauseSpace()">Pause</button>
-              <button class="game-btn" onclick="resetSpace()">Reset</button>
-            </div>
-            <div class="game-info">
-              🎮 Use A/D or arrow keys to move, SPACE to shoot. Destroy all invaders!
-            </div>
-            <div class="leaderboard" id="spaceLeaderboard">
-              <h4>High Scores</h4>
-              <div class="leaderboard-entry"><span>Player 1</span><span>5000</span></div>
-              <div class="leaderboard-entry"><span>Player 2</span><span>3500</span></div>
-              <div class="leaderboard-entry"><span>Player 3</span><span>2800</span></div>
+              <div class="leaderboard-entry"><span>Level 5</span><span>12400</span></div>
+              <div class="leaderboard-entry"><span>Level 4</span><span>8800</span></div>
+              <div class="leaderboard-entry"><span>Level 3</span><span>5200</span></div>
             </div>
           </div>
 
@@ -332,15 +313,16 @@
               <button class="game-btn" onclick="startTetris()">Start Game</button>
               <button class="game-btn" onclick="pauseTetris()">Pause</button>
               <button class="game-btn" onclick="resetTetris()">Reset</button>
+              <button class="game-btn" onclick="skipTetrisLevel()">Skip Level</button>
             </div>
             <div class="game-info">
-              🎮 Use arrow keys: ← → to move, ↓ to drop faster, ↑ to rotate. Complete lines to score!
+              🎮 Use arrow keys: ← → to move, ↓ to drop faster, ↑ to rotate. Complete lines to advance levels!
             </div>
             <div class="leaderboard" id="tetrisLeaderboard">
               <h4>High Scores</h4>
-              <div class="leaderboard-entry"><span>Player 1</span><span>15000</span></div>
-              <div class="leaderboard-entry"><span>Player 2</span><span>12000</span></div>
-              <div class="leaderboard-entry"><span>Player 3</span><span>8500</span></div>
+              <div class="leaderboard-entry"><span>Level 10</span><span>45000</span></div>
+              <div class="leaderboard-entry"><span>Level 8</span><span>32000</span></div>
+              <div class="leaderboard-entry"><span>Level 6</span><span>18500</span></div>
             </div>
           </div>
 
