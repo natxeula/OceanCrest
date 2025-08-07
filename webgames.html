@@ -883,6 +883,13 @@
             const pixelX = x * minesweeperGame.cellSize;
             const pixelY = y * minesweeperGame.cellSize;
 
+            // Highlight selected cell for mobile
+            if (minesweeperGame.selectedCell &&
+                minesweeperGame.selectedCell.x === x && minesweeperGame.selectedCell.y === y) {
+              minesweeperGame.ctx.fillStyle = '#00bfff';
+              minesweeperGame.ctx.fillRect(pixelX - 2, pixelY - 2, minesweeperGame.cellSize + 2, minesweeperGame.cellSize + 2);
+            }
+
             if (cell.revealed) {
               minesweeperGame.ctx.fillStyle = cell.mine ? '#ff0000' : '#ddd';
               minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
@@ -899,7 +906,12 @@
                 minesweeperGame.ctx.fillText('💣', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 7);
               }
             } else {
-              minesweeperGame.ctx.fillStyle = cell.flagged ? '#ffff00' : '#888';
+              // X-ray vision modifier
+              if (minesweeperGame.modifiers.xray && cell.mine) {
+                minesweeperGame.ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+              } else {
+                minesweeperGame.ctx.fillStyle = cell.flagged ? '#ffff00' : '#888';
+              }
               minesweeperGame.ctx.fillRect(pixelX, pixelY, minesweeperGame.cellSize - 2, minesweeperGame.cellSize - 2);
 
               if (cell.flagged) {
@@ -907,6 +919,11 @@
                 minesweeperGame.ctx.font = '16px Arial';
                 minesweeperGame.ctx.textAlign = 'center';
                 minesweeperGame.ctx.fillText('🚩', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 5);
+              } else if (minesweeperGame.modifiers.xray && cell.mine) {
+                minesweeperGame.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                minesweeperGame.ctx.font = '16px Arial';
+                minesweeperGame.ctx.textAlign = 'center';
+                minesweeperGame.ctx.fillText('💣', pixelX + minesweeperGame.cellSize/2, pixelY + minesweeperGame.cellSize/2 + 5);
               }
             }
           }
