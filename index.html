@@ -44,7 +44,7 @@
     </button>
 
     <div class="settings-panel" id="settingsPanel">
-      <h3>Theme</h3>
+      <h3>Settings</h3>
 
       <div class="setting-group">
         <div class="setting-flex">
@@ -52,7 +52,17 @@
             <span class="theme-icon">🌙</span>
             Dark Mode
           </label>
-          <div class="setting-toggle" id="themeToggle"></div>
+          <button class="setting-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <div class="setting-flex">
+          <label class="setting-label">
+            <span class="theme-icon">🎬</span>
+            Reduced Motion
+          </label>
+          <button class="setting-toggle" id="motionToggle" aria-label="Toggle reduced motion"></button>
         </div>
       </div>
     </div>
