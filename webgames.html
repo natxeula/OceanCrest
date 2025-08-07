@@ -1119,16 +1119,19 @@
 
       // Initialize all games when page loads
       document.addEventListener('DOMContentLoaded', () => {
-        initSnake();
+        initMinesweeper();
         initBreakout();
-        initSpace();
         initTetris();
-        
+
         // Draw initial states
-        drawSnake();
+        drawMinesweeper();
         drawBreakout();
-        drawSpace();
         drawTetris();
+
+        // Update displays
+        updateMinesweeperDisplay();
+        updateBreakoutDisplay();
+        updateTetrisDisplay();
       });
     </script>
   </body>
