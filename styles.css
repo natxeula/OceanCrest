@@ -947,6 +947,8 @@ header.scrolled {
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
+  border: none;
+  outline: none;
 }
 
 .setting-toggle::before {
