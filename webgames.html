@@ -487,6 +487,26 @@
             <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🔲 Tetris</h2>
             <canvas id="tetrisCanvas" class="game-canvas" width="400" height="400" style="max-width: 400px;"></canvas>
             <div class="score-display" id="tetrisScore">Score: 0 | Level: 1 | Lines: 0</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Modifiers:</span>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('ghost')">Ghost Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('hold')">Hold Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('bomb')">Bomb Piece</button>
+              <button class="modifier-btn" onclick="toggleTetrisModifier('rainbow')">Rainbow Mode</button>
+            </div>
+
+            <div class="mobile-controls">
+              <div class="mobile-dpad">
+                <button class="mobile-btn" onclick="mobileTetrisMove('rotate')">🔄</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('left')">A</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('right')">D</button>
+                <button class="mobile-btn" onclick="mobileTetrisMove('down')">S</button>
+              </div>
+              <button class="mobile-btn" onclick="mobileTetrisMove('drop')">⬇ Drop</button>
+              <button class="mobile-btn" onclick="mobileTetrisMove('hold')">📦 Hold</button>
+            </div>
+
             <div class="game-controls">
               <button class="game-btn" onclick="startTetris()">Start Game</button>
               <button class="game-btn" onclick="pauseTetris()">Pause</button>
@@ -494,7 +514,7 @@
               <button class="game-btn" onclick="skipTetrisLevel()">Skip Level</button>
             </div>
             <div class="game-info">
-              🎮 Use arrow keys: ← → to move, ↓ to drop faster, ↑ to rotate. Complete lines to advance levels!
+              🎮 Use WASD: A/D to move, S to drop faster, W to rotate, SPACE for hard drop. Complete lines to advance levels!
             </div>
             <div class="leaderboard" id="tetrisLeaderboard">
               <h4>High Scores</h4>
