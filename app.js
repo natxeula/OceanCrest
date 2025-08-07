@@ -134,6 +134,11 @@ class OceanCrestApp {
     this.setTheme(newTheme);
   }
 
+  toggleMotion() {
+    const newMotion = !this.reducedMotion;
+    this.setMotion(newMotion);
+  }
+
   setupSettings() {
     // Make sure settings elements are visible
     const settingsToggle = document.getElementById("settingsToggle");
