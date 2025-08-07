@@ -448,6 +448,23 @@
             <h2 style="text-align: center; margin-bottom: 1rem; color: var(--accent-blue)">🧱 Breakout</h2>
             <canvas id="breakoutCanvas" class="game-canvas" width="800" height="400"></canvas>
             <div class="score-display" id="breakoutScore">Score: 0 | Lives: 3 | Level: 1</div>
+
+            <div class="modifiers-panel">
+              <span style="color: var(--accent-blue); font-weight: 600;">Power-ups:</span>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('bigPaddle')">Big Paddle</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('multiBall')">Multi-Ball</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('slowMotion')">Slow Motion</button>
+              <button class="modifier-btn" onclick="toggleBreakoutModifier('laser')">Laser Paddle</button>
+            </div>
+
+            <div class="mobile-controls">
+              <div class="mobile-dpad">
+                <button class="mobile-btn" onmousedown="mobilePaddleMove('left')" onmouseup="stopMobilePaddle()" ontouchstart="mobilePaddleMove('left')" ontouchend="stopMobilePaddle()">←</button>
+                <button class="mobile-btn" onmousedown="mobilePaddleMove('right')" onmouseup="stopMobilePaddle()" ontouchstart="mobilePaddleMove('right')" ontouchend="stopMobilePaddle()">→</button>
+              </div>
+              <button class="mobile-btn" onclick="activateBreakoutPowerUp()">Power-Up</button>
+            </div>
+
             <div class="game-controls">
               <button class="game-btn" onclick="startBreakout()">Start Game</button>
               <button class="game-btn" onclick="pauseBreakout()">Pause</button>
