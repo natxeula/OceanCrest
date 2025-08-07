@@ -155,17 +155,163 @@
         border-bottom: none;
       }
 
+      .modifiers-panel {
+        background: rgba(0, 191, 255, 0.1);
+        border: 1px solid var(--accent-blue);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .modifier-btn {
+        padding: 0.5rem 1rem;
+        background: rgba(0, 191, 255, 0.2);
+        color: var(--accent-blue);
+        border: 1px solid var(--accent-blue);
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .modifier-btn:hover {
+        background: var(--accent-blue);
+        color: var(--primary-bg);
+      }
+
+      .modifier-btn.active {
+        background: var(--accent-blue);
+        color: var(--primary-bg);
+      }
+
+      .mobile-controls {
+        display: none;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+      }
+
+      .mobile-btn {
+        padding: 1rem;
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      .mobile-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 191, 255, 0.3);
+      }
+
+      .mobile-btn:active {
+        transform: translateY(0px);
+      }
+
+      .mobile-dpad {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0.5rem;
+        width: 150px;
+        height: 150px;
+      }
+
+      .mobile-dpad .mobile-btn {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+      }
+
+      .mobile-dpad .mobile-btn:nth-child(2) { grid-column: 2; grid-row: 1; } /* Up */
+      .mobile-dpad .mobile-btn:nth-child(3) { grid-column: 1; grid-row: 2; } /* Left */
+      .mobile-dpad .mobile-btn:nth-child(4) { grid-column: 3; grid-row: 2; } /* Right */
+      .mobile-dpad .mobile-btn:nth-child(5) { grid-column: 2; grid-row: 3; } /* Down */
+
+      .power-up {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffd700, #ffaa00);
+        box-shadow: 0 0 10px #ffd700;
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+      }
+
+      .modifier-effect {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--accent-gradient);
+        color: var(--primary-bg);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: bold;
+        z-index: 1000;
+        animation: fadeInOut 2s ease-in-out;
+      }
+
+      @keyframes fadeInOut {
+        0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      }
+
       @media (max-width: 768px) {
         .webgames-title {
           font-size: 2.5rem;
         }
-        
+
         .game-canvas {
           height: 300px;
+          max-width: 100%;
         }
-        
+
         .game-container {
           padding: 1.5rem;
+        }
+
+        .mobile-controls {
+          display: flex;
+        }
+
+        .game-controls {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .game-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .modifiers-panel {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .modifier-btn {
+          text-align: center;
         }
       }
     </style>
