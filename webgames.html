@@ -1135,6 +1135,8 @@
         board: [],
         currentPiece: null,
         nextPiece: null,
+        heldPiece: null,
+        canHold: true,
         score: 0,
         level: 1,
         lines: 0,
@@ -1142,6 +1144,12 @@
         gameLoop: null,
         dropTime: 0,
         comboCount: 0,
+        modifiers: {
+          ghost: false,
+          hold: false,
+          bomb: false,
+          rainbow: false
+        },
         pieces: [
           {matrix: [[1,1,1,1]], color: '#00ffff'}, // I - Cyan
           {matrix: [[1,1],[1,1]], color: '#ffff00'}, // O - Yellow
@@ -1149,7 +1157,8 @@
           {matrix: [[0,1,1],[1,1,0]], color: '#00ff00'}, // S - Green
           {matrix: [[1,1,0],[0,1,1]], color: '#ff0000'}, // Z - Red
           {matrix: [[1,0,0],[1,1,1]], color: '#0000ff'}, // J - Blue
-          {matrix: [[0,0,1],[1,1,1]], color: '#ffa500'}  // L - Orange
+          {matrix: [[0,0,1],[1,1,1]], color: '#ffa500'}, // L - Orange
+          {matrix: [[1]], color: '#ff00ff'} // Bomb piece
         ]
       };
 
