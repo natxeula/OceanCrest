@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanCrest Admin - Security Logs</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="team-security.css" />
+    <style>
+      .admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .admin-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: var(--glass-bg);
+        border-radius: 15px;
+        border: 1px solid var(--border-color);
+      }
+
+      .admin-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--accent-blue);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .logs-section {
+        background: var(--glass-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .section-title {
+        color: var(--accent-blue);
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logs-container {
+        max-height: 500px;
+        overflow-y: auto;
+        background: var(--primary-bg);
+        border-radius: 10px;
+        padding: 1rem;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .log-entry {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 5px;
+        border-left: 3px solid var(--accent-blue);
+        background: var(--secondary-bg);
+      }
+
+      .log-entry.error {
+        border-left-color: #ff4444;
+        background: rgba(255, 68, 68, 0.1);
+      }
+
+      .log-entry.warning {
+        border-left-color: #ffa500;
+        background: rgba(255, 165, 0, 0.1);
+      }
+
+      .log-entry.success {
+        border-left-color: #00ff88;
+        background: rgba(0, 255, 136, 0.1);
+      }
+
+      .log-timestamp {
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .log-type {
+        color: var(--accent-blue);
+        font-weight: 700;
+      }
+
+      .log-ip {
+        color: var(--accent-purple);
+        font-weight: 600;
+      }
+
+      .controls-section {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .control-btn {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .control-btn.primary {
+        background: linear-gradient(135deg, #00bfff, #0099cc);
+        color: white;
+      }
+
+      .control-btn.danger {
+        background: linear-gradient(135deg, #ff4444, #cc0000);
+        color: white;
+      }
+
+      .control-btn.warning {
+        background: linear-gradient(135deg, #ffa500, #cc8800);
+        color: white;
+      }
+
+      .control-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .ip-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .ip-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem;
+        background: var(--secondary-bg);
+        border-radius: 8px;
+        border-left: 3px solid var(--accent-blue);
+      }
+
+      .ip-item.banned {
+        border-left-color: #ff4444;
+        background: rgba(255, 68, 68, 0.1);
+      }
+
+      .ip-address {
+        font-family: 'Courier New', monospace;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .ip-member {
+        color: var(--accent-blue);
+        font-weight: 600;
+      }
+
+      .ip-status {
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .status-authorized {
+        background: rgba(0, 255, 136, 0.2);
+        color: #00ff88;
+      }
+
+      .status-banned {
+        background: rgba(255, 68, 68, 0.2);
+        color: #ff4444;
+      }
+
+      .filter-controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--border-color);
+        background: var(--secondary-bg);
+        color: var(--text-secondary);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .filter-btn.active {
+        background: var(--accent-blue);
+        color: white;
+        border-color: var(--accent-blue);
+      }
+
+      @media (max-width: 768px) {
+        .admin-container {
+          padding: 1rem;
+        }
+        
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .controls-section {
+          flex-direction: column;
+        }
+        
+        .filter-controls {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+          <nav class="desktop-nav">
+            <ul>
+              <li><a href="handbooks.html">← Back to Handbooks</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="section" style="padding-top: 6rem;">
+      <div class="admin-container">
+        <div class="admin-header">
+          <h1 class="admin-title">🔐 Security Admin Panel</h1>
+          <p style="color: var(--text-muted);">Text file-based security monitoring and management</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="authorizedCount">0</div>
+            <div class="stat-label">Authorized IPs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="bannedCount">0</div>
+            <div class="stat-label">Banned IPs</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="totalLogs">0</div>
+            <div class="stat-label">Total Log Entries</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="activeMembers">0</div>
+            <div class="stat-label">Active Team Members</div>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <button class="control-btn primary" onclick="refreshData()">🔄 Refresh Data</button>
+          <button class="control-btn primary" onclick="downloadLogs()">📥 Download access_logs.txt</button>
+          <button class="control-btn primary" onclick="downloadIPs()">📥 Download authorized_ips.txt</button>
+          <button class="control-btn warning" onclick="clearAllSessions()">⚠️ Clear All Sessions</button>
+          <button class="control-btn danger" onclick="clearAllBans()">🚫 Unban All IPs</button>
+          <button class="control-btn danger" onclick="resetSystem()">🔄 Reset System</button>
+        </div>
+
+        <div class="logs-section">
+          <h3 class="section-title">📄 access_logs.txt</h3>
+          <div class="filter-controls">
+            <button class="filter-btn active" onclick="filterLogs('all')">All</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_GRANTED')">Access Granted</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_DENIED')">Access Denied</button>
+            <button class="filter-btn" onclick="filterLogs('IP_BANNED')">IP Banned</button>
+            <button class="filter-btn" onclick="filterLogs('IP_REGISTERED')">IP Registered</button>
+          </div>
+          <div class="logs-container" id="logsDisplay">
+            <!-- Dynamic content -->
+          </div>
+        </div>
+
+        <div class="logs-section">
+          <h3 class="section-title">🌐 authorized_ips.txt</h3>
+          <div class="ip-list" id="authorizedIPsList">
+            <!-- Dynamic content -->
+          </div>
+        </div>
+
+        <div class="logs-section">
+          <h3 class="section-title">🚫 banned_ips.txt</h3>
+          <div class="ip-list" id="bannedIPsList">
+            <!-- Dynamic content -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="handbook-security-simple.js"></script>
+    <script>
+      class AdminPanel {
+        constructor() {
+          this.currentFilter = 'all';
+          this.refreshData();
+          this.startAutoRefresh();
+        }
+
+        refreshData() {
+          if (!window.teamSecurity) {
+            console.log('Team security system not loaded');
+            return;
+          }
+
+          const security = window.teamSecurity;
+          const status = security.getSystemStatus();
+          
+          // Update statistics
+          document.getElementById('authorizedCount').textContent = status.authorizedTeamMembers;
+          document.getElementById('bannedCount').textContent = status.bannedIPs;
+          document.getElementById('totalLogs').textContent = status.totalLogs;
+          document.getElementById('activeMembers').textContent = this.countActiveMembers();
+          
+          // Update displays
+          this.updateLogsDisplay();
+          this.updateAuthorizedIPsList();
+          this.updateBannedIPsList();
+        }
+
+        countActiveMembers() {
+          const handbooks = ['executive', 'internal', 'logs'];
+          const activeMembers = new Set();
+          
+          handbooks.forEach(handbook => {
+            const member = sessionStorage.getItem(`handbook_${handbook}_team_member`);
+            if (member) activeMembers.add(member);
+          });
+          
+          return activeMembers.size;
+        }
+
+        updateLogsDisplay() {
+          const logsDisplay = document.getElementById('logsDisplay');
+          
+          if (!window.teamSecurity || !window.teamSecurity.accessLogs) {
+            logsDisplay.innerHTML = '<div class="log-entry">No access logs available</div>';
+            return;
+          }
+          
+          let logs = window.teamSecurity.accessLogs.slice().reverse();
+          
+          // Apply filter
+          if (this.currentFilter !== 'all') {
+            logs = logs.filter(log => log.type.includes(this.currentFilter));
+          }
+          
+          logsDisplay.innerHTML = '';
+          
+          logs.slice(0, 100).forEach(log => {
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            
+            if (log.type.includes('DENIED') || log.type.includes('BANNED')) {
+              entry.classList.add('error');
+            } else if (log.type.includes('GRANTED') || log.type.includes('REGISTERED')) {
+              entry.classList.add('success');
+            } else if (log.type.includes('INVALID') || log.type.includes('MISMATCH')) {
+              entry.classList.add('warning');
+            }
+            
+            const timestamp = new Date(log.timestamp).toLocaleString();
+            entry.innerHTML = `
+              <span class="log-timestamp">[${timestamp}]</span>
+              <span class="log-type">${log.type}:</span> ${log.description}
+              <br>
+              <small>Team Member: <strong>${log.teamMember}</strong> | IP: <span class="log-ip">${log.ip}</span></small>
+            `;
+            
+            logsDisplay.appendChild(entry);
+          });
+          
+          if (logs.length === 0) {
+            logsDisplay.innerHTML = '<div class="log-entry">No logs match the current filter</div>';
+          }
+        }
+
+        updateAuthorizedIPsList() {
+          const ipsList = document.getElementById('authorizedIPsList');
+          
+          if (!window.teamSecurity || !window.teamSecurity.authorizedIPs) {
+            ipsList.innerHTML = '<div class="ip-item">No authorized IPs</div>';
+            return;
+          }
+          
+          ipsList.innerHTML = '';
+          
+          window.teamSecurity.authorizedIPs.forEach((ip, member) => {
+            const item = document.createElement('div');
+            item.className = 'ip-item';
+            item.innerHTML = `
+              <div>
+                <div class="ip-address">${ip}</div>
+                <div class="ip-member">${member}</div>
+              </div>
+              <div class="ip-status status-authorized">Authorized</div>
+            `;
+            ipsList.appendChild(item);
+          });
+          
+          if (window.teamSecurity.authorizedIPs.size === 0) {
+            ipsList.innerHTML = '<div class="ip-item">No authorized IPs registered</div>';
+          }
+        }
+
+        updateBannedIPsList() {
+          const ipsList = document.getElementById('bannedIPsList');
+          
+          if (!window.teamSecurity || !window.teamSecurity.bannedIPs) {
+            ipsList.innerHTML = '<div class="ip-item">No banned IPs</div>';
+            return;
+          }
+          
+          ipsList.innerHTML = '';
+          
+          window.teamSecurity.bannedIPs.forEach(ip => {
+            const item = document.createElement('div');
+            item.className = 'ip-item banned';
+            item.innerHTML = `
+              <div>
+                <div class="ip-address">${ip}</div>
+                <div class="ip-member">Unknown/Unauthorized</div>
+              </div>
+              <div class="ip-status status-banned">Banned</div>
+            `;
+            ipsList.appendChild(item);
+          });
+          
+          if (window.teamSecurity.bannedIPs.size === 0) {
+            ipsList.innerHTML = '<div class="ip-item">No banned IPs</div>';
+          }
+        }
+
+        startAutoRefresh() {
+          setInterval(() => {
+            this.refreshData();
+          }, 10000); // Refresh every 10 seconds
+        }
+      }
+
+      // Admin control functions
+      function refreshData() {
+        if (window.adminPanel) {
+          window.adminPanel.refreshData();
+        }
+      }
+
+      function downloadLogs() {
+        if (window.teamSecurity) {
+          window.teamSecurity.downloadAccessLogs();
+        }
+      }
+
+      function downloadIPs() {
+        if (!window.teamSecurity || !window.teamSecurity.authorizedIPs) {
+          alert('No authorized IPs data available');
+          return;
+        }
+        
+        let content = 'OCEANCREST AUTHORIZED IPs\n';
+        content += '========================\n\n';
+        
+        window.teamSecurity.authorizedIPs.forEach((ip, member) => {
+          content += `${member}: ${ip}\n`;
+        });
+        
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `oceancrest-authorized-ips-${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        URL.revokeObjectURL(url);
+      }
+
+      function clearAllSessions() {
+        if (confirm('Are you sure you want to clear all active sessions?')) {
+          const handbooks = ['executive', 'internal', 'logs', 'project', 'hr'];
+          handbooks.forEach(handbook => {
+            sessionStorage.removeItem(`handbook_${handbook}_access`);
+            sessionStorage.removeItem(`handbook_${handbook}_team_member`);
+            sessionStorage.removeItem(`handbook_${handbook}_session`);
+            sessionStorage.removeItem(`handbook_${handbook}_timestamp`);
+          });
+          
+          if (window.teamSecurity) {
+            window.teamSecurity.logToFile('ADMIN_ACTION', 'All sessions cleared via admin panel');
+          }
+          
+          alert('All active sessions have been cleared.');
+          refreshData();
+        }
+      }
+
+      function clearAllBans() {
+        if (confirm('Are you sure you want to unban all IPs?')) {
+          if (window.teamSecurity) {
+            window.teamSecurity.bannedIPs.clear();
+            window.teamSecurity.saveToFile('oceancrest_banned_ips', []);
+            window.teamSecurity.logToFile('ADMIN_ACTION', 'All IP bans cleared via admin panel');
+          }
+          
+          alert('All IP bans have been cleared.');
+          refreshData();
+        }
+      }
+
+      function resetSystem() {
+        if (confirm('Are you sure you want to reset the entire security system? This will clear all data.')) {
+          localStorage.removeItem('oceancrest_authorized_ips');
+          localStorage.removeItem('oceancrest_banned_ips');
+          localStorage.removeItem('oceancrest_access_logs');
+          localStorage.removeItem('oceancrest_log_content');
+          localStorage.removeItem('simulated_ip');
+          
+          // Clear all sessions
+          const handbooks = ['executive', 'internal', 'logs', 'project', 'hr'];
+          handbooks.forEach(handbook => {
+            sessionStorage.removeItem(`handbook_${handbook}_access`);
+            sessionStorage.removeItem(`handbook_${handbook}_team_member`);
+            sessionStorage.removeItem(`handbook_${handbook}_session`);
+            sessionStorage.removeItem(`handbook_${handbook}_timestamp`);
+          });
+          
+          alert('Security system has been reset. Page will reload.');
+          window.location.reload();
+        }
+      }
+
+      function filterLogs(type) {
+        // Update filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        // Update current filter and refresh display
+        if (window.adminPanel) {
+          window.adminPanel.currentFilter = type;
+          window.adminPanel.updateLogsDisplay();
+        }
+      }
+
+      // Initialize admin panel
+      document.addEventListener('DOMContentLoaded', () => {
+        window.adminPanel = new AdminPanel();
+      });
+    </script>
+  </body>
+</html>
