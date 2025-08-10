@@ -202,7 +202,7 @@ class TeamSecuritySystem {
                 type="text"
                 id="teamMemberName"
                 class="team-input"
-                placeholder="${this.getPlaceholderText()}"
+                placeholder="Enter your team member name"
                 autocomplete="off"
               >
               <div class="team-suggestions" id="teamSuggestions"></div>
