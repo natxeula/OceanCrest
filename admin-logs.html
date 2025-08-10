@@ -499,29 +499,29 @@
         }
       }
 
-      function downloadIPs() {
-        if (!window.teamSecurity || !window.teamSecurity.authorizedIPs) {
-          alert('No authorized IPs data available');
+      function downloadAccessSessions() {
+        if (!window.teamSecurity || !window.teamSecurity.authorizedAccessSessions) {
+          alert('No authorized access sessions data available');
           return;
         }
-        
-        let content = 'OCEANCREST AUTHORIZED IPs\n';
-        content += '========================\n\n';
-        
-        window.teamSecurity.authorizedIPs.forEach((ip, member) => {
-          content += `${member}: ${ip}\n`;
+
+        let content = 'OCEANCREST AUTHORIZED ACCESS SESSIONS\n';
+        content += '====================================\n\n';
+
+        window.teamSecurity.authorizedAccessSessions.forEach((session, member) => {
+          content += `${member}: ${session.ip} (Session: ${session.sessionId})\n`;
         });
-        
+
         const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-        
+
         const a = document.createElement('a');
         a.href = url;
-        a.download = `oceancrest-authorized-ips-${new Date().toISOString().split('T')[0]}.txt`;
+        a.download = `oceancrest-authorized-access-sessions-${new Date().toISOString().split('T')[0]}.txt`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        
+
         URL.revokeObjectURL(url);
       }
 
@@ -545,22 +545,22 @@
       }
 
       function clearAllBans() {
-        if (confirm('Are you sure you want to unban all IPs?')) {
+        if (confirm('Are you sure you want to unban all access sessions?')) {
           if (window.teamSecurity) {
-            window.teamSecurity.bannedIPs.clear();
-            window.teamSecurity.saveToFile('oceancrest_banned_ips', []);
-            window.teamSecurity.logToFile('ADMIN_ACTION', 'All IP bans cleared via admin panel');
+            window.teamSecurity.bannedAccessSessions.clear();
+            window.teamSecurity.saveToFile('oceancrest_banned_access_sessions', []);
+            window.teamSecurity.logToFile('ADMIN_ACTION', 'All access session bans cleared via admin panel');
           }
-          
-          alert('All IP bans have been cleared.');
+
+          alert('All access session bans have been cleared.');
           refreshData();
         }
       }
 
       function resetSystem() {
         if (confirm('Are you sure you want to reset the entire security system? This will clear all data.')) {
-          localStorage.removeItem('oceancrest_authorized_ips');
-          localStorage.removeItem('oceancrest_banned_ips');
+          localStorage.removeItem('oceancrest_authorized_access_sessions');
+          localStorage.removeItem('oceancrest_banned_access_sessions');
           localStorage.removeItem('oceancrest_access_logs');
           localStorage.removeItem('oceancrest_log_content');
           localStorage.removeItem('simulated_ip');
