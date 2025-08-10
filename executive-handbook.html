@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="handbook-security.css" />
+    <link rel="stylesheet" href="team-security.css" />
     <style>
       .handbook-container {
         max-width: 800px;
@@ -339,9 +339,9 @@
           <div class="handbook-header">
             <h1 class="handbook-title">OCEANCREST ENTERTAINMENT</h1>
             <h2 class="handbook-subtitle">Executive Handbook</h2>
-            <div class="confidential-badge">🔒 ULTRA-SECURE - MAXIMUM CLEARANCE</div>
-            <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); border-radius: 10px; text-align: center;">
-              🚨 <strong>WARNING:</strong> This document contains classified information. Unauthorized access is prohibited and monitored.
+            <div class="confidential-badge">🔒 TEAM ACCESS - EXECUTIVE LEVEL</div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 191, 255, 0.1); border: 1px solid rgba(0, 191, 255, 0.3); border-radius: 10px; text-align: center;">
+              📋 <strong>NOTICE:</strong> Access logged to access_logs.txt. IP tracked in authorized_ips.txt.
             </div>
           </div>
 
@@ -775,13 +775,13 @@
     </footer>
 
     <script src="app.js"></script>
-    <script src="handbook-security.js"></script>
+    <script src="handbook-security-simple.js"></script>
     <script>
       // Immediate access verification - before DOM loads
       (function() {
-        // Use advanced security system for verification
-        if (window.advancedSecurity) {
-          if (!window.advancedSecurity.verifyPageAccess('executive')) {
+        // Use team security system for verification
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('executive')) {
             return; // Will redirect if verification fails
           }
         } else {
@@ -796,13 +796,14 @@
 
       // Access verification and features after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access with advanced security
-        if (window.advancedSecurity) {
-          if (!window.advancedSecurity.verifyPageAccess('executive')) {
+        // Double-check access with team security
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('executive')) {
             return;
           }
           // Log page access
-          window.advancedSecurity.logSecurityEvent('PAGE_ACCESS', 'Executive handbook accessed');
+          const teamMember = sessionStorage.getItem('handbook_executive_team_member');
+          window.teamSecurity.logToFile('PAGE_ACCESS', 'Executive handbook accessed', teamMember);
         }
 
         // Add smooth scrolling for table of contents
@@ -820,9 +821,10 @@
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        if (window.advancedSecurity) {
-          window.advancedSecurity.clearAccess('executive');
-          window.advancedSecurity.logSecurityEvent('PAGE_EXIT', 'Executive handbook session ended');
+        if (window.teamSecurity) {
+          const teamMember = sessionStorage.getItem('handbook_executive_team_member');
+          window.teamSecurity.logToFile('PAGE_EXIT', 'Executive handbook session ended', teamMember);
+          window.teamSecurity.clearAccess('executive');
         }
       });
     </script>
