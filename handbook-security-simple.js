@@ -132,33 +132,33 @@ class TeamSecuritySystem {
     return 'sess_' + Math.random().toString(36).substr(2, 16);
   }
 
-  checkIPAccess(teamMember) {
-    const currentIP = this.getSimulatedIP();
-    
-    // Check if IP is banned
-    if (this.bannedIPs.has(currentIP)) {
-      this.logToFile('ACCESS_DENIED', `Banned IP attempted access`, teamMember);
-      return { allowed: false, reason: 'IP_BANNED' };
+  checkAccessSessionAccess(teamMember) {
+    const currentAccessSession = this.getCurrentAccessSession();
+
+    // Check if access session is banned
+    if (Array.from(this.bannedAccessSessions).some(session => session.ip === currentAccessSession.ip)) {
+      this.logToFile('ACCESS_DENIED', `Banned access session attempted access`, teamMember);
+      return { allowed: false, reason: 'ACCESS_SESSION_BANNED' };
     }
-    
-    // Check if team member has an authorized IP
-    if (this.authorizedIPs.has(teamMember.toLowerCase())) {
-      const authorizedIP = this.authorizedIPs.get(teamMember.toLowerCase());
-      
-      if (authorizedIP !== currentIP) {
-        // Different IP detected - ban this IP and deny access
-        this.bannedIPs.add(currentIP);
-        this.saveToFile('oceancrest_banned_ips', Array.from(this.bannedIPs));
-        this.logToFile('IP_MISMATCH_BANNED', `Unauthorized IP ${currentIP} banned. Expected: ${authorizedIP}`, teamMember);
-        return { allowed: false, reason: 'IP_MISMATCH' };
+
+    // Check if team member has an authorized access session
+    if (this.authorizedAccessSessions.has(teamMember.toLowerCase())) {
+      const authorizedSession = this.authorizedAccessSessions.get(teamMember.toLowerCase());
+
+      if (authorizedSession.ip !== currentAccessSession.ip) {
+        // Different IP detected - ban this access session and deny access
+        this.bannedAccessSessions.add(currentAccessSession);
+        this.saveToFile('oceancrest_banned_access_sessions', Array.from(this.bannedAccessSessions));
+        this.logToFile('ACCESS_SESSION_MISMATCH_BANNED', `Unauthorized access session ${currentAccessSession.ip} banned. Expected: ${authorizedSession.ip}`, teamMember);
+        return { allowed: false, reason: 'ACCESS_SESSION_MISMATCH' };
       }
     } else {
-      // First time login - register this IP
-      this.authorizedIPs.set(teamMember.toLowerCase(), currentIP);
-      this.saveToFile('oceancrest_authorized_ips', Array.from(this.authorizedIPs.entries()));
-      this.logToFile('IP_REGISTERED', `New IP registered for team member`, teamMember);
+      // First time login - register this access session
+      this.authorizedAccessSessions.set(teamMember.toLowerCase(), currentAccessSession);
+      this.saveToFile('oceancrest_authorized_access_sessions', Array.from(this.authorizedAccessSessions.entries()));
+      this.logToFile('ACCESS_SESSION_REGISTERED', `New access session registered for team member`, teamMember);
     }
-    
+
     return { allowed: true };
   }
 
