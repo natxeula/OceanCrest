@@ -41,9 +41,9 @@ class TeamSecuritySystem {
     };
     
     this.currentHandbook = null;
-    this.authorizedIPs = new Map(); // teamMember -> IP
+    this.authorizedAccessSessions = new Map(); // teamMember -> AccessSession
     this.accessLogs = [];
-    this.bannedIPs = new Set();
+    this.bannedAccessSessions = new Set();
     
     this.init();
   }
@@ -57,15 +57,15 @@ class TeamSecuritySystem {
 
   loadStoredData() {
     // Load from localStorage (simulating file system)
-    const storedIPs = localStorage.getItem('oceancrest_authorized_ips');
-    const storedBanned = localStorage.getItem('oceancrest_banned_ips');
+    const storedSessions = localStorage.getItem('oceancrest_authorized_access_sessions');
+    const storedBanned = localStorage.getItem('oceancrest_banned_access_sessions');
     const storedLogs = localStorage.getItem('oceancrest_access_logs');
 
-    if (storedIPs) {
-      this.authorizedIPs = new Map(JSON.parse(storedIPs));
+    if (storedSessions) {
+      this.authorizedAccessSessions = new Map(JSON.parse(storedSessions));
     }
     if (storedBanned) {
-      this.bannedIPs = new Set(JSON.parse(storedBanned));
+      this.bannedAccessSessions = new Set(JSON.parse(storedBanned));
     }
     if (storedLogs) {
       this.accessLogs = JSON.parse(storedLogs);
