@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="handbook-security.css" />
+    <link rel="stylesheet" href="team-security.css" />
     <style>
       .handbook-container {
         max-width: 800px;
@@ -320,9 +320,9 @@
             <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
               (Note: This may include info about our development branch, "OceanCrest Games")
             </p>
-            <div class="confidential-badge">🔐 SECURE - VERIFIED PERSONNEL ONLY</div>
+            <div class="confidential-badge">🔐 TEAM ACCESS - INTERNAL PERSONNEL</div>
             <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 10px; text-align: center;">
-              🛡️ <strong>NOTICE:</strong> Access to this document is monitored and logged for security purposes.
+              📋 <strong>NOTICE:</strong> Team member access logged to access_logs.txt.
             </div>
           </div>
 
@@ -801,13 +801,13 @@
     </footer>
 
     <script src="app.js"></script>
-    <script src="handbook-security.js"></script>
+    <script src="handbook-security-simple.js"></script>
     <script>
       // Immediate access verification - before DOM loads
       (function() {
-        // Use advanced security system for verification
-        if (window.advancedSecurity) {
-          if (!window.advancedSecurity.verifyPageAccess('internal')) {
+        // Use team security system for verification
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('internal')) {
             return; // Will redirect if verification fails
           }
         } else {
@@ -822,13 +822,14 @@
 
       // Access verification and features after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access with advanced security
-        if (window.advancedSecurity) {
-          if (!window.advancedSecurity.verifyPageAccess('internal')) {
+        // Double-check access with team security
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('internal')) {
             return;
           }
           // Log page access
-          window.advancedSecurity.logSecurityEvent('PAGE_ACCESS', 'Internal handbook accessed');
+          const teamMember = sessionStorage.getItem('handbook_internal_team_member');
+          window.teamSecurity.logToFile('PAGE_ACCESS', 'Internal handbook accessed', teamMember);
         }
 
         // Add smooth scrolling for table of contents
@@ -846,9 +847,10 @@
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        if (window.advancedSecurity) {
-          window.advancedSecurity.clearAccess('internal');
-          window.advancedSecurity.logSecurityEvent('PAGE_EXIT', 'Internal handbook session ended');
+        if (window.teamSecurity) {
+          const teamMember = sessionStorage.getItem('handbook_internal_team_member');
+          window.teamSecurity.logToFile('PAGE_EXIT', 'Internal handbook session ended', teamMember);
+          window.teamSecurity.clearAccess('internal');
         }
       });
     </script>
