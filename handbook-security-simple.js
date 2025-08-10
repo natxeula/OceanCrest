@@ -180,6 +180,12 @@ class TeamSecuritySystem {
     document.body.style.overflow = 'hidden';
     
     this.initModalEvents(modal);
+
+    // Update placeholder for executive access
+    const nameInput = modal.querySelector('#teamMemberName');
+    if (this.currentHandbook === 'executive' || this.currentHandbook === 'logs') {
+      nameInput.placeholder = 'Executive access only (natxeula, future, mr80, kat, puzzles, muelio, fortune, adjective)';
+    }
   }
 
   getTeamLoginHTML() {
