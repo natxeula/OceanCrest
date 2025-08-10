@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="handbook-security.css" />
+    <link rel="stylesheet" href="team-security.css" />
     <style>
       .handbook-card {
         background: var(--glass-bg);
@@ -287,55 +287,55 @@
     <main class="section" style="padding-top: 8rem;">
       <div class="container">
         <div class="page-header">
-          <h1 class="section-title">🔐 Secure Company Handbooks</h1>
+          <h1 class="section-title">🔐 Team Access Handbooks</h1>
           <p class="section-subtitle">
             Official documentation and guidelines for OceanCrest Entertainment team members.
-            <strong>Access is restricted to authorized personnel only.</strong>
+            <strong>Access requires team member authentication.</strong>
             <br><br>
-            🛡️ <em>Protected by advanced biometric verification, multi-factor authentication, behavioral analysis, and real-time threat detection.</em>
+            📋 <em>Login with your team member name and access code. Your IP will be logged to text files.</em>
             <br>
-            🔒 <em>All access attempts are monitored and logged for security purposes.</em>
+            🚫 <em>Unauthorized IPs are automatically banned. <a href="admin-logs.html" style="color: var(--accent-blue);">View Admin Panel</a></em>
           </p>
         </div>
 
         <div class="overview-grid" style="margin-top: 4rem;">
           <div class="handbook-card" data-handbook="executive">
-            <div class="status-badge status-restricted">🔒 Ultra-Secure</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">👑</div>
             <h3 class="handbook-title">Executive Handbook</h3>
             <p class="handbook-description">
-              <strong>MAXIMUM SECURITY CLEARANCE REQUIRED.</strong> Comprehensive guide for executive team members covering leadership protocols,
+              <strong>TEAM MEMBER AUTHENTICATION REQUIRED.</strong> Comprehensive guide for executive team members covering leadership protocols,
               responsibilities, conduct standards, and organizational structure. Contains
               classified information regarding company operations and management policies.
-              <br><br>🛡️ <em>Protected by biometric verification, multi-factor authentication, and behavioral analysis.</em>
+              <br><br>🔐 <em>Protected by team member verification and IP logging to access_logs.txt</em>
             </p>
-            <div class="btn btn-primary">🔐 Initiate Secure Access</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="internal">
-            <div class="status-badge status-restricted">🔒 High Security</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">📋</div>
             <h3 class="handbook-title">Internal Handbook</h3>
             <p class="handbook-description">
               <strong>INTERNAL PERSONNEL ONLY.</strong> General internal guidelines for all OceanCrest team members including core values,
               team structure, communication protocols, project lifecycles, and operational procedures.
               Essential reading for all verified internal staff and team members.
-              <br><br>🔐 <em>Protected by advanced authentication and session monitoring.</em>
+              <br><br>🔐 <em>Protected by team authentication and IP tracking to authorized_ips.txt</em>
             </p>
-            <div class="btn btn-primary">🔐 Secure Access</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="logs">
-            <div class="status-badge status-restricted">🔒 Top Secret</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">📊</div>
             <h3 class="handbook-title">Executive Logs</h3>
             <p class="handbook-description">
               <strong>CLASSIFIED PERSONNEL RECORDS.</strong> Historical records of past and present department leads including tenure information,
               status changes, transition details, and sensitive HR documentation. Confidential personnel data for
               executive reference and organizational history tracking.
-              <br><br>🚨 <em>Highest security level - multiple verification layers required.</em>
+              <br><br>🚨 <em>High security - team verification and IP banning for unauthorized access.</em>
             </p>
-            <div class="btn btn-primary">🔐 Classified Access</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="project">
@@ -421,7 +421,7 @@
     </footer>
 
     <script src="app.js"></script>
-    <script src="handbook-security.js"></script>
+    <script src="handbook-security-simple.js"></script>
     <script>
       class HandbookAccess {
         constructor() {
@@ -469,11 +469,11 @@
             return;
           }
 
-          // Use advanced security system
-          if (window.advancedSecurity) {
-            window.advancedSecurity.requestAccess(handbook);
+          // Use team security system
+          if (window.teamSecurity) {
+            window.teamSecurity.requestAccess(handbook);
           } else {
-            console.error('Security system not loaded');
+            console.error('Team security system not loaded');
           }
         }
 
