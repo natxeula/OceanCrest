@@ -6,23 +6,38 @@
 class TeamSecuritySystem {
   constructor() {
     this.teamMembers = [
-      'natxeula', 'nat', 'nate',
-      'future', 'the future', 'futuristic',
-      'mr. 80', 'mr80', 'eighty',
-      'kat', 'katherine',
-      'mr puzzles', 'mrpuzzles', 'puzzles',
-      'fork',
-      'whi',
-      'don', 'poseidonokeanos', 'lucifercelestis',
-      'robo', 'robomg07',
-      'teo',
-      'emplexity'
+      'natxeula',
+      'future',
+      'mr80',
+      'kat',
+      'puzzles',
+      'muelio',
+      'fortune',
+      'adjective',
+      'Tempest',
+      'Plushie',
+      '0r4n',
+      'MV',
+      'yeah_no',
+      'fork'
+    ];
+
+    // Executive-level access (restricted to executive team only)
+    this.executiveMembers = [
+      'natxeula',
+      'future',
+      'mr80',
+      'kat',
+      'puzzles',
+      'muelio',
+      'fortune',
+      'adjective'
     ];
     
     this.accessCodes = {
-      executive: 'EXEC_ULTRA_SECURE_2025',
-      internal: 'INTERNAL_TEAM_ACCESS_2025',
-      logs: 'LOGS_CLASSIFIED_2025'
+      executive: 'industrializablecurrents',
+      internal: 'oceancrestproud',
+      logs: 'firedrialist'
     };
     
     this.currentHandbook = null;
@@ -165,6 +180,12 @@ class TeamSecuritySystem {
     document.body.style.overflow = 'hidden';
     
     this.initModalEvents(modal);
+
+    // Update placeholder for executive access
+    const nameInput = modal.querySelector('#teamMemberName');
+    if (this.currentHandbook === 'executive' || this.currentHandbook === 'logs') {
+      nameInput.placeholder = 'Executive access only (natxeula, future, mr80, kat, puzzles, muelio, fortune, adjective)';
+    }
   }
 
   getTeamLoginHTML() {
@@ -183,11 +204,11 @@ class TeamSecuritySystem {
           <div class="login-content">
             <div class="input-section">
               <label for="teamMemberName">Team Member Name:</label>
-              <input 
-                type="text" 
-                id="teamMemberName" 
-                class="team-input" 
-                placeholder="Enter your name (e.g., natxeula, future, kat)" 
+              <input
+                type="text"
+                id="teamMemberName"
+                class="team-input"
+                placeholder="Enter your team member name"
                 autocomplete="off"
               >
               <div class="team-suggestions" id="teamSuggestions"></div>
@@ -203,9 +224,9 @@ class TeamSecuritySystem {
               >
             </div>
             
-            <div class="ip-info">
-              <p>🌐 Your IP: <code>${this.getSimulatedIP()}</code></p>
-              <p>⚠️ This IP will be registered and monitored</p>
+            <div class="security-info">
+              <p>📋 Your access will be tracked for security</p>
+              <p>⚠️ Session will be monitored for team verification</p>
             </div>
             
             <div class="login-buttons">
@@ -214,8 +235,8 @@ class TeamSecuritySystem {
             </div>
             
             <div class="security-notice">
-              <p>🔐 All access attempts are logged to <code>access_logs.txt</code></p>
-              <p>🚫 Unauthorized IPs are automatically banned</p>
+              <p>🔐 All access attempts are logged for security</p>
+              <p>🚫 Unauthorized access attempts are tracked</p>
             </div>
           </div>
         </div>
@@ -290,7 +311,7 @@ class TeamSecuritySystem {
     }
 
     // Check if team member exists
-    const memberExists = this.teamMembers.some(member => 
+    const memberExists = this.teamMembers.some(member =>
       member.toLowerCase() === teamMember.toLowerCase()
     );
 
@@ -298,6 +319,19 @@ class TeamSecuritySystem {
       this.logToFile('INVALID_TEAM_MEMBER', `Unknown team member attempted access: ${teamMember}`);
       this.showAlert('Invalid team member name', 'error');
       return;
+    }
+
+    // Check executive access for executive handbooks and logs
+    if ((this.currentHandbook === 'executive' || this.currentHandbook === 'logs')) {
+      const hasExecutiveAccess = this.executiveMembers.some(member =>
+        member.toLowerCase() === teamMember.toLowerCase()
+      );
+
+      if (!hasExecutiveAccess) {
+        this.logToFile('EXECUTIVE_ACCESS_DENIED', `Non-executive member attempted executive access: ${teamMember}`);
+        this.showAlert('Executive access required. You do not have permission to access this handbook.', 'error');
+        return;
+      }
     }
 
     // Check access code
@@ -312,9 +346,9 @@ class TeamSecuritySystem {
     if (!ipCheck.allowed) {
       let message = 'Access denied';
       if (ipCheck.reason === 'IP_BANNED') {
-        message = 'Your IP has been banned from accessing the system';
+        message = 'Your access has been restricted for security reasons';
       } else if (ipCheck.reason === 'IP_MISMATCH') {
-        message = `Access denied: Different IP detected. Your IP has been banned for security.`;
+        message = `Access denied: Security verification failed. Your access has been restricted.`;
       }
       this.showAlert(message, 'error');
       return;
@@ -412,6 +446,13 @@ class TeamSecuritySystem {
     setTimeout(() => {
       alert.remove();
     }, 5000);
+  }
+
+  getPlaceholderText() {
+    if (this.currentHandbook === 'executive' || this.currentHandbook === 'logs') {
+      return 'Enter executive name (natxeula, future, mr80, kat, puzzles, muelio, fortune, adjective)';
+    }
+    return 'Enter your team member name';
   }
 
   closeModal() {
