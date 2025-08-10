@@ -260,7 +260,7 @@
               <button class="control-btn danger" onclick="clearAllSessions()">Clear All Sessions</button>
               <button class="control-btn warning" onclick="resetThreatLevel()">Reset Threat Level</button>
               <button class="control-btn success" onclick="exportLogs()">Export Logs</button>
-              <button class="control-btn warning" onclick="unbanAllIPs()">Unban All IPs</button>
+              <button class="control-btn warning" onclick="unbanAllAccessSessions()">Unban All Access Sessions</button>
             </div>
           </div>
 
@@ -473,14 +473,14 @@
         }
       }
 
-      function unbanAllIPs() {
+      function unbanAllAccessSessions() {
         if (window.advancedSecurity) {
           window.advancedSecurity.bannedAccessSessions.clear();
           window.advancedSecurity.failedAttempts.clear();
-          window.advancedSecurity.logSecurityEvent('ADMIN_ACTION', 'All IP bans cleared via dashboard');
+          window.advancedSecurity.logSecurityEvent('ADMIN_ACTION', 'All access session bans cleared via dashboard');
         }
-        
-        alert('All IP bans have been cleared.');
+
+        alert('All access session bans have been cleared.');
         dashboard.updateDashboard();
       }
 
