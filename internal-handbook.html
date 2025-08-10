@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="team-security.css" />
     <style>
       .handbook-container {
         max-width: 800px;
@@ -319,7 +320,10 @@
             <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
               (Note: This may include info about our development branch, "OceanCrest Games")
             </p>
-            <div class="confidential-badge">📋 INTERNAL PERSONNEL ONLY</div>
+            <div class="confidential-badge">🔐 TEAM ACCESS - INTERNAL PERSONNEL</div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 10px; text-align: center;">
+              📋 <strong>NOTICE:</strong> Team member access logged to access_logs.txt.
+            </div>
           </div>
 
           <div class="toc">
@@ -797,24 +801,35 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="handbook-security-simple.js"></script>
     <script>
       // Immediate access verification - before DOM loads
       (function() {
-        const hasAccess = sessionStorage.getItem('handbook_internal_access');
-        if (hasAccess !== 'granted') {
-          // Redirect back to handbooks page if no access
-          window.location.href = 'handbooks.html';
-          return; // Stop execution
+        // Use team security system for verification
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('internal')) {
+            return; // Will redirect if verification fails
+          }
+        } else {
+          // Fallback check
+          const hasAccess = sessionStorage.getItem('handbook_internal_access');
+          if (hasAccess !== 'granted') {
+            window.location.href = 'handbooks.html';
+            return;
+          }
         }
       })();
 
       // Access verification and features after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access
-        const hasAccess = sessionStorage.getItem('handbook_internal_access');
-        if (hasAccess !== 'granted') {
-          window.location.href = 'handbooks.html';
-          return;
+        // Double-check access with team security
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('internal')) {
+            return;
+          }
+          // Log page access
+          const teamMember = sessionStorage.getItem('handbook_internal_team_member');
+          window.teamSecurity.logToFile('PAGE_ACCESS', 'Internal handbook accessed', teamMember);
         }
 
         // Add smooth scrolling for table of contents
@@ -832,7 +847,11 @@
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        sessionStorage.removeItem('handbook_internal_access');
+        if (window.teamSecurity) {
+          const teamMember = sessionStorage.getItem('handbook_internal_team_member');
+          window.teamSecurity.logToFile('PAGE_EXIT', 'Internal handbook session ended', teamMember);
+          window.teamSecurity.clearAccess('internal');
+        }
       });
     </script>
   </body>

@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="team-security.css" />
     <style>
       .handbook-card {
         background: var(--glass-bg);
@@ -286,48 +287,55 @@
     <main class="section" style="padding-top: 8rem;">
       <div class="container">
         <div class="page-header">
-          <h1 class="section-title">📚 Company Handbooks</h1>
+          <h1 class="section-title">🔐 Team Access Handbooks</h1>
           <p class="section-subtitle">
             Official documentation and guidelines for OceanCrest Entertainment team members.
-            Access is restricted to authorized personnel only.
+            <strong>Access requires team member authentication.</strong>
+            <br><br>
+            📋 <em>Login with your team member name and access code. Your IP will be logged to text files.</em>
+            <br>
+            🚫 <em>Unauthorized IPs are automatically banned. <a href="admin-logs.html" style="color: var(--accent-blue);">View Admin Panel</a></em>
           </p>
         </div>
 
         <div class="overview-grid" style="margin-top: 4rem;">
           <div class="handbook-card" data-handbook="executive">
-            <div class="status-badge status-restricted">Restricted</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">👑</div>
             <h3 class="handbook-title">Executive Handbook</h3>
             <p class="handbook-description">
-              Comprehensive guide for executive team members covering leadership protocols,
+              <strong>TEAM MEMBER AUTHENTICATION REQUIRED.</strong> Comprehensive guide for executive team members covering leadership protocols,
               responsibilities, conduct standards, and organizational structure. Contains
-              confidential information regarding company operations and management policies.
+              classified information regarding company operations and management policies.
+              <br><br>🔐 <em>Protected by team member verification and IP logging to access_logs.txt</em>
             </p>
-            <div class="btn btn-primary">Access Handbook</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="internal">
-            <div class="status-badge status-restricted">Restricted</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">📋</div>
             <h3 class="handbook-title">Internal Handbook</h3>
             <p class="handbook-description">
-              General internal guidelines for all OceanCrest team members including core values,
+              <strong>INTERNAL PERSONNEL ONLY.</strong> General internal guidelines for all OceanCrest team members including core values,
               team structure, communication protocols, project lifecycles, and operational procedures.
-              Essential reading for all internal staff and team members.
+              Essential reading for all verified internal staff and team members.
+              <br><br>🔐 <em>Protected by team authentication and IP tracking to authorized_ips.txt</em>
             </p>
-            <div class="btn btn-primary">Access Handbook</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="logs">
-            <div class="status-badge status-restricted">Restricted</div>
+            <div class="status-badge status-restricted">🔒 Team Access</div>
             <div class="handbook-icon">📊</div>
             <h3 class="handbook-title">Executive Logs</h3>
             <p class="handbook-description">
-              Historical records of past and present department leads including tenure information,
-              status changes, and transition details. Confidential personnel documentation for
+              <strong>CLASSIFIED PERSONNEL RECORDS.</strong> Historical records of past and present department leads including tenure information,
+              status changes, transition details, and sensitive HR documentation. Confidential personnel data for
               executive reference and organizational history tracking.
+              <br><br>🚨 <em>High security - team verification and IP banning for unauthorized access.</em>
             </p>
-            <div class="btn btn-primary">Access Logs</div>
+            <div class="btn btn-primary">🔐 Team Login</div>
           </div>
 
           <div class="handbook-card" data-handbook="project">
@@ -413,16 +421,11 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="handbook-security-simple.js"></script>
     <script>
       class HandbookAccess {
         constructor() {
-          this.passwords = {
-            executive: 'EXEC2025',
-            internal: 'INTERNAL2025',
-            logs: 'LOGS2025',
-            project: 'PROJECT2025',
-            hr: 'HR2025'
-          };
+          // Passwords are now managed by the advanced security system
           this.currentHandbook = null;
           this.init();
         }
@@ -458,20 +461,37 @@
 
         requestAccess(handbook) {
           this.currentHandbook = handbook;
-          
-          if (!this.passwords[handbook]) {
-            // Show coming soon message or redirect
+
+          // Check if handbook is available
+          const availableHandbooks = ['executive', 'internal', 'logs'];
+          if (!availableHandbooks.includes(handbook)) {
+            this.showComingSoonMessage();
             return;
           }
 
-          this.showModal();
+          // Use team security system
+          if (window.teamSecurity) {
+            window.teamSecurity.requestAccess(handbook);
+          } else {
+            console.error('Team security system not loaded');
+          }
         }
 
-        showModal() {
-          const modal = document.getElementById('passwordModal');
-          modal.classList.add('active');
-          document.getElementById('passwordInput').focus();
-          document.body.style.overflow = 'hidden';
+        showComingSoonMessage() {
+          const alert = document.createElement('div');
+          alert.className = 'security-alert';
+          alert.innerHTML = `
+            <div class="alert-content">
+              <span class="alert-icon">ℹ️</span>
+              <span class="alert-text">This handbook is coming soon!</span>
+            </div>
+          `;
+
+          document.body.appendChild(alert);
+
+          setTimeout(() => {
+            alert.remove();
+          }, 3000);
         }
 
         closeModal() {
