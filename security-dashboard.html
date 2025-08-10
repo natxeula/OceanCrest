@@ -238,8 +238,8 @@
                 <div class="status-label">Security Events</div>
               </div>
               <div class="status-item">
-                <div class="status-value" id="bannedIPs">0</div>
-                <div class="status-label">Banned IPs</div>
+                <div class="status-value" id="bannedAccessSessions">0</div>
+                <div class="status-label">Banned Access Sessions</div>
               </div>
             </div>
             <div class="threat-meter">
@@ -302,7 +302,7 @@
           
           // Update statistics
           document.getElementById('totalEvents').textContent = security.securityLogs.length;
-          document.getElementById('bannedIPs').textContent = security.bannedIPs.size;
+          document.getElementById('bannedAccessSessions').textContent = security.bannedAccessSessions.size;
           
           // Update active sessions
           const activeSessions = this.countActiveSessions();
@@ -475,7 +475,7 @@
 
       function unbanAllIPs() {
         if (window.advancedSecurity) {
-          window.advancedSecurity.bannedIPs.clear();
+          window.advancedSecurity.bannedAccessSessions.clear();
           window.advancedSecurity.failedAttempts.clear();
           window.advancedSecurity.logSecurityEvent('ADMIN_ACTION', 'All IP bans cleared via dashboard');
         }
