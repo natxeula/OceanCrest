@@ -83,21 +83,21 @@ class TeamSecuritySystem {
   }
 
   createDownloadableLog() {
-    const logContent = this.accessLogs.map(log => 
-      `[${log.timestamp}] ${log.type}: ${log.description} (IP: ${log.ip})`
+    const logContent = this.accessLogs.map(log =>
+      `[${log.timestamp}] ${log.type}: ${log.description} (Access Session IP: ${log.accessSession ? log.accessSession.ip : log.ip})`
     ).join('\n');
-    
+
     // Store for potential download
     localStorage.setItem('oceancrest_log_content', logContent);
   }
 
   logToFile(type, description, teamMember = null) {
-    const currentIP = this.getSimulatedIP();
+    const currentAccessSession = this.getCurrentAccessSession();
     const logEntry = {
       timestamp: new Date().toISOString(),
       type,
       description,
-      ip: currentIP,
+      accessSession: currentAccessSession,
       teamMember: teamMember || 'unknown',
       userAgent: navigator.userAgent.slice(0, 50)
     };
