@@ -26,9 +26,9 @@ class TeamSecuritySystem {
     ];
     
     this.accessCodes = {
-      executive: 'EXEC_ULTRA_SECURE_2025',
-      internal: 'INTERNAL_TEAM_ACCESS_2025',
-      logs: 'LOGS_CLASSIFIED_2025'
+      executive: 'industrializablecurrents',
+      internal: 'oceancrestproud',
+      logs: 'firedrialist'
     };
     
     this.currentHandbook = null;
