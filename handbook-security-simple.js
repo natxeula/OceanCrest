@@ -350,14 +350,14 @@ class TeamSecuritySystem {
       return;
     }
 
-    // Check IP access
-    const ipCheck = this.checkIPAccess(teamMember);
-    if (!ipCheck.allowed) {
+    // Check access session access
+    const sessionCheck = this.checkAccessSessionAccess(teamMember);
+    if (!sessionCheck.allowed) {
       let message = 'Access denied';
-      if (ipCheck.reason === 'IP_BANNED') {
-        message = 'Your access has been restricted for security reasons';
-      } else if (ipCheck.reason === 'IP_MISMATCH') {
-        message = `Access denied: Security verification failed. Your access has been restricted.`;
+      if (sessionCheck.reason === 'ACCESS_SESSION_BANNED') {
+        message = 'Your access session has been restricted for security reasons';
+      } else if (sessionCheck.reason === 'ACCESS_SESSION_MISMATCH') {
+        message = `Access denied: Security verification failed. Your access session has been restricted.`;
       }
       this.showAlert(message, 'error');
       return;
@@ -418,10 +418,10 @@ class TeamSecuritySystem {
       return false;
     }
 
-    // Verify IP still matches
-    const ipCheck = this.checkIPAccess(teamMember);
-    if (!ipCheck.allowed) {
-      this.logToFile('IP_VERIFICATION_FAILED', `IP verification failed for active session`, teamMember);
+    // Verify access session still matches
+    const sessionCheck = this.checkAccessSessionAccess(teamMember);
+    if (!sessionCheck.allowed) {
+      this.logToFile('ACCESS_SESSION_VERIFICATION_FAILED', `Access session verification failed for active session`, teamMember);
       this.clearAccess(handbookType);
       window.location.href = 'handbooks.html';
       return false;
@@ -490,8 +490,8 @@ class TeamSecuritySystem {
 
   getSystemStatus() {
     return {
-      authorizedTeamMembers: this.authorizedIPs.size,
-      bannedIPs: this.bannedIPs.size,
+      authorizedTeamMembers: this.authorizedAccessSessions.size,
+      bannedAccessSessions: this.bannedAccessSessions.size,
       totalLogs: this.accessLogs.length,
       lastActivity: this.accessLogs.length > 0 ? this.accessLogs[this.accessLogs.length - 1].timestamp : 'None'
     };
