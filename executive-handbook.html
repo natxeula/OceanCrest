@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="handbook-security.css" />
     <style>
       .handbook-container {
         max-width: 800px;
@@ -338,7 +339,10 @@
           <div class="handbook-header">
             <h1 class="handbook-title">OCEANCREST ENTERTAINMENT</h1>
             <h2 class="handbook-subtitle">Executive Handbook</h2>
-            <div class="confidential-badge">🔒 CONFIDENTIAL - EXECUTIVE LEVEL</div>
+            <div class="confidential-badge">🔒 ULTRA-SECURE - MAXIMUM CLEARANCE</div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 68, 68, 0.1); border: 1px solid rgba(255, 68, 68, 0.3); border-radius: 10px; text-align: center;">
+              🚨 <strong>WARNING:</strong> This document contains classified information. Unauthorized access is prohibited and monitored.
+            </div>
           </div>
 
           <div class="toc">
@@ -771,24 +775,34 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="handbook-security.js"></script>
     <script>
       // Immediate access verification - before DOM loads
       (function() {
-        const hasAccess = sessionStorage.getItem('handbook_executive_access');
-        if (hasAccess !== 'granted') {
-          // Redirect back to handbooks page if no access
-          window.location.href = 'handbooks.html';
-          return; // Stop execution
+        // Use advanced security system for verification
+        if (window.advancedSecurity) {
+          if (!window.advancedSecurity.verifyPageAccess('executive')) {
+            return; // Will redirect if verification fails
+          }
+        } else {
+          // Fallback check
+          const hasAccess = sessionStorage.getItem('handbook_executive_access');
+          if (hasAccess !== 'granted') {
+            window.location.href = 'handbooks.html';
+            return;
+          }
         }
       })();
 
       // Access verification and features after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access
-        const hasAccess = sessionStorage.getItem('handbook_executive_access');
-        if (hasAccess !== 'granted') {
-          window.location.href = 'handbooks.html';
-          return;
+        // Double-check access with advanced security
+        if (window.advancedSecurity) {
+          if (!window.advancedSecurity.verifyPageAccess('executive')) {
+            return;
+          }
+          // Log page access
+          window.advancedSecurity.logSecurityEvent('PAGE_ACCESS', 'Executive handbook accessed');
         }
 
         // Add smooth scrolling for table of contents
@@ -806,7 +820,10 @@
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        sessionStorage.removeItem('handbook_executive_access');
+        if (window.advancedSecurity) {
+          window.advancedSecurity.clearAccess('executive');
+          window.advancedSecurity.logSecurityEvent('PAGE_EXIT', 'Executive handbook session ended');
+        }
       });
     </script>
   </body>
