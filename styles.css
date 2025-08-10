@@ -1956,7 +1956,7 @@ nav a.active {
   /* 3D hover effects preserved */
 }
 
-/* Magnetic Field Effect */
+/* Magnetic Field Effect - Disabled for buttons */
 .magnetic-field {
   position: relative;
 }
@@ -1979,9 +1979,20 @@ nav a.active {
   border-radius: inherit;
 }
 
+/* Disable magnetic field effect on buttons */
+.btn.magnetic-field::before {
+  display: none;
+}
+
 .magnetic-field:hover::before {
   opacity: 1;
   animation: magneticPulse 1s ease-in-out;
+}
+
+/* Disable magnetic field hover effect on buttons */
+.btn.magnetic-field:hover::before {
+  opacity: 0;
+  animation: none;
 }
 
 @keyframes magneticPulse {

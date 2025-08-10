@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanCrest Entertainment - Executive Logs</title>
+    <meta
+      name="description"
+      content="Executive Logs - Historical Records of OceanCrest Leadership"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .handbook-container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .handbook-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .handbook-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .handbook-subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .confidential-badge {
+        display: inline-block;
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--warning-color);
+        padding: 0.5rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: 1px solid rgba(248, 81, 73, 0.3);
+      }
+
+      .team-section {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+      }
+
+      .team-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
+      }
+
+      .executive-entry {
+        background: var(--primary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        position: relative;
+        border-left: 4px solid var(--accent-blue);
+      }
+
+      .executive-entry.terminated {
+        border-left-color: var(--warning-color);
+      }
+
+      .executive-entry.blacklisted {
+        border-left-color: #8b0000;
+        background: rgba(139, 0, 0, 0.05);
+      }
+
+      .executive-entry.serving {
+        border-left-color: var(--success-color);
+      }
+
+      .executive-entry.retired {
+        border-left-color: var(--accent-purple);
+      }
+
+      .executive-entry.demoted {
+        border-left-color: #ffa500;
+      }
+
+      .exec-name {
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .exec-aliases {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .exec-role {
+        color: var(--accent-blue);
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .exec-tenure {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .exec-status {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0.5rem 0;
+      }
+
+      .status-serving {
+        background: rgba(35, 134, 54, 0.2);
+        color: var(--success-color);
+        border: 1px solid rgba(35, 134, 54, 0.3);
+      }
+
+      .status-terminated {
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--warning-color);
+        border: 1px solid rgba(248, 81, 73, 0.3);
+      }
+
+      .status-retired {
+        background: rgba(139, 74, 140, 0.2);
+        color: var(--accent-purple);
+        border: 1px solid rgba(139, 74, 140, 0.3);
+      }
+
+      .status-demoted {
+        background: rgba(255, 165, 0, 0.2);
+        color: #ffa500;
+        border: 1px solid rgba(255, 165, 0, 0.3);
+      }
+
+      .status-blacklisted {
+        background: rgba(139, 0, 0, 0.2);
+        color: #8b0000;
+        border: 1px solid rgba(139, 0, 0, 0.3);
+      }
+
+      .exec-reason {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-secondary);
+      }
+
+      .exec-note {
+        margin-top: 0.5rem;
+        color: var(--text-muted);
+        font-style: italic;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      @media (max-width: 768px) {
+        .handbook-container {
+          margin: 1rem;
+          padding: 2rem 1.5rem;
+        }
+
+        .handbook-title {
+          font-size: 2rem;
+        }
+
+        .team-section {
+          padding: 1.5rem;
+        }
+
+        .executive-entry {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
+            <ul>
+              <li>
+                <a href="index.html">Home<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="about.html">About<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="projects.html">Projects<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="gaming.html">Gaming<span class="nav-indicator"></span></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                  <a href="handbooks.html">Handbooks</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html">Contact<span class="nav-indicator"></span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="handbooks.html" class="mobile-nav-link">📚 Handbooks</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
+
+    <main class="section" style="padding-top: 6rem;">
+      <div class="container">
+        <div class="handbook-container">
+          <div class="handbook-header">
+            <h1 class="handbook-title">OCEANCREST ENTERTAINMENT</h1>
+            <h2 class="handbook-subtitle">Executive Logs</h2>
+            <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
+              (Only lists past and present department leads.)
+            </p>
+            <div class="confidential-badge">📊 CONFIDENTIAL - EXECUTIVE RECORDS</div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Executive Team</h3>
+            
+            <div class="executive-entry terminated">
+              <div class="exec-name">PoseidonOkeanos</div>
+              <div class="exec-aliases">Also Known As: Don, LuciferCaelestis</div>
+              <div class="exec-role">Lead Director</div>
+              <div class="exec-tenure">Tenure: November 2024 – January 2025 (stayed in the team until May 2025)</div>
+              <div class="exec-status status-terminated">Terminated</div>
+              <div class="exec-reason">
+                <strong>Reason for Termination:</strong> Persistent inactivity, lack of communication with the Executive Department.
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Natxeula</div>
+              <div class="exec-aliases">Also Known As: Nat, Nate</div>
+              <div class="exec-role">The Executive</div>
+              <div class="exec-tenure">Tenure: January 2025 - Present</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Creative Team</h3>
+            
+            <div class="executive-entry retired">
+              <div class="exec-name">Whi</div>
+              <div class="exec-role">Lead Writer</div>
+              <div class="exec-tenure">Tenure: November 2024 – January 2025</div>
+              <div class="exec-status status-retired">Retired Honorably</div>
+              <div class="exec-reason">
+                <strong>Reason for Retirement:</strong> Busy.
+              </div>
+              <div class="exec-note">Note: 💔</div>
+            </div>
+            
+            <div class="executive-entry demoted">
+              <div class="exec-name">fork</div>
+              <div class="exec-role">Head of Writing</div>
+              <div class="exec-tenure">Tenure: November 2024 – June 2025 (stays in the team as a honorary member)</div>
+              <div class="exec-status status-demoted">Demoted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion:</strong> Request.
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">The Future</div>
+              <div class="exec-aliases">Also Known As: Future, Futuristic</div>
+              <div class="exec-role">Overseer of Creative</div>
+              <div class="exec-tenure">Tenure: March 2025 – Present (stayed in the team until May 2025)</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Acting Team</h3>
+            
+            <div class="executive-entry demoted">
+              <div class="exec-name">Natxeula</div>
+              <div class="exec-role">Acting Coordinator</div>
+              <div class="exec-tenure">Tenure: November 2024 – May 2025</div>
+              <div class="exec-status status-demoted">Demoted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion:</strong> Temporary
+              </div>
+            </div>
+            
+            <div class="executive-entry blacklisted">
+              <div class="exec-name">robomg07</div>
+              <div class="exec-role">Head of Acting</div>
+              <div class="exec-tenure">Tenure: June 2025 – June 2025</div>
+              <div class="exec-status status-blacklisted">Blacklisted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion:</strong> Severe incompetency.
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Mr. 80</div>
+              <div class="exec-role">Overseer of Acting</div>
+              <div class="exec-tenure">Tenure: June 2025 – July 2025</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Building Team</h3>
+            
+            <div class="executive-entry blacklisted">
+              <div class="exec-name">Teo</div>
+              <div class="exec-role">Overseer of Building</div>
+              <div class="exec-tenure">Tenure: June 2025 - July 2025</div>
+              <div class="exec-status status-blacklisted">Blacklisted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion:</strong> Severe incompetency.
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Natxeula</div>
+              <div class="exec-role">Acting Overseer of Building (The Executive)</div>
+              <div class="exec-tenure">Tenure: July 2024 – Present</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Post Production Team</h3>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Natxeula</div>
+              <div class="exec-role">Acting Overseer of Post-Production (The Executive)</div>
+              <div class="exec-tenure">Tenure: June 2024 – Present</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Marketing Team</h3>
+            
+            <div class="executive-entry demoted">
+              <div class="exec-name">Natxeula</div>
+              <div class="exec-role">Acting Overseer of Marketing (The Executive)</div>
+              <div class="exec-tenure">Tenure: May 2025 – August 2025</div>
+              <div class="exec-status status-demoted">Demoted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion:</strong> Temporary
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Kat</div>
+              <div class="exec-role">Overseer of Marketing</div>
+              <div class="exec-tenure">Tenure: August 2025 – Present</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="team-section">
+            <h3 class="team-title">The Lore Team</h3>
+            
+            <div class="executive-entry blacklisted">
+              <div class="exec-name">Emplexity</div>
+              <div class="exec-role">Overseer of Lore</div>
+              <div class="exec-tenure">Tenure: June 2025 – July 2025</div>
+              <div class="exec-status status-blacklisted">Blacklisted</div>
+              <div class="exec-reason">
+                <strong>Reason for Demotion/Blacklist:</strong> Deleted discord account, no notice.
+              </div>
+            </div>
+            
+            <div class="executive-entry serving">
+              <div class="exec-name">Mr Puzzles</div>
+              <div class="exec-role">Trial Overseer of Lore</div>
+              <div class="exec-tenure">Tenure: August 2025 – Present</div>
+              <div class="exec-status status-serving">Currently Serving</div>
+            </div>
+          </div>
+
+          <div class="navigation-buttons">
+            <a href="handbooks.html" class="btn btn-secondary">← Back to Handbooks</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Immediate access verification - before DOM loads
+      (function() {
+        const hasAccess = sessionStorage.getItem('handbook_logs_access');
+        if (hasAccess !== 'granted') {
+          // Redirect back to handbooks page if no access
+          window.location.href = 'handbooks.html';
+          return; // Stop execution
+        }
+      })();
+
+      // Access verification after DOM loads
+      document.addEventListener('DOMContentLoaded', () => {
+        // Double-check access
+        const hasAccess = sessionStorage.getItem('handbook_logs_access');
+        if (hasAccess !== 'granted') {
+          window.location.href = 'handbooks.html';
+          return;
+        }
+      });
+
+      // Clear access on page unload
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.removeItem('handbook_logs_access');
+      });
+    </script>
+  </body>
+</html>
