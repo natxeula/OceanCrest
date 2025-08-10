@@ -6,17 +6,23 @@
 class TeamSecuritySystem {
   constructor() {
     this.teamMembers = [
-      'natxeula', 'nat', 'nate',
-      'future', 'the future', 'futuristic',
-      'mr. 80', 'mr80', 'eighty',
-      'kat', 'katherine',
-      'mr puzzles', 'mrpuzzles', 'puzzles',
-      'fork',
-      'whi',
-      'don', 'poseidonokeanos', 'lucifercelestis',
-      'robo', 'robomg07',
-      'teo',
-      'emplexity'
+      'executive', 'EXECUTIVE',
+      'natxeula',
+      'future',
+      'mr80',
+      'kat',
+      'puzzles',
+      'muelio',
+      'fortune',
+      'adjective',
+      'all', 'ALL',
+      'exec',
+      'tempest', 'Tempest',
+      'plushie', 'Plushie',
+      '0r4n',
+      'mv', 'MV',
+      'yeah_no',
+      'fork'
     ];
     
     this.accessCodes = {
