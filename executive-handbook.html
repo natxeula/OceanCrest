@@ -772,14 +772,25 @@
 
     <script src="app.js"></script>
     <script>
-      // Access verification
-      document.addEventListener('DOMContentLoaded', () => {
+      // Immediate access verification - before DOM loads
+      (function() {
         const hasAccess = sessionStorage.getItem('handbook_executive_access');
         if (hasAccess !== 'granted') {
           // Redirect back to handbooks page if no access
           window.location.href = 'handbooks.html';
+          return; // Stop execution
         }
-        
+      })();
+
+      // Access verification and features after DOM loads
+      document.addEventListener('DOMContentLoaded', () => {
+        // Double-check access
+        const hasAccess = sessionStorage.getItem('handbook_executive_access');
+        if (hasAccess !== 'granted') {
+          window.location.href = 'handbooks.html';
+          return;
+        }
+
         // Add smooth scrolling for table of contents
         document.querySelectorAll('.toc a').forEach(link => {
           link.addEventListener('click', (e) => {
