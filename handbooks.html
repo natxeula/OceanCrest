@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanCrest Entertainment - Handbooks</title>
+    <meta
+      name="description"
+      content="Official OceanCrest Entertainment handbooks and documentation."
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .handbook-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .handbook-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-primary);
+        border-color: var(--accent-blue);
+      }
+
+      .handbook-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s;
+      }
+
+      .handbook-card:hover::before {
+        left: 100%;
+      }
+
+      .handbook-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 0 15px var(--accent-blue));
+      }
+
+      .handbook-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .handbook-description {
+        color: var(--text-muted);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .password-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .password-modal.active {
+        display: flex;
+      }
+
+      .password-form {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 3rem;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        position: relative;
+        animation: modalSlideIn 0.3s ease;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .password-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .password-subtitle {
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        line-height: 1.5;
+      }
+
+      .password-input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: var(--primary-bg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .password-input:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.1);
+      }
+
+      .password-error {
+        color: var(--warning-color);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        display: none;
+      }
+
+      .password-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .access-denied {
+        color: var(--warning-color);
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        background: rgba(248, 81, 73, 0.1);
+        border-radius: 5px;
+        display: none;
+      }
+
+      .status-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .status-restricted {
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--warning-color);
+        border: 1px solid rgba(248, 81, 73, 0.3);
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .close-modal:hover {
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
+            <ul>
+              <li>
+                <a href="index.html">Home<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="about.html">About<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="projects.html">Projects<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="gaming.html">Gaming<span class="nav-indicator"></span></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                  <a href="handbooks.html" class="active">Handbooks</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html">Contact<span class="nav-indicator"></span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="handbooks.html" class="mobile-nav-link">📚 Handbooks</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
+
+    <main class="section" style="padding-top: 8rem;">
+      <div class="container">
+        <div class="page-header">
+          <h1 class="section-title">📚 Company Handbooks</h1>
+          <p class="section-subtitle">
+            Official documentation and guidelines for OceanCrest Entertainment team members.
+            Access is restricted to authorized personnel only.
+          </p>
+        </div>
+
+        <div class="overview-grid" style="margin-top: 4rem;">
+          <div class="handbook-card" data-handbook="executive">
+            <div class="status-badge status-restricted">Restricted</div>
+            <div class="handbook-icon">👑</div>
+            <h3 class="handbook-title">Executive Handbook</h3>
+            <p class="handbook-description">
+              Comprehensive guide for executive team members covering leadership protocols, 
+              responsibilities, conduct standards, and organizational structure. Contains 
+              confidential information regarding company operations and management policies.
+            </p>
+            <div class="btn btn-primary">Access Handbook</div>
+          </div>
+
+          <div class="handbook-card" data-handbook="production">
+            <div class="status-badge status-restricted">Restricted</div>
+            <div class="handbook-icon">🎬</div>
+            <h3 class="handbook-title">Production Handbook</h3>
+            <p class="handbook-description">
+              Guidelines and procedures for production teams, including workflow protocols, 
+              quality standards, equipment usage, and project management procedures. 
+              Essential for all production staff.
+            </p>
+            <div class="btn btn-secondary">Coming Soon</div>
+          </div>
+
+          <div class="handbook-card" data-handbook="hr">
+            <div class="status-badge status-restricted">Restricted</div>
+            <div class="handbook-icon">👥</div>
+            <h3 class="handbook-title">HR Handbook</h3>
+            <p class="handbook-description">
+              Human resources policies, procedures, and guidelines covering team member 
+              relations, conflict resolution, performance evaluations, and company culture. 
+              For HR team and management use.
+            </p>
+            <div class="btn btn-secondary">Coming Soon</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+      <div class="password-form">
+        <button class="close-modal" id="closeModal">&times;</button>
+        <h2 class="password-title">🔐 Access Required</h2>
+        <p class="password-subtitle">This handbook requires executive-level clearance. Please enter the access code to continue.</p>
+        
+        <form id="passwordForm">
+          <input type="password" id="passwordInput" class="password-input" placeholder="Enter access code" required>
+          <div class="password-error" id="passwordError">Invalid access code. Please try again.</div>
+          <div class="password-buttons">
+            <button type="submit" class="btn btn-primary">Access</button>
+            <button type="button" class="btn btn-secondary" id="cancelAccess">Cancel</button>
+          </div>
+        </form>
+        <div class="access-denied" id="accessDenied">
+          Access denied. If you believe you should have access to this handbook, 
+          please contact your supervisor or the Executive Producer.
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      class HandbookAccess {
+        constructor() {
+          this.passwords = {
+            executive: 'OCEANCREST2025'
+          };
+          this.currentHandbook = null;
+          this.init();
+        }
+
+        init() {
+          // Add event listeners for handbook cards
+          document.querySelectorAll('.handbook-card[data-handbook]').forEach(card => {
+            card.addEventListener('click', (e) => {
+              if (!e.target.classList.contains('btn-secondary')) {
+                this.requestAccess(card.dataset.handbook);
+              }
+            });
+          });
+
+          // Modal controls
+          document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
+          document.getElementById('cancelAccess').addEventListener('click', () => this.closeModal());
+          document.getElementById('passwordForm').addEventListener('submit', (e) => this.handlePasswordSubmit(e));
+          
+          // Close modal on background click
+          document.getElementById('passwordModal').addEventListener('click', (e) => {
+            if (e.target.id === 'passwordModal') {
+              this.closeModal();
+            }
+          });
+
+          // Clear error on input
+          document.getElementById('passwordInput').addEventListener('input', () => {
+            document.getElementById('passwordError').style.display = 'none';
+            document.getElementById('accessDenied').style.display = 'none';
+          });
+        }
+
+        requestAccess(handbook) {
+          this.currentHandbook = handbook;
+          
+          if (!this.passwords[handbook]) {
+            // Show coming soon message or redirect
+            return;
+          }
+
+          this.showModal();
+        }
+
+        showModal() {
+          const modal = document.getElementById('passwordModal');
+          modal.classList.add('active');
+          document.getElementById('passwordInput').focus();
+          document.body.style.overflow = 'hidden';
+        }
+
+        closeModal() {
+          const modal = document.getElementById('passwordModal');
+          modal.classList.remove('active');
+          document.getElementById('passwordInput').value = '';
+          document.getElementById('passwordError').style.display = 'none';
+          document.getElementById('accessDenied').style.display = 'none';
+          document.body.style.overflow = '';
+          this.currentHandbook = null;
+        }
+
+        handlePasswordSubmit(e) {
+          e.preventDefault();
+          const password = document.getElementById('passwordInput').value;
+          
+          if (this.passwords[this.currentHandbook] === password) {
+            this.grantAccess(this.currentHandbook);
+          } else {
+            this.showError();
+          }
+        }
+
+        showError() {
+          const errorEl = document.getElementById('passwordError');
+          errorEl.style.display = 'block';
+          
+          // Show access denied after 3 failed attempts
+          setTimeout(() => {
+            document.getElementById('accessDenied').style.display = 'block';
+          }, 2000);
+        }
+
+        grantAccess(handbook) {
+          // Store access token in session
+          sessionStorage.setItem(`handbook_${handbook}_access`, 'granted');
+          
+          // Redirect to handbook page
+          switch(handbook) {
+            case 'executive':
+              window.location.href = 'executive-handbook.html';
+              break;
+            default:
+              console.log('Handbook not implemented yet');
+          }
+        }
+      }
+
+      // Initialize handbook access system
+      document.addEventListener('DOMContentLoaded', () => {
+        new HandbookAccess();
+      });
+    </script>
+  </body>
+</html>
