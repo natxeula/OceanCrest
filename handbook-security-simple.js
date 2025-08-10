@@ -6,7 +6,6 @@
 class TeamSecuritySystem {
   constructor() {
     this.teamMembers = [
-      'executive', 'EXECUTIVE',
       'natxeula',
       'future',
       'mr80',
@@ -15,12 +14,11 @@ class TeamSecuritySystem {
       'muelio',
       'fortune',
       'adjective',
-      'all', 'ALL',
       'exec',
-      'tempest', 'Tempest',
-      'plushie', 'Plushie',
+      'Tempest',
+      'Plushie',
       '0r4n',
-      'mv', 'MV',
+      'MV',
       'yeah_no',
       'fork'
     ];
