@@ -311,9 +311,9 @@
             <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
               (Only lists past and present department leads.)
             </p>
-            <div class="confidential-badge">🔒 TOP SECRET - CLASSIFIED RECORDS</div>
-            <div style="margin-top: 1rem; padding: 1rem; background: rgba(139, 0, 0, 0.1); border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 10px; text-align: center;">
-              🚨 <strong>CLASSIFIED:</strong> Personnel records are highly sensitive. Unauthorized disclosure is prohibited by company policy.
+            <div class="confidential-badge">🔒 TEAM ACCESS - EXECUTIVE RECORDS</div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); border-radius: 10px; text-align: center;">
+              🚨 <strong>SENSITIVE:</strong> Personnel records access logged. Unauthorized IPs will be banned.
             </div>
           </div>
 
@@ -540,21 +540,23 @@
 
       // Access verification after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access with advanced security
-        if (window.advancedSecurity) {
-          if (!window.advancedSecurity.verifyPageAccess('logs')) {
+        // Double-check access with team security
+        if (window.teamSecurity) {
+          if (!window.teamSecurity.verifyPageAccess('logs')) {
             return;
           }
           // Log page access
-          window.advancedSecurity.logSecurityEvent('PAGE_ACCESS', 'Executive logs accessed');
+          const teamMember = sessionStorage.getItem('handbook_logs_team_member');
+          window.teamSecurity.logToFile('PAGE_ACCESS', 'Executive logs accessed', teamMember);
         }
       });
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        if (window.advancedSecurity) {
-          window.advancedSecurity.clearAccess('logs');
-          window.advancedSecurity.logSecurityEvent('PAGE_EXIT', 'Executive logs session ended');
+        if (window.teamSecurity) {
+          const teamMember = sessionStorage.getItem('handbook_logs_team_member');
+          window.teamSecurity.logToFile('PAGE_EXIT', 'Executive logs session ended', teamMember);
+          window.teamSecurity.clearAccess('logs');
         }
       });
     </script>
