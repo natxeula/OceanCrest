@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanCrest Entertainment - Internal Handbook</title>
+    <meta
+      name="description"
+      content="Internal Handbook - OceanCrest Entertainment General Documentation"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .handbook-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .handbook-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .handbook-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .handbook-subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .confidential-badge {
+        display: inline-block;
+        background: rgba(35, 134, 54, 0.2);
+        color: var(--success-color);
+        padding: 0.5rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: 1px solid rgba(35, 134, 54, 0.3);
+      }
+
+      .section-header {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .subsection-header {
+        color: var(--accent-blue);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 2rem 0 1rem 0;
+      }
+
+      .handbook-content {
+        line-height: 1.8;
+        color: var(--text-secondary);
+      }
+
+      .handbook-content p {
+        margin-bottom: 1.2rem;
+      }
+
+      .handbook-content ul {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .handbook-content li {
+        margin-bottom: 0.8rem;
+        position: relative;
+      }
+
+      .handbook-content li::marker {
+        color: var(--accent-blue);
+      }
+
+      .handbook-content strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .values-list {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .values-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .values-list li:last-child {
+        border-bottom: none;
+      }
+
+      .team-structure {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .structure-level {
+        margin: 1rem 0;
+        padding: 1rem;
+        background: var(--primary-bg);
+        border-radius: 10px;
+        border-left: 4px solid var(--accent-blue);
+      }
+
+      .structure-title {
+        color: var(--accent-purple);
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .warning-box {
+        background: rgba(248, 81, 73, 0.1);
+        border: 1px solid rgba(248, 81, 73, 0.3);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: var(--warning-color);
+      }
+
+      .success-box {
+        background: rgba(35, 134, 54, 0.1);
+        border: 1px solid rgba(35, 134, 54, 0.3);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: var(--success-color);
+      }
+
+      .navigation-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .toc {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .toc h3 {
+        color: var(--accent-blue);
+        margin-bottom: 1rem;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .toc li {
+        margin: 0.5rem 0;
+      }
+
+      .toc a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        padding: 0.3rem 0;
+        display: block;
+        transition: color 0.3s ease;
+      }
+
+      .toc a:hover {
+        color: var(--accent-blue);
+      }
+
+      @media (max-width: 768px) {
+        .handbook-container {
+          margin: 1rem;
+          padding: 2rem 1.5rem;
+        }
+
+        .handbook-title {
+          font-size: 2rem;
+        }
+
+        .section-header {
+          font-size: 1.5rem;
+        }
+
+        .navigation-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
+            <ul>
+              <li>
+                <a href="index.html">Home<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="about.html">About<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="projects.html">Projects<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="gaming.html">Gaming<span class="nav-indicator"></span></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                  <a href="handbooks.html">Handbooks</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html">Contact<span class="nav-indicator"></span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="handbooks.html" class="mobile-nav-link">📚 Handbooks</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
+
+    <main class="section" style="padding-top: 6rem;">
+      <div class="container">
+        <div class="handbook-container">
+          <div class="handbook-header">
+            <h1 class="handbook-title">OCEANCREST ENTERTAINMENT</h1>
+            <h2 class="handbook-subtitle">Internal Handbook</h2>
+            <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
+              (Note: This may include info about our development branch, "OceanCrest Games")
+            </p>
+            <div class="confidential-badge">📋 INTERNAL PERSONNEL ONLY</div>
+          </div>
+
+          <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+              <li><a href="#section1">Section 1 - Introduction</a></li>
+              <li><a href="#section2">Section 2 - Core Values</a></li>
+              <li><a href="#section3">Section 3 - Team Structure</a></li>
+              <li><a href="#section4">Section 4 - Project Lifecycles</a></li>
+              <li><a href="#section5">Section 5 - Communication</a></li>
+              <li><a href="#section6">Section 6 - Conduct</a></li>
+              <li><a href="#section7">Section 7 - AI Usage</a></li>
+              <li><a href="#section8">Section 8 - Brand</a></li>
+              <li><a href="#section9">Section 9 - Entry and Exit</a></li>
+              <li><a href="#section10">Section 10 - Quotas and LOAs</a></li>
+              <li><a href="#section11">Section 11 - Appendices</a></li>
+              <li><a href="#section12">Section 12 - The End</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section1" class="handbook-content">
+            <h2 class="section-header">Section 1 - Introduction</h2>
+            
+            <h3 class="subsection-header">1.1 - Purpose</h3>
+            <p>This handbook is designed for everyone working within OceanCrest Entertainment—whether you're an overseer, writer, actor, editor, builder, or part of any internal team. It exists to align how we operate, how we collaborate, and what's expected from each person involved.</p>
+            
+            <p>This is a evolving reference meant to protect creative energy, avoid miscommunication, and keep OceanCrest efficient, respectful, and forward-focused.</p>
+            
+            <p>From short films to scripted events and long-term series, this handbook applies across all OceanCrest projects. This document is for OceanCrest productions only.</p>
+            
+            <p>As the studio grows, so will this handbook. It's here to help us scale without losing the things that actually work.</p>
+
+            <h3 class="subsection-header">1.2 - Who is this handbook for?</h3>
+            <p>This handbook is for anyone working within OceanCrest Entertainment, including:</p>
+            
+            <ul>
+              <li>Overseers of Teams</li>
+              <li>Team Members</li>
+              <li>Actors</li>
+              <li>Builders</li>
+              <li>Marketers</li>
+              <li>Editors & Post-Production</li>
+              <li>New Trials</li>
+            </ul>
+            
+            <p>If you're on a project that carries the OceanCrest name or operates under its banner, this applies to you—whether you're leading a team or joining one for a limited-time event.</p>
+            
+            <p><strong>This is not for:</strong></p>
+            <ul>
+              <li>Volunteers unaffiliated with OceanCrest projects</li>
+              <li>External partners without clearance or oversight roles</li>
+              <li>Fans or audience members (this is not a public-facing doc)</li>
+            </ul>
+            
+            <p>This is an internal handbook meant to create consistency and clarity across teams. You don't need to memorize it, but you do need to follow it, and check back as it evolves.</p>
+
+            <h3 class="subsection-header">1.3 - How to Use</h3>
+            <p>This handbook is a living guide, designed to be referenced whenever you need clarity on how OceanCrest works, what's expected, or where to find resources.</p>
+            
+            <ul>
+              <li><strong>Don't try to read it all at once.</strong> Use it as a go-to manual when questions arise about roles, communication, conduct, or project workflows.</li>
+              <li><strong>Check back often.</strong> As the studio evolves, this handbook will be updated. Make sure you're always working with the latest version.</li>
+              <li><strong>Ask questions.</strong> If something isn't clear or you think a section needs improvement, reach out to your team lead or the studio's point of contact.</li>
+              <li><strong>Respect the policies.</strong> Following this guide keeps our creative environment safe, productive, and respectful for everyone.</li>
+            </ul>
+            
+            <p>Think of it as your personal playbook for navigating OceanCrest. It is not a rulebook (see #information in discord), but a roadmap.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section2" class="handbook-content">
+            <h2 class="section-header">Section 2 - Core Values</h2>
+            
+            <h3 class="subsection-header">2.1 - Core Values</h3>
+            <p>At OceanCrest Entertainment, our mission is to create immersive, narrative-driven films and multimedia projects that combine creativity, technical excellence, and collaboration.</p>
+            
+            <p><strong>Our core values guide everything we do:</strong></p>
+            
+            <div class="values-list">
+              <ul>
+                <li><strong>Story First:</strong> Every project is rooted in compelling storytelling.</li>
+                <li><strong>Collaborative Creativity:</strong> We foster a supportive environment where all voices contribute.</li>
+                <li><strong>Quality Over Quantity:</strong> We focus on polished, meaningful content instead of rushing output.</li>
+                <li><strong>Respect & Inclusion:</strong> Diversity and respect are fundamental to our culture and stories.</li>
+                <li><strong>Continuous Growth:</strong> We embrace learning and evolving with each project.</li>
+              </ul>
+            </div>
+            
+            <p>These values shape our studio culture and drive our decisions, ensuring we build work that resonates and endures.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section3" class="handbook-content">
+            <h2 class="section-header">Section 3 - Team Structure</h2>
+            
+            <h3 class="subsection-header">3.1 - Team Structure</h3>
+            <p>OceanCrest Entertainment is organized to promote clear responsibilities, efficient collaboration, and creative freedom. Our structure balances leadership guidance with team autonomy.</p>
+            
+            <div class="team-structure">
+              <div class="structure-level">
+                <div class="structure-title">Studio Leadership</div>
+                <ul>
+                  <li><strong>The Executive:</strong> Oversees all OceanCrest projects, strategy, and studio direction.</li>
+                  <li><strong>Head of Overseers:</strong> Manage several projects, timelines, and cross-team coordination. Closely aligned with The Executive.</li>
+                  <li><strong>Overseers:</strong> Lead teams (Creative, Acting, Post-Production, etc.) and ensure quality and communication.</li>
+                </ul>
+              </div>
+              
+              <div class="structure-level">
+                <div class="structure-title">Core Teams & Roles</div>
+                <ul>
+                  <li><strong>Creative Team:</strong> Develops scripts, story outlines, and dialogue.</li>
+                  <li><strong>Acting Team:</strong> Voice actors and actors bring characters to life.</li>
+                  <li><strong>Building Team:</strong> Designs sets.</li>
+                  <li><strong>Post-Production Team:</strong> Handles editing.</li>
+                  <li><strong>Marketing Team:</strong> Manages promotions.</li>
+                  <li><strong>Development Team:</strong> Conducts quality assurance checks on films.</li>
+                  <li><strong>Lore Team:</strong> Maintains story continuity.</li>
+                  <li><strong>Camera Team:</strong> Manages cinematography and visual composition.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <p>Teams work both independently and cross-functionally. Clear communication channels and respect for each team's expertise are essential for success.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section4" class="handbook-content">
+            <h2 class="section-header">Section 4 - Project Lifecycles</h2>
+            
+            <h3 class="subsection-header">4.1 - Project Lifecycles</h3>
+            <p>OceanCrest projects follow a structured but flexible lifecycle to maintain quality and meet deadlines while allowing creative space.</p>
+            
+            <ul>
+              <li><strong>Concept & Pitch:</strong> Ideas are brainstormed and pitched to Head of Overseers. Approved concepts move to pre-production.</li>
+              <li><strong>Pre-Production:</strong> Scriptwriting, storyboarding, and casting planning take place.</li>
+              <li><strong>Production:</strong> Voice recording, acting, scene building, filming happen here.</li>
+              <li><strong>Post-Production:</strong> Editing, sound design, visual effects, and quality checks.</li>
+              <li><strong>Release & Promotion:</strong> The final product is published, with marketing coordinating trailers, social media, and community outreach.</li>
+              <li><strong>Live Support & Updates (if applicable):</strong> Ongoing maintenance, bug fixes, or expansions continue after launch.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Handoffs & Communication</h3>
+            <p>Clear handoffs between teams at each stage are critical. Production leads ensure schedules and expectations are communicated to avoid bottlenecks.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section5" class="handbook-content">
+            <h2 class="section-header">Section 5 - Communication</h2>
+            
+            <h3 class="subsection-header">5.1 - Communication</h3>
+            <p>Effective communication is key to OceanCrest's creative success. Clear, timely, and respectful interaction keeps projects moving and teams aligned.</p>
+            
+            <h3 class="subsection-header">Primary Communication Tools</h3>
+            <ul>
+              <li><strong>Discord:</strong> Our main hub for daily chats, announcements, and quick questions.</li>
+              <li><strong>Miro:</strong> All sorts of brainstorming stuff.</li>
+              <li><strong>Shared Docs:</strong> Scripts, style guides, and documentation live here.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Meetings</h3>
+            <ul>
+              <li>Scheduled as needed.</li>
+              <li>Keep meetings focused and concise; come prepared.</li>
+              <li>If you can't attend, notify your lead in advance PLEASE.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Announcements & Decisions</h3>
+            <ul>
+              <li>Major updates come from Head of Overseers or executives via Discord.</li>
+              <li>Decision-making aims to be transparent; ask for clarification!</li>
+            </ul>
+            
+            <h3 class="subsection-header">Conflict Resolution</h3>
+            <ul>
+              <li>Address issues professionally and promptly with involved members.</li>
+              <li>If unresolved, escalate to team leads or management.</li>
+              <li>Respectful disagreement is encouraged; personal attacks are not tolerated.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section6" class="handbook-content">
+            <h2 class="section-header">Section 6 - Conduct</h2>
+            
+            <h3 class="subsection-header">6.1 - Conduct</h3>
+            <p>OceanCrest values a creative environment where respect, inclusion, and professionalism are the foundation.</p>
+            
+            <h3 class="subsection-header">Respect & Inclusion</h3>
+            <ul>
+              <li>Treat all team members with courtesy, regardless of role or experience.</li>
+              <li>Celebrate diversity in backgrounds, perspectives, and ideas.</li>
+              <li>Harassment, discrimination, or exclusionary behavior will not be tolerated.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Professionalism</h3>
+            <ul>
+              <li>Meet deadlines and communicate delays early.</li>
+              <li>Provide constructive feedback, focused on work, not individuals.</li>
+              <li>Maintain confidentiality about sensitive studio information.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Zero Tolerance Areas</h3>
+            <ul>
+              <li>Harassment, bullying, hate speech, or personal attacks.</li>
+              <li>Sharing private or confidential information without authorization.</li>
+              <li>Any form of discrimination based on race, gender, religion, or other personal attributes.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Creative Feedback Culture</h3>
+            <ul>
+              <li>Encourage open dialogue and respectful challenge of ideas.</li>
+              <li>Disagreements should stay professional and solution-oriented.</li>
+              <li>Recognize that critique is about the project's success, not personal judgment.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section7" class="handbook-content">
+            <h2 class="section-header">Section 7 - AI Usage</h2>
+            
+            <h3 class="subsection-header">7.1 - AI Usage</h3>
+            <p>AI is a tool—not a replacement—for human creativity. At OceanCrest, we allow AI to assist, not replace, core roles in our creative process.</p>
+            
+            <h3 class="subsection-header">Approved Uses</h3>
+            <ul>
+              <li>Drafting early ideas or outlines (scripts, promo text, etc.)</li>
+              <li>Brainstorming concepts or naming conventions</li>
+              <li>Generating placeholder assets for internal use (with clear labeling)</li>
+              <li>Proofreading, formatting, or automating repetitive tasks</li>
+            </ul>
+            
+            <h3 class="subsection-header">Not Allowed</h3>
+            <ul>
+              <li>Final scripts written entirely by AI</li>
+              <li>AI-generated voice acting or character dialogue for public release</li>
+              <li>Using AI content without review by a human lead</li>
+              <li>Claiming AI-generated work as entirely original or human-made</li>
+            </ul>
+            
+            <h3 class="subsection-header">Transparency</h3>
+            <p>If AI is used in any part of a project, the responsible team must clearly label it and notify their lead. No AI use should go unnoticed or undocumented.</p>
+            
+            <h3 class="subsection-header">Oversight</h3>
+            <p>The AI Oversight Lead (currently Future) ensures responsible usage, reviews questionable content, and helps maintain quality control.</p>
+            
+            <p>AI is here to support the studio—not define it. We lead with human vision, not automation.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section8" class="handbook-content">
+            <h2 class="section-header">Section 8 - Brand</h2>
+            
+            <h3 class="subsection-header">8.1 - Brand</h3>
+            <p>OceanCrest's creative identity is built on original content, shared trust, and brand consistency. Everyone is expected to respect and protect our property.</p>
+            
+            <h3 class="subsection-header">Brand Usage</h3>
+            <ul>
+              <li>Logos, names, characters, and project titles are the property of OceanCrest.</li>
+              <li>Do not modify or distribute official branding without permission.</li>
+              <li>Any marketing or promotional material must be approved by the Marketing Lead or a Head of Overseers.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Intellectual Property</h3>
+            <ul>
+              <li>All work created for OceanCrest—scripts, designs, audio, etc.—belongs to the studio unless otherwise stated in writing.</li>
+              <li>Team members may include their work in personal portfolios only with Head of Overseers approval and proper crediting.</li>
+              <li>External reuse of OceanCrest assets is not permitted without written consent.</li>
+            </ul>
+            
+            <p>We protect our work because it protects our people—and the stories we want to tell.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section9" class="handbook-content">
+            <h2 class="section-header">Section 9 - Entry and Exit</h2>
+            
+            <h3 class="subsection-header">9.1 - Entry and Exit</h3>
+            <p>OceanCrest operates with a trust-based, professional environment. Joining the team means committing to the project and the people around you. Leaving the team should be handled with the same level of respect.</p>
+            
+            <h3 class="subsection-header">Joining the Team</h3>
+            <ul>
+              <li>Recruitment is handled directly by Executives. There are no open applications or tryouts unless announced.</li>
+              <li>Trial Periods may be used for new members. During this time, behavior, communication, and reliability are observed.</li>
+              <li>Access is limited at first—new members earn deeper involvement by showing consistency and team fit.</li>
+              <li>You're expected to read this handbook before fully integrating into any team.</li>
+            </ul>
+            
+            <h3 class="subsection-header">Exiting the Team</h3>
+            <ul>
+              <li>If you need to step down, give notice and explain your reason when possible. You won't be punished for leaving respectfully.</li>
+              <li>Ghosting or vanishing mid-project without communication may lead to restricted future involvement.</li>
+              <li>All project files, assets, or confidential info must remain with OceanCrest—do not take or reuse studio content.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section10" class="handbook-content">
+            <h2 class="section-header">Section 10 - Quotas and LOAs</h2>
+            
+            <h3 class="subsection-header">10.1 - Quotas</h3>
+            
+            <h3 class="subsection-header">10.1.1 - Quota Info</h3>
+            <p>Meeting weekly quotas is essential to maintaining consistent progress and ensuring balanced workloads across all teams. Quotas are tailored to each team's specific needs and roles, reflecting the nature of their contributions.</p>
+            
+            <p>Team members active in two teams are required to meet the quotas of both teams each week, balancing their time accordingly. Members involved in three or more teams need only fulfill the highest individual quota among their teams weekly, preventing burnout while sustaining productivity.</p>
+            
+            <p>Quotas are tracked on a Sunday through Friday schedule, with Saturdays reserved for reviews, catch-ups, and rest. It's mandatory to report quota completion to team leads by Saturday noon, allowing timely tracking and feedback.</p>
+            
+            <div class="warning-box">
+              Failure to meet quotas without an approved leave or prior notice may lead to review by High Rank and potential consequences.
+            </div>
+            
+            <p>We emphasizes communication and flexibility. Team members should notify leads promptly if they anticipate challenges meeting quotas. These measures help keep studio projects on track while supporting individual circumstances.</p>
+
+            <h3 class="subsection-header">10.2 - Short LOAs</h3>
+            <p>A Short LOA (Leave of Absence) refers to any planned or unplanned leave lasting 5 days or less within a quota week. These are meant for temporary breaks due to scheduling conflicts, minor illness, family matters, or personal time.</p>
+            
+            <p><strong>Short LOA Rules:</strong></p>
+            <ul>
+              <li>You must notify a High Rank or your team lead before or during the absence.</li>
+              <li>If you're gone for 5+ days, this is no longer a Short LOA—see Section 10.3.</li>
+              <li>Short LOAs excuse you from all quotas during the leave period.</li>
+              <li>If you are on multiple teams, your LOA counts across all of them, not just one.</li>
+              <li>Returning early? Awesome—but make sure to let your lead know if you're resuming work.</li>
+              <li>You don't need to submit proof unless asked, but clear communication is expected.</li>
+            </ul>
+            
+            <p>Short LOAs are to support you, they are not a punishment. Use them when you need time, and keep everyone in the loop.</p>
+
+            <h3 class="subsection-header">10.3 - Long LOA</h3>
+            <p>A Long LOA is any absence that lasts longer than 5 days within a quota week. This applies whether you're away for 6 days or several weeks. These are typically used for school breaks, vacations, health issues, or serious personal matters.</p>
+            
+            <p><strong>Long LOA Rules:</strong></p>
+            <ul>
+              <li>You must request a Long LOA from High Rank directly—not just your team lead.</li>
+              <li>Please include a general reason and an estimated return date if possible.</li>
+              <li>While on Long LOA, you are exempt from all quotas and responsibilities.</li>
+              <li>If you would like to not be exempt, you can instead request to have a "half-quota".</li>
+              <li>You are still allowed (but not expected) to chat or hang out with the team if you'd like.</li>
+              <li>Once you return, let your team leads and High Rank know so you're re-added to workflow.</li>
+              <li>If you need an extension, you must request it again before the original return date passes.</li>
+            </ul>
+            
+            <p>Long LOAs are here to protect your time and mental health. You're not penalized for taking one: just keep us informed, and we'll support you however we can.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section11" class="handbook-content">
+            <h2 class="section-header">Section 11 - Appendices</h2>
+            
+            <h3 class="subsection-header">11.1 - Template Index</h3>
+            <p>This section outlines the standard templates used across OceanCrest. All team members are expected to follow these formats to keep communication clear and tracking consistent.</p>
+            
+            <p><strong>Quota Submission Format:</strong></p>
+            <p>(Used by all production teams. Found in Section 10.1. Each team has its own version, but all follow the same basic structure)</p>
+            <ul>
+              <li>Event or Task:</li>
+              <li>Date:</li>
+              <li>Proof/Vouch:</li>
+            </ul>
+            
+            <p><strong>Short LOA Request Format:</strong></p>
+            <ul>
+              <li>Type: Short LOA</li>
+              <li>Duration: (Example — 2 days (Monday to Wednesday)</li>
+              <li>Reason (optional): (Personal, Sick, or Schedule Conflict)</li>
+            </ul>
+            
+            <p><strong>Long LOA Request Format:</strong></p>
+            <ul>
+              <li>Type: Long LOA</li>
+              <li>Duration: Start date to estimated return date</li>
+              <li>Reason (general): Vacation, School, etc.</li>
+            </ul>
+            
+            <p>These templates are also pinned in relevant Discord forums. Consistent use is required—submissions without the correct format may be denied or ignored.</p>
+
+            <h3 class="subsection-header">11.2 - Airtable</h3>
+            <p>All OceanCrest team rosters and member activity logs are managed through Airtable. This centralized system keeps track of active members, ranks, roles, LOA status, and quota completion across all teams.</p>
+            
+            <ul>
+              <li>Airtable is the official and only source for viewing current team structure.</li>
+              <li>Members do not have editing permissions; only High Rank (HR) can make changes.</li>
+              <li>The link to the public view of the Airtable is pinned in the Discord channel.</li>
+              <li>If your information is incorrect, contact a High Rank to have it updated.</li>
+              <li>LOA status, team switches, and removals are updated in Airtable within 48 hours of approval.</li>
+            </ul>
+            
+            <p>All internal tracking (excluding member quota logs) is done directly through Airtable to ensure clarity and consistency.</p>
+
+            <h3 class="subsection-header">11.3 - Chain of Command</h3>
+            <p>OceanCrest operates under a clear chain of command to ensure organized communication, accountability, and decision-making across all teams.</p>
+            
+            <ul>
+              <li><strong>The Executive (E)</strong> - This is a HR</li>
+              <li><strong>Head of Overseers (HO)</strong> - This is a HR</li>
+              <li><strong>Overseer of (Team)</strong> - This is a HR</li>
+              <li><strong>Team MR</strong></li>
+              <li><strong>Team LR</strong></li>
+            </ul>
+            
+            <p>If you have a question, concern, or request, follow the chain: Team MR → Overseer of (Team) → HR → The Executive. Skipping steps without cause may result in being ignored unless it's an urgent or private matter.</p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div id="section12" class="handbook-content">
+            <h2 class="section-header">Section 12 - The End</h2>
+            
+            <h3 class="subsection-header">12.1 - Conclusion</h3>
+            <p>This handbook exists to provide clarity, structure, and support to every member of OceanCrest. Whether you're here as a creative lead, a builder, a writer, an actor, or anything in between: you are a vital part of what we create.</p>
+            
+            <p>Every section, system, and standard is built not to restrict, but to guide. Our projects thrive when expectations are clear and our teams communicate well.</p>
+            
+            <p>If something in this handbook feels confusing, missing, or outdated, let a High Rank know. Handbooks don't lead teams, people do.</p>
+            
+            <p>Stay organized, stay professional, and stay collaborative. We're all in this together, and the better we work as a team, the better our stories become.</p>
+            
+            <p><strong>Let's keep making something great.</strong></p>
+          </div>
+        </div>
+
+        <div class="handbook-container">
+          <div class="navigation-buttons">
+            <a href="handbooks.html" class="btn btn-secondary">← Back to Handbooks</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Access verification
+      document.addEventListener('DOMContentLoaded', () => {
+        const hasAccess = sessionStorage.getItem('handbook_internal_access');
+        if (hasAccess !== 'granted') {
+          // Redirect back to handbooks page if no access
+          window.location.href = 'handbooks.html';
+        }
+        
+        // Add smooth scrolling for table of contents
+        document.querySelectorAll('.toc a').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      });
+
+      // Clear access on page unload
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.removeItem('handbook_internal_access');
+      });
+    </script>
+  </body>
+</html>
