@@ -113,14 +113,23 @@ class TeamSecuritySystem {
     console.log(`[SECURITY LOG] ${type}: ${description}`);
   }
 
-  getSimulatedIP() {
-    // Simulate IP address (in real implementation this would be server-side)
+  getCurrentAccessSession() {
+    // Get current access session with IP address
     let ip = localStorage.getItem('simulated_ip');
     if (!ip) {
       ip = `192.168.1.${Math.floor(Math.random() * 255)}`;
       localStorage.setItem('simulated_ip', ip);
     }
-    return ip;
+    return {
+      ip: ip,
+      userAgent: navigator.userAgent.slice(0, 50),
+      timestamp: Date.now(),
+      sessionId: this.generateSessionId()
+    };
+  }
+
+  generateSessionId() {
+    return 'sess_' + Math.random().toString(36).substr(2, 16);
   }
 
   checkIPAccess(teamMember) {
