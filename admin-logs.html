@@ -165,13 +165,13 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       }
 
-      .ip-list {
+      .access-session-list {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
       }
 
-      .ip-item {
+      .access-session-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -181,23 +181,23 @@
         border-left: 3px solid var(--accent-blue);
       }
 
-      .ip-item.banned {
+      .access-session-item.banned {
         border-left-color: #ff4444;
         background: rgba(255, 68, 68, 0.1);
       }
 
-      .ip-address {
+      .access-session-address {
         font-family: 'Courier New', monospace;
         font-weight: 600;
         color: var(--text-primary);
       }
 
-      .ip-member {
+      .access-session-member {
         color: var(--accent-blue);
         font-weight: 600;
       }
 
-      .ip-status {
+      .access-session-status {
         padding: 0.3rem 0.8rem;
         border-radius: 12px;
         font-size: 0.8rem;
@@ -280,11 +280,11 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value" id="authorizedCount">0</div>
-            <div class="stat-label">Authorized IPs</div>
+            <div class="stat-label">Authorized Access Sessions</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="bannedCount">0</div>
-            <div class="stat-label">Banned IPs</div>
+            <div class="stat-label">Banned Access Sessions</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="totalLogs">0</div>
@@ -299,9 +299,9 @@
         <div class="controls-section">
           <button class="control-btn primary" onclick="refreshData()">🔄 Refresh Data</button>
           <button class="control-btn primary" onclick="downloadLogs()">📥 Download access_logs.txt</button>
-          <button class="control-btn primary" onclick="downloadIPs()">📥 Download authorized_ips.txt</button>
+          <button class="control-btn primary" onclick="downloadAccessSessions()">📥 Download authorized_access_sessions.txt</button>
           <button class="control-btn warning" onclick="clearAllSessions()">⚠️ Clear All Sessions</button>
-          <button class="control-btn danger" onclick="clearAllBans()">🚫 Unban All IPs</button>
+          <button class="control-btn danger" onclick="clearAllBans()">🚫 Unban All Access Sessions</button>
           <button class="control-btn danger" onclick="resetSystem()">🔄 Reset System</button>
         </div>
 
@@ -311,8 +311,8 @@
             <button class="filter-btn active" onclick="filterLogs('all')">All</button>
             <button class="filter-btn" onclick="filterLogs('ACCESS_GRANTED')">Access Granted</button>
             <button class="filter-btn" onclick="filterLogs('ACCESS_DENIED')">Access Denied</button>
-            <button class="filter-btn" onclick="filterLogs('IP_BANNED')">IP Banned</button>
-            <button class="filter-btn" onclick="filterLogs('IP_REGISTERED')">IP Registered</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_SESSION_BANNED')">Access Session Banned</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_SESSION_REGISTERED')">Access Session Registered</button>
           </div>
           <div class="logs-container" id="logsDisplay">
             <!-- Dynamic content -->
@@ -320,15 +320,15 @@
         </div>
 
         <div class="logs-section">
-          <h3 class="section-title">🌐 authorized_ips.txt</h3>
-          <div class="ip-list" id="authorizedIPsList">
+          <h3 class="section-title">🌐 authorized_access_sessions.txt</h3>
+          <div class="access-session-list" id="authorizedAccessSessionsList">
             <!-- Dynamic content -->
           </div>
         </div>
 
         <div class="logs-section">
-          <h3 class="section-title">🚫 banned_ips.txt</h3>
-          <div class="ip-list" id="bannedIPsList">
+          <h3 class="section-title">🚫 banned_access_sessions.txt</h3>
+          <div class="access-session-list" id="bannedAccessSessionsList">
             <!-- Dynamic content -->
           </div>
         </div>
