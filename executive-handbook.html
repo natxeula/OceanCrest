@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OceanCrest Entertainment - Executive Handbook</title>
+    <meta
+      name="description"
+      content="Executive Handbook - Confidential OceanCrest Entertainment Documentation"
+    />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .handbook-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .handbook-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-color);
+      }
+
+      .handbook-title {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .handbook-subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .confidential-badge {
+        display: inline-block;
+        background: rgba(248, 81, 73, 0.2);
+        color: var(--warning-color);
+        padding: 0.5rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border: 1px solid rgba(248, 81, 73, 0.3);
+      }
+
+      .section-header {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .subsection-header {
+        color: var(--accent-blue);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 2rem 0 1rem 0;
+      }
+
+      .handbook-content {
+        line-height: 1.8;
+        color: var(--text-secondary);
+      }
+
+      .handbook-content p {
+        margin-bottom: 1.2rem;
+      }
+
+      .handbook-content ul {
+        margin: 1rem 0;
+        padding-left: 1.5rem;
+      }
+
+      .handbook-content li {
+        margin-bottom: 0.8rem;
+        position: relative;
+      }
+
+      .handbook-content li::marker {
+        color: var(--accent-blue);
+      }
+
+      .handbook-content strong {
+        color: var(--text-primary);
+        font-weight: 600;
+      }
+
+      .priorities-list {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .priorities-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .priorities-list li:last-child {
+        border-bottom: none;
+      }
+
+      .role-card {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.2rem;
+        margin: 1rem 0;
+      }
+
+      .role-title {
+        color: var(--accent-purple);
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .chain-command {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .chain-item {
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+        padding: 1rem;
+        background: var(--primary-bg);
+        border-radius: 10px;
+        border-left: 4px solid var(--accent-blue);
+      }
+
+      .chain-position {
+        font-weight: 600;
+        color: var(--accent-blue);
+        min-width: 120px;
+      }
+
+      .warning-box {
+        background: rgba(248, 81, 73, 0.1);
+        border: 1px solid rgba(248, 81, 73, 0.3);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: var(--warning-color);
+      }
+
+      .success-box {
+        background: rgba(35, 134, 54, 0.1);
+        border: 1px solid rgba(35, 134, 54, 0.3);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        color: var(--success-color);
+      }
+
+      .blank-space {
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        font-style: italic;
+        font-size: 0.9rem;
+        border: 1px dashed var(--border-color);
+        border-radius: 10px;
+        margin: 2rem 0;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .toc {
+        background: var(--secondary-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .toc h3 {
+        color: var(--accent-blue);
+        margin-bottom: 1rem;
+      }
+
+      .toc ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .toc li {
+        margin: 0.5rem 0;
+      }
+
+      .toc a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        padding: 0.3rem 0;
+        display: block;
+        transition: color 0.3s ease;
+      }
+
+      .toc a:hover {
+        color: var(--accent-blue);
+      }
+
+      @media (max-width: 768px) {
+        .handbook-container {
+          margin: 1rem;
+          padding: 2rem 1.5rem;
+        }
+
+        .handbook-title {
+          font-size: 2rem;
+        }
+
+        .section-header {
+          font-size: 1.5rem;
+        }
+
+        .chain-item {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .navigation-buttons {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Experience...</div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <header>
+      <div class="container">
+        <div class="header-container">
+          <a href="index.html" class="logo">OceanCrest</a>
+
+          <!-- Mobile Menu Toggle -->
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <!-- Desktop Navigation -->
+          <nav class="desktop-nav">
+            <ul>
+              <li>
+                <a href="index.html">Home<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="about.html">About<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="projects.html">Projects<span class="nav-indicator"></span></a>
+              </li>
+              <li>
+                <a href="gaming.html">Gaming<span class="nav-indicator"></span></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span></a>
+                <div class="dropdown-menu">
+                  <a href="capabilities.html">Capabilities</a>
+                  <a href="team.html">Team</a>
+                  <a href="leadership.html">Leadership</a>
+                  <a href="careers.html">Careers</a>
+                  <a href="handbooks.html">Handbooks</a>
+                </div>
+              </li>
+              <li>
+                <a href="contact.html">Contact<span class="nav-indicator"></span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <nav class="mobile-nav-menu">
+        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+        <a href="team.html" class="mobile-nav-link">👥 Team</a>
+        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="handbooks.html" class="mobile-nav-link">📚 Handbooks</a>
+        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+      </nav>
+    </div>
+
+    <main class="section" style="padding-top: 6rem;">
+      <div class="container">
+        <div class="handbook-container">
+          <div class="handbook-header">
+            <h1 class="handbook-title">OCEANCREST ENTERTAINMENT</h1>
+            <h2 class="handbook-subtitle">Executive Handbook</h2>
+            <div class="confidential-badge">�� CONFIDENTIAL - EXECUTIVE LEVEL</div>
+          </div>
+
+          <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <ul>
+              <li><a href="#section1">Section 1 - Introduction</a></li>
+              <li><a href="#section2">Section 2 - Roles & Duties</a></li>
+              <li><a href="#section3">Section 3 - Oversight</a></li>
+              <li><a href="#section4">Section 4 - Quotas and Evaluations</a></li>
+              <li><a href="#section5">Section 5 - Conduct and Standards</a></li>
+              <li><a href="#section6">Section 6 - Conflicts & HR Protocol</a></li>
+              <li><a href="#section7">Section 7 - Firing & Disciplinary Actions</a></li>
+              <li><a href="#section8">Section 8 - LOA & Resignation Protocol</a></li>
+              <li><a href="#section9">Section 9 - Notes</a></li>
+            </ul>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section1" class="handbook-content">
+            <h2 class="section-header">Section 1 - Introduction</h2>
+            
+            <h3 class="subsection-header">1.1 - Welcome!</h3>
+            <p>Welcome to the OceanCrest Executive Team.</p>
+            
+            <p>As an executive, you hold one of the highest levels of responsibility within OceanCrest. You are here to shape the future of our creative projects, enforce quality and conduct standards, and ensure your teams are following team rules.</p>
+            
+            <p>This handbook serves as your guide for expectations, protocols, and conduct. While we acknowledge creativity and flexibility, this guide provides the non-negotiable standards by which executives are evaluated.</p>
+            
+            <p><strong>By serving as an executive, you agree to the following priorities:</strong></p>
+            
+            <div class="priorities-list">
+              <ul>
+                <li><strong>The well-being and productivity of your team comes first.</strong></li>
+                <li><strong>All decisions must be in the best interest of the project—not personal alliances or grudges.</strong></li>
+                <li><strong>Communication must remain professional even under pressure.</strong></li>
+                <li><strong>You are a leader, not just a manager—your actions set the tone.</strong></li>
+              </ul>
+            </div>
+            
+            <div class="warning-box">
+              <strong>⚠️ Important:</strong> Your behavior, reliability, and initiative will directly influence whether you remain in this position. We do not hand executive roles lightly, nor do we hesitate to remove them when standards are violated.
+            </div>
+          </div>
+
+          <div id="section2" class="handbook-content">
+            <h2 class="section-header">Section 2 - Roles & Duties</h2>
+            
+            <h3 class="subsection-header">2.1 - Roles</h3>
+            
+            <div class="role-card">
+              <div class="role-title">EP (Executive Producer):</div>
+              <p>Overall leadership, company direction, final decisions, and founder liaison.</p>
+            </div>
+            
+            <div class="role-card">
+              <div class="role-title">P (Producer):</div>
+              <p>Oversees project management, team coordination, deadlines, and resource allocation.</p>
+            </div>
+            
+            <div class="role-card">
+              <div class="role-title">HW (Head of Writing):</div>
+              <p>Leads writers, script quality control, and story consistency.</p>
+            </div>
+            
+            <div class="role-card">
+              <div class="role-title">HA (Head of Acting):</div>
+              <p>Manages casting, rehearsals, and actor performance.</p>
+            </div>
+            
+            <div class="role-card">
+              <div class="role-title">HO (Head of Outfit):</div>
+              <p>Oversees costume design, visual consistency, and approvals.</p>
+            </div>
+            
+            <div class="role-card">
+              <div class="role-title">HPP (Head of Post-Production):</div>
+              <p>Handles editing, effects, and final production touches.</p>
+            </div>
+            
+            <p>Each role has clear responsibilities and authority to lead their teams effectively. Temporary dual roles may be assigned with approval.</p>
+
+            <h3 class="subsection-header">2.2 - Expectations</h3>
+            <ul>
+              <li>Maintain professionalism and clear communication at all times.</li>
+              <li>Meet assigned deadlines and fulfill team quotas.</li>
+              <li>Lead by example, motivating and supporting team members.</li>
+              <li>Attend required meetings and provide regular progress updates.</li>
+              <li>Uphold company values and enforce standards within your teams.</li>
+              <li>Address conflicts promptly and escalate serious issues when necessary.</li>
+              <li>Collaborate respectfully with other executives and staff.</li>
+              <li>Executives are expected to balance leadership with contribution to projects.</li>
+            </ul>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">2.3 - Chain of Command</h3>
+            <p>OceanCrest's Executive Team functions through a strict leadership hierarchy. Authority flows top-down, and all decisions should follow this chain unless directed otherwise by the Founder.</p>
+            
+            <div class="chain-command">
+              <div class="chain-item">
+                <div class="chain-position">EP</div>
+                <div>
+                  <strong>Executive Producer</strong><br>
+                  Final authority on all decisions. Oversees every team, approves project direction, resolves disputes, and enforces leadership standards.
+                </div>
+              </div>
+              
+              <div class="chain-item">
+                <div class="chain-position">P</div>
+                <div>
+                  <strong>Producer</strong><br>
+                  Supports the EP by overseeing multiple departments. Coordinates deadlines, progress, and high-level logistics. Can manage or overrule team leads with EP consent.
+                </div>
+              </div>
+              
+              <div class="chain-item">
+                <div class="chain-position">HW</div>
+                <div>
+                  <strong>Head of Writing</strong><br>
+                  Directs the writing team. Oversees script structure, quality control, and scene quotas. Collaborates closely with Producers on script timelines.
+                </div>
+              </div>
+              
+              <div class="chain-item">
+                <div class="chain-position">HA</div>
+                <div>
+                  <strong>Head of Acting</strong><br>
+                  Leads actor coordination. Manages casting, scheduling, and live direction during scenes. Ensures performance standards are upheld.
+                </div>
+              </div>
+              
+              <div class="chain-item">
+                <div class="chain-position">HO</div>
+                <div>
+                  <strong>Head of Outfitting</strong><br>
+                  Handles character outfit design. Ensures every actor or NPC is styled consistently and appropriately for tone, scene, and production standards.
+                </div>
+              </div>
+            </div>
+
+            <h3 class="subsection-header">2.3 - Chain of Command PT 2</h3>
+            
+            <div class="chain-command">
+              <div class="chain-item">
+                <div class="chain-position">HPP</div>
+                <div>
+                  <strong>Head of Post-Production</strong><br>
+                  Manages editing, final cuts, music, and scene transitions. Delivers polished versions of projects ready for release.
+                </div>
+              </div>
+            </div>
+            
+            <p>In the event of conflict or indecision, the Executive Producer's decision is final. A Producer may act on behalf of the EP during absences or emergencies.</p>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section3" class="handbook-content">
+            <h2 class="section-header">Section 3 - Oversight</h2>
+            
+            <h3 class="subsection-header">3.1 - Overseeing Protocols</h3>
+            <p>Executives are expected to actively oversee their departments by maintaining awareness of ongoing work, ensuring deadlines are met, and addressing inactivity or issues early. This includes checking in with team members weekly, reviewing progress regularly, and using designated tools (such as Miro, Discord, and shared drives) to track assignments, provide feedback, and escalate concerns when needed.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">3.2 - Leading a Team Meeting</h3>
+            <p>Executives are responsible for organizing and leading regular team meetings to ensure progress, address challenges, and align goals. Meetings should have a clear agenda, be time-efficient, and encourage constructive participation from all members. Executives must document key points, decisions, and action items and follow up on them promptly.</p>
+            
+            <p><strong>Effective meeting leadership includes:</strong></p>
+            <ul>
+              <li>Starting and ending on time</li>
+              <li>Keeping discussions focused and productive</li>
+              <li>Encouraging input and addressing concerns</li>
+              <li>Assigning tasks and deadlines clearly</li>
+              <li>Ensuring accountability through follow-ups</li>
+            </ul>
+            
+            <p>Executives should adapt meeting frequency and format based on team needs and project phases, maintaining a balance between communication and productivity.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">3.3 - Delegation and Efficiency</h3>
+            <p>Executives are not expected to do everything themselves — effective leadership involves knowing what to delegate, when, and to whom. The goal is to maintain quality while improving turnaround and reducing burnout.</p>
+            
+            <ul>
+              <li><strong>Assign Tasks Based on Strengths:</strong> Understand your team's skills and assign work accordingly. Don't give key assignments to those who aren't ready for them.</li>
+              <li><strong>Use Checkpoints:</strong> Do not micromanage, but set deadlines and follow-up expectations for all delegated tasks.</li>
+              <li><strong>Clarity is Key:</strong> When assigning work, always explain the goal, the format, and the deadline.</li>
+              <li><strong>Encourage Accountability:</strong> Delegated work is still your responsibility. If it fails, own it — then fix the system.</li>
+              <li><strong>Streamline, Don't Overload:</strong> Keep delegation efficient. Don't delegate so many tasks that it fragments team focus or creates confusion.</li>
+            </ul>
+            
+            <p>Executives should use delegation to amplify results, and never to drop your responsibilities</p>
+          </div>
+
+          <div id="section4" class="handbook-content">
+            <h2 class="section-header">Section 4 - Quotas and Evals</h2>
+            
+            <h3 class="subsection-header">4.1 - Executives Have Quotas</h3>
+            <p>All executives are subject to specific quota systems based on their department. These are not optional and are designed to ensure consistent leadership output across all divisions. Examples include:</p>
+            
+            <ul>
+              <li><strong>Head of Writing</strong> – Scene reviews, grammar/spell checks, quota tracking</li>
+              <li><strong>Head of Acting</strong> – Actor check-ins, VC session planning, scene role prep</li>
+              <li><strong>Producer</strong> – Weekly initiative tracking, Miro/documentation updates, inter-team communication</li>
+              <li><strong>Executive Producer</strong> – Oversight across all divisions, monitoring consistency, issuing evaluations</li>
+            </ul>
+            
+            <div class="warning-box">
+              Failure to meet quotas without prior LOA may result in warnings or re-examination. Quotas may evolve as the studio grows.
+            </div>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">4.2 - Re-Examinations</h3>
+            <p><em>(also known as REEXAMS)</em></p>
+            
+            <p>Executives undergo mandatory re-examinations during project transitions or when issues in performance arise. These re-exams assess:</p>
+            
+            <ul>
+              <li>Contribution history</li>
+              <li>Leadership behavior and communication</li>
+              <li>Role-specific knowledge and duties</li>
+              <li>Team feedback and consistency</li>
+            </ul>
+            
+            <p>Results may include continued placement, demotion, probation, or termination. Exams are conducted formally, and results are public within leadership channels. Executives are expected to cooperate fully and professionally.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">4.3 - Accountability</h3>
+            <p>Executive performance is measured through a combination of qualitative and quantitative indicators:</p>
+            
+            <ul>
+              <li><strong>Quotas Met:</strong> Scene delivery, department progress, task completions</li>
+              <li><strong>Engagement:</strong> Meeting attendance, availability, and initiative shown</li>
+              <li><strong>Team Management:</strong> Oversight quality, communication clarity, morale tracking</li>
+              <li><strong>Behavior:</strong> Professionalism, conflict resolution, adherence to conduct standards</li>
+            </ul>
+            
+            <p>Leads must consistently demonstrate reliability and adaptability. Failure to meet accountability expectations may result in formal warnings or re-examination.</p>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section5" class="handbook-content">
+            <h2 class="section-header">Section 5 - Conduct and Standard</h2>
+            
+            <h3 class="subsection-header">5.1 – Behavior</h3>
+            <p>All executives are expected to uphold a professional, respectful, and composed demeanor in all internal and external text communications. Leadership reflects on the entire organization, so emotional outbursts, harassment, favoritism, or failure to manage conflict productively are not tolerated.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">5.2 – Public v. Internal Conduct</h3>
+            <p>Executives must distinguish between internal discussions and public-facing behavior. Internally, directness and critique are allowed within reason, but all public interactions—whether with community members, collaborators, or actors—must remain respectful, professional, and in alignment with OceanCrest's image. Never bring internal conflicts or frustrations into public spaces. (unless it is a reasonable joke)</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">5.3 – Communication</h3>
+            <p>Clear, respectful, and timely communication is expected from all executives. This includes responding to DMs, attending scheduled meetings, and using appropriate tone across all platforms. Use team channels for collaboration, avoid vague messages, and escalate concerns through the proper chain of command. Poor communication reflects poorly on leadership and impacts overall team morale and productivity.</p>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section6" class="handbook-content">
+            <h2 class="section-header">Section 6 - Conflicts & HR Protocol</h2>
+            
+            <h3 class="subsection-header">6.1 – Internal Disputes</h3>
+            <p>Internal disputes should be handled with discretion, professionalism, and calm communication. When a disagreement arises, all parties are expected to first attempt resolution privately and respectfully. Leaders should remain neutral and avoid taking sides prematurely. If the issue cannot be resolved directly, it must be escalated to the appropriate higher authority. Public arguments, passive-aggressive behavior, and gossip are strictly prohibited. All dispute matters must remain confidential to protect team integrity and trust.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">6.2 – Warnings, Investigations, and Escalation</h3>
+            <p>When a member fails to meet conduct or performance expectations, leadership may issue a verbal or written warning depending on the severity. Continued issues can lead to a formal investigation, which includes evidence review and internal discussion. Investigations must remain private and fair. If misconduct is confirmed, actions may escalate. This includes probation, demotion, or removal. Executives are held to a stricter standard and may be reviewed immediately if their actions impact team trust or safety.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">6.3 – Internal Appeals and Reconsideration</h3>
+            <p>Team members have the right to request a reconsideration of disciplinary actions if they believe a decision was made unfairly. Appeals must be submitted respectfully and with clear reasoning, ideally within 48 hours of the action. A neutral third party or higher-level executive will assess the appeal. Reconsideration does not guarantee reversal but ensures the issue is reviewed with fairness and transparency. Inappropriate or aggressive appeals will not be entertained.</p>
+            
+            <div class="warning-box">
+              <strong>Note:</strong> This process does not apply in the case of termination. Appeals cannot be made after a firing.
+            </div>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section7" class="handbook-content">
+            <h2 class="section-header">Section 7 - Firing & Disciplinary Actions</h2>
+            
+            <h3 class="subsection-header">7.1 – Executive Demotion Process</h3>
+            <p>As said earlier, Executives will be subject to performance reviews and re-evaluations regularly. If concerns arise regarding conduct or contribution, a formal review will be conducted involving key leadership. The executive in question will be notified of any issues and given a clear opportunity to respond and improve.</p>
+            
+            <p>Should performance or behavior fail to meet standards after warnings and support, demotion or removal from the executive role may be initiated. All decisions will be documented and communicated transparently to relevant parties.</p>
+            
+            <p>The process aims to be fair, consistent, and focused on maintaining team integrity and professionalism.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">7.2 - In an Emergency</h3>
+            <p>In cases of severe misconduct, unprofessional behavior, or actions that jeopardize team safety and project integrity, immediate termination of an executive's role may be necessary without prior warning.</p>
+            
+            <p>Such decisions are made with careful consideration but prioritize protecting the team and company. Documentation of the reasons and circumstances will be maintained, and affected parties will be informed as soon as possible.</p>
+            
+            <p>Emergency termination is reserved for serious breaches and is not a substitute for the regular disciplinary process.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">7.3 - Privacy, Transparency, and Communication</h3>
+            <p>All disciplinary and termination actions must be handled with the utmost respect for privacy and professionalism. Information about these actions should be shared strictly on a need-to-know basis, limited to those directly involved or impacted. Confidentiality must be maintained to protect individuals' personal information and uphold the integrity of the process.</p>
+            
+            <p>At the same time, clear and timely communication is crucial to prevent misunderstandings, rumors, or misinformation from spreading within the team. While some details may need to remain confidential, providing as much transparency as possible about the decision-making process helps maintain trust and fairness.</p>
+            
+            <p>Striking the right balance between transparency and privacy ensures that the team remains informed and cohesive without compromising individual rights or causing unnecessary tension. This approach promotes a professional environment where difficult decisions are handled responsibly and respectfully.</p>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section8" class="handbook-content">
+            <h2 class="section-header">Section 8 - LOA & Resignation Protocol</h2>
+            
+            <h3 class="subsection-header">8.1 - Short-Term Leave Rules</h3>
+            <p>Executives may request short-term leaves of absence (LOA) for personal, health, or other valid reasons. All LOA requests must be submitted in writing to the Founder with reasonable advance notice when possible. Approval depends on project deadlines and team requirements to ensure minimal disruption.</p>
+            
+            <p>During an approved LOA, executives are generally expected to step back from communication and responsibilities, allowing for little to no involvement with team activities. Delegation of duties prior to the LOA is essential to maintain workflow. Extended or uncommunicated absences may lead to disciplinary measures. Proper documentation of the leave and handover plans should be provided to ensure smooth operations while the executive is away.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">8.2 - Succession Planning / Interim Management</h3>
+            <p>When an executive takes a leave of absence or resigns, clear succession planning must be in place to ensure continuity. The executive should coordinate with the Founder and relevant team leads to designate an interim manager or successor who can handle responsibilities during their absence. This temporary appointment should be communicated clearly to all affected team members to avoid confusion.</p>
+            
+            <p>Interim managers are expected to maintain the quality and standards of the role, uphold team morale, and keep the Founder informed on key developments. Succession planning also involves preparing potential candidates for permanent roles to minimize disruptions during transitions.</p>
+            
+            <p>Effective succession planning is essential for maintaining project momentum and team stability, especially during unexpected absences or departures</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">8.3 - Formal Exit or Retirement Expectations</h3>
+            <p>When an executive decides to resign or retire, it is important to follow a formal exit process to ensure a smooth transition. The executive should provide advance notice to the Executive Producer and relevant team members, allowing adequate time to reassign responsibilities.</p>
+            
+            <p>During the exit period, the executive is expected to complete outstanding tasks, document key information, and assist in training or handing off duties to their successor or interim manager. Clear communication about the departure timeline helps maintain team morale and project continuity.</p>
+            
+            <p>Properly managing exits or retirements reflects professionalism and respect for the team, preserving positive relationships and leaving the door open for future collaboration.</p>
+          </div>
+
+          <div class="blank-space">[This space is intentionally left blank]</div>
+
+          <div id="section9" class="handbook-content">
+            <h2 class="section-header">Section 9 - Notes</h2>
+            
+            <h3 class="subsection-header">9.1 - Expectations Summary</h3>
+            <p>Executives are expected to demonstrate consistent professionalism, leadership, and accountability. This includes meeting quotas, managing teams effectively, communicating clearly, and adhering to company policies. Maintaining a respectful and collaborative environment is essential to our success.</p>
+            
+            <p>Leaders must also be proactive in addressing issues, open to feedback, and committed to continuous improvement. Upholding these standards ensures a strong, cohesive team that drives projects forward efficiently and with quality.</p>
+
+            <div class="blank-space">[This space is intentionally left blank]</div>
+
+            <h3 class="subsection-header">9.2 - Full Executive Resource Links</h3>
+            <p>To be added at a future date.</p>
+            
+            <h3 class="subsection-header">9.3 - Communication Links</h3>
+            <p>To be added at a future date.</p>
+          </div>
+
+          <div class="navigation-buttons">
+            <a href="handbooks.html" class="btn btn-secondary">← Back to Handbooks</a>
+            <button onclick="window.print()" class="btn btn-primary">🖨️ Print Handbook</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Production</h4>
+            <a href="about.html">About</a>
+            <a href="capabilities.html">Capabilities</a>
+            <a href="projects.html">Projects</a>
+          </div>
+          <div class="footer-section">
+            <h4>Gaming</h4>
+            <a href="gaming.html">All Games</a>
+            <a href="mythoria.html">Mythoria</a>
+            <a href="heat.html">HEAT</a>
+          </div>
+          <div class="footer-section">
+            <h4>Join The Team</h4>
+            <a href="team.html">Team</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="careers.html">Careers</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem">
+            <a href="#" class="gradient-link">Privacy Policy</a> |
+            <a href="#" class="gradient-link">Terms of Service</a> |
+            <a href="contact.html" class="gradient-link">Contact</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+      // Access verification
+      document.addEventListener('DOMContentLoaded', () => {
+        const hasAccess = sessionStorage.getItem('handbook_executive_access');
+        if (hasAccess !== 'granted') {
+          // Redirect back to handbooks page if no access
+          window.location.href = 'handbooks.html';
+        }
+        
+        // Add smooth scrolling for table of contents
+        document.querySelectorAll('.toc a').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      });
+
+      // Clear access on page unload
+      window.addEventListener('beforeunload', () => {
+        sessionStorage.removeItem('handbook_executive_access');
+      });
+    </script>
+  </body>
+</html>
