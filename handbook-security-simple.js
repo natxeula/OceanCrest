@@ -203,9 +203,9 @@ class TeamSecuritySystem {
               >
             </div>
             
-            <div class="ip-info">
-              <p>🌐 Your IP: <code>${this.getSimulatedIP()}</code></p>
-              <p>⚠️ This IP will be registered and monitored</p>
+            <div class="security-info">
+              <p>📋 Your access will be tracked for security</p>
+              <p>⚠️ Session will be monitored for team verification</p>
             </div>
             
             <div class="login-buttons">
@@ -214,8 +214,8 @@ class TeamSecuritySystem {
             </div>
             
             <div class="security-notice">
-              <p>🔐 All access attempts are logged to <code>access_logs.txt</code></p>
-              <p>🚫 Unauthorized IPs are automatically banned</p>
+              <p>🔐 All access attempts are logged for security</p>
+              <p>🚫 Unauthorized access attempts are tracked</p>
             </div>
           </div>
         </div>
@@ -312,9 +312,9 @@ class TeamSecuritySystem {
     if (!ipCheck.allowed) {
       let message = 'Access denied';
       if (ipCheck.reason === 'IP_BANNED') {
-        message = 'Your IP has been banned from accessing the system';
+        message = 'Your access has been restricted for security reasons';
       } else if (ipCheck.reason === 'IP_MISMATCH') {
-        message = `Access denied: Different IP detected. Your IP has been banned for security.`;
+        message = `Access denied: Security verification failed. Your access has been restricted.`;
       }
       this.showAlert(message, 'error');
       return;
