@@ -14,7 +14,6 @@ class TeamSecuritySystem {
       'muelio',
       'fortune',
       'adjective',
-      'exec',
       'Tempest',
       'Plushie',
       '0r4n',
