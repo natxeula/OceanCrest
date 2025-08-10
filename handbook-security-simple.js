@@ -36,7 +36,7 @@ class TeamSecuritySystem {
     
     this.accessCodes = {
       executive: 'industrializablecurrents',
-      internal: 'oceancrestproud',
+      internal: 'staffcrest',
       logs: 'firedrialist'
     };
     
