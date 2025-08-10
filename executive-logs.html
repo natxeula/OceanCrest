@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="handbook-security.css" />
     <style>
       .handbook-container {
         max-width: 900px;
@@ -310,7 +311,10 @@
             <p style="color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">
               (Only lists past and present department leads.)
             </p>
-            <div class="confidential-badge">📊 CONFIDENTIAL - EXECUTIVE RECORDS</div>
+            <div class="confidential-badge">🔒 TOP SECRET - CLASSIFIED RECORDS</div>
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(139, 0, 0, 0.1); border: 1px solid rgba(139, 0, 0, 0.3); border-radius: 10px; text-align: center;">
+              🚨 <strong>CLASSIFIED:</strong> Personnel records are highly sensitive. Unauthorized disclosure is prohibited by company policy.
+            </div>
           </div>
 
           <div class="team-section">
@@ -515,30 +519,43 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="handbook-security.js"></script>
     <script>
       // Immediate access verification - before DOM loads
       (function() {
-        const hasAccess = sessionStorage.getItem('handbook_logs_access');
-        if (hasAccess !== 'granted') {
-          // Redirect back to handbooks page if no access
-          window.location.href = 'handbooks.html';
-          return; // Stop execution
+        // Use advanced security system for verification
+        if (window.advancedSecurity) {
+          if (!window.advancedSecurity.verifyPageAccess('logs')) {
+            return; // Will redirect if verification fails
+          }
+        } else {
+          // Fallback check
+          const hasAccess = sessionStorage.getItem('handbook_logs_access');
+          if (hasAccess !== 'granted') {
+            window.location.href = 'handbooks.html';
+            return;
+          }
         }
       })();
 
       // Access verification after DOM loads
       document.addEventListener('DOMContentLoaded', () => {
-        // Double-check access
-        const hasAccess = sessionStorage.getItem('handbook_logs_access');
-        if (hasAccess !== 'granted') {
-          window.location.href = 'handbooks.html';
-          return;
+        // Double-check access with advanced security
+        if (window.advancedSecurity) {
+          if (!window.advancedSecurity.verifyPageAccess('logs')) {
+            return;
+          }
+          // Log page access
+          window.advancedSecurity.logSecurityEvent('PAGE_ACCESS', 'Executive logs accessed');
         }
       });
 
       // Clear access on page unload
       window.addEventListener('beforeunload', () => {
-        sessionStorage.removeItem('handbook_logs_access');
+        if (window.advancedSecurity) {
+          window.advancedSecurity.clearAccess('logs');
+          window.advancedSecurity.logSecurityEvent('PAGE_EXIT', 'Executive logs session ended');
+        }
       });
     </script>
   </body>
