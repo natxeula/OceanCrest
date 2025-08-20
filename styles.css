@@ -1124,6 +1124,73 @@ footer {
   line-height: 1.1;
 }
 
+/* Contact Details */
+.contact-details p {
+  margin-bottom: 1rem;
+}
+
+.contact-details strong {
+  color: var(--text-primary);
+}
+
+.contact-details a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-details a:hover {
+  color: var(--accent-tertiary);
+}
+
+/* FAQ Styling */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.faq-item {
+  background: var(--glass-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.faq-item h3 {
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.faq-item p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.faq-item a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.faq-item a:hover {
+  text-decoration: underline;
+}
+
+/* Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Project Layout */
 .project-details {
   display: flex;
