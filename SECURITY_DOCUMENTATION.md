@@ -37,7 +37,7 @@ The OceanCrest Entertainment handbook security system has been enhanced with **1
 ### 5. **Advanced Monitoring**
 - **Security Event Logging**: Comprehensive audit trail of all access attempts
 - **Failed Attempt Tracking**: Progressive penalties for unauthorized access
-- **Access Session Banning**: Automatic blocking after multiple failed attempts
+- **IP Banning**: Automatic blocking after multiple failed attempts
 - **Real-Time Alerts**: Immediate notification of security violations
 
 ## 🔧 Technical Implementation
@@ -54,8 +54,8 @@ The OceanCrest Entertainment handbook security system has been enhanced with **1
 └─────────────────────┬───────────────────────────────────────┘
                       │
 ┌─────────────────────▼───────────────────────────────────────┐
-│          Access Session & Device Validation                 │
-│  • Banned Session Check  • Device Fingerprinting           │
+│             IP & Device Validation                          │
+│  • Banned IP Check  • Device Fingerprinting                │
 │  • Network Analysis • Browser Signature                    │
 └────────────────────��┬───────────────────────────────────────┘
                       │
@@ -71,7 +71,7 @@ The OceanCrest Entertainment handbook security system has been enhanced with **1
 │  • Primary Access Code (32-char secure)                    │
 │  • Secondary Encryption Key (session-based)                │
 │  • Dynamic Challenge-Response                              │
-└─────────���───────────┬───────��───────────────────────────────┘
+└─────────���───────────┬───────────────────────────────────────┘
                       │
 ┌─────────────────────▼───────────────────────────────────────┐
 │            Final Security Verification                      │
@@ -95,8 +95,8 @@ The OceanCrest Entertainment handbook security system has been enhanced with **1
 - **75+**: Critical Risk - Access denied, investigation triggered
 
 ### Automatic Security Actions
-1. **3 Failed Attempts**: Access session temporarily flagged
-2. **5 Failed Attempts**: Access session automatically banned
+1. **3 Failed Attempts**: IP temporarily flagged
+2. **5 Failed Attempts**: IP automatically banned
 3. **Unusual Patterns**: Threat level increases
 4. **Session Tampering**: Immediate termination
 5. **Token Manipulation**: Security alert triggered
@@ -115,7 +115,7 @@ Access the security monitoring dashboard at `/security-dashboard.html` to view:
 - **Log Export**: Complete audit trail export
 - **Session Management**: Clear active sessions
 - **Threat Reset**: Administrative threat level control
-- **Access Session Management**: Ban/unban access sessions
+- **IP Management**: Ban/unban IP addresses
 
 ## 🔑 Access Codes
 
@@ -137,7 +137,7 @@ HR: HR_[32-character-secure-code]
 - **Clear All Sessions**: Immediately revoke all active access
 - **Reset Threat Level**: Administrative threat level reset
 - **Export Security Logs**: Download complete audit trail
-- **Access Session Management**: Control banned access sessions
+- **IP Management**: Control banned IP addresses
 
 ### Emergency Procedures
 1. **Security Breach**: Use dashboard to clear all sessions
@@ -153,7 +153,7 @@ HR: HR_[32-character-secure-code]
 - `ACCESS_DENIED` - Failed authentication attempts
 - `BIOMETRIC_FAILURE` - Biometric verification failed
 - `THREAT_INCREASE` - Security threat detected
-- `ACCESS_SESSION_BANNED` - Automatic access session blocking
+- `IP_BANNED` - Automatic IP blocking
 - `SESSION_EXPIRED` - Session timeout occurred
 - `PAGE_ACCESS` - Handbook page viewed
 - `PAGE_EXIT` - Session terminated
@@ -166,7 +166,7 @@ HR: HR_[32-character-secure-code]
   "description": "Secure access granted to executive",
   "threatLevel": 15,
   "userAgent": "Mozilla/5.0...",
-  "accessSession": { "ip": "192.168.1.100", "sessionId": "sess_abc123" }
+  "ip": "192.168.1.100"
 }
 ```
 
