@@ -1,4 +1,5 @@
 // OceanCrest Entertainment - Enhanced JavaScript Functionality
+// Updated for PR testing - January 2025
 class OceanCrestApp {
   constructor() {
     this.isLoaded = false;
