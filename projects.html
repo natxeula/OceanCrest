@@ -62,9 +62,61 @@
     }
 
     .project-hero {
-      background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+      background:
+        radial-gradient(ellipse at center, rgba(91, 110, 232, 0.12) 0%, transparent 70%),
+        linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
       padding: 8rem 0 4rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card {
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(91, 110, 232, 0.2);
+    }
+
+    .project-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    .status-released {
+      background: linear-gradient(135deg, #00ff9f, #00b4d8);
+      color: var(--primary-bg);
+    }
+
+    .status-production {
+      background: linear-gradient(135deg, #ffd60a, #ff8500);
+      color: var(--primary-bg);
+    }
+
+    .status-development {
+      background: linear-gradient(135deg, #7209b7, #560bad);
+      color: white;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
   </style>
 </head>
@@ -215,7 +267,7 @@
               </div>
             </div>
             <footer class="project-action">
-              <a href="#" class="project-link">Watch on YouTube now!</a>
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="project-link" target="_blank" rel="noopener">Watch on YouTube now!</a>
             </footer>
           </article>
 
@@ -309,5 +361,37 @@
 
   <!-- Scripts -->
   <script src="app.js"></script>
+  <script>
+    // Project filtering functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          // Add active class to clicked button
+          this.classList.add('active');
+
+          const filter = this.getAttribute('data-filter');
+
+          projectCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+              card.style.display = 'block';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                card.style.display = 'none';
+              }, 300);
+            }
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>

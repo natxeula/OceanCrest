@@ -158,69 +158,83 @@
   </head>
   <body>
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
+    <div class="loading-screen" id="loadingScreen" role="status" aria-label="Loading content">
       <div class="loader-container">
-        <div class="loader"></div>
+        <div class="loader" aria-hidden="true"></div>
         <div class="loading-text">Loading Experience...</div>
       </div>
     </div>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress">
       <div class="scroll-progress-bar" id="scrollProgress"></div>
     </div>
 
     
-    <header>
+    <!-- Header Navigation -->
+    <header role="banner">
       <div class="container">
         <div class="header-container">
-          <a href="index.html" class="logo">OceanCrest</a>
-          
-          <!-- Mobile Menu Toggle -->
-          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
+          <!-- Logo -->
+          <a href="index.html" class="logo" aria-label="OceanCrest Entertainment Home">OceanCrest</a>
+
+          <!-- Mobile Navigation Toggle -->
+          <button
+            class="mobile-nav-toggle"
+            id="mobileNavToggle"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobileNavOverlay"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </button>
           
           <!-- Desktop Navigation -->
-          <nav class="desktop-nav">
+          <nav class="desktop-nav" role="navigation" aria-label="Main navigation">
             <ul>
               <li>
-                <a href="index.html"
-                  >Home<span class="nav-indicator"></span
-                ></a>
+                <a href="index.html">
+                  Home
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                </a>
               </li>
               <li>
-                <a href="about.html"
-                  >About<span class="nav-indicator"></span
-                ></a>
+                <a href="about.html">
+                  About
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                </a>
               </li>
               <li>
-                <a href="projects.html"
-                  >Projects<span class="nav-indicator"></span
-                ></a>
+                <a href="projects.html">
+                  Projects
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                </a>
               </li>
               <li>
-                <a href="gaming.html" class="active"
-                  >Gaming<span class="nav-indicator"></span
-                ></a>
+                <a href="gaming.html" class="active" aria-current="page">
+                  Gaming
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                </a>
               </li>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle"
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"
                   >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
                 ></a>
-                <div class="dropdown-menu">
-                  <a href="capabilities.html">Capabilities</a>
-                  <a href="team.html">Team</a>
-                  <a href="leadership.html">Leadership</a>
-                  <a href="careers.html">Careers</a>
+                <div class="dropdown-menu" role="menu">
+                  <a href="capabilities.html" role="menuitem">Capabilities</a>
+                  <a href="team.html" role="menuitem">Team</a>
+                  <a href="leadership.html" role="menuitem">Leadership</a>
+                  <a href="careers.html" role="menuitem">Careers</a>
+                  <a href="handbooks.html" role="menuitem">Handbooks</a>
                 </div>
               </li>
               <li>
-                <a href="contact.html"
-                  >Contact<span class="nav-indicator"></span
-                ></a>
+                <a href="contact.html">
+                  Contact
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                </a>
               </li>
             </ul>
           </nav>
@@ -229,8 +243,8 @@
     </header>
     
     <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
-      <nav class="mobile-nav-menu">
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+      <nav class="mobile-nav-menu" role="navigation" aria-label="Mobile menu">
         <a href="index.html" class="mobile-nav-link">🏠 Home</a>
         <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
         <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
@@ -239,11 +253,13 @@
         <a href="team.html" class="mobile-nav-link">👥 Team</a>
         <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
         <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+        <a href="handbooks.html" class="mobile-nav-link">📖 Handbooks</a>
         <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
       </nav>
     </div>
 
-    <main>
+    <!-- Main Content -->
+    <main role="main">
       <section class="gaming-hero">
         <div class="hero-parallax"></div>
         <div class="particles" id="particles"></div>
@@ -463,7 +479,8 @@
       </section>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer role="contentinfo">
       <div class="container">
         <div class="footer-content">
           <div class="footer-section">
