@@ -165,13 +165,13 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       }
 
-      .ip-list {
+      .access-session-list {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
       }
 
-      .ip-item {
+      .access-session-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -181,23 +181,23 @@
         border-left: 3px solid var(--accent-blue);
       }
 
-      .ip-item.banned {
+      .access-session-item.banned {
         border-left-color: #ff4444;
         background: rgba(255, 68, 68, 0.1);
       }
 
-      .ip-address {
+      .access-session-address {
         font-family: 'Courier New', monospace;
         font-weight: 600;
         color: var(--text-primary);
       }
 
-      .ip-member {
+      .access-session-member {
         color: var(--accent-blue);
         font-weight: 600;
       }
 
-      .ip-status {
+      .access-session-status {
         padding: 0.3rem 0.8rem;
         border-radius: 12px;
         font-size: 0.8rem;
@@ -280,11 +280,11 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value" id="authorizedCount">0</div>
-            <div class="stat-label">Authorized IPs</div>
+            <div class="stat-label">Authorized Access Sessions</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="bannedCount">0</div>
-            <div class="stat-label">Banned IPs</div>
+            <div class="stat-label">Banned Access Sessions</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="totalLogs">0</div>
@@ -299,9 +299,9 @@
         <div class="controls-section">
           <button class="control-btn primary" onclick="refreshData()">🔄 Refresh Data</button>
           <button class="control-btn primary" onclick="downloadLogs()">📥 Download access_logs.txt</button>
-          <button class="control-btn primary" onclick="downloadIPs()">📥 Download authorized_ips.txt</button>
+          <button class="control-btn primary" onclick="downloadAccessSessions()">📥 Download authorized_access_sessions.txt</button>
           <button class="control-btn warning" onclick="clearAllSessions()">⚠️ Clear All Sessions</button>
-          <button class="control-btn danger" onclick="clearAllBans()">🚫 Unban All IPs</button>
+          <button class="control-btn danger" onclick="clearAllBans()">🚫 Unban All Access Sessions</button>
           <button class="control-btn danger" onclick="resetSystem()">🔄 Reset System</button>
         </div>
 
@@ -311,8 +311,8 @@
             <button class="filter-btn active" onclick="filterLogs('all')">All</button>
             <button class="filter-btn" onclick="filterLogs('ACCESS_GRANTED')">Access Granted</button>
             <button class="filter-btn" onclick="filterLogs('ACCESS_DENIED')">Access Denied</button>
-            <button class="filter-btn" onclick="filterLogs('IP_BANNED')">IP Banned</button>
-            <button class="filter-btn" onclick="filterLogs('IP_REGISTERED')">IP Registered</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_SESSION_BANNED')">Access Session Banned</button>
+            <button class="filter-btn" onclick="filterLogs('ACCESS_SESSION_REGISTERED')">Access Session Registered</button>
           </div>
           <div class="logs-container" id="logsDisplay">
             <!-- Dynamic content -->
@@ -320,15 +320,15 @@
         </div>
 
         <div class="logs-section">
-          <h3 class="section-title">🌐 authorized_ips.txt</h3>
-          <div class="ip-list" id="authorizedIPsList">
+          <h3 class="section-title">🌐 authorized_access_sessions.txt</h3>
+          <div class="access-session-list" id="authorizedAccessSessionsList">
             <!-- Dynamic content -->
           </div>
         </div>
 
         <div class="logs-section">
-          <h3 class="section-title">🚫 banned_ips.txt</h3>
-          <div class="ip-list" id="bannedIPsList">
+          <h3 class="section-title">🚫 banned_access_sessions.txt</h3>
+          <div class="access-session-list" id="bannedAccessSessionsList">
             <!-- Dynamic content -->
           </div>
         </div>
@@ -356,14 +356,14 @@
           
           // Update statistics
           document.getElementById('authorizedCount').textContent = status.authorizedTeamMembers;
-          document.getElementById('bannedCount').textContent = status.bannedIPs;
+          document.getElementById('bannedCount').textContent = status.bannedAccessSessions;
           document.getElementById('totalLogs').textContent = status.totalLogs;
           document.getElementById('activeMembers').textContent = this.countActiveMembers();
           
           // Update displays
           this.updateLogsDisplay();
-          this.updateAuthorizedIPsList();
-          this.updateBannedIPsList();
+          this.updateAuthorizedAccessSessionsList();
+          this.updateBannedAccessSessionsList();
         }
 
         countActiveMembers() {
@@ -412,7 +412,7 @@
               <span class="log-timestamp">[${timestamp}]</span>
               <span class="log-type">${log.type}:</span> ${log.description}
               <br>
-              <small>Team Member: <strong>${log.teamMember}</strong> | IP: <span class="log-ip">${log.ip}</span></small>
+              <small>Team Member: <strong>${log.teamMember}</strong> | Access Session IP: <span class="log-ip">${log.accessSession ? log.accessSession.ip : log.ip}</span></small>
             `;
             
             logsDisplay.appendChild(entry);
@@ -423,59 +423,59 @@
           }
         }
 
-        updateAuthorizedIPsList() {
-          const ipsList = document.getElementById('authorizedIPsList');
-          
-          if (!window.teamSecurity || !window.teamSecurity.authorizedIPs) {
-            ipsList.innerHTML = '<div class="ip-item">No authorized IPs</div>';
+        updateAuthorizedAccessSessionsList() {
+          const sessionsList = document.getElementById('authorizedAccessSessionsList');
+
+          if (!window.teamSecurity || !window.teamSecurity.authorizedAccessSessions) {
+            sessionsList.innerHTML = '<div class="access-session-item">No authorized access sessions</div>';
             return;
           }
-          
-          ipsList.innerHTML = '';
-          
-          window.teamSecurity.authorizedIPs.forEach((ip, member) => {
+
+          sessionsList.innerHTML = '';
+
+          window.teamSecurity.authorizedAccessSessions.forEach((session, member) => {
             const item = document.createElement('div');
-            item.className = 'ip-item';
+            item.className = 'access-session-item';
             item.innerHTML = `
               <div>
-                <div class="ip-address">${ip}</div>
-                <div class="ip-member">${member}</div>
+                <div class="access-session-address">${session.ip}</div>
+                <div class="access-session-member">${member}</div>
               </div>
-              <div class="ip-status status-authorized">Authorized</div>
+              <div class="access-session-status status-authorized">Authorized</div>
             `;
-            ipsList.appendChild(item);
+            sessionsList.appendChild(item);
           });
-          
-          if (window.teamSecurity.authorizedIPs.size === 0) {
-            ipsList.innerHTML = '<div class="ip-item">No authorized IPs registered</div>';
+
+          if (window.teamSecurity.authorizedAccessSessions.size === 0) {
+            sessionsList.innerHTML = '<div class="access-session-item">No authorized access sessions registered</div>';
           }
         }
 
-        updateBannedIPsList() {
-          const ipsList = document.getElementById('bannedIPsList');
-          
-          if (!window.teamSecurity || !window.teamSecurity.bannedIPs) {
-            ipsList.innerHTML = '<div class="ip-item">No banned IPs</div>';
+        updateBannedAccessSessionsList() {
+          const sessionsList = document.getElementById('bannedAccessSessionsList');
+
+          if (!window.teamSecurity || !window.teamSecurity.bannedAccessSessions) {
+            sessionsList.innerHTML = '<div class="access-session-item">No banned access sessions</div>';
             return;
           }
-          
-          ipsList.innerHTML = '';
-          
-          window.teamSecurity.bannedIPs.forEach(ip => {
+
+          sessionsList.innerHTML = '';
+
+          window.teamSecurity.bannedAccessSessions.forEach(session => {
             const item = document.createElement('div');
-            item.className = 'ip-item banned';
+            item.className = 'access-session-item banned';
             item.innerHTML = `
               <div>
-                <div class="ip-address">${ip}</div>
-                <div class="ip-member">Unknown/Unauthorized</div>
+                <div class="access-session-address">${session.ip}</div>
+                <div class="access-session-member">Unknown/Unauthorized</div>
               </div>
-              <div class="ip-status status-banned">Banned</div>
+              <div class="access-session-status status-banned">Banned</div>
             `;
-            ipsList.appendChild(item);
+            sessionsList.appendChild(item);
           });
-          
-          if (window.teamSecurity.bannedIPs.size === 0) {
-            ipsList.innerHTML = '<div class="ip-item">No banned IPs</div>';
+
+          if (window.teamSecurity.bannedAccessSessions.size === 0) {
+            sessionsList.innerHTML = '<div class="access-session-item">No banned access sessions</div>';
           }
         }
 
@@ -499,29 +499,29 @@
         }
       }
 
-      function downloadIPs() {
-        if (!window.teamSecurity || !window.teamSecurity.authorizedIPs) {
-          alert('No authorized IPs data available');
+      function downloadAccessSessions() {
+        if (!window.teamSecurity || !window.teamSecurity.authorizedAccessSessions) {
+          alert('No authorized access sessions data available');
           return;
         }
-        
-        let content = 'OCEANCREST AUTHORIZED IPs\n';
-        content += '========================\n\n';
-        
-        window.teamSecurity.authorizedIPs.forEach((ip, member) => {
-          content += `${member}: ${ip}\n`;
+
+        let content = 'OCEANCREST AUTHORIZED ACCESS SESSIONS\n';
+        content += '====================================\n\n';
+
+        window.teamSecurity.authorizedAccessSessions.forEach((session, member) => {
+          content += `${member}: ${session.ip} (Session: ${session.sessionId})\n`;
         });
-        
+
         const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-        
+
         const a = document.createElement('a');
         a.href = url;
-        a.download = `oceancrest-authorized-ips-${new Date().toISOString().split('T')[0]}.txt`;
+        a.download = `oceancrest-authorized-access-sessions-${new Date().toISOString().split('T')[0]}.txt`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        
+
         URL.revokeObjectURL(url);
       }
 
@@ -545,22 +545,22 @@
       }
 
       function clearAllBans() {
-        if (confirm('Are you sure you want to unban all IPs?')) {
+        if (confirm('Are you sure you want to unban all access sessions?')) {
           if (window.teamSecurity) {
-            window.teamSecurity.bannedIPs.clear();
-            window.teamSecurity.saveToFile('oceancrest_banned_ips', []);
-            window.teamSecurity.logToFile('ADMIN_ACTION', 'All IP bans cleared via admin panel');
+            window.teamSecurity.bannedAccessSessions.clear();
+            window.teamSecurity.saveToFile('oceancrest_banned_access_sessions', []);
+            window.teamSecurity.logToFile('ADMIN_ACTION', 'All access session bans cleared via admin panel');
           }
-          
-          alert('All IP bans have been cleared.');
+
+          alert('All access session bans have been cleared.');
           refreshData();
         }
       }
 
       function resetSystem() {
         if (confirm('Are you sure you want to reset the entire security system? This will clear all data.')) {
-          localStorage.removeItem('oceancrest_authorized_ips');
-          localStorage.removeItem('oceancrest_banned_ips');
+          localStorage.removeItem('oceancrest_authorized_access_sessions');
+          localStorage.removeItem('oceancrest_banned_access_sessions');
           localStorage.removeItem('oceancrest_access_logs');
           localStorage.removeItem('oceancrest_log_content');
           localStorage.removeItem('simulated_ip');

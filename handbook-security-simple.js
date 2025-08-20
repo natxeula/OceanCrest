@@ -41,9 +41,9 @@ class TeamSecuritySystem {
     };
     
     this.currentHandbook = null;
-    this.authorizedIPs = new Map(); // teamMember -> IP
+    this.authorizedAccessSessions = new Map(); // teamMember -> AccessSession
     this.accessLogs = [];
-    this.bannedIPs = new Set();
+    this.bannedAccessSessions = new Set();
     
     this.init();
   }
@@ -57,15 +57,15 @@ class TeamSecuritySystem {
 
   loadStoredData() {
     // Load from localStorage (simulating file system)
-    const storedIPs = localStorage.getItem('oceancrest_authorized_ips');
-    const storedBanned = localStorage.getItem('oceancrest_banned_ips');
+    const storedSessions = localStorage.getItem('oceancrest_authorized_access_sessions');
+    const storedBanned = localStorage.getItem('oceancrest_banned_access_sessions');
     const storedLogs = localStorage.getItem('oceancrest_access_logs');
 
-    if (storedIPs) {
-      this.authorizedIPs = new Map(JSON.parse(storedIPs));
+    if (storedSessions) {
+      this.authorizedAccessSessions = new Map(JSON.parse(storedSessions));
     }
     if (storedBanned) {
-      this.bannedIPs = new Set(JSON.parse(storedBanned));
+      this.bannedAccessSessions = new Set(JSON.parse(storedBanned));
     }
     if (storedLogs) {
       this.accessLogs = JSON.parse(storedLogs);
@@ -83,21 +83,21 @@ class TeamSecuritySystem {
   }
 
   createDownloadableLog() {
-    const logContent = this.accessLogs.map(log => 
-      `[${log.timestamp}] ${log.type}: ${log.description} (IP: ${log.ip})`
+    const logContent = this.accessLogs.map(log =>
+      `[${log.timestamp}] ${log.type}: ${log.description} (Access Session IP: ${log.accessSession ? log.accessSession.ip : log.ip})`
     ).join('\n');
-    
+
     // Store for potential download
     localStorage.setItem('oceancrest_log_content', logContent);
   }
 
   logToFile(type, description, teamMember = null) {
-    const currentIP = this.getSimulatedIP();
+    const currentAccessSession = this.getCurrentAccessSession();
     const logEntry = {
       timestamp: new Date().toISOString(),
       type,
       description,
-      ip: currentIP,
+      accessSession: currentAccessSession,
       teamMember: teamMember || 'unknown',
       userAgent: navigator.userAgent.slice(0, 50)
     };
@@ -113,43 +113,52 @@ class TeamSecuritySystem {
     console.log(`[SECURITY LOG] ${type}: ${description}`);
   }
 
-  getSimulatedIP() {
-    // Simulate IP address (in real implementation this would be server-side)
+  getCurrentAccessSession() {
+    // Get current access session with IP address
     let ip = localStorage.getItem('simulated_ip');
     if (!ip) {
       ip = `192.168.1.${Math.floor(Math.random() * 255)}`;
       localStorage.setItem('simulated_ip', ip);
     }
-    return ip;
+    return {
+      ip: ip,
+      userAgent: navigator.userAgent.slice(0, 50),
+      timestamp: Date.now(),
+      sessionId: this.generateSessionId()
+    };
   }
 
-  checkIPAccess(teamMember) {
-    const currentIP = this.getSimulatedIP();
-    
-    // Check if IP is banned
-    if (this.bannedIPs.has(currentIP)) {
-      this.logToFile('ACCESS_DENIED', `Banned IP attempted access`, teamMember);
-      return { allowed: false, reason: 'IP_BANNED' };
+  generateSessionId() {
+    return 'sess_' + Math.random().toString(36).substr(2, 16);
+  }
+
+  checkAccessSessionAccess(teamMember) {
+    const currentAccessSession = this.getCurrentAccessSession();
+
+    // Check if access session is banned
+    if (Array.from(this.bannedAccessSessions).some(session => session.ip === currentAccessSession.ip)) {
+      this.logToFile('ACCESS_DENIED', `Banned access session attempted access`, teamMember);
+      return { allowed: false, reason: 'ACCESS_SESSION_BANNED' };
     }
-    
-    // Check if team member has an authorized IP
-    if (this.authorizedIPs.has(teamMember.toLowerCase())) {
-      const authorizedIP = this.authorizedIPs.get(teamMember.toLowerCase());
-      
-      if (authorizedIP !== currentIP) {
-        // Different IP detected - ban this IP and deny access
-        this.bannedIPs.add(currentIP);
-        this.saveToFile('oceancrest_banned_ips', Array.from(this.bannedIPs));
-        this.logToFile('IP_MISMATCH_BANNED', `Unauthorized IP ${currentIP} banned. Expected: ${authorizedIP}`, teamMember);
-        return { allowed: false, reason: 'IP_MISMATCH' };
+
+    // Check if team member has an authorized access session
+    if (this.authorizedAccessSessions.has(teamMember.toLowerCase())) {
+      const authorizedSession = this.authorizedAccessSessions.get(teamMember.toLowerCase());
+
+      if (authorizedSession.ip !== currentAccessSession.ip) {
+        // Different IP detected - ban this access session and deny access
+        this.bannedAccessSessions.add(currentAccessSession);
+        this.saveToFile('oceancrest_banned_access_sessions', Array.from(this.bannedAccessSessions));
+        this.logToFile('ACCESS_SESSION_MISMATCH_BANNED', `Unauthorized access session ${currentAccessSession.ip} banned. Expected: ${authorizedSession.ip}`, teamMember);
+        return { allowed: false, reason: 'ACCESS_SESSION_MISMATCH' };
       }
     } else {
-      // First time login - register this IP
-      this.authorizedIPs.set(teamMember.toLowerCase(), currentIP);
-      this.saveToFile('oceancrest_authorized_ips', Array.from(this.authorizedIPs.entries()));
-      this.logToFile('IP_REGISTERED', `New IP registered for team member`, teamMember);
+      // First time login - register this access session
+      this.authorizedAccessSessions.set(teamMember.toLowerCase(), currentAccessSession);
+      this.saveToFile('oceancrest_authorized_access_sessions', Array.from(this.authorizedAccessSessions.entries()));
+      this.logToFile('ACCESS_SESSION_REGISTERED', `New access session registered for team member`, teamMember);
     }
-    
+
     return { allowed: true };
   }
 
@@ -341,14 +350,14 @@ class TeamSecuritySystem {
       return;
     }
 
-    // Check IP access
-    const ipCheck = this.checkIPAccess(teamMember);
-    if (!ipCheck.allowed) {
+    // Check access session access
+    const sessionCheck = this.checkAccessSessionAccess(teamMember);
+    if (!sessionCheck.allowed) {
       let message = 'Access denied';
-      if (ipCheck.reason === 'IP_BANNED') {
-        message = 'Your access has been restricted for security reasons';
-      } else if (ipCheck.reason === 'IP_MISMATCH') {
-        message = `Access denied: Security verification failed. Your access has been restricted.`;
+      if (sessionCheck.reason === 'ACCESS_SESSION_BANNED') {
+        message = 'Your access session has been restricted for security reasons';
+      } else if (sessionCheck.reason === 'ACCESS_SESSION_MISMATCH') {
+        message = `Access denied: Security verification failed. Your access session has been restricted.`;
       }
       this.showAlert(message, 'error');
       return;
@@ -409,10 +418,10 @@ class TeamSecuritySystem {
       return false;
     }
 
-    // Verify IP still matches
-    const ipCheck = this.checkIPAccess(teamMember);
-    if (!ipCheck.allowed) {
-      this.logToFile('IP_VERIFICATION_FAILED', `IP verification failed for active session`, teamMember);
+    // Verify access session still matches
+    const sessionCheck = this.checkAccessSessionAccess(teamMember);
+    if (!sessionCheck.allowed) {
+      this.logToFile('ACCESS_SESSION_VERIFICATION_FAILED', `Access session verification failed for active session`, teamMember);
       this.clearAccess(handbookType);
       window.location.href = 'handbooks.html';
       return false;
@@ -481,8 +490,8 @@ class TeamSecuritySystem {
 
   getSystemStatus() {
     return {
-      authorizedTeamMembers: this.authorizedIPs.size,
-      bannedIPs: this.bannedIPs.size,
+      authorizedTeamMembers: this.authorizedAccessSessions.size,
+      bannedAccessSessions: this.bannedAccessSessions.size,
       totalLogs: this.accessLogs.length,
       lastActivity: this.accessLogs.length > 0 ? this.accessLogs[this.accessLogs.length - 1].timestamp : 'None'
     };
