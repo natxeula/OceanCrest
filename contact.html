@@ -1,234 +1,289 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact - OceanCrest Entertainment</title>
-    <meta name="description" content="Contact us here!" />
-    <meta name="theme-color" content="#0a0b0f" />
-    <link rel="manifest" href="manifest.json" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-      <div class="loader-container">
-        <div class="loader"></div>
-        <div class="loading-text">Loading Experience...</div>
-      </div>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact OceanCrest Entertainment - Get in touch for collaborations, partnerships, and inquiries.">
+  <meta name="theme-color" content="#0a0b0f">
+  <meta name="author" content="OceanCrest Entertainment">
+  <meta name="keywords" content="contact, collaboration, partnership, inquiries">
+  
+  <title>Contact - OceanCrest Entertainment</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen" role="status" aria-label="Loading content">
+    <div class="loader-container">
+      <div class="loader" aria-hidden="true"></div>
+      <div class="loading-text">Loading Experience...</div>
     </div>
+  </div>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress">
-      <div class="scroll-progress-bar" id="scrollProgress"></div>
-    </div>
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+  </div>
 
+  <!-- Header Navigation -->
+  <header role="banner">
+    <div class="container">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html" class="logo" aria-label="OceanCrest Entertainment Home">
+          OceanCrest
+        </a>
 
-    <header>
-      <div class="container">
-        <div class="header-container">
-          <a href="index.html" class="logo">OceanCrest</a>
+        <!-- Mobile Navigation Toggle -->
+        <button 
+          class="mobile-nav-toggle" 
+          id="mobileNavToggle" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobileNavOverlay"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
 
-          <!-- Mobile Menu Toggle -->
-          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-
-          <!-- Desktop Navigation -->
-          <nav class="desktop-nav">
-            <ul>
-              <li>
-                <a href="index.html"
-                  >Home<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="about.html"
-                  >About<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="projects.html"
-                  >Projects<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="gaming.html"
-                  >Gaming<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle"
-                  >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
-                ></a>
-                <div class="dropdown-menu">
-                  <a href="capabilities.html">Capabilities</a>
-                  <a href="team.html">Team</a>
-                  <a href="leadership.html">Leadership</a>
-                  <a href="careers.html">Careers</a>
-                </div>
-              </li>
-              <li>
-                <a href="contact.html" class="active"
-                  >Contact<span class="nav-indicator"></span
-                ></a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
-
-    <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
-      <nav class="mobile-nav-menu">
-        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
-        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
-        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
-        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
-        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
-        <a href="team.html" class="mobile-nav-link">👥 Team</a>
-        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
-        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
-        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
-      </nav>
-    </div>
-
-    <main>
-      <section class="hero">
-        <div class="hero-parallax"></div>
-        <div class="particles" id="particles"></div>
-        <div class="container">
-          <div class="hero-content fade-in">
-            <h1>Get in Touch</h1>
-            <p class="hero-subtitle">Contact us here!</p>
-            <div class="cta-buttons">
-              <a href="about.html" class="btn btn-primary">Learn More</a>
-              <a href="careers.html" class="btn btn-secondary">Join Our Team</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section parallax-section fade-in">
-        <div class="container">
-          <h2 class="section-title">Contact Information</h2>
-          <p class="section-subtitle">Choose the best way to reach us here.</p>
-
-          <div class="overview-grid">
-            <div class="overview-card glass-card fade-in">
-              <h3>General Inquiries</h3>
-              <p>
-                <strong>Discord: </strong>
-                <a href="https://discord.gg/huDx4td5uA">The Official Discord</a>
-              </p>
-              <p>
-                For general questions, partnership opportunities, and media
-                inquiries. We respond to all inquiries within 24 hours.
-              </p>
-            </div>
-            <div class="overview-card glass-card fade-in">
-              <h3>Production Services</h3>
-              <p>
-                <strong>Discord: </strong>Message @natxeula on Discord directly.
-              </p>
-              <p>For pitching your game as a movie.</p>
-            </div>
-            <div class="overview-card glass-card fade-in">
-              <h3>Business Development</h3>
-              <p>
-                <strong>Discord: </strong
-                ><a href="https://discord.gg/huDx4td5uA"
-                  >The Official Discord</a
-                >
-              </p>
-              <p>For partnerships only.</p>
-            </div>
-          </div>
-
-          <div style="text-align: center; margin-top: 3rem">
-            <div
-              class="contact-hours"
-              style="
-                background: var(--glass-bg);
-                backdrop-filter: blur(20px);
-                padding: 2rem;
-                border-radius: 20px;
-                border: 1px solid var(--border-color);
-                max-width: 500px;
-                margin: 0 auto;
-              "
-            >
-              <h4
-                style="
-                  background: var(--accent-gradient);
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  background-clip: text;
-                  margin-bottom: 1rem;
-                  font-size: 1.3rem;
-                "
-              >
-                💬 Response Times
-              </h4>
-              <div style="text-align: left; color: var(--text-secondary)">
-                <p style="margin-bottom: 0.5rem">
-                  <strong>General Inquiries:</strong> Within 24 hours
-                </p>
-                <p style="margin-bottom: 0.5rem">
-                  <strong>Production Services:</strong> Within 12 hours
-                </p>
-                <p><strong>Business Development:</strong> Within 6 hours</p>
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li>
+              <a href="index.html">
+                Home
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html">
+                About
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="projects.html">
+                Projects
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="gaming.html">
+                Gaming
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                Company
+                <span class="nav-indicator" aria-hidden="true"></span>
+                <span class="dropdown-arrow" aria-hidden="true">▼</span>
+              </a>
+              <div class="dropdown-menu" role="menu">
+                <a href="capabilities.html" role="menuitem">Capabilities</a>
+                <a href="team.html" role="menuitem">Team</a>
+                <a href="leadership.html" role="menuitem">Leadership</a>
+                <a href="careers.html" role="menuitem">Careers</a>
+                <a href="handbooks.html" role="menuitem">Handbooks</a>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+            </li>
+            <li>
+              <a href="contact.html" class="active" aria-current="page">
+                Contact
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
 
-    <footer>
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="mobile-nav-menu" role="navigation" aria-label="Mobile menu">
+      <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+      <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+      <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+      <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+      <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+      <a href="team.html" class="mobile-nav-link">👥 Team</a>
+      <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+      <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+      <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <main role="main" style="padding-top: 8rem;">
+    <!-- Contact Hero -->
+    <section class="hero" role="banner">
+      <div class="particles" id="particles" aria-hidden="true"></div>
       <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>Production</h4>
-            <a href="about.html">About</a>
-            <a href="capabilities.html">Capabilities</a>
-            <a href="projects.html">Projects</a>
-          </div>
-          <div class="footer-section">
-            <h4>Gaming</h4>
-            <a href="gaming.html">All Games</a>
-            <a href="mythoria.html">Mythoria</a>
-            <a href="heat.html">HEAT</a>
-          </div>
-          <div class="footer-section">
-            <h4>Join The Team</h4>
-            <a href="team.html">Team</a>
-            <a href="leadership.html">Leadership</a>
-            <a href="careers.html">Careers</a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
-          <p style="margin-top: 1rem; font-size: 0.9rem">
-            <a href="#" class="gradient-link">Privacy Policy</a> |
-            <a href="#" class="gradient-link">Terms of Service</a> |
-            <a href="contact.html" class="gradient-link">Contact</a>
+        <div class="hero-content">
+          <h1 class="section-title">Get in Touch</h1>
+          <p class="section-subtitle">
+            Ready to collaborate, invest, or learn more about OceanCrest Entertainment? We'd love to hear from you.
           </p>
         </div>
       </div>
-    </footer>
+    </section>
 
-    <script src="app.js"></script>
-  </body>
+    <!-- Contact Methods -->
+    <section class="section" aria-labelledby="contact-methods-title">
+      <div class="container">
+        <h2 id="contact-methods-title" class="sr-only">Contact Methods</h2>
+        
+        <div class="overview-grid">
+          <article class="overview-card glass-card">
+            <header>
+              <h3>💬 General Inquiries</h3>
+            </header>
+            <div class="contact-details">
+              <p>
+                <strong>Discord:</strong> 
+                <a href="https://discord.gg/huDx4td5uA" target="_blank" rel="noopener noreferrer">
+                  The Official Discord
+                </a>
+              </p>
+              <p>
+                For general questions, partnership opportunities, and media inquiries.
+              </p>
+            </div>
+          </article>
+
+          <article class="overview-card glass-card">
+            <header>
+              <h3>🎬 Production Services</h3>
+            </header>
+            <div class="contact-details">
+              <p>
+                <strong>Contact:</strong> 
+                Founder <strong>@natxeula</strong> on discord directly.
+              </p>
+              <p>
+                For production services, collaboration proposals, and creative partnerships.
+              </p>
+            </div>
+          </article>
+
+          <article class="overview-card glass-card">
+            <header>
+              <h3>🤝 Business Development</h3>
+            </header>
+            <div class="contact-details">
+              <p>
+                <strong>Discord:</strong> 
+                <a href="https://discord.gg/huDx4td5uA" target="_blank" rel="noopener noreferrer">
+                  The Official Discord
+                </a>
+              </p>
+              <p>For distribution partnerships.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Special CTA -->
+    <section class="section" style="background: var(--secondary-bg)" aria-labelledby="special-cta-title">
+      <div class="container">
+        <div class="contact-cta-wrapper">
+          <div class="contact-cta">
+            <h2 id="special-cta-title">Want to make a movie for your game?</h2>
+            <p>Let's discuss how we can bring your game to life!</p>
+            <a href="https://discord.gg/huDx4td5uA" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              Start the Conversation
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" aria-labelledby="faq-title">
+      <div class="container">
+        <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-grid">
+          <article class="faq-item">
+            <h3>How much do you charge for film production?</h3>
+            <p>
+              We operate with a budget of $0. We create films out of passion, not profit, and never ask for money from our community.
+            </p>
+          </article>
+
+          <article class="faq-item">
+            <h3>What types of games do you adapt?</h3>
+            <p>
+              We focus on games with rich lore and compelling narratives. We stay authentic to the source material while bringing our cinematic vision to the story.
+            </p>
+          </article>
+
+          <article class="faq-item">
+            <h3>How can I propose a game for adaptation?</h3>
+            <p>
+              Join our Discord server and reach out to our team. We're always interested in hearing about games with great storytelling potential.
+            </p>
+          </article>
+
+          <article class="faq-item">
+            <h3>Can I join your production team?</h3>
+            <p>
+              Absolutely! We're always looking for passionate creators. Check out our <a href="careers.html">careers page</a> for current opportunities.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Production</h4>
+          <a href="about.html">About</a>
+          <a href="capabilities.html">Capabilities</a>
+          <a href="projects.html">Projects</a>
+        </div>
+        <div class="footer-section">
+          <h4>Gaming</h4>
+          <a href="gaming.html">All Games</a>
+          <a href="mythoria.html">Mythoria</a>
+          <a href="heat.html">HEAT</a>
+        </div>
+        <div class="footer-section">
+          <h4>Join The Team</h4>
+          <a href="team.html">Team</a>
+          <a href="leadership.html">Leadership</a>
+          <a href="careers.html">Careers</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+        <p>
+          <a href="#" class="gradient-link">Privacy Policy</a> |
+          <a href="#" class="gradient-link">Terms of Service</a> |
+          <a href="contact.html" class="gradient-link">Contact</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
 </html>
