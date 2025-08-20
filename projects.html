@@ -6,7 +6,7 @@
   <meta name="description" content="Featured projects from OceanCrest Entertainment - Current slate of productions spanning multiple genres with meticulous attention to detail.">
   <meta name="theme-color" content="#0a0b0f">
   <meta name="author" content="OceanCrest Entertainment">
-  <meta name="keywords" content="projects, films, movies, productions, entertainment, games, mythoria, heat, scp">
+  <meta name="keywords" content="projects, films, movies, productions, entertainment">
   
   <title>Projects - OceanCrest Entertainment</title>
   
@@ -40,8 +40,6 @@
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: 500;
-      position: relative;
-      overflow: hidden;
     }
 
     .filter-btn:hover {
@@ -56,18 +54,9 @@
       border-color: transparent;
     }
 
-    .filter-btn .count {
-      display: inline-block;
-      margin-left: 0.5rem;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.2rem 0.5rem;
-      border-radius: 10px;
-      font-size: 0.75rem;
-    }
-
     .project-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 2.5rem;
       margin-top: 3rem;
     }
@@ -82,28 +71,15 @@
       overflow: hidden;
     }
 
-    .project-hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(91,110,232,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-      opacity: 0.3;
-      z-index: -1;
-    }
-
     .project-card {
       background: linear-gradient(145deg, rgba(26, 29, 37, 0.95), rgba(17, 18, 24, 0.95));
       backdrop-filter: blur(20px);
       border: 1px solid rgba(91, 110, 232, 0.2);
       border-radius: 20px;
-      padding: 0;
+      padding: 2rem;
       transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
       position: relative;
       overflow: hidden;
-      cursor: pointer;
     }
 
     .project-card::before {
@@ -129,34 +105,6 @@
       opacity: 1;
     }
 
-    .project-image {
-      position: relative;
-      height: 200px;
-      background: linear-gradient(135deg, rgba(91, 110, 232, 0.3), rgba(109, 66, 168, 0.3));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      color: white;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
-    }
-
-    .project-image::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="grain"><stop offset="0%" stop-color="rgba(255,255,255,0.1)"/><stop offset="100%" stop-color="rgba(0,0,0,0.1)"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
-      opacity: 0.3;
-    }
-
-    .project-content {
-      padding: 2rem;
-    }
-
     .project-header {
       margin-bottom: 1.5rem;
     }
@@ -169,110 +117,14 @@
       line-height: 1.3;
     }
 
-    .project-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
+    .project-content {
+      margin-bottom: 2rem;
     }
 
-    .project-type {
-      font-size: 0.85rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 15px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .type-game {
-      background: linear-gradient(135deg, #00ff9f, #00b4d8);
-      color: var(--primary-bg);
-    }
-
-    .type-film {
-      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-      color: white;
-    }
-
-    .type-series {
-      background: linear-gradient(135deg, #a8e6cf, #7fcdcd);
-      color: var(--primary-bg);
-    }
-
-    .type-web {
-      background: linear-gradient(135deg, #ffd93d, #6bcf7f);
-      color: var(--primary-bg);
-    }
-
-    .project-description {
+    .project-content p {
       color: var(--text-secondary);
       line-height: 1.6;
-      margin-bottom: 1.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .project-features {
-      margin-bottom: 1.5rem;
-    }
-
-    .project-features h4 {
-      font-size: 0.9rem;
-      color: var(--text-primary);
-      margin-bottom: 0.8rem;
-      font-weight: 600;
-    }
-
-    .feature-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0.5rem;
-    }
-
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-    }
-
-    .feature-icon {
-      font-size: 1rem;
-    }
-
-    .project-stats {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin: 1.5rem 0;
-      padding: 1rem;
-      background: rgba(91, 110, 232, 0.05);
-      border-radius: 10px;
-      border: 1px solid rgba(91, 110, 232, 0.1);
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--accent-primary);
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      margin-bottom: 1.2rem;
     }
 
     .project-details {
@@ -292,11 +144,9 @@
       border: 1px solid rgba(91, 110, 232, 0.3);
     }
 
-    .project-actions {
+    .project-action {
       display: flex;
-      gap: 1rem;
       justify-content: center;
-      flex-wrap: wrap;
     }
 
     .project-link {
@@ -311,23 +161,11 @@
       display: inline-block;
       position: relative;
       overflow: hidden;
-      min-width: 120px;
     }
 
     .project-link:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(91, 110, 232, 0.4);
-    }
-
-    .project-link.secondary {
-      background: var(--glass-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-    }
-
-    .project-link.secondary:hover {
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
     }
 
     .project-link.disabled {
@@ -367,11 +205,6 @@
       color: white;
     }
 
-    .status-coming-soon {
-      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-      color: white;
-    }
-
     .status-dot {
       width: 8px;
       height: 8px;
@@ -385,76 +218,13 @@
       50% { opacity: 0.5; }
     }
 
-    .featured-project {
-      grid-column: 1 / -1;
-      background: linear-gradient(145deg, rgba(91, 110, 232, 0.1), rgba(109, 66, 168, 0.1));
-      border: 2px solid rgba(91, 110, 232, 0.3);
-    }
-
-    .featured-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: var(--accent-gradient);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 15px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      z-index: 10;
-    }
-
-    .project-progress {
-      margin: 1rem 0;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    .progress-bar {
-      height: 6px;
-      background: rgba(91, 110, 232, 0.2);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: var(--accent-gradient);
-      border-radius: 3px;
-      transition: width 1s ease;
-    }
-
-    .section-divider {
-      margin: 4rem 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-    }
-
     @media (max-width: 768px) {
       .project-grid {
         grid-template-columns: 1fr;
       }
 
       .project-card {
-        margin-bottom: 1rem;
-      }
-
-      .project-content {
         padding: 1.5rem;
-      }
-
-      .project-actions {
-        flex-direction: column;
-      }
-
-      .featured-project {
-        grid-column: 1;
       }
     }
   </style>
@@ -571,22 +341,8 @@
       <div class="container">
         <h1 class="section-title">Our Projects</h1>
         <p class="section-subtitle">
-          A diverse portfolio spanning interactive gaming experiences, cinematic adaptations, and innovative entertainment productions—each crafted with passion and precision.
+          Current slate of productions spanning multiple genres, each crafted with meticulous attention to detail and narrative depth.
         </p>
-        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-          <div style="text-align: center;">
-            <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);">8+</div>
-            <div style="font-size: 0.9rem; color: var(--text-muted);">Active Projects</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);">3</div>
-            <div style="font-size: 0.9rem; color: var(--text-muted);">Released</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary);">100%</div>
-            <div style="font-size: 0.9rem; color: var(--text-muted);">Passion Driven</div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -594,513 +350,85 @@
     <section class="section" aria-labelledby="projects-section">
       <div class="container">
         <div class="project-filters" role="group" aria-label="Project filters">
-          <button class="filter-btn active" data-filter="all">All Projects <span class="count">8</span></button>
-          <button class="filter-btn" data-filter="game">Games <span class="count">5</span></button>
-          <button class="filter-btn" data-filter="film">Films <span class="count">2</span></button>
-          <button class="filter-btn" data-filter="series">Series <span class="count">1</span></button>
-          <button class="filter-btn" data-filter="released">Released <span class="count">3</span></button>
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="released">Released</button>
+          <button class="filter-btn" data-filter="production">In Production</button>
+          <button class="filter-btn" data-filter="development">Development</button>
         </div>
 
         <!-- Featured Projects -->
         <div class="project-grid">
-          <!-- Featured: Mythoria -->
-          <article class="project-card featured-project" data-category="game" data-status="released">
-            <div class="featured-badge">🌟 Featured</div>
-            <div class="project-image" style="background: linear-gradient(135deg, #4a90e2, #7b68ee);">
-              ⚔️
-            </div>
+          <article class="overview-card glass-card project-card" data-category="released">
+            <header class="project-header">
+              <h2>Authority: The Oath of Office Movie</h2>
+              <div class="project-status status-released">
+                <span class="status-dot" aria-hidden="true"></span>
+                Available Now
+              </div>
+            </header>
             <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-game">Game</span>
-                <div class="project-status status-released">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  Available Now
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Mythoria</h2>
-              </div>
-              <div class="project-description">
-                Arrive in Thlassa, collect several weapons, and protect The Central from the enemies at all costs. An immersive sci-fi adventure featuring single and multiplayer modes with expansive worlds to explore.
-              </div>
-              <div class="project-features">
-                <h4>Key Features</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">👥</span>
-                    Multiplayer
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">⚔️</span>
-                    Combat System
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🏰</span>
-                    Dungeons
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🌍</span>
-                    Open World
-                  </div>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="stat-item">
-                  <span class="stat-value">15+</span>
-                  <span class="stat-label">Characters</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">25+</span>
-                  <span class="stat-label">Weapons</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">10+</span>
-                  <span class="stat-label">Dungeons</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">2</span>
-                  <span class="stat-label">Expansions</span>
-                </div>
-              </div>
-              <div class="project-details">
-                <span class="project-tag">Sci-Fi</span>
-                <span class="project-tag">Action RPG</span>
-                <span class="project-tag">Roblox</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://www.roblox.com/games/113342217515713/Mythoria" class="project-link" target="_blank" rel="noopener">Play Now</a>
-                <a href="mythoria.html" class="project-link secondary">Learn More</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Authority: The Oath of Office Movie -->
-          <article class="project-card" data-category="film" data-status="released">
-            <div class="project-image" style="background: linear-gradient(135deg, #d4af37, #ffd700);">
-              🏛️
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-film">Film</span>
-                <div class="project-status status-released">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  Available Now
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Authority: The Oath of Office</h2>
-              </div>
-              <div class="project-description">
-                James "Jimmy" Washington rises during a time of national unrest. When President Sebastian Underwood tightens his grip on power, James runs for office. With his best friend Owen, James wages a grueling campaign facing the political world.
-              </div>
-              <div class="project-features">
-                <h4>Production Details</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">🎬</span>
-                    Full Feature
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🎭</span>
-                    Voice Acting
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🎮</span>
-                    Game Adaptation
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">📺</span>
-                    Free to Watch
-                  </div>
-                </div>
-              </div>
+              <p>
+                James "Jimmy" Washington, rises during a time of national unrest. When the President Sebastian Underwood tightens his grip on power, James runs. With his best friend Owen, James wages a grueling campaign-facing the political world.
+              </p>
               <div class="project-details">
                 <span class="project-tag">Political Drama</span>
                 <span class="project-tag">Game Adaptation</span>
-                <span class="project-tag">Independent Film</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="project-link" target="_blank" rel="noopener">Watch Now</a>
               </div>
             </div>
+            <footer class="project-action">
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="project-link" target="_blank" rel="noopener">Watch on YouTube now!</a>
+            </footer>
           </article>
 
-          <!-- HEAT -->
-          <article class="project-card" data-category="game" data-status="production">
-            <div class="project-image" style="background: linear-gradient(135deg, #ff6b35, #f7931e);">
-              🔥
-            </div>
+          <article class="overview-card glass-card project-card" data-category="production">
+            <header class="project-header">
+              <h2>Classified: A SCP Series</h2>
+              <div class="project-status status-production">
+                <span class="status-dot" aria-hidden="true"></span>
+                In Production
+              </div>
+            </header>
             <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-game">Game</span>
-                <div class="project-status status-production">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  In Production
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>HEAT</h2>
-              </div>
-              <div class="project-description">
-                Survive the hoards in the desert. You are dropped in with a pistol and must fend off waves of enemies to survive. The desert never cools, and neither should you.
-              </div>
-              <div class="project-progress">
-                <div class="progress-label">
-                  <span>Development Progress</span>
-                  <span>75%</span>
-                </div>
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 75%;"></div>
-                </div>
-              </div>
-              <div class="project-features">
-                <h4>Game Features</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">🎯</span>
-                    FPS Action
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">♾️</span>
-                    Infinite Survival
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">👥</span>
-                    Multiplayer
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🏜️</span>
-                    Desert Setting
-                  </div>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="stat-item">
-                  <span class="stat-value">60</span>
-                  <span class="stat-label">Target FPS</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">10</span>
-                  <span class="stat-label">Max Players</span>
-                </div>
-              </div>
-              <div class="project-details">
-                <span class="project-tag">Shooter</span>
-                <span class="project-tag">Action</span>
-                <span class="project-tag">Multi-Platform</span>
-              </div>
-              <div class="project-actions">
-                <a href="heat.html" class="project-link secondary">Learn More</a>
-                <span class="project-link disabled">Coming Soon</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Classified: A SCP Series -->
-          <article class="project-card" data-category="series" data-status="production">
-            <div class="project-image" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
-              🔒
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-series">Series</span>
-                <div class="project-status status-production">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  In Production
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Classified: A SCP Series</h2>
-              </div>
-              <div class="project-description">
-                [CLASSIFIED INFORMATION - LEVEL 4 CLEARANCE REQUIRED] An upcoming series exploring the SCP Foundation universe with original stories and terrifying anomalies. More details coming later this year.
-              </div>
-              <div class="project-progress">
-                <div class="progress-label">
-                  <span>Pre-Production</span>
-                  <span>40%</span>
-                </div>
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 40%;"></div>
-                </div>
-              </div>
-              <div class="project-features">
-                <h4>Series Features</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">📚</span>
-                    Multi-Episode
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">👁️</span>
-                    Horror Elements
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🏢</span>
-                    Site 1110
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🔬</span>
-                    Science Fiction
-                  </div>
-                </div>
-              </div>
+              <p>
+                This information is classified under Level-4 Personnel. More details later this year.
+              </p>
               <div class="project-details">
                 <span class="project-tag">Horror</span>
                 <span class="project-tag">SCP Foundation</span>
-                <span class="project-tag">Sci-Fi</span>
-              </div>
-              <div class="project-actions">
-                <span class="project-link disabled">Coming 2025</span>
               </div>
             </div>
+            <footer class="project-action">
+              <span class="project-link disabled">Coming Soon</span>
+            </footer>
           </article>
 
-          <!-- Secure. Contain. Protect. (Game) -->
-          <article class="project-card" data-category="game" data-status="development">
-            <div class="project-image" style="background: linear-gradient(135deg, #8b0000, #a52a2a);">
-              🛡️
-            </div>
+          <article class="overview-card glass-card project-card" data-category="development">
+            <header class="project-header">
+              <h2>Future Productions</h2>
+              <div class="project-status status-development">
+                <span class="status-dot" aria-hidden="true"></span>
+                Development
+              </div>
+            </header>
             <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-game">Game</span>
-                <div class="project-status status-development">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  In Development
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Secure. Contain. Protect.</h2>
-              </div>
-              <div class="project-description">
-                An upcoming Roblox game where you can either play a story mode or a roleplay mode, set in a custom Site 1110. Experience the world of the SCP Foundation in an immersive environment.
-              </div>
-              <div class="project-progress">
-                <div class="progress-label">
-                  <span>Development Progress</span>
-                  <span>60%</span>
-                </div>
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 60%;"></div>
-                </div>
-              </div>
-              <div class="project-features">
-                <h4>Game Modes</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">📖</span>
-                    Story Mode
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🎭</span>
-                    Roleplay Mode
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🏢</span>
-                    Custom Site
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">👥</span>
-                    Multiplayer
-                  </div>
-                </div>
-              </div>
+              <p>
+                We're constantly exploring new gaming universes and stories that deserve the cinematic treatment. Stay tuned for exciting announcements.
+              </p>
               <div class="project-details">
-                <span class="project-tag">Horror</span>
-                <span class="project-tag">Roleplay</span>
-                <span class="project-tag">Roblox</span>
-              </div>
-              <div class="project-actions">
-                <span class="project-link disabled">Beta Soon</span>
+                <span class="project-tag">TBA</span>
               </div>
             </div>
-          </article>
-
-          <!-- Air Clicker: Legacy -->
-          <article class="project-card" data-category="game" data-status="released">
-            <div class="project-image" style="background: linear-gradient(135deg, #87ceeb, #4682b4);">
-              💨
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-game">Game</span>
-                <div class="project-status status-released">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  Available Now
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Air Clicker: Legacy</h2>
-              </div>
-              <div class="project-description">
-                The original Air Clicker game where you click air! Features two special events: The Mafia and Summer Sacred. A simple yet addictive clicker experience.
-              </div>
-              <div class="project-features">
-                <h4>Game Features</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">👆</span>
-                    Click Mechanics
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🎉</span>
-                    Special Events
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🏆</span>
-                    Achievements
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">📱</span>
-                    Mobile Friendly
-                  </div>
-                </div>
-              </div>
-              <div class="project-details">
-                <span class="project-tag">Idle</span>
-                <span class="project-tag">Clicker</span>
-                <span class="project-tag">Roblox</span>
-              </div>
-              <div class="project-actions">
-                <a href="#" class="project-link">Play Now</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Air Clicker: Remastered -->
-          <article class="project-card" data-category="game" data-status="development">
-            <div class="project-image" style="background: linear-gradient(135deg, #20b2aa, #008b8b);">
-              ✨
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-game">Game</span>
-                <div class="project-status status-development">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  In Development
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Air Clicker: Remastered</h2>
-              </div>
-              <div class="project-description">
-                Enhanced version of the classic Air Clicker with improved features, better graphics, and a completely revamped experience. Taking the clicking genre to new heights.
-              </div>
-              <div class="project-progress">
-                <div class="progress-label">
-                  <span>Development Progress</span>
-                  <span>30%</span>
-                </div>
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 30%;"></div>
-                </div>
-              </div>
-              <div class="project-features">
-                <h4>New Features</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">🎨</span>
-                    Enhanced Graphics
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🔧</span>
-                    New Mechanics
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🌟</span>
-                    Premium Features
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🎵</span>
-                    Sound Effects
-                  </div>
-                </div>
-              </div>
-              <div class="project-details">
-                <span class="project-tag">Idle</span>
-                <span class="project-tag">Remaster</span>
-                <span class="project-tag">Enhanced</span>
-              </div>
-              <div class="project-actions">
-                <span class="project-link disabled">Coming Soon</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Web Games Collection -->
-          <article class="project-card" data-category="game" data-status="released">
-            <div class="project-image" style="background: linear-gradient(135deg, #ff7b7b, #667eea);">
-              🕹️
-            </div>
-            <div class="project-content">
-              <div class="project-meta">
-                <span class="project-type type-web">Web Games</span>
-                <div class="project-status status-released">
-                  <span class="status-dot" aria-hidden="true"></span>
-                  Available Now
-                </div>
-              </div>
-              <div class="project-header">
-                <h2>Web Games Collection</h2>
-              </div>
-              <div class="project-description">
-                A collection of classic web games playable instantly in your browser. No downloads required - just pure gaming nostalgia including Snake, Breakout, Space Invaders, and Tetris.
-              </div>
-              <div class="project-features">
-                <h4>Available Games</h4>
-                <div class="feature-list">
-                  <div class="feature-item">
-                    <span class="feature-icon">🐍</span>
-                    Snake
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🧱</span>
-                    Breakout
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">👾</span>
-                    Space Invaders
-                  </div>
-                  <div class="feature-item">
-                    <span class="feature-icon">🟦</span>
-                    Tetris
-                  </div>
-                </div>
-              </div>
-              <div class="project-stats">
-                <div class="stat-item">
-                  <span class="stat-value">4</span>
-                  <span class="stat-label">Games</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value">0MB</span>
-                  <span class="stat-label">Download Size</span>
-                </div>
-              </div>
-              <div class="project-details">
-                <span class="project-tag">Classic</span>
-                <span class="project-tag">Browser</span>
-                <span class="project-tag">Instant Play</span>
-              </div>
-              <div class="project-actions">
-                <a href="webgames.html" class="project-link">Play Now</a>
-              </div>
-            </div>
+            <footer class="project-action">
+              <span class="project-link disabled">TBA</span>
+            </footer>
           </article>
         </div>
-
-        <div class="section-divider"></div>
 
         <!-- Call to Action -->
         <div class="section-cta" style="text-align: center; margin-top: 4rem; padding: 3rem; background: var(--glass-bg); border-radius: 20px; border: 1px solid var(--border-color); backdrop-filter: blur(20px);">
           <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary);">Have a Game Story to Tell?</h3>
-          <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            We're always looking for new gaming universes to bring to life through cinema. Whether it's an epic quest, a thrilling adventure, or an emotional journey, we want to hear from you.
-          </p>
-          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-            <a href="contact.html" class="btn btn-primary" style="padding: 1rem 2rem;">Pitch Your Project</a>
-            <a href="capabilities.html" class="btn btn-secondary" style="padding: 1rem 2rem;">Our Capabilities</a>
-          </div>
+          <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">We're always looking for new gaming universes to bring to life through cinema.</p>
+          <a href="contact.html" class="btn btn-primary" style="padding: 1rem 2rem;">Pitch Your Project</a>
         </div>
       </div>
     </section>
@@ -1148,26 +476,6 @@
       const filterButtons = document.querySelectorAll('.filter-btn');
       const projectCards = document.querySelectorAll('.project-card');
 
-      // Update project counts
-      function updateCounts() {
-        const counts = {
-          all: projectCards.length,
-          game: document.querySelectorAll('[data-category="game"]').length,
-          film: document.querySelectorAll('[data-category="film"]').length,
-          series: document.querySelectorAll('[data-category="series"]').length,
-          released: document.querySelectorAll('[data-status="released"]').length
-        };
-
-        filterButtons.forEach(btn => {
-          const filter = btn.getAttribute('data-filter');
-          const countElement = btn.querySelector('.count');
-          if (countElement && counts[filter]) {
-            countElement.textContent = counts[filter];
-          }
-        });
-      }
-
-      // Filter functionality
       filterButtons.forEach(button => {
         button.addEventListener('click', function() {
           // Remove active class from all buttons
@@ -1178,25 +486,10 @@
           const filter = this.getAttribute('data-filter');
 
           projectCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            const status = card.getAttribute('data-status');
-            
-            let shouldShow = false;
-            
-            if (filter === 'all') {
-              shouldShow = true;
-            } else if (filter === 'released') {
-              shouldShow = status === 'released';
-            } else {
-              shouldShow = category === filter;
-            }
-
-            if (shouldShow) {
+            if (filter === 'all' || card.getAttribute('data-category') === filter) {
               card.style.display = 'block';
-              setTimeout(() => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-              }, 10);
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
             } else {
               card.style.opacity = '0';
               card.style.transform = 'translateY(20px)';
@@ -1205,57 +498,6 @@
               }, 300);
             }
           });
-        });
-      });
-
-      // Initialize counts
-      updateCounts();
-
-      // Animate progress bars on scroll
-      const progressBars = document.querySelectorAll('.progress-fill');
-      const observerOptions = {
-        threshold: 0.5,
-        rootMargin: '0px 0px -100px 0px'
-      };
-
-      const progressObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const progressBar = entry.target;
-            const width = progressBar.style.width;
-            progressBar.style.width = '0%';
-            setTimeout(() => {
-              progressBar.style.width = width;
-            }, 100);
-          }
-        });
-      }, observerOptions);
-
-      progressBars.forEach(bar => {
-        progressObserver.observe(bar);
-      });
-
-      // Add hover effects for project cards
-      projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-          this.style.zIndex = '10';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-          this.style.zIndex = '1';
-        });
-      });
-
-      // Add click functionality to project cards
-      projectCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on links
-          if (e.target.tagName === 'A' || e.target.closest('a')) return;
-          
-          const primaryLink = this.querySelector('.project-link:not(.disabled)');
-          if (primaryLink) {
-            primaryLink.click();
-          }
         });
       });
     });
