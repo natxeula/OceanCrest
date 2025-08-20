@@ -1,250 +1,261 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - OceanCrest Entertainment</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <style>
-      /* Page-specific overrides for About page */
-      main {
-        padding-top: 8rem;
-      }
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about OceanCrest Entertainment - A passionate team creating authentic game-based cinema.">
+  <meta name="theme-color" content="#0a0b0f">
+  <meta name="author" content="OceanCrest Entertainment">
+  <meta name="keywords" content="about, company, film production, gaming, entertainment">
+  
+  <title>About - OceanCrest Entertainment</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>
+    /* Page-specific styles for About page */
+    main {
+      padding-top: 8rem;
+    }
 
-      .page-hero {
-        background:
-          radial-gradient(
-            ellipse at center,
-            rgba(0, 191, 255, 0.1) 0%,
-            transparent 70%
-          ),
-          linear-gradient(
-            135deg,
-            var(--primary-bg) 0%,
-            var(--secondary-bg) 100%
-          );
-        padding: 6rem 0;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .page-title {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(
+    .page-hero {
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(91, 110, 232, 0.08) 0%,
+          transparent 70%
+        ),
+        linear-gradient(
           135deg,
-          var(--text-primary) 0%,
-          var(--accent-blue) 100%
+          var(--primary-bg) 0%,
+          var(--secondary-bg) 100%
         );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Scroll Progress -->
-    <div class="scroll-progress">
-      <div class="scroll-progress-bar" id="scrollProgress"></div>
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen" role="status" aria-label="Loading content">
+    <div class="loader-container">
+      <div class="loader" aria-hidden="true"></div>
+      <div class="loading-text">Loading Experience...</div>
     </div>
+  </div>
 
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+  </div>
 
-    <header>
-      <div class="container">
-        <div class="header-container">
-          <a href="index.html" class="logo">OceanCrest</a>
+  <!-- Header Navigation -->
+  <header role="banner">
+    <div class="container">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="index.html" class="logo" aria-label="OceanCrest Entertainment Home">
+          OceanCrest
+        </a>
 
-          <!-- Mobile Menu Toggle -->
-          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+        <!-- Mobile Navigation Toggle -->
+        <button 
+          class="mobile-nav-toggle" 
+          id="mobileNavToggle" 
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobileNavOverlay"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
 
-          <!-- Desktop Navigation -->
-          <nav class="desktop-nav">
-            <ul>
-              <li>
-                <a href="index.html"
-                  >Home<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="about.html" class="active"
-                  >About<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="projects.html"
-                  >Projects<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li>
-                <a href="gaming.html"
-                  >Gaming<span class="nav-indicator"></span
-                ></a>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle"
-                  >Company<span class="nav-indicator"></span><span class="dropdown-arrow">▼</span
-                ></a>
-                <div class="dropdown-menu">
-                  <a href="capabilities.html">Capabilities</a>
-                  <a href="team.html">Team</a>
-                  <a href="leadership.html">Leadership</a>
-                  <a href="careers.html">Careers</a>
-                </div>
-              </li>
-              <li>
-                <a href="contact.html"
-                  >Contact<span class="nav-indicator"></span
-                ></a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li>
+              <a href="index.html">
+                Home
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="about.html" class="active" aria-current="page">
+                About
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="projects.html">
+                Projects
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li>
+              <a href="gaming.html">
+                Gaming
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                Company
+                <span class="nav-indicator" aria-hidden="true"></span>
+                <span class="dropdown-arrow" aria-hidden="true">▼</span>
+              </a>
+              <div class="dropdown-menu" role="menu">
+                <a href="capabilities.html" role="menuitem">Capabilities</a>
+                <a href="team.html" role="menuitem">Team</a>
+                <a href="leadership.html" role="menuitem">Leadership</a>
+                <a href="careers.html" role="menuitem">Careers</a>
+                <a href="handbooks.html" role="menuitem">Handbooks</a>
+              </div>
+            </li>
+            <li>
+              <a href="contact.html">
+                Contact
+                <span class="nav-indicator" aria-hidden="true"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
-    </header>
-
-    <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
-      <nav class="mobile-nav-menu">
-        <a href="index.html" class="mobile-nav-link">🏠 Home</a>
-        <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
-        <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
-        <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
-        <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
-        <a href="team.html" class="mobile-nav-link">👥 Team</a>
-        <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
-        <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
-        <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
-      </nav>
     </div>
+  </header>
 
-    <main>
-      <section class="page-hero">
-        <div class="container">
-          <h1 class="page-title">About OceanCrest</h1>
-          <p
-            style="
-              font-size: 1.2rem;
-              color: var(--text-muted);
-              max-width: 600px;
-              margin: 0 auto;
-            "
-          >
-            A premier entertainment studio dedicated to producing original,
-            high-quality films and immersive storytelling experiences that push
-            the boundaries of narrative-driven entertainment.
-          </p>
-        </div>
-      </section>
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="mobile-nav-menu" role="navigation" aria-label="Mobile menu">
+      <a href="index.html" class="mobile-nav-link">🏠 Home</a>
+      <a href="about.html" class="mobile-nav-link">ℹ️ About</a>
+      <a href="projects.html" class="mobile-nav-link">🎬 Projects</a>
+      <a href="gaming.html" class="mobile-nav-link">🎮 Gaming</a>
+      <a href="capabilities.html" class="mobile-nav-link">⚡ Capabilities</a>
+      <a href="team.html" class="mobile-nav-link">👥 Team</a>
+      <a href="leadership.html" class="mobile-nav-link">👑 Leadership</a>
+      <a href="careers.html" class="mobile-nav-link">💼 Careers</a>
+      <a href="contact.html" class="mobile-nav-link">📞 Contact</a>
+    </nav>
+  </div>
 
-      <section class="section">
-        <div class="container">
-          <h2 class="section-title">Our Foundation</h2>
-          <div
-            class="overview-card glass-card fade-in tilt-effect reactive-card"
-            style="max-width: 800px; margin: 0 auto"
-          >
-            <h3
-              class="typing-text"
-              data-text="🎬 OceanCrest Entertainment"
-              data-speed="100"
-            >
-              OceanCrest Entertainment
-            </h3>
-            <p>
-              OceanCrest is an independent film studio focused on storytelling
-              across digital platforms. Known for our ambitious Roblox-based
-              productions, we bring cinematic quality to virtual worlds through
-              original series, drama-driven scripts, and a team-first approach.
-              We’re powered by passion, not paychecks—driven to create
-              unforgettable experiences with minimal resources and maximum
-              dedication.
-            </p>
-            <div
-              style="
-                display: flex;
-                justify-content: space-around;
-                margin-top: 2rem;
-                text-align: center;
-              "
-            >
-              <div>
-                <div class="live-counter" data-target="4" data-duration="3000">
-                  0
-                </div>
-                <small style="color: var(--text-muted)"
-                  >Projects in Development</small
-                >
-              </div>
-              <div>
-                <div
-                  class="live-counter"
-                  data-target="100"
-                  data-duration="4000"
-                >
-                  0
-                </div>
-                <small style="color: var(--text-muted)"
-                  >Community Members</small
-                >
-              </div>
-              <div>
-                <div
-                  class="live-counter"
-                  data-target="100"
-                  data-duration="2000"
-                >
-                  0
-                </div>
-                <small style="color: var(--text-muted)">% Passion Driven</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
+  <!-- Main Content -->
+  <main role="main">
+    <!-- Page Hero -->
+    <section class="page-hero" role="banner">
       <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h4>Production</h4>
-            <a href="about.html">About</a>
-            <a href="capabilities.html">Capabilities</a>
-            <a href="projects.html">Projects</a>
-          </div>
-          <div class="footer-section">
-            <h4>Gaming</h4>
-            <a href="gaming.html">All Games</a>
-            <a href="mythoria.html">Mythoria</a>
-            <a href="heat.html">HEAT</a>
-          </div>
-          <div class="footer-section">
-            <h4>Join The Team</h4>
-            <a href="team.html">Team</a>
-            <a href="leadership.html">Leadership</a>
-            <a href="careers.html">Careers</a>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
-          <p style="margin-top: 1rem; font-size: 0.9rem">
-            <a href="#" class="gradient-link">Privacy Policy</a> |
-            <a href="#" class="gradient-link">Terms of Service</a> |
-            <a href="contact.html" class="gradient-link">Contact</a>
+        <h1 class="page-title">About OceanCrest</h1>
+        <p class="hero-subtitle">We make the films that we want to make</p>
+      </div>
+    </section>
+
+    <!-- Company Overview -->
+    <section class="section" aria-labelledby="overview-title">
+      <div class="container">
+        <h2 id="overview-title" class="section-title">Our Story</h2>
+        <div class="content-wrapper">
+          <p class="large-text">
+            At OceanCrest Entertainment, we believe in the power of authentic storytelling. We create films based on real games, staying true to their essence while bringing fresh cinematic perspectives to beloved gaming worlds.
+          </p>
+          <p>
+            Our mission is simple: make the movies we want to make with zero budget constraints. We're driven by passion, not profit, and we never ask for money from our community.
           </p>
         </div>
       </div>
-    </footer>
-    <script src="app.js"></script>
-  </body>
+    </section>
+
+    <!-- Values -->
+    <section class="section" style="background: var(--secondary-bg)" aria-labelledby="values-title">
+      <div class="container">
+        <h2 id="values-title" class="section-title">Our Values</h2>
+        <div class="overview-grid">
+          <article class="overview-card glass-card">
+            <h3>🎮 Authenticity</h3>
+            <p>We stay true to the games that inspire us, respecting their lore, characters, and world-building while adding our cinematic vision.</p>
+          </article>
+          <article class="overview-card glass-card">
+            <h3>💝 Passion-Driven</h3>
+            <p>Every project we undertake is fueled by genuine love for storytelling and gaming. We create because we care, not for commercial gain.</p>
+          </article>
+          <article class="overview-card glass-card">
+            <h3>🤝 Community-Focused</h3>
+            <p>We listen to our audience, value feedback, and ensure our community's voice shapes our creative decisions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section" aria-labelledby="team-title">
+      <div class="container">
+        <h2 id="team-title" class="section-title">Meet Our Team</h2>
+        <p class="section-subtitle">
+          A small but dedicated group of creators, each bringing unique skills and perspectives to our projects.
+        </p>
+        <div class="cta-buttons" style="justify-content: center; margin-top: 2rem;">
+          <a href="team.html" class="btn btn-primary">View Full Team</a>
+          <a href="leadership.html" class="btn btn-secondary">Leadership</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Production</h4>
+          <a href="about.html">About</a>
+          <a href="capabilities.html">Capabilities</a>
+          <a href="projects.html">Projects</a>
+        </div>
+        <div class="footer-section">
+          <h4>Gaming</h4>
+          <a href="gaming.html">All Games</a>
+          <a href="mythoria.html">Mythoria</a>
+          <a href="heat.html">HEAT</a>
+        </div>
+        <div class="footer-section">
+          <h4>Join The Team</h4>
+          <a href="team.html">Team</a>
+          <a href="leadership.html">Leadership</a>
+          <a href="careers.html">Careers</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 OceanCrest Entertainment. All rights reserved.</p>
+        <p>
+          <a href="#" class="gradient-link">Privacy Policy</a> |
+          <a href="#" class="gradient-link">Terms of Service</a> |
+          <a href="contact.html" class="gradient-link">Contact</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
 </html>
