@@ -1124,6 +1124,20 @@ footer {
   line-height: 1.1;
 }
 
+/* Content Layout */
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.large-text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
 /* Contact CTA Styling */
 .contact-cta-wrapper {
   text-align: center;
