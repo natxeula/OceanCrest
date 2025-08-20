@@ -1,4 +1,4 @@
-// OceanCrest Entertainment - Cyberpunk Enhanced JavaScript
+// OceanCrest Entertainment - Professional Enhanced JavaScript
 class OceanCrestApp {
   constructor() {
     this.isLoaded = false;
@@ -6,8 +6,6 @@ class OceanCrestApp {
     this.theme = localStorage.getItem("theme") || "dark";
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || 
                         localStorage.getItem("reducedMotion") === "true";
-    this.particles = [];
-    this.glitchInterval = null;
     this.init();
   }
 
@@ -16,8 +14,7 @@ class OceanCrestApp {
     this.setupEventListeners();
     this.setupTheme();
     this.setupMobileNavigation();
-    this.createParticleSystem();
-    this.initGlitchEffects();
+    this.setupProfessionalInteractions();
 
     // Initialize enhanced features after DOM is ready
     if (document.readyState === "loading") {
@@ -77,33 +74,30 @@ class OceanCrestApp {
         }
       }
     });
-
-    // Enhanced hover effects for cyberpunk elements
-    this.setupCyberpunkEffects();
   }
 
-  setupCyberpunkEffects() {
-    // Card hover effects with glitch
+  setupProfessionalInteractions() {
+    // Sophisticated hover effects for cards
     document.querySelectorAll('.card, .project-card, .stat-item, .contact-item').forEach(card => {
       card.addEventListener('mouseenter', (e) => {
         if (!this.reducedMotion) {
-          e.target.style.transform = 'translateY(-15px)';
-          this.addRandomGlitch(e.target);
+          e.target.style.transform = 'translateY(-8px)';
+          this.addSubtleGlow(e.target);
         }
       });
       
       card.addEventListener('mouseleave', (e) => {
         e.target.style.transform = '';
-        this.removeGlitch(e.target);
+        this.removeSubtleGlow(e.target);
       });
     });
 
-    // Button cyber effects
+    // Professional button effects
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('mouseenter', (e) => {
         if (!this.reducedMotion) {
-          e.target.style.transform = 'translateY(-5px)';
-          this.createEnergyPulse(e.target);
+          e.target.style.transform = 'translateY(-3px)';
+          this.createElegantRipple(e.target);
         }
       });
       
@@ -112,82 +106,58 @@ class OceanCrestApp {
       });
 
       btn.addEventListener('click', (e) => {
-        this.createClickRipple(e);
+        this.createClickFeedback(e);
       });
     });
 
-    // Navigation link effects
+    // Navigation hover effects
     document.querySelectorAll('.desktop-nav a, .mobile-nav-link').forEach(link => {
       link.addEventListener('mouseenter', (e) => {
-        this.createHoverScan(e.target);
+        this.createUnderlineAnimation(e.target);
       });
     });
+
+    // Parallax effect for hero section
+    if (!this.reducedMotion) {
+      this.setupParallaxEffect();
+    }
   }
 
-  createEnergyPulse(element) {
-    const pulse = document.createElement('div');
-    pulse.style.cssText = `
+  addSubtleGlow(element) {
+    element.style.boxShadow = '0 15px 40px rgba(212, 175, 55, 0.15)';
+    element.style.borderColor = 'var(--accent-gold)';
+  }
+
+  removeSubtleGlow(element) {
+    element.style.boxShadow = '';
+    element.style.borderColor = '';
+  }
+
+  createElegantRipple(element) {
+    const ripple = document.createElement('div');
+    ripple.style.cssText = `
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, rgba(0, 255, 255, 0.3), rgba(255, 0, 128, 0.3));
+      background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(192, 192, 192, 0.1));
       opacity: 0;
       pointer-events: none;
-      animation: energyPulse 0.6s ease-out;
-      clip-path: inherit;
+      animation: elegantRipple 0.8s ease-out;
+      border-radius: inherit;
     `;
 
     element.style.position = 'relative';
-    element.appendChild(pulse);
+    element.appendChild(ripple);
 
-    // Add energy pulse animation
+    // Add elegant ripple animation
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes energyPulse {
-        0% { opacity: 0; transform: scale(0.8); }
-        50% { opacity: 1; transform: scale(1.05); }
-        100% { opacity: 0; transform: scale(1.2); }
-      }
-    `;
-    document.head.appendChild(style);
-
-    setTimeout(() => {
-      if (pulse.parentNode) {
-        pulse.parentNode.removeChild(pulse);
-      }
-    }, 600);
-  }
-
-  createClickRipple(event) {
-    const ripple = document.createElement('div');
-    const rect = event.target.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = event.clientX - rect.left - size / 2;
-    const y = event.clientY - rect.top - size / 2;
-
-    ripple.style.cssText = `
-      position: absolute;
-      width: ${size}px;
-      height: ${size}px;
-      left: ${x}px;
-      top: ${y}px;
-      background: radial-gradient(circle, rgba(0, 255, 255, 0.6) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
-      animation: cyberpunkRipple 0.8s ease-out;
-    `;
-
-    event.target.style.position = 'relative';
-    event.target.appendChild(ripple);
-
-    // Add ripple animation
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes cyberpunkRipple {
-        0% { transform: scale(0); opacity: 1; }
-        100% { transform: scale(2); opacity: 0; }
+      @keyframes elegantRipple {
+        0% { opacity: 0; transform: scale(0.9); }
+        50% { opacity: 1; transform: scale(1.02); }
+        100% { opacity: 0; transform: scale(1.05); }
       }
     `;
     document.head.appendChild(style);
@@ -199,88 +169,60 @@ class OceanCrestApp {
     }, 800);
   }
 
-  createHoverScan(element) {
-    const scanner = document.createElement('div');
-    scanner.style.cssText = `
+  createClickFeedback(event) {
+    const feedback = document.createElement('div');
+    const rect = event.target.getBoundingClientRect();
+    const size = 40;
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+
+    feedback.style.cssText = `
       position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+      width: ${size}px;
+      height: ${size}px;
+      left: ${x}px;
+      top: ${y}px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
       pointer-events: none;
-      animation: scanLine 0.8s ease-out;
-      clip-path: inherit;
+      animation: professionalRipple 0.6s ease-out;
     `;
 
-    element.style.position = 'relative';
-    element.appendChild(scanner);
+    event.target.style.position = 'relative';
+    event.target.appendChild(feedback);
 
-    // Add scan animation
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes scanLine {
-        0% { left: -100%; }
-        100% { left: 100%; }
+      @keyframes professionalRipple {
+        0% { transform: scale(0); opacity: 1; }
+        100% { transform: scale(3); opacity: 0; }
       }
     `;
     document.head.appendChild(style);
 
     setTimeout(() => {
-      if (scanner.parentNode) {
-        scanner.parentNode.removeChild(scanner);
+      if (feedback.parentNode) {
+        feedback.parentNode.removeChild(feedback);
       }
-    }, 800);
+    }, 600);
   }
 
-  initGlitchEffects() {
-    if (this.reducedMotion) return;
-
-    // Add glitch effect to hero title
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-      heroTitle.classList.add('glitch');
-      this.startRandomGlitches();
-    }
-
-    // Add periodic glitch to logo
-    const logo = document.querySelector('.logo');
-    if (logo) {
-      setInterval(() => {
-        this.addTemporaryGlitch(logo, 200);
-      }, 8000 + Math.random() * 4000);
-    }
+  createUnderlineAnimation(element) {
+    // Professional underline effect is handled by CSS
+    // This could be expanded for more complex animations
   }
 
-  startRandomGlitches() {
-    this.glitchInterval = setInterval(() => {
-      const glitchTargets = document.querySelectorAll('.card-title, .section-title, .project-title');
-      if (glitchTargets.length > 0) {
-        const randomTarget = glitchTargets[Math.floor(Math.random() * glitchTargets.length)];
-        this.addTemporaryGlitch(randomTarget, 150);
+  setupParallaxEffect() {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      
+      if (hero) {
+        // Subtle parallax effect
+        const speed = scrolled * 0.3;
+        hero.style.transform = `translateY(${speed}px)`;
       }
-    }, 10000 + Math.random() * 15000);
-  }
-
-  addTemporaryGlitch(element, duration = 300) {
-    element.classList.add('glitch');
-    element.setAttribute('data-text', element.textContent);
-    
-    setTimeout(() => {
-      element.classList.remove('glitch');
-      element.removeAttribute('data-text');
-    }, duration);
-  }
-
-  addRandomGlitch(element) {
-    if (Math.random() > 0.7) { // 30% chance
-      this.addTemporaryGlitch(element, 100);
-    }
-  }
-
-  removeGlitch(element) {
-    element.classList.remove('glitch');
-    element.removeAttribute('data-text');
+    });
   }
 
   setupTheme() {
@@ -302,7 +244,7 @@ class OceanCrestApp {
   createThemeToggle() {
     const themeToggle = document.createElement('button');
     themeToggle.className = 'theme-toggle';
-    themeToggle.innerHTML = this.theme === 'dark' ? 'LGT' : 'DRK';
+    themeToggle.innerHTML = this.theme === 'dark' ? '☀' : '🌙';
     themeToggle.setAttribute('aria-label', 'Toggle theme');
     document.body.appendChild(themeToggle);
   }
@@ -320,11 +262,11 @@ class OceanCrestApp {
     document.body.setAttribute("data-theme", this.theme);
     localStorage.setItem("theme", this.theme);
     
-    // Update theme toggle text
+    // Update theme toggle icon
     const themeToggle = document.querySelector('.theme-toggle');
     if (themeToggle) {
-      themeToggle.innerHTML = this.theme === 'dark' ? 'LGT' : 'DRK';
-      this.createEnergyPulse(themeToggle);
+      themeToggle.innerHTML = this.theme === 'dark' ? '☀' : '🌙';
+      this.createElegantRipple(themeToggle);
     }
   }
 
@@ -365,7 +307,6 @@ class OceanCrestApp {
         overlay.classList.add("active");
         toggle.classList.add("active");
         document.body.style.overflow = "hidden";
-        this.createEnergyPulse(toggle);
       }
     }
   }
@@ -379,65 +320,6 @@ class OceanCrestApp {
       toggle.classList.remove("active");
       document.body.style.overflow = "";
     }
-  }
-
-  createParticleSystem() {
-    if (this.reducedMotion) return;
-
-    const heroSection = document.querySelector('.hero');
-    if (!heroSection) return;
-
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'particles';
-    heroSection.appendChild(particlesContainer);
-
-    // Create cyber particles
-    for (let i = 0; i < 60; i++) {
-      setTimeout(() => {
-        this.createCyberParticle(particlesContainer);
-      }, i * 150);
-    }
-
-    // Continue creating particles
-    this.particleInterval = setInterval(() => {
-      if (this.particles.length < 60) {
-        this.createCyberParticle(particlesContainer);
-      }
-    }, 800);
-  }
-
-  createCyberParticle(container) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    const colors = ['#00ffff', '#ff0080', '#8b00ff', '#00ff41', '#ffff00'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const size = Math.random() * 4 + 1;
-    const left = Math.random() * 100;
-    const animationDuration = Math.random() * 10 + 15;
-    const opacity = Math.random() * 0.8 + 0.2;
-    
-    particle.style.cssText = `
-      width: ${size}px;
-      height: ${size}px;
-      left: ${left}%;
-      background: ${color};
-      opacity: ${opacity};
-      animation-duration: ${animationDuration}s;
-      animation-delay: ${Math.random() * 5}s;
-      box-shadow: 0 0 10px ${color};
-    `;
-    
-    container.appendChild(particle);
-    this.particles.push(particle);
-    
-    // Remove particle after animation
-    setTimeout(() => {
-      if (particle.parentNode) {
-        particle.parentNode.removeChild(particle);
-        this.particles = this.particles.filter(p => p !== particle);
-      }
-    }, animationDuration * 1000);
   }
 
   updateScrollProgress() {
@@ -457,13 +339,13 @@ class OceanCrestApp {
     const header = document.querySelector("header");
     if (header) {
       if (window.pageYOffset > 100) {
-        header.style.background = "rgba(10, 10, 10, 0.98)";
+        header.style.background = "rgba(26, 26, 26, 0.98)";
         header.style.backdropFilter = "blur(25px)";
-        header.style.boxShadow = "0 0 30px rgba(0, 255, 255, 0.4)";
+        header.style.borderBottom = "1px solid var(--accent-gold)";
       } else {
-        header.style.background = "rgba(10, 10, 10, 0.95)";
+        header.style.background = "rgba(26, 26, 26, 0.95)";
         header.style.backdropFilter = "blur(20px)";
-        header.style.boxShadow = "0 0 20px rgba(0, 255, 255, 0.3)";
+        header.style.borderBottom = "1px solid var(--border-color)";
       }
     }
   }
@@ -484,12 +366,6 @@ class OceanCrestApp {
       top: 0,
       behavior: 'smooth'
     });
-    
-    // Add cyberpunk effect
-    const scrollBtn = document.querySelector('.scroll-to-top');
-    if (scrollBtn) {
-      this.createEnergyPulse(scrollBtn);
-    }
   }
 
   smoothScrollTo(element) {
@@ -513,13 +389,6 @@ class OceanCrestApp {
       if (elementTop < window.innerHeight - elementVisible) {
         element.style.opacity = '1';
         element.style.transform = 'translateY(0)';
-        
-        // Add random glitch effect on reveal
-        if (Math.random() > 0.8) {
-          setTimeout(() => {
-            this.addTemporaryGlitch(element.querySelector('.card-title') || element, 100);
-          }, Math.random() * 1000);
-        }
       }
     });
   }
@@ -527,7 +396,7 @@ class OceanCrestApp {
   initializeEnhancedFeatures() {
     this.setupIntersectionObserver();
     this.setupCounterAnimations();
-    this.setupCyberpunkInteractions();
+    this.setupAccessibility();
     this.hideLoadingScreen();
   }
 
@@ -550,10 +419,10 @@ class OceanCrestApp {
             this.animateCounter(entry.target);
           }
           
-          // Cyberpunk reveal effect
+          // Subtle reveal effect
           setTimeout(() => {
-            this.createRevealScan(entry.target);
-          }, Math.random() * 500);
+            this.createRevealEffect(entry.target);
+          }, Math.random() * 300);
         }
       });
     }, observerOptions);
@@ -561,44 +430,44 @@ class OceanCrestApp {
     // Observe elements
     document.querySelectorAll('.card, .stat-item, .project-card, .contact-item').forEach(el => {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(50px)';
+      el.style.transform = 'translateY(30px)';
       el.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       observer.observe(el);
     });
   }
 
-  createRevealScan(element) {
-    const scanner = document.createElement('div');
-    scanner.style.cssText = `
+  createRevealEffect(element) {
+    const reveal = document.createElement('div');
+    reveal.style.cssText = `
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 255, 0.3) 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
       pointer-events: none;
-      animation: revealScan 1s ease-out;
-      clip-path: inherit;
+      animation: professionalReveal 1.2s ease-out;
+      border-radius: inherit;
     `;
 
     element.style.position = 'relative';
-    element.appendChild(scanner);
+    element.appendChild(reveal);
 
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes revealScan {
-        0% { transform: translateY(-100%); opacity: 0; }
+      @keyframes professionalReveal {
+        0% { transform: translateX(-100%); opacity: 0; }
         50% { opacity: 1; }
-        100% { transform: translateY(100%); opacity: 0; }
+        100% { transform: translateX(100%); opacity: 0; }
       }
     `;
     document.head.appendChild(style);
 
     setTimeout(() => {
-      if (scanner.parentNode) {
-        scanner.parentNode.removeChild(scanner);
+      if (reveal.parentNode) {
+        reveal.parentNode.removeChild(reveal);
       }
-    }, 1000);
+    }, 1200);
   }
 
   setupCounterAnimations() {
@@ -623,66 +492,48 @@ class OceanCrestApp {
         setTimeout(animate, 50);
       } else {
         element.textContent = element.textContent.replace(/[0-9]+/, targetText);
-        this.addTemporaryGlitch(element, 200);
       }
     };
     
     animate();
   }
 
-  setupCyberpunkInteractions() {
-    // Add cyber sound effects (visual feedback)
-    document.addEventListener('click', (e) => {
-      if (e.target.closest('.btn, .card, .mobile-nav-link, .desktop-nav a')) {
-        this.createClickFeedback(e);
-      }
-    });
-
-    // Add typing effect to inputs
-    document.querySelectorAll('input, textarea').forEach(input => {
-      input.addEventListener('focus', (e) => {
-        e.target.style.boxShadow = '0 0 20px rgba(0, 255, 255, 0.5)';
-        e.target.style.borderColor = 'var(--accent-neon)';
-      });
-      
-      input.addEventListener('blur', (e) => {
-        e.target.style.boxShadow = '';
-        e.target.style.borderColor = '';
-      });
-    });
-  }
-
-  createClickFeedback(event) {
-    // Create visual click feedback
-    const feedback = document.createElement('div');
-    feedback.style.cssText = `
-      position: fixed;
-      left: ${event.clientX - 5}px;
-      top: ${event.clientY - 5}px;
-      width: 10px;
-      height: 10px;
-      background: var(--accent-neon);
-      border-radius: 50%;
-      pointer-events: none;
+  setupAccessibility() {
+    // Skip to main content
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main';
+    skipLink.textContent = 'Skip to main content';
+    skipLink.className = 'skip-link';
+    skipLink.style.cssText = `
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--accent-gold);
+      color: var(--primary-bg);
+      padding: 8px 16px;
+      text-decoration: none;
       z-index: 10000;
-      animation: clickExpand 0.4s ease-out;
-      box-shadow: 0 0 20px var(--accent-neon);
+      border-radius: 4px;
+      font-weight: 500;
+      transition: top 0.3s ease;
     `;
+    
+    skipLink.addEventListener('focus', () => {
+      skipLink.style.top = '6px';
+    });
+    
+    skipLink.addEventListener('blur', () => {
+      skipLink.style.top = '-40px';
+    });
+    
+    document.body.insertBefore(skipLink, document.body.firstChild);
 
-    document.body.appendChild(feedback);
-
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes clickExpand {
-        0% { transform: scale(1); opacity: 1; }
-        100% { transform: scale(4); opacity: 0; }
+    // Enhanced keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeMobileNav();
       }
-    `;
-    document.head.appendChild(style);
-
-    setTimeout(() => {
-      document.body.removeChild(feedback);
-    }, 400);
+    });
   }
 
   hideLoadingScreen() {
@@ -692,19 +543,62 @@ class OceanCrestApp {
         loadingScreen.classList.add("hidden");
         setTimeout(() => {
           loadingScreen.style.display = "none";
-        }, 1000);
-      }, 1500);
+        }, 800);
+      }, 1200);
     }
     this.isLoaded = true;
   }
 
   handleResize() {
-    // Adjust particle system
-    if (!this.reducedMotion && this.particles.length > 0) {
-      this.particles.forEach(particle => {
-        particle.style.left = Math.random() * 100 + '%';
+    // Handle responsive adjustments
+    this.updateHeaderState();
+  }
+
+  // Form handling for professional interactions
+  handleContactForm() {
+    const form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.showNotification('Thank you for your message. We will respond shortly.', 'success');
       });
     }
+  }
+
+  showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 2rem;
+      background: ${type === 'success' ? 'var(--accent-gold)' : 'var(--secondary-bg)'};
+      color: ${type === 'success' ? 'var(--primary-bg)' : 'var(--text-primary)'};
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      z-index: 10000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      box-shadow: var(--shadow-secondary);
+      font-weight: 500;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    setTimeout(() => {
+      notification.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        if (notification.parentNode) {
+          document.body.removeChild(notification);
+        }
+      }, 300);
+    }, 4000);
   }
 
   // Utility functions
@@ -720,16 +614,20 @@ class OceanCrestApp {
     };
   }
 
+  // Performance monitoring
+  measurePerformance() {
+    if ('performance' in window) {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const perfData = performance.getEntriesByType('navigation')[0];
+          console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart);
+        }, 0);
+      });
+    }
+  }
+
   // Cleanup
   destroy() {
-    if (this.particleInterval) {
-      clearInterval(this.particleInterval);
-    }
-    
-    if (this.glitchInterval) {
-      clearInterval(this.glitchInterval);
-    }
-    
     // Remove event listeners
     window.removeEventListener('scroll', this.updateScrollProgress);
     window.removeEventListener('resize', this.handleResize);
@@ -764,19 +662,12 @@ window.addEventListener('unhandledrejection', (e) => {
   console.error('Unhandled promise rejection:', e.reason);
 });
 
-// Cyber Easter Eggs
-document.addEventListener('keydown', (e) => {
-  // Konami code for special effects
-  if (e.code === 'KeyC' && e.ctrlKey && e.shiftKey) {
-    app.addTemporaryGlitch(document.body, 2000);
-  }
-});
-
 // Performance optimization
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => {
     // Non-critical initialization
-    console.log('%c🔮 OCEANCREST CYBERPUNK SYSTEM ONLINE 🔮', 'color: #00ffff; font-size: 16px; font-weight: bold; text-shadow: 0 0 10px #00ffff;');
-    console.log('%c⚡ All systems operational ⚡', 'color: #ff0080; font-size: 12px;');
+    app.handleContactForm();
+    app.measurePerformance();
+    console.log('%c🎬 OceanCrest Entertainment - Professional System Initialized', 'color: #d4af37; font-size: 14px; font-weight: bold;');
   });
 }
