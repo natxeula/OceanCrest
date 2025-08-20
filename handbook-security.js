@@ -19,7 +19,7 @@ class AdvancedHandbookSecurity {
     this.securityLogs = [];
     this.threatLevel = 0;
     this.failedAttempts = new Map();
-    this.bannedAccessSessions = new Set();
+    this.bannedIPs = new Set();
     this.encryptionKey = this.generateEncryptionKey();
     this.currentHandbook = null;
     this.securityMode = 'MAXIMUM';
@@ -209,9 +209,9 @@ class AdvancedHandbookSecurity {
   async requestAccess(handbook) {
     this.currentHandbook = handbook;
     
-    // Check if access session is banned
-    if (this.isAccessSessionBanned()) {
-      this.showSecurityAlert('Access denied - Access session banned');
+    // Check if IP is banned
+    if (this.isIPBanned()) {
+      this.showSecurityAlert('Access denied - IP banned');
       return false;
     }
 
@@ -526,36 +526,25 @@ class AdvancedHandbookSecurity {
   }
 
   logFailedAttempt() {
-    const accessSession = this.getCurrentAccessSession();
-    const attempts = this.failedAttempts.get(accessSession.ip) || 0;
-    this.failedAttempts.set(accessSession.ip, attempts + 1);
-
+    const ip = this.getSimulatedIP();
+    const attempts = this.failedAttempts.get(ip) || 0;
+    this.failedAttempts.set(ip, attempts + 1);
+    
     if (attempts >= 3) {
-      this.bannedAccessSessions.add(accessSession);
-      this.logSecurityEvent('ACCESS_SESSION_BANNED', `Access session ${accessSession.ip} banned after multiple failed attempts`);
+      this.bannedIPs.add(ip);
+      this.logSecurityEvent('IP_BANNED', `IP ${ip} banned after multiple failed attempts`);
     }
-
+    
     this.increaseThreatLevel(15, 'Failed authentication attempt');
   }
 
-  isAccessSessionBanned() {
-    const currentSession = this.getCurrentAccessSession();
-    return Array.from(this.bannedAccessSessions).some(session => session.ip === currentSession.ip);
+  isIPBanned() {
+    return this.bannedIPs.has(this.getSimulatedIP());
   }
 
-  getCurrentAccessSession() {
-    // Get current access session with IP address
-    const ip = '192.168.1.' + Math.floor(Math.random() * 255);
-    return {
-      ip: ip,
-      userAgent: navigator.userAgent.slice(0, 50),
-      timestamp: Date.now(),
-      sessionId: this.generateSessionId()
-    };
-  }
-
-  generateSessionId() {
-    return 'sess_' + Math.random().toString(36).substr(2, 16);
+  getSimulatedIP() {
+    // Simulate IP address for demo
+    return '192.168.1.' + Math.floor(Math.random() * 255);
   }
 
   increaseThreatLevel(amount, reason) {
@@ -584,7 +573,7 @@ class AdvancedHandbookSecurity {
       description,
       threatLevel: this.threatLevel,
       userAgent: navigator.userAgent.slice(0, 50),
-      accessSession: this.getCurrentAccessSession()
+      ip: this.getSimulatedIP()
     };
     
     this.securityLogs.push(event);

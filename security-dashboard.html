@@ -238,8 +238,8 @@
                 <div class="status-label">Security Events</div>
               </div>
               <div class="status-item">
-                <div class="status-value" id="bannedAccessSessions">0</div>
-                <div class="status-label">Banned Access Sessions</div>
+                <div class="status-value" id="bannedIPs">0</div>
+                <div class="status-label">Banned IPs</div>
               </div>
             </div>
             <div class="threat-meter">
@@ -260,7 +260,7 @@
               <button class="control-btn danger" onclick="clearAllSessions()">Clear All Sessions</button>
               <button class="control-btn warning" onclick="resetThreatLevel()">Reset Threat Level</button>
               <button class="control-btn success" onclick="exportLogs()">Export Logs</button>
-              <button class="control-btn warning" onclick="unbanAllAccessSessions()">Unban All Access Sessions</button>
+              <button class="control-btn warning" onclick="unbanAllIPs()">Unban All IPs</button>
             </div>
           </div>
 
@@ -302,7 +302,7 @@
           
           // Update statistics
           document.getElementById('totalEvents').textContent = security.securityLogs.length;
-          document.getElementById('bannedAccessSessions').textContent = security.bannedAccessSessions.size;
+          document.getElementById('bannedIPs').textContent = security.bannedIPs.size;
           
           // Update active sessions
           const activeSessions = this.countActiveSessions();
@@ -473,14 +473,14 @@
         }
       }
 
-      function unbanAllAccessSessions() {
+      function unbanAllIPs() {
         if (window.advancedSecurity) {
-          window.advancedSecurity.bannedAccessSessions.clear();
+          window.advancedSecurity.bannedIPs.clear();
           window.advancedSecurity.failedAttempts.clear();
-          window.advancedSecurity.logSecurityEvent('ADMIN_ACTION', 'All access session bans cleared via dashboard');
+          window.advancedSecurity.logSecurityEvent('ADMIN_ACTION', 'All IP bans cleared via dashboard');
         }
-
-        alert('All access session bans have been cleared.');
+        
+        alert('All IP bans have been cleared.');
         dashboard.updateDashboard();
       }
 
