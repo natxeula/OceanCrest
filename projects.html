@@ -54,32 +54,220 @@
       border-color: transparent;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 2.5rem;
-      margin-top: 3rem;
-    }
-
     .project-hero {
       background:
-        radial-gradient(ellipse at center, rgba(91, 110, 232, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse at center, rgba(91, 110, 232, 0.15) 0%, transparent 70%),
         linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
-      padding: 8rem 0 4rem;
+      padding: 10rem 0 6rem;
       text-align: center;
       position: relative;
       overflow: hidden;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-hero h1 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, #64f4ac 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .project-hero p {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Featured Project - Large Card */
+    .featured-project {
+      background: linear-gradient(145deg, rgba(26, 29, 37, 0.98), rgba(17, 18, 24, 0.95));
+      backdrop-filter: blur(30px);
+      border: 2px solid rgba(91, 110, 232, 0.3);
+      border-radius: 32px;
+      padding: 4rem;
+      margin: 4rem 0;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .featured-project::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(91, 110, 232, 0.08), rgba(109, 66, 168, 0.08));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 32px;
+    }
+
+    .featured-project:hover {
+      transform: translateY(-12px);
+      border-color: rgba(91, 110, 232, 0.5);
+      box-shadow: 0 40px 80px rgba(91, 110, 232, 0.3);
+    }
+
+    .featured-project:hover::before {
+      opacity: 1;
+    }
+
+    .featured-project .project-badge {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2rem;
+    }
+
+    .featured-project h3 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .featured-project .project-description {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 800px;
+    }
+
+    .featured-project .project-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+      padding: 2rem;
+      background: rgba(91, 110, 232, 0.08);
+      border-radius: 20px;
+      border: 1px solid rgba(91, 110, 232, 0.2);
+    }
+
+    .meta-item {
+      text-align: center;
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .meta-value {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .project-btn {
+      background: var(--accent-gradient);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .project-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(91, 110, 232, 0.4);
+    }
+
+    .project-btn.secondary {
+      background: transparent;
+      border: 2px solid var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .project-btn.secondary:hover {
+      background: var(--accent-primary);
+      color: white;
+    }
+
+    .project-btn.disabled {
+      background: var(--border-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .project-btn.disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Other Projects Grid */
+    .other-projects {
+      margin-top: 6rem;
+    }
+
+    .other-projects h2 {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
     }
 
     .project-card {
       background: linear-gradient(145deg, rgba(26, 29, 37, 0.95), rgba(17, 18, 24, 0.95));
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(91, 110, 232, 0.2);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border: 1px solid rgba(91, 110, 232, 0.25);
+      border-radius: 24px;
+      padding: 3rem;
       position: relative;
       overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
     }
 
     .project-card::before {
@@ -89,105 +277,32 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, rgba(91, 110, 232, 0.1), rgba(109, 66, 168, 0.1));
+      background: linear-gradient(135deg, rgba(91, 110, 232, 0.06), rgba(109, 66, 168, 0.06));
       opacity: 0;
       transition: opacity 0.3s ease;
-      border-radius: 20px;
+      border-radius: 24px;
     }
 
     .project-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-10px);
       border-color: rgba(91, 110, 232, 0.4);
-      box-shadow: 0 20px 50px rgba(91, 110, 232, 0.25);
+      box-shadow: 0 25px 60px rgba(91, 110, 232, 0.25);
     }
 
     .project-card:hover::before {
       opacity: 1;
     }
 
-    .project-header {
-      margin-bottom: 1.5rem;
-    }
-
-    .project-header h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
-    }
-
-    .project-content {
-      margin-bottom: 2rem;
-    }
-
-    .project-content p {
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
-    }
-
-    .project-details {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-bottom: 1.5rem;
-    }
-
-    .project-tag {
-      background: rgba(91, 110, 232, 0.15);
-      color: var(--accent-primary);
-      padding: 0.4rem 0.8rem;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      border: 1px solid rgba(91, 110, 232, 0.3);
-    }
-
-    .project-action {
-      display: flex;
-      justify-content: center;
-    }
-
-    .project-link {
-      background: var(--accent-gradient);
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      text-align: center;
-      display: inline-block;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(91, 110, 232, 0.4);
-    }
-
-    .project-link.disabled {
-      background: var(--border-color);
-      color: var(--text-muted);
-      cursor: not-allowed;
-    }
-
-    .project-link.disabled:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    .project-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
+    .project-card .status-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 25px;
       font-size: 0.85rem;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .status-released {
@@ -205,26 +320,91 @@
       color: white;
     }
 
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-      animation: pulse 2s infinite;
+    .project-card h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 2rem 0 1.5rem;
+      line-height: 1.3;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+    .project-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .project-tag {
+      background: rgba(91, 110, 232, 0.15);
+      color: var(--accent-primary);
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(91, 110, 232, 0.3);
+    }
+
+    .project-card .project-link {
+      background: var(--accent-gradient);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.3s ease;
+      margin-top: auto;
+    }
+
+    .project-card .project-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(91, 110, 232, 0.4);
+    }
+
+    .project-card .project-link.disabled {
+      background: var(--border-color);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .project-card .project-link.disabled:hover {
+      transform: none;
+      box-shadow: none;
     }
 
     @media (max-width: 768px) {
-      .project-grid {
+      .featured-project {
+        padding: 2.5rem;
+        margin: 3rem 0;
+      }
+
+      .projects-grid {
         grid-template-columns: 1fr;
       }
 
       .project-card {
-        padding: 1.5rem;
+        padding: 2rem;
+        min-height: 350px;
+      }
+
+      .project-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .project-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
       }
     }
   </style>
@@ -356,79 +536,90 @@
           <button class="filter-btn" data-filter="development">Development</button>
         </div>
 
-        <!-- Featured Projects -->
-        <div class="project-grid">
-          <article class="overview-card glass-card project-card" data-category="released">
-            <header class="project-header">
-              <h2>Authority: The Oath of Office Movie</h2>
-              <div class="project-status status-released">
-                <span class="status-dot" aria-hidden="true"></span>
-                Available Now
-              </div>
-            </header>
-            <div class="project-content">
-              <p>
-                James "Jimmy" Washington, rises during a time of national unrest. When the President Sebastian Underwood tightens his grip on power, James runs. With his best friend Owen, James wages a grueling campaign-facing the political world.
-              </p>
-              <div class="project-details">
-                <span class="project-tag">Political Drama</span>
-                <span class="project-tag">Game Adaptation</span>
-              </div>
-            </div>
-            <footer class="project-action">
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="project-link" target="_blank" rel="noopener">Watch on YouTube now!</a>
-            </footer>
-          </article>
+        <!-- Featured Project -->
+        <div class="featured-project" data-category="released">
+          <div class="project-badge">Featured Release</div>
+          <h3>Authority: The Oath of Office Movie</h3>
+          <p class="project-description">
+            Follow James "Jimmy" Washington as he rises during a time of national unrest. When President Sebastian Underwood tightens his grip on power, James embarks on a grueling campaign that will test everything he believes in. This epic political drama explores the cost of ambition and the price of power in a divided nation.
+          </p>
 
-          <article class="overview-card glass-card project-card" data-category="production">
-            <header class="project-header">
-              <h2>Classified: A SCP Series</h2>
-              <div class="project-status status-production">
-                <span class="status-dot" aria-hidden="true"></span>
-                In Production
-              </div>
-            </header>
-            <div class="project-content">
+          <div class="project-meta">
+            <div class="meta-item">
+              <div class="meta-label">Genre</div>
+              <div class="meta-value">Political Drama</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Runtime</div>
+              <div class="meta-value">Feature Length</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Status</div>
+              <div class="meta-value">Available Now</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Platform</div>
+              <div class="meta-value">YouTube</div>
+            </div>
+          </div>
+
+          <div class="project-actions">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="project-btn" target="_blank" rel="noopener">
+              <span>🎬</span> Watch Now
+            </a>
+            <a href="#" class="project-btn secondary">
+              <span>📖</span> Learn More
+            </a>
+          </div>
+        </div>
+
+        <!-- Other Projects -->
+        <div class="other-projects">
+          <h2>Upcoming Productions</h2>
+
+          <div class="projects-grid">
+            <article class="project-card" data-category="production">
+              <div class="status-badge status-production">In Production</div>
+              <h3>Classified: A SCP Series</h3>
               <p>
-                This information is classified under Level-4 Personnel. More details later this year.
+                This information is classified under Level-4 Personnel clearance. What we can reveal: an unprecedented dive into the SCP Foundation universe with production values never before seen in fan content. Expect mind-bending horror, complex narratives, and faithful adaptation of beloved SCP lore.
               </p>
-              <div class="project-details">
+              <div class="project-tags">
                 <span class="project-tag">Horror</span>
                 <span class="project-tag">SCP Foundation</span>
+                <span class="project-tag">Series</span>
               </div>
-            </div>
-            <footer class="project-action">
-              <span class="project-link disabled">Coming Soon</span>
-            </footer>
-          </article>
+              <a href="#" class="project-link disabled">Coming Late 2025</a>
+            </article>
 
-          <article class="overview-card glass-card project-card" data-category="development">
-            <header class="project-header">
-              <h2>Future Productions</h2>
-              <div class="project-status status-development">
-                <span class="status-dot" aria-hidden="true"></span>
-                Development
-              </div>
-            </header>
-            <div class="project-content">
+            <article class="project-card" data-category="development">
+              <div class="status-badge status-development">Development</div>
+              <h3>Future Gaming Adaptations</h3>
               <p>
-                We're constantly exploring new gaming universes and stories that deserve the cinematic treatment. Stay tuned for exciting announcements.
+                We're constantly exploring new gaming universes that deserve the cinematic treatment. From indie darlings to AAA blockbusters, our development slate includes ambitious projects that will push the boundaries of game-to-film adaptation.
               </p>
-              <div class="project-details">
+              <div class="project-tags">
+                <span class="project-tag">Multiple Genres</span>
+                <span class="project-tag">Game Adaptations</span>
                 <span class="project-tag">TBA</span>
               </div>
-            </div>
-            <footer class="project-action">
-              <span class="project-link disabled">TBA</span>
-            </footer>
-          </article>
+              <a href="contact.html" class="project-link">Pitch Your Game</a>
+            </article>
+          </div>
         </div>
 
         <!-- Call to Action -->
-        <div class="section-cta" style="text-align: center; margin-top: 4rem; padding: 3rem; background: var(--glass-bg); border-radius: 20px; border: 1px solid var(--border-color); backdrop-filter: blur(20px);">
-          <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary);">Have a Game Story to Tell?</h3>
-          <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">We're always looking for new gaming universes to bring to life through cinema.</p>
-          <a href="contact.html" class="btn btn-primary" style="padding: 1rem 2rem;">Pitch Your Project</a>
+        <div style="text-align: center; margin-top: 6rem; padding: 4rem; background: linear-gradient(145deg, rgba(26, 29, 37, 0.95), rgba(17, 18, 24, 0.95)); border-radius: 32px; border: 2px solid rgba(91, 110, 232, 0.3); backdrop-filter: blur(30px); position: relative; overflow: hidden;">
+          <h3 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1.5rem; color: var(--text-primary); font-weight: 800;">Have a Game Story to Tell?</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 3rem; font-size: 1.25rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.6;">We're always looking for new gaming universes to bring to life through cinema. Partner with us to turn your game into an unforgettable film experience.</p>
+          <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+            <a href="contact.html" class="project-btn" style="background: var(--accent-gradient); color: white; padding: 1.2rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.8rem;">
+              <span>🚀</span> Pitch Your Project
+            </a>
+            <a href="about.html" class="project-btn secondary" style="background: transparent; border: 2px solid var(--accent-primary); color: var(--accent-primary); padding: 1.2rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.8rem;">
+              <span>📚</span> Learn Our Process
+            </a>
+          </div>
         </div>
       </div>
     </section>
