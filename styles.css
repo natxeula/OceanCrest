@@ -168,7 +168,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(26, 29, 41, 0.92);
+  background: rgba(10, 11, 15, 0.92);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-color);
   z-index: 999;
@@ -176,7 +176,7 @@ header {
 }
 
 header.scrolled {
-  background: rgba(26, 29, 41, 0.95);
+  background: rgba(10, 11, 15, 0.95);
   box-shadow: var(--shadow-soft);
 }
 
