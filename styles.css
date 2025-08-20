@@ -1124,6 +1124,36 @@ footer {
   line-height: 1.1;
 }
 
+/* Contact CTA Styling */
+.contact-cta-wrapper {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.contact-cta {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.contact-cta h4 {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.contact-cta p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   * {
