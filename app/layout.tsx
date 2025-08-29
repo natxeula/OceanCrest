@@ -8,7 +8,7 @@ import NotificationBar from '@/components/NotificationBar'
 import ScrollProgress from '@/components/ScrollProgress'
 import ClientProvider from '@/components/ClientProvider'
 
-const manrope = Manrope({ subsets: ['latin'] })
+const manrope = Manrope({ subsets: ['latin'], weight: ['300','400','600','700','800'] })
 
 export const metadata: Metadata = {
   title: 'OceanCrest - Corporate',
