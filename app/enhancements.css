@@ -1,0 +1,175 @@
+/* Small, additive styles that enhance visuals without changing the original look and feel */
+
+/* Utility: secondary background section */
+.section-secondary {
+  background: var(--secondary-bg);
+}
+
+/* Visibility helpers */
+.only-mobile {
+  display: none;
+}
+.only-desktop {
+  display: block;
+}
+
+/* Cleaner brand imagery: subtle shadow and crisper rendering */
+.brand-image-clean {
+  filter: drop-shadow(0 4px 24px rgba(230, 210, 181, 0.25));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Notification badge for prominence */
+.notification-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--notification-bg) 0%, var(--notification-bg-2) 100%);
+  color: #ffffff;
+  letter-spacing: 0.4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.notification-timer {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--notification-bg) 0%, var(--notification-bg-2) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Dismiss button */
+.notification-close {
+  margin-left: 0.25rem;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--notification-text);
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.notification-close:hover {
+  background: rgba(45, 27, 61, 0.12);
+  border-color: rgba(45, 27, 61, 0.2);
+}
+
+/* Prevent bottom bar from covering content */
+body.has-notification {
+  padding-bottom: calc(56px + env(safe-area-inset-bottom));
+}
+
+/* Mobile and small screens optimizations */
+@media (max-width: 640px) {
+  /* Show/hide mobile-first sections */
+  .only-mobile { display: block; }
+  .only-desktop { display: none; }
+
+  /* Keep notification fixed at bottom on mobile to avoid covering header */
+  .notification-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* Place header at the very top on mobile */
+  .header {
+    top: 0;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Reduce hero height and padding for compact mobile feel */
+  .hero {
+    min-height: 80vh;
+    padding-top: 110px;
+    padding-bottom: 2.5rem;
+  }
+
+  /* Typography tweaks */
+  .section { padding: 2.5rem 0; }
+  .section-title { margin-bottom: 0.75rem; }
+
+  /* Stack content into a single column with tighter spacing */
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .overview-card {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  /* Make primary CTAs full-width for better tap targets */
+  .cta-buttons {
+    gap: 1rem;
+  }
+  .btn {
+    padding: 1.2rem 1.6rem;
+    min-width: 0;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  /* Calm visuals and improve performance on mobile */
+  .floating-shapes,
+  .particles-container {
+    display: none;
+  }
+
+  /* Ensure brand image scales nicely on small screens */
+  .hero-brand-image {
+    max-width: min(90vw, 560px);
+  }
+
+  /* Respect device safe areas in mobile menu */
+  .mobile-nav-menu {
+    padding-top: calc(2rem + env(safe-area-inset-top));
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Project grid single column on mobile */
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Visibility helpers */
+  .only-tablet { display: block; }
+
+  /* Container breathing room */
+  .container { padding: 0 1.5rem; }
+
+  /* Hero adjustments */
+  .hero { min-height: 90vh; padding-top: 136px; padding-bottom: 3rem; }
+  .hero-brand-image { max-width: min(75vw, 620px); }
+
+  /* Balanced buttons */
+  .btn { width: auto; min-width: 200px; }
+  .cta-buttons { gap: 1.25rem; }
+
+  /* Two-column grids for comfortable reading */
+  .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem; }
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+
+  /* Card comfort */
+  .overview-card { padding: 1.5rem; }
+
+  /* Hero logo size on tablet */
+  .hero-logo-only { max-width: 300px; width: 45vw; }
+}
+
+/* Desktop-only helpers */
+@media (min-width: 900px) {
+  .mobile-nav-toggle { display: none; }
+  .hero-logo-only { max-width: 360px; width: 32vw; }
+}
