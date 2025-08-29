@@ -957,6 +957,51 @@ body {
   overflow: hidden;
 }
 
+/* Subtle interactive project cards */
+.project-card.interactive {
+  transform-style: preserve-3d;
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+}
+.project-card.interactive:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25), var(--shadow-primary);
+  border-color: rgba(123, 144, 240, 0.35);
+}
+.project-card.interactive .project-content {
+  will-change: transform;
+}
+
+/* Tag chips */
+.project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.tag-chip {
+  background: rgba(123, 144, 240, 0.18);
+  color: var(--accent-blue);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Filter counts and focus ring */
+.filter-btn { position: relative; }
+.filter-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  line-height: 1;
+}
+.filter-btn:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+
+/* CTA block styles */
+.section-cta { text-align: center; margin-top: 4rem; padding: 3rem; background: var(--glass-bg); border-radius: 20px; border: 1px solid var(--border-color); backdrop-filter: blur(20px); }
+.section-cta-title { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary); }
+.section-cta-text { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem; }
+
 .project-filters {
   display: flex;
   justify-content: center;
