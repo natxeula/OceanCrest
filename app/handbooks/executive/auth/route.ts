@@ -7,11 +7,12 @@ export async function POST(req: NextRequest) {
 
   if (typeof password === 'string' && expected && password === expected) {
     const res = NextResponse.redirect(new URL('/handbooks/executive', req.url), 303)
+    const secure = req.nextUrl.protocol === 'https:' || process.env.NODE_ENV === 'production'
     res.cookies.set('hb_executive', 'ok', {
       httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-      path: '/handbooks',
+      sameSite: 'lax',
+      secure,
+      path: '/',
       maxAge: 60 * 60 * 24 * 30,
     })
     return res
