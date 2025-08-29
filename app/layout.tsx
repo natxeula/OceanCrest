@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Manrope } from 'next/font/google'
 import './globals.css'
 import './enhancements.css'
 import Header from '@/components/Header'
@@ -8,7 +8,7 @@ import NotificationBar from '@/components/NotificationBar'
 import ScrollProgress from '@/components/ScrollProgress'
 import ClientProvider from '@/components/ClientProvider'
 
-const inter = Inter({ subsets: ['latin'] })
+const manrope = Manrope({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'OceanCrest - Corporate',
