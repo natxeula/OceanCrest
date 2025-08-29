@@ -47,13 +47,13 @@ export default function NotificationBar() {
   if (!visible) return null
 
   return (
-    <div className="notification-bar" role="region" aria-label="Site update">
+    <div className="notification-bar" role="region" aria-label="Site update" suppressHydrationWarning>
       <div className="container">
         <div className="notification-content">
           <span className="notification-badge" aria-hidden="true">COMING SOON!!!</span>
           <span className="notification-text">
             generic clicking game (Air Clicker Remasted) releasing September 30th!
-            <span className="notification-timer" aria-live="polite" style={{marginLeft: '0.5rem'}}>{timeLeft}</span>
+            <span className="notification-timer notification-timer-offset" aria-live="polite" suppressHydrationWarning>{timeLeft}</span>
           </span>
           <a href="https://5f6789ac192643529b88288c589bed5f-ba1775e6-aca6-4b92-9ecb-5916b7.fly.dev/faq" className="notification-link">FAQ</a>
           <a href="https://discord.gg/huDx4td5uA" className="notification-link">Join Discord</a>

@@ -30,8 +30,6 @@ export default function Footer() {
         <div className="footer-bottom">
           <p>&copy; 2025 OceanCrest. All rights reserved.</p>
           <p>
-            <Link href="#" className="gradient-link">Privacy Policy</Link> |{' '}
-            <Link href="#" className="gradient-link">Terms of Service</Link> |{' '}
             <Link href="/contact" className="gradient-link">Contact</Link>
           </p>
         </div>

@@ -15,7 +15,7 @@
 
 /* Cleaner brand imagery: subtle shadow and crisper rendering */
 .brand-image-clean {
-  filter: drop-shadow(0 4px 24px rgba(230, 210, 181, 0.25));
+  filter: drop-shadow(0 4px 24px rgba(217, 225, 236, 0.18));
   image-rendering: -webkit-optimize-contrast;
 }
 
@@ -63,6 +63,11 @@
 /* Prevent bottom bar from covering content */
 body.has-notification {
   padding-bottom: calc(56px + env(safe-area-inset-bottom));
+}
+
+/* Utility: subtle left spacing for timer next to text */
+.notification-timer-offset {
+  margin-left: 0.5rem;
 }
 
 /* Mobile and small screens optimizations */
