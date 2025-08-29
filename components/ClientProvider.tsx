@@ -8,6 +8,11 @@ interface ClientProviderProps {
 
 export default function ClientProvider({ children }: ClientProviderProps) {
   useEffect(() => {
+    document.documentElement.classList.add('js')
+    return () => document.documentElement.classList.remove('js')
+  }, [])
+
+  useEffect(() => {
     // Initialize cursor trail effect
     let mouseX = 0
     let mouseY = 0
