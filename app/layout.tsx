@@ -33,7 +33,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="dark">
-      <body className={inter.className}>
+      <body className={manrope.className}>
         <ClientProvider>
           <ScrollProgress />
           <NotificationBar />
