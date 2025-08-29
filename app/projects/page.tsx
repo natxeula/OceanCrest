@@ -178,7 +178,7 @@ export default function ProjectsPage() {
           <div className="section-cta">
             <h3 className="section-cta-title">Have a Game Story to Tell?</h3>
             <p className="section-cta-text">We're always looking for new gaming universes to bring to life through cinema.</p>
-            <a href="/contact" className="btn btn-primary" style={{padding: '1rem 2rem'}}>
+            <a href="/contact" className="btn btn-primary">
               Pitch Your Project
             </a>
           </div>
