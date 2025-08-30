@@ -74,7 +74,6 @@ export default function Header() {
                     <span className="dropdown-arrow" aria-hidden="true">▼</span>
                   </a>
                   <div className="dropdown-menu" role="menu">
-                    <Link href="/capabilities" role="menuitem">Capabilities</Link>
                     <Link href="/team" role="menuitem">Team</Link>
                     <Link href="/leadership" role="menuitem">Leadership</Link>
                     <Link href="/careers" role="menuitem">Careers</Link>
@@ -83,7 +82,7 @@ export default function Header() {
               </ul>
               
               <div className="nav-actions">
-                <Link href="/contact" className="nav-btn nav-btn-quote">Get a quote</Link>
+                <Link href="/contact" className="nav-btn nav-btn-quote">Contact us</Link>
                 <Link href="/projects" className="nav-btn nav-btn-code">View work</Link>
                 <Link href="/careers" className="nav-btn nav-btn-signup">Join team</Link>
               </div>
@@ -105,7 +104,6 @@ export default function Header() {
           <Link href="/about" className="mobile-nav-link" onClick={closeMobileMenu}>ℹ️ About</Link>
           <Link href="/projects" className="mobile-nav-link" onClick={closeMobileMenu}>🎬 Projects</Link>
           <Link href="/gaming" className="mobile-nav-link" onClick={closeMobileMenu}>🎮 Gaming</Link>
-          <Link href="/capabilities" className="mobile-nav-link" onClick={closeMobileMenu}>⚡ Capabilities</Link>
           <Link href="/team" className="mobile-nav-link" onClick={closeMobileMenu}>👥 Team</Link>
           <Link href="/leadership" className="mobile-nav-link" onClick={closeMobileMenu}>👑 Leadership</Link>
           <Link href="/careers" className="mobile-nav-link" onClick={closeMobileMenu}>💼 Careers</Link>
