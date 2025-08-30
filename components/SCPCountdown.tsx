@@ -65,16 +65,54 @@ export default function SCPCountdown({ days = 90, storageKey = 'classifiedReveal
   const done = remaining <= 0
   const f = format(remaining)
 
+  // Progress estimation (from inferred start = target - days)
+  const start = useMemo(() => (target ? new Date(target.getTime() - days * 86400000) : null), [target, days])
+  const total = useMemo(() => (start && target ? target.getTime() - start.getTime() : days * 86400000), [start, target, days])
+  const elapsed = useMemo(() => (start ? Math.max(0, Math.min(total, now.getTime() - start.getTime())) : 0), [start, now, total])
+  const percent = total > 0 ? Math.round((elapsed / total) * 100) : 0
+
+  const warning = !done && remaining <= 7 * 86400000
+
   return (
-    <div className="scp-countdown" aria-live="polite" role="timer">
-      <span className="scp-countdown-label">{label}</span>
+    <div className={`scp-countdown epic ${warning ? 'warning' : ''}`} aria-live="polite" role="timer">
+      <div className="scp-countdown-header">
+        <span className="scp-countdown-label">{label}</span>
+        <span className={`scp-beacon ${done ? 'ok' : 'live'}`} aria-hidden></span>
+      </div>
+
       {done ? (
-        <span className="scp-countdown-value revealed">REVEALED</span>
+        <div className="scp-time-grid" role="group" aria-label="Reveal status">
+          <div className="scp-time-box revealed">
+            <span className="scp-time-value">REVEALED</span>
+            <span className="scp-time-unit">status</span>
+          </div>
+        </div>
       ) : (
-        <span className="scp-countdown-value">
-          {f.days}d {f.hours}h {f.minutes}m {f.seconds}s
-        </span>
+        <div className="scp-time-grid" role="group" aria-label="Time remaining">
+          <div className="scp-time-box">
+            <span className="scp-time-value glitch">{f.days}</span>
+            <span className="scp-time-unit">days</span>
+          </div>
+          <div className="scp-time-box">
+            <span className="scp-time-value">{f.hours}</span>
+            <span className="scp-time-unit">hours</span>
+          </div>
+          <div className="scp-time-box">
+            <span className="scp-time-value">{f.minutes}</span>
+            <span className="scp-time-unit">mins</span>
+          </div>
+          <div className="scp-time-box">
+            <span className="scp-time-value">{f.seconds}</span>
+            <span className="scp-time-unit">secs</span>
+          </div>
+        </div>
       )}
+
+      <div className="scp-progress" aria-hidden>
+        <div className="scp-progress-bar" style={{ width: `${done ? 100 : percent}%` }} />
+      </div>
+
+      <div className="scp-scanline" aria-hidden></div>
     </div>
   )
 }
