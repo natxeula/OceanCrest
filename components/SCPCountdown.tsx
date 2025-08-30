@@ -6,6 +6,7 @@ type Props = {
   days?: number
   storageKey?: string
   label?: string
+  target?: string | Date
 }
 
 function addDays(date: Date, days: number) {
@@ -47,7 +48,7 @@ function SlideValue({ text, glitch }: SlideValueProps) {
   )
 }
 
-export default function SCPCountdown({ days = 90, storageKey = 'classifiedRevealTarget', label = 'Reveal in' }: Props) {
+export default function SCPCountdown({ days = 90, storageKey = 'classifiedRevealTarget', label = 'Reveal in', target: targetProp }: Props) {
   const [target, setTarget] = useState<Date | null>(null)
   const [now, setNow] = useState<Date>(new Date())
   const intervalRef = useRef<number | null>(null)
@@ -55,20 +56,28 @@ export default function SCPCountdown({ days = 90, storageKey = 'classifiedReveal
   // Initialize/persist target
   useEffect(() => {
     let t: Date | null = null
-    try {
-      const stored = localStorage.getItem(storageKey)
-      if (stored) {
-        const parsed = new Date(stored)
-        if (!isNaN(parsed.getTime())) t = parsed
-      }
-    } catch {}
 
-    if (!t) {
-      t = addDays(new Date(), days)
-      try { localStorage.setItem(storageKey, t.toISOString()) } catch {}
+    if (targetProp) {
+      const parsed = new Date(targetProp)
+      if (!isNaN(parsed.getTime())) {
+        t = parsed
+      }
+    } else {
+      try {
+        const stored = localStorage.getItem(storageKey)
+        if (stored) {
+          const parsed = new Date(stored)
+          if (!isNaN(parsed.getTime())) t = parsed
+        }
+      } catch {}
+
+      if (!t) {
+        t = addDays(new Date(), days)
+        try { localStorage.setItem(storageKey, t.toISOString()) } catch {}
+      }
     }
     setTarget(t)
-  }, [days, storageKey])
+  }, [days, storageKey, targetProp])
 
   // Tick
   useEffect(() => {
