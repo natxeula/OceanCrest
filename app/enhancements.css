@@ -289,8 +289,8 @@ body.has-notification {
 .scp-time-box.revealed .scp-time-value { color: var(--success-color); text-shadow: 0 0 10px rgba(129,199,132,0.35); }
 
 /* Sliding ticker */
-.sv-container { height: 1.2em; overflow: hidden; position: relative; }
-.sv-track { display: flex; flex-direction: column; transform: translateY(-100%); animation: svDown 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.sv-container { display: block; width: 100%; height: clamp(3.5rem, 12vw, 9rem); overflow: hidden; position: relative; }
+.sv-track { display: flex; flex-direction: column; transform: translateY(-100%); animation: svDown 600ms cubic-bezier(0.22, 1, 0.36, 1) both; height: 200%; }
 .sv-prev { opacity: 0.35; filter: blur(0.5px); }
 @keyframes svDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 
