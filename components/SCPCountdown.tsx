@@ -90,7 +90,7 @@ export default function SCPCountdown({ days = 90, storageKey = 'classifiedReveal
       ) : (
         <div className="scp-time-grid" role="group" aria-label="Time remaining">
           <div className="scp-time-box">
-            <span className="scp-time-value glitch">{f.days}</span>
+            <span className="scp-time-value glitch" data-text={String(f.days)}>{f.days}</span>
             <span className="scp-time-unit">days</span>
           </div>
           <div className="scp-time-box">
