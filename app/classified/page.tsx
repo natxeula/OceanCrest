@@ -45,21 +45,25 @@ export default function ClassifiedPage() {
                   </div>
                 </header>
                 <p className="terminal-summary">{season.summary}</p>
-                <div className="episode-list" role="list" aria-label={`${season.name} episodes`}>
-                  {season.episodes.map((ep) => (
-                    <div key={ep.id} role="listitem" className="episode-row">
-                      <div className="episode-left">
-                        <div className="episode-code">{ep.id.toUpperCase()}</div>
-                        <h4 className="episode-title">{ep.title}</h4>
+                {season.episodes.length > 0 ? (
+                  <div className="episode-list" role="list" aria-label={`${season.name} episodes`}>
+                    {season.episodes.map((ep) => (
+                      <div key={ep.id} role="listitem" className="episode-row">
+                        <div className="episode-left">
+                          <div className="episode-code">{ep.id.toUpperCase()}</div>
+                          <h4 className="episode-title">{ep.title}</h4>
+                        </div>
+                        <div className="episode-right">
+                          <span className="episode-badge episode-length">{ep.runtimeMinutes}m</span>
+                          <span className="episode-badge episode-rating">{ep.rating}</span>
+                        </div>
+                        <p className="episode-synopsis">{ep.synopsis}</p>
                       </div>
-                      <div className="episode-right">
-                        <span className="episode-badge episode-length">{ep.runtimeMinutes}m</span>
-                        <span className="episode-badge episode-rating">{ep.rating}</span>
-                      </div>
-                      <p className="episode-synopsis">{ep.synopsis}</p>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="terminal-placeholder" role="status">Pre-release dossier. Episodes TBA.</div>
+                )}
               </article>
             ))}
           </div>
