@@ -113,15 +113,15 @@ export default function SCPCountdown({ days = 90, storageKey = 'classifiedReveal
             <span className="scp-time-unit">days</span>
           </div>
           <div className="scp-time-box">
-            <SlideValue text={String(f.hours)} />
+            <SlideValue text={String(f.hours)} glitch />
             <span className="scp-time-unit">hours</span>
           </div>
           <div className="scp-time-box">
-            <SlideValue text={String(f.minutes)} />
+            <SlideValue text={String(f.minutes)} glitch />
             <span className="scp-time-unit">mins</span>
           </div>
           <div className="scp-time-box">
-            <SlideValue text={String(f.seconds)} />
+            <SlideValue text={String(f.seconds)} glitch />
             <span className="scp-time-unit">secs</span>
           </div>
         </div>
