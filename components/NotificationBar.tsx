@@ -55,7 +55,7 @@ export default function NotificationBar() {
             generic clicking game (Air Clicker Remasted) releasing September 30th!
             <span className="notification-timer notification-timer-offset" aria-live="polite" suppressHydrationWarning>{timeLeft}</span>
           </span>
-          <a href="https://5f6789ac192643529b88288c589bed5f-ba1775e6-aca6-4b92-9ecb-5916b7.fly.dev/faq" className="notification-link">FAQ</a>
+          <a href="/faq" className="notification-link">FAQ</a>
           <a href="https://discord.gg/huDx4td5uA" className="notification-link">Join Discord</a>
           <button className="notification-close" aria-label="Dismiss update" onClick={dismiss}>✕</button>
         </div>
