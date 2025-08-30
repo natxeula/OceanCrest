@@ -274,3 +274,38 @@ body.has-notification {
 .scp-countdown-label { color: #cbd2dc; font-weight: 800; letter-spacing: 0.6px; }
 .scp-countdown-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-weight: 900; color: #e64a4a; }
 .scp-countdown-value.revealed { color: var(--success-color); }
+
+/* Epic variant */
+.scp-countdown.epic { display: block; background: linear-gradient(180deg, rgba(12,14,20,0.92), rgba(10,12,18,0.92)); border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1rem 1.25rem; box-shadow: 0 12px 30px rgba(0,0,0,0.35); position: relative; }
+.scp-countdown.epic .scp-countdown-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.scp-countdown.epic .scp-beacon { width: 10px; height: 10px; border-radius: 50%; background: #e64a4a; box-shadow: 0 0 12px rgba(230,74,74,0.6); animation: beacon 1.5s infinite ease-in-out; display: inline-block; }
+.scp-countdown.epic .scp-beacon.ok { background: #4caf50; box-shadow: 0 0 12px rgba(76,175,80,0.6); animation: none; }
+@keyframes beacon { 0%,100% { opacity: 0.6; transform: scale(0.9);} 50% { opacity: 1; transform: scale(1);} }
+
+.scp-time-grid { display: grid; grid-template-columns: repeat(4, minmax(60px, 1fr)); gap: 0.75rem; }
+.scp-time-box { background: #0b0e14; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 0.6rem 0.5rem; text-align: center; position: relative; overflow: hidden; }
+.scp-time-box .scp-time-value { display: block; font-size: 1.3rem; font-weight: 900; color: #e6e8ee; letter-spacing: 0.5px; }
+.scp-time-box .scp-time-unit { display: block; font-size: 0.7rem; color: #9aa1ad; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; }
+.scp-time-box.revealed .scp-time-value { color: var(--success-color); }
+
+/* Glitch effect */
+.glitch { position: relative; text-shadow: 0 0 12px rgba(230,74,74,0.25); }
+.glitch::before, .glitch::after { content: attr(data-text); position: absolute; left: 0; top: 0; width: 100%; clip-path: inset(0 0 0 0); }
+.glitch::before { transform: translate(1px, 0); color: rgba(230,74,74,0.6); animation: glitchShift 2s infinite linear alternate; }
+.glitch::after { transform: translate(-1px, 0); color: rgba(123,144,240,0.6); animation: glitchShift 1.6s infinite linear alternate-reverse; }
+@keyframes glitchShift { 0% { clip-path: inset(0 0 85% 0); } 20% { clip-path: inset(0 0 0 0); } 40% { clip-path: inset(80% 0 0 0); } 60% { clip-path: inset(0 0 10% 0); } 80% { clip-path: inset(20% 0 60% 0); } 100% { clip-path: inset(0 0 0 0); } }
+
+/* Progress */
+.scp-progress { margin-top: 0.9rem; height: 6px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+.scp-progress-bar { height: 100%; background: linear-gradient(90deg, #1de9b6, #e64a4a); box-shadow: 0 0 12px rgba(230,74,74,0.35); transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+/* Scanline overlay */
+.scp-scanline { pointer-events: none; position: absolute; inset: 0; background: repeating-linear-gradient( to bottom, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 2px ); mix-blend-mode: overlay; opacity: 0.25; }
+
+/* Warning state */
+.scp-countdown.warning .scp-beacon { background: var(--warning-color); box-shadow: 0 0 12px rgba(199,178,122,0.6); }
+.scp-countdown.warning .scp-time-box { border-color: rgba(199,178,122,0.45); }
+
+@media (max-width: 640px) {
+  .scp-time-grid { grid-template-columns: repeat(2, minmax(80px, 1fr)); }
+}
