@@ -34,56 +34,7 @@ export const classifiedShow: Show = {
       year: 2025,
       summary:
         'Initial incidents escalate as routine containment fractures into a chain of cross-site anomalies. A small field unit uncovers a pattern hidden in clearance-locked logs.',
-      episodes: [
-        {
-          id: 's1e1',
-          title: 'Black Site Echo',
-          synopsis:
-            'A silent alarm at Site-43 reveals a containment chamber that never officially existed. The absence is louder than any breach.',
-          runtimeMinutes: 44,
-          rating: 'TV-14',
-        },
-        {
-          id: 's1e2',
-          title: 'Procedure 110-Montauk (Redacted)',
-          synopsis:
-            'A redacted protocol surfaces in a junior researcher’s terminal cache, triggering a Foundation-wide audit that only raises more questions.',
-          runtimeMinutes: 46,
-          rating: 'TV-14',
-        },
-        {
-          id: 's1e3',
-          title: 'Hushed Frequencies',
-          synopsis:
-            'Encrypted radio bursts map to outdated site coordinates. The team follows the noise and finds the signal is listening back.',
-          runtimeMinutes: 43,
-          rating: 'TV-14',
-        },
-        {
-          id: 's1e4',
-          title: 'Thaumic Debt',
-          synopsis:
-            'Anomalous debt transfers appear on Foundation ledgers—paid in full with interest the moment you look away.',
-          runtimeMinutes: 45,
-          rating: 'TV-14',
-        },
-        {
-          id: 's1e5',
-          title: 'The Archivist Sleeps',
-          synopsis:
-            'A dormant archival entity awakens, rewriting incident reports in present tense. The edits predict an accident that has not happened yet.',
-          runtimeMinutes: 47,
-          rating: 'TV-14',
-        },
-        {
-          id: 's1e6',
-          title: 'Event: Blue Noon',
-          synopsis:
-            'At exactly 12:00, all shadows in Site-19 align north. Doors open to rooms that were never built. Not everyone returns.',
-          runtimeMinutes: 49,
-          rating: 'TV-14',
-        },
-      ],
+      episodes: [],
     },
     {
       id: 's2',
