@@ -28,6 +28,25 @@ function format(durationMs: number) {
   }
 }
 
+function usePrevious<T>(value: T) {
+  const ref = useRef(value)
+  useEffect(() => { ref.current = value })
+  return ref.current
+}
+
+type SlideValueProps = { text: string; glitch?: boolean }
+function SlideValue({ text, glitch }: SlideValueProps) {
+  const prev = usePrevious(text)
+  return (
+    <div className="sv-container">
+      <div className="sv-track" key={text}>
+        <span className={`scp-time-value ${glitch ? 'glitch' : ''}`} data-text={text}>{text}</span>
+        <span className="scp-time-value sv-prev">{prev}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function SCPCountdown({ days = 90, storageKey = 'classifiedRevealTarget', label = 'Reveal in' }: Props) {
   const [target, setTarget] = useState<Date | null>(null)
   const [now, setNow] = useState<Date>(new Date())
@@ -90,19 +109,19 @@ export default function SCPCountdown({ days = 90, storageKey = 'classifiedReveal
       ) : (
         <div className="scp-time-grid" role="group" aria-label="Time remaining">
           <div className="scp-time-box">
-            <span className="scp-time-value glitch" data-text={String(f.days)}>{f.days}</span>
+            <SlideValue text={String(f.days)} glitch />
             <span className="scp-time-unit">days</span>
           </div>
           <div className="scp-time-box">
-            <span className="scp-time-value">{f.hours}</span>
+            <SlideValue text={String(f.hours)} />
             <span className="scp-time-unit">hours</span>
           </div>
           <div className="scp-time-box">
-            <span className="scp-time-value">{f.minutes}</span>
+            <SlideValue text={String(f.minutes)} />
             <span className="scp-time-unit">mins</span>
           </div>
           <div className="scp-time-box">
-            <span className="scp-time-value">{f.seconds}</span>
+            <SlideValue text={String(f.seconds)} />
             <span className="scp-time-unit">secs</span>
           </div>
         </div>
