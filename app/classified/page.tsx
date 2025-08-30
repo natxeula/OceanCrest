@@ -41,7 +41,7 @@ export default function ClassifiedPage() {
                   <h3 id={`${season.id}-title`} className="terminal-title">{season.name}</h3>
                   <div className="terminal-meta">
                     <span className="terminal-chip">Year {season.year}</span>
-                    <span className="terminal-chip terminal-chip-accent">{season.episodes.length} Episodes</span>
+                    <span className="terminal-chip terminal-chip-accent">{season.episodes.length ? `${season.episodes.length} Episodes` : 'In Production'}</span>
                   </div>
                 </header>
                 <p className="terminal-summary">{season.summary}</p>
