@@ -313,5 +313,5 @@ body.has-notification {
 .scp-countdown.warning .scp-time-box { border-color: rgba(199,178,122,0.45); }
 
 @media (max-width: 640px) {
-  .scp-time-grid { grid-template-columns: repeat(2, minmax(80px, 1fr)); }
+  .scp-time-grid { grid-template-columns: repeat(2, minmax(250px, 1fr)); }
 }
