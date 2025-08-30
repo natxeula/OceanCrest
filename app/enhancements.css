@@ -230,6 +230,7 @@ body.has-notification {
 .episode-badge { font-size: 0.75rem; font-weight: 800; color: #cbd2dc; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); padding: 0.2rem 0.5rem; border-radius: 6px; }
 .episode-length { color: #b6ffed; border-color: rgba(182,255,237,0.35); background: rgba(182,255,237,0.06); }
 .episode-rating { color: #ffddc1; border-color: rgba(255,221,193,0.35); background: rgba(255,221,193,0.06); }
+.episode-unreleased { color: var(--warning-color); border-color: rgba(199,178,122,0.45); background: rgba(199,178,122,0.08); }
 .episode-synopsis { color: #9aa1ad; margin-top: 0.6rem; }
 .terminal-placeholder { border: 1px dashed rgba(255,255,255,0.15); color: #9aa1ad; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; text-align: center; font-weight: 700; letter-spacing: 0.5px; }
 
