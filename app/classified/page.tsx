@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { classifiedShow } from '@/data/shows/classified'
 import SCPCountdown from '@/components/SCPCountdown'
+import SCPCountdown from '@/components/SCPCountdown'
 
 export const metadata: Metadata = {
   title: 'Classified: A SCP Series',
