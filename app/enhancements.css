@@ -282,16 +282,16 @@ body.has-notification {
 .scp-countdown.epic .scp-beacon.ok { background: #4caf50; box-shadow: 0 0 12px rgba(76,175,80,0.6); animation: none; }
 @keyframes beacon { 0%,100% { opacity: 0.6; transform: scale(0.9);} 50% { opacity: 1; transform: scale(1);} }
 
-.scp-time-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 1rem; }
-.scp-time-box { background: #0b0e14; border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1rem 0.75rem; text-align: center; position: relative; overflow: hidden; }
-.scp-time-box .scp-time-value { display: block; font-size: clamp(3rem, 12vw, 8rem); line-height: 1; font-weight: 900; color: #e6e8ee; letter-spacing: 1px; }
-.scp-time-box .scp-time-unit { display: block; font-size: clamp(0.9rem, 2vw, 1.25rem); color: #9aa1ad; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
-.scp-time-box.revealed .scp-time-value { color: var(--success-color); }
+.scp-time-grid { display: grid; grid-template-columns: repeat(4, minmax(160px, 1fr)); gap: 1.25rem; }
+.scp-time-box { background: #0b0e14; border: 2px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 1.25rem 1rem; text-align: center; position: relative; overflow: hidden; }
+.scp-time-box .scp-time-value { display: block; font-size: clamp(3.5rem, 12vw, 9rem); line-height: 0.95; font-weight: 900; color: #e6e8ee; letter-spacing: 1.2px; text-shadow: 0 0 2px rgba(230,234,255,0.5), 0 0 12px rgba(230,74,74,0.18); }
+.scp-time-box .scp-time-unit { display: block; font-size: clamp(1rem, 2.2vw, 1.35rem); color: #cbd2dc; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+.scp-time-box.revealed .scp-time-value { color: var(--success-color); text-shadow: 0 0 10px rgba(129,199,132,0.35); }
 
 /* Sliding ticker */
-.sv-container { height: 1.05em; overflow: hidden; position: relative; }
+.sv-container { height: 1.2em; overflow: hidden; position: relative; }
 .sv-track { display: flex; flex-direction: column; transform: translateY(-100%); animation: svDown 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-.sv-prev { opacity: 0.65; }
+.sv-prev { opacity: 0.35; filter: blur(0.5px); }
 @keyframes svDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 
 /* Glitch effect */
