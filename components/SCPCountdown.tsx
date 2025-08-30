@@ -48,7 +48,7 @@ function SlideValue({ text, glitch }: SlideValueProps) {
   )
 }
 
-export default function SCPCountdown({ days = 90, storageKey = 'classifiedRevealTarget', label = 'Reveal in (aprox. date)', target: targetProp }: Props) {
+export default function SCPCountdown({ days = 90, storageKey = 'classifiedRevealTarget', label = 'Reveal in ()', target: targetProp }: Props) {
   const [target, setTarget] = useState<Date | null>(null)
   const [now, setNow] = useState<Date>(new Date())
   const intervalRef = useRef<number | null>(null)
