@@ -6,13 +6,6 @@ export default function ContactPage() {
       description: "Join our community and chat with the team directly.",
       actionLabel: "Join Discord",
       href: "https://discord.gg/huDx4td5uA"
-    },
-    {
-      icon: "🐦",
-      title: "Social Media",
-      description: "Follow us for updates and behind-the-scenes content.",
-      actionLabel: "@CrestedEnt",
-      href: "https://x.com/CrestedEnt"
     }
   ]
 
