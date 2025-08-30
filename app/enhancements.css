@@ -268,3 +268,9 @@ body.has-notification {
 .scp-quote { background: linear-gradient(180deg, rgba(12,14,20,0.9), rgba(10,12,18,0.9)); border: 1px solid rgba(255,255,255,0.12); border-left: 3px solid #e64a4a; border-radius: 14px; padding: 1rem 1.25rem; color: #cbd2dc; position: relative; }
 .scp-quote p { margin: 0 0 0.5rem; color: #e6e8ee; font-weight: 700; }
 .scp-quote footer { color: #9aa1ad; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px; }
+
+/* Countdown */
+.scp-countdown { margin: 1.25rem auto 0; display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 0.5rem 0.75rem; }
+.scp-countdown-label { color: #cbd2dc; font-weight: 800; letter-spacing: 0.6px; }
+.scp-countdown-value { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-weight: 900; color: #e64a4a; }
+.scp-countdown-value.revealed { color: var(--success-color); }

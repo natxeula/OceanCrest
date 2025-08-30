@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { classifiedShow } from '@/data/shows/classified'
+import SCPCountdown from '@/components/SCPCountdown'
 
 export const metadata: Metadata = {
   title: 'Classified — SCP Operations',
@@ -45,6 +46,7 @@ export default function ClassifiedPage() {
               <span className="redaction-line s"></span>
               <span className="redaction-line l"></span>
             </div>
+            <SCPCountdown />
             <div className="scp-lockout-actions">
               <Link href="/contact" className="scp-cta">Request Screener</Link>
             </div>
