@@ -282,11 +282,17 @@ body.has-notification {
 .scp-countdown.epic .scp-beacon.ok { background: #4caf50; box-shadow: 0 0 12px rgba(76,175,80,0.6); animation: none; }
 @keyframes beacon { 0%,100% { opacity: 0.6; transform: scale(0.9);} 50% { opacity: 1; transform: scale(1);} }
 
-.scp-time-grid { display: grid; grid-template-columns: repeat(4, minmax(60px, 1fr)); gap: 0.75rem; }
-.scp-time-box { background: #0b0e14; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 0.6rem 0.5rem; text-align: center; position: relative; overflow: hidden; }
-.scp-time-box .scp-time-value { display: block; font-size: 1.3rem; font-weight: 900; color: #e6e8ee; letter-spacing: 0.5px; }
-.scp-time-box .scp-time-unit { display: block; font-size: 0.7rem; color: #9aa1ad; font-weight: 800; letter-spacing: 0.6px; text-transform: uppercase; }
+.scp-time-grid { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); gap: 1rem; }
+.scp-time-box { background: #0b0e14; border: 1px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1rem 0.75rem; text-align: center; position: relative; overflow: hidden; }
+.scp-time-box .scp-time-value { display: block; font-size: clamp(3rem, 12vw, 8rem); line-height: 1; font-weight: 900; color: #e6e8ee; letter-spacing: 1px; }
+.scp-time-box .scp-time-unit { display: block; font-size: clamp(0.9rem, 2vw, 1.25rem); color: #9aa1ad; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
 .scp-time-box.revealed .scp-time-value { color: var(--success-color); }
+
+/* Sliding ticker */
+.sv-container { height: 1.05em; overflow: hidden; position: relative; }
+.sv-track { display: flex; flex-direction: column; transform: translateY(-100%); animation: svDown 600ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.sv-prev { opacity: 0.65; }
+@keyframes svDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
 
 /* Glitch effect */
 .glitch { position: relative; text-shadow: 0 0 12px rgba(230,74,74,0.25); }
