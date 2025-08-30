@@ -231,6 +231,7 @@ body.has-notification {
 .episode-length { color: #b6ffed; border-color: rgba(182,255,237,0.35); background: rgba(182,255,237,0.06); }
 .episode-rating { color: #ffddc1; border-color: rgba(255,221,193,0.35); background: rgba(255,221,193,0.06); }
 .episode-synopsis { color: #9aa1ad; margin-top: 0.6rem; }
+.terminal-placeholder { border: 1px dashed rgba(255,255,255,0.15); color: #9aa1ad; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 12px; text-align: center; font-weight: 700; letter-spacing: 0.5px; }
 
 /* CTA panel */
 .scp-cta-block { background: linear-gradient(180deg, #0a0c12 0%, #090b10 100%); }
