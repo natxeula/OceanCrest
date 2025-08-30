@@ -178,3 +178,73 @@ body.has-notification {
   .mobile-nav-toggle { display: none; }
   .hero-logo-only { max-width: 360px; width: 32vw; }
 }
+
+/* ===== SCP Theme (additive) ===== */
+.scp-hero {
+  position: relative;
+  background:
+    radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, transparent 70%),
+    linear-gradient(135deg, #0a0b0f 0%, #0e1118 100%);
+  padding: 8rem 0 5rem;
+  overflow: hidden;
+}
+.scp-hero-inner { text-align: center; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+.scp-hero-badge { display: inline-block; padding: 0.35rem 0.75rem; border: 1px solid rgba(255,255,255,0.14); color: #e64a4a; letter-spacing: 2px; font-weight: 800; border-radius: 6px; background: rgba(255,255,255,0.03); margin-bottom: 1rem; }
+.scp-hero-title { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: 2px; color: #e6e8ee; text-transform: uppercase; }
+.scp-hero-meta { color: #9aa1ad; margin-top: 0.75rem; }
+.scp-meta-item { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+.scp-meta-sep { margin: 0 0.5rem; color: #4b4f59; }
+.scp-hero-cta { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+.scp-cta { background: #11141b; color: #e6e8ee; border: 1px solid rgba(255,255,255,0.14); padding: 0.75rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.scp-cta:hover { transform: translateY(-2px); border-color: #e64a4a; box-shadow: 0 10px 24px rgba(230,74,74,0.15); }
+.scp-cta-secondary { background: #0c0f15; color: #cbd2dc; }
+
+/* CRT overlay */
+.crt-overlay { position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 2px); mix-blend-mode: overlay; opacity: 0.35; }
+
+/* Section titles */
+.scp-section { background: linear-gradient(180deg, #0f1117 0%, #0a0c12 100%); }
+.scp-section-title { text-align: center; font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 2rem; color: #e6e8ee; }
+
+/* Season grid */
+.scp-season-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; margin-top: 1.5rem; }
+
+/* Terminal cards */
+.terminal-card { background: linear-gradient(180deg, rgba(12,14,20,0.9), rgba(10,12,18,0.9)); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.5rem; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.terminal-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 10% 10%, rgba(230,74,74,0.07), transparent 40%); pointer-events: none; }
+.terminal-card-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem; }
+.terminal-title { font-size: 1.2rem; color: #e6e8ee; font-weight: 800; letter-spacing: 0.5px; }
+.terminal-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.terminal-chip { background: rgba(255,255,255,0.06); color: #cbd2dc; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 0.25rem 0.6rem; font-size: 0.75rem; font-weight: 700; }
+.terminal-chip-accent { color: #ffe0e0; border-color: rgba(230,74,74,0.6); background: rgba(230,74,74,0.08); }
+.terminal-summary { color: #9aa1ad; margin: 0.5rem 0 1rem; }
+
+/* Episodes */
+.episode-list { display: grid; gap: 1rem; margin-top: 1rem; }
+.episode-row { border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; background: #0b0e14; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.episode-row:hover { transform: translateY(-2px); border-color: rgba(230,74,74,0.5); box-shadow: 0 12px 24px rgba(230,74,74,0.08); }
+.episode-left { display: flex; align-items: center; gap: 0.75rem; }
+.episode-code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; color: #e64a4a; font-weight: 900; font-size: 0.8rem; letter-spacing: 1px; background: rgba(230,74,74,0.1); border: 1px solid rgba(230,74,74,0.35); padding: 0.2rem 0.5rem; border-radius: 6px; }
+.episode-title { color: #e6e8ee; font-size: 1rem; font-weight: 800; }
+.episode-right { margin-left: auto; display: flex; gap: 0.5rem; }
+.episode-badge { font-size: 0.75rem; font-weight: 800; color: #cbd2dc; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); padding: 0.2rem 0.5rem; border-radius: 6px; }
+.episode-length { color: #b6ffed; border-color: rgba(182,255,237,0.35); background: rgba(182,255,237,0.06); }
+.episode-rating { color: #ffddc1; border-color: rgba(255,221,193,0.35); background: rgba(255,221,193,0.06); }
+.episode-synopsis { color: #9aa1ad; margin-top: 0.6rem; }
+
+/* CTA panel */
+.scp-cta-block { background: linear-gradient(180deg, #0a0c12 0%, #090b10 100%); }
+.scp-cta-panel { background: linear-gradient(180deg, rgba(12,14,20,0.92), rgba(10,12,18,0.92)); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; text-align: center; max-width: 720px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.scp-cta-title { color: #e6e8ee; font-size: 1.5rem; margin-bottom: 0.5rem; }
+.scp-cta-text { color: #9aa1ad; margin-bottom: 1rem; }
+.scp-cta-primary { background: #e64a4a; color: #0b0e14; border: 1px solid #ff6a6a; }
+.scp-cta-primary:hover { border-color: #ffd1d1; box-shadow: 0 16px 36px rgba(230,74,74,0.25); }
+
+/* Responsive adjustments matching existing breakpoints */
+@media (max-width: 640px) {
+  .scp-hero { padding: 6rem 0 3rem; }
+  .scp-season-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .terminal-card { padding: 1rem; }
+  .episode-row { padding: 0.75rem; }
+  .episode-left { flex-wrap: wrap; }
+}
