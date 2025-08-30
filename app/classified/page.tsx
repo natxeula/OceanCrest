@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { classifiedShow } from '@/data/shows/classified'
 
 export const metadata: Metadata = {
-  title: 'Classified — SCP Operations',
-  description: 'Access Level 4 required. Season information and full episode index for Classified: SCP Operations.',
+  title: 'Classified: A SCP Series',
+  description: 'Access Level 4 required.',
 }
 
 export default function ClassifiedPage() {
@@ -31,6 +31,8 @@ export default function ClassifiedPage() {
         <div className="crt-overlay" aria-hidden></div>
       </section>
 
+  
+
       <section id="seasons" className="section scp-section" aria-labelledby="seasons-title">
         <div className="container">
           <h2 id="seasons-title" className="scp-section-title">Season Index</h2>
@@ -51,7 +53,7 @@ export default function ClassifiedPage() {
           </div>
         </div>
       </section>
-
+      <SCPCountdown />
 
       <section className="section scp-section scp-cta-block" aria-labelledby="contact-secure-title">
         <div className="container">
