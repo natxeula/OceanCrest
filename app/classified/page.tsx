@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { classifiedShow } from '@/data/shows/classified'
-import SCPCountdown from '@/components/SCPCountdown'
 
 export const metadata: Metadata = {
   title: 'Classified — SCP Operations',
@@ -46,7 +45,6 @@ export default function ClassifiedPage() {
               <span className="redaction-line s"></span>
               <span className="redaction-line l"></span>
             </div>
-            <SCPCountdown />
             <div className="scp-lockout-actions">
               <Link href="/contact" className="scp-cta">Request Screener</Link>
             </div>
@@ -54,29 +52,6 @@ export default function ClassifiedPage() {
         </div>
       </section>
 
-      <section id="bts" className="section scp-section" aria-labelledby="bts-title">
-        <div className="container">
-          <h2 id="bts-title" className="scp-section-title">Declassified: Behind-the-Scenes Notes</h2>
-          <div className="scp-quote-grid">
-            <blockquote className="scp-quote">
-              <p>We wanted the D-Class riot to feel inevitable—like the site itself was pushing toward failure.</p>
-              <footer>Showrunner — N. Kimball</footer>
-            </blockquote>
-            <blockquote className="scp-quote">
-              <p>The knock in ventilation is the heartbeat of the season; it’s not a jumpscare, it’s a witness.</p>
-              <footer>Director of Photography</footer>
-            </blockquote>
-            <blockquote className="scp-quote">
-              <p>Upsilon-11 banter matters—human noise before the alarms.</p>
-              <footer>Lead Writer</footer>
-            </blockquote>
-            <blockquote className="scp-quote">
-              <p>We cut Episode 4 as a prequel so the detonation plays like prophecy, not surprise.</p>
-              <footer>Editor</footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
 
       <section className="section scp-section scp-cta-block" aria-labelledby="contact-secure-title">
         <div className="container">
