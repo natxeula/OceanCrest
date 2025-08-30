@@ -54,7 +54,6 @@ export default function ClassifiedPage() {
           </div>
         </div>
       </section>
-      <SCPCountdown target="2025-11-30T18:00:00Z" days={90} />
 
       <section className="section scp-section scp-cta-block" aria-labelledby="contact-secure-title">
         <div className="container">
