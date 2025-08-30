@@ -41,7 +41,7 @@ export default function ClassifiedPage() {
                   <h3 id={`${season.id}-title`} className="terminal-title">{season.name}</h3>
                   <div className="terminal-meta">
                     <span className="terminal-chip">Year {season.year}</span>
-                    <span className="terminal-chip terminal-chip-accent">{season.episodes.length ? `${season.episodes.length} Episodes` : 'In Production'}</span>
+                    <span className="terminal-chip terminal-chip-accent">{season.episodes.length ? (season.episodes.every(ep => ep.released === false) ? 'Pre-release' : `${season.episodes.length} Episodes`) : 'In Production'}</span>
                   </div>
                 </header>
                 <p className="terminal-summary">{season.summary}</p>
@@ -54,6 +54,9 @@ export default function ClassifiedPage() {
                           <h4 className="episode-title">{ep.title}</h4>
                         </div>
                         <div className="episode-right">
+                          {ep.released === false && (
+                            <span className="episode-badge episode-unreleased">Unreleased</span>
+                          )}
                           <span className="episode-badge episode-length">{ep.runtimeMinutes}m</span>
                           <span className="episode-badge episode-rating">{ep.rating}</span>
                         </div>
